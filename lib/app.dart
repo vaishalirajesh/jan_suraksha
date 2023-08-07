@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/config/theme_config.dart';
+import 'package:jan_suraksha/view/screen/splash/splash_view.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -18,15 +20,10 @@ class _MainAppState extends State<MainApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
-        return const GetMaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: SafeArea(
-              child: Center(
-                child: Text("Added widget here"),
-              ),
-            ),
-          ),
+          home: const SplashPage(),
+          theme: JSThemes.jsThemeMobile,
         );
       },
     );

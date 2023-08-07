@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
-import 'package:jan_suraksha/view/widget/app_common_screen.dart';
+import 'package:jan_suraksha/utils/widget/app_common_screen.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);

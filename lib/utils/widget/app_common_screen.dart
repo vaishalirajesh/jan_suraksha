@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
-import 'package:jan_suraksha/view/widget/app_button.dart';
-import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
+import 'package:jan_suraksha/utils/widget/app_button.dart';
+import 'package:jan_suraksha/utils/widget/appbar_with_title.dart';
 
 class AddHeaderFooter extends StatelessWidget {
   AddHeaderFooter({

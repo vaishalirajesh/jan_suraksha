@@ -1,6 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jansuraksha">
     <application
-        android:label="jan_suraksha"
+        android:label="Jan Suraksha"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

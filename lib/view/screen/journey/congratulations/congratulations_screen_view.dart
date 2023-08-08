@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'congratulations_screen_logic.dart';
 
-class Congratulations_screenPage extends StatelessWidget {
-  Congratulations_screenPage({Key? key}) : super(key: key);
+class CongratulationsPage extends StatelessWidget {
+  CongratulationsPage({Key? key}) : super(key: key);
 
   final logic = Get.find<Congratulations_screenLogic>();
 

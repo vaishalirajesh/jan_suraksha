@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'preview_application_form_logic.dart';
 
-class Preview_application_formPage extends StatelessWidget {
-  Preview_application_formPage({Key? key}) : super(key: key);
+class PreviewApplicationPage extends StatelessWidget {
+  PreviewApplicationPage({Key? key}) : super(key: key);
 
   final logic = Get.find<Preview_application_formLogic>();
 

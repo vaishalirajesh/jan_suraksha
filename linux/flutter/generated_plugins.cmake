@@ -3,6 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  gstmobieservice_marketplace
+  webcrypto
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

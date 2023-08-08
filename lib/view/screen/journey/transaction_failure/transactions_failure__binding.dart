@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import 'transactions_failure__logic.dart';
 
-class Transactions_failure_Binding extends Bindings {
+class TransactionsFailureBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => Transactions_failure_Logic());

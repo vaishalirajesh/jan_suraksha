@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'customer_verification_logic.dart';
 
-class Customer_verificationPage extends StatelessWidget {
-  Customer_verificationPage({Key? key}) : super(key: key);
+class CustomerVerificationPage extends StatelessWidget {
+  CustomerVerificationPage({Key? key}) : super(key: key);
 
   final logic = Get.find<Customer_verificationLogic>();
 

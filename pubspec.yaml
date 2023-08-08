@@ -19,7 +19,7 @@ dependencies:
   get: ^4.6.5
 
   # For responsive UI
-  flutter_screenutil: ^5.7.0
+  flutter_screenutil: 5.7.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

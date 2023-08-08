@@ -12,11 +12,12 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AddHeaderFooter(
       title: "Testing header",
-      appbarName: AppString.appBarWithTitle,
+      appbarName: AppString.appBarWithNotification,
       buttonTitle: "Test Button",
       onButtonClick: () {},
       isDataLoading: false,
       isButtonEnable: true,
+      isShowButton: true,
       subTitle: "Happy to have you onboard! Let's start by finding out which insurance you need.",
       child: Column(
         children: [

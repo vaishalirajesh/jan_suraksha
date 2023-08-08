@@ -17,6 +17,7 @@ class AddHeaderFooter extends StatelessWidget {
     required this.onButtonClick,
     required this.isDataLoading,
     required this.isButtonEnable,
+    this.isShowButton = true,
     this.subTitle = '',
   }) : super(key: key);
   Widget child;
@@ -27,6 +28,7 @@ class AddHeaderFooter extends StatelessWidget {
   VoidCallback onButtonClick;
   bool isButtonEnable = false;
   bool isDataLoading = false;
+  bool isShowButton = true;
 
   PreferredSizeWidget getAppBar() {
     switch (appbarName) {
@@ -48,15 +50,17 @@ class AddHeaderFooter extends StatelessWidget {
         backgroundColor: ThemeHelper.getInstance()?.colorScheme.background,
         appBar: getAppBar(),
         body: child,
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: AppButton(
-            onPress: onButtonClick,
-            title: buttonTitle,
-            isButtonEnable: isButtonEnable.obs,
-            isDataLoading: isDataLoading.obs,
-          ),
-        ),
+        bottomNavigationBar: isShowButton
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                child: AppButton(
+                  onPress: onButtonClick,
+                  title: buttonTitle,
+                  isButtonEnable: isButtonEnable.obs,
+                  isDataLoading: isDataLoading.obs,
+                ),
+              )
+            : const SizedBox.shrink(),
       ),
     );
   }

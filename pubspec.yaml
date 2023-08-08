@@ -26,3 +26,34 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: OutfitBold
+      fonts:
+        - asset: assets/fonts/Outfit-Bold.ttf
+    - family: OutfitRegular
+      fonts:
+        - asset: assets/fonts/Outfit-Regular.ttf
+    - family: OutfitSemiBold
+      fonts:
+        - asset: assets/fonts/Outfit-SemiBold.ttf
+    - family: OutfitExtraBold
+      fonts:
+        - asset: assets/fonts/Outfit-ExtraBold.ttf
+    - family: OutfitLight
+      fonts:
+        - asset: assets/fonts/Outfit-Medium.ttf
+    - family: OutfitMedium
+      fonts:
+        - asset: assets/fonts/Outfit-Light.ttf
+#    - family: OutfitItalic
+#      fonts:
+#        - asset: assets/fonts/Outfit-Italic.ttf
+
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

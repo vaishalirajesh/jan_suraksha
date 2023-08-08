@@ -10,6 +10,10 @@ class StyleConfig {
     fontSize: 12.sp,
     fontFamily: JSFonts.outfitRegular,
   );
+  static TextStyle semiBoldExtraSmallText = TextStyle(
+    fontSize: 12.sp,
+    fontFamily: JSFonts.outfitSemiBold,
+  );
   static TextStyle regularExtraSmallPinkText = TextStyle(
     fontSize: 12.sp,
     fontFamily: JSFonts.outfitRegular,

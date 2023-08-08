@@ -6,4 +6,7 @@ class AppString {
   static const String emptyText = '';
   static const String jsBankName = 'JanSuraksha';
   static const String mandatorySign = '*';
+  static const String cifNo = 'CIF : ';
+  static const String accountHolder = 'A/C Holder';
+  static const String accountNo = 'Account No. : ';
 }

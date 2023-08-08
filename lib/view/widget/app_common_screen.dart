@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
-import 'package:jan_suraksha/utils/widget/app_button.dart';
-import 'package:jan_suraksha/utils/widget/appbar_with_title.dart';
+import 'package:jan_suraksha/utils/theme_helper.dart';
+import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
+
+import 'app_button.dart';
 
 class AddHeaderFooter extends StatelessWidget {
   AddHeaderFooter({
@@ -43,6 +45,7 @@ class AddHeaderFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: ThemeHelper.getInstance()?.colorScheme.background,
         appBar: getAppBar(),
         body: child,
         bottomNavigationBar: Padding(

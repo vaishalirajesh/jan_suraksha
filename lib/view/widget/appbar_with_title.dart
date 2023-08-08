@@ -11,7 +11,7 @@ class CommonAppBar {
       centerTitle: true,
       leading: Icon(
         Icons.arrow_back_sharp,
-        color: ColorConfig.jsBlackColor,
+        color: ColorConfig.jsLightBlackColor,
         size: 25.r,
       ),
       title: Text(
@@ -34,7 +34,7 @@ class CommonAppBar {
       centerTitle: true,
       leading: Icon(
         Icons.arrow_back_sharp,
-        color: ColorConfig.jsBlackColor,
+        color: ColorConfig.jsLightBlackColor,
         size: 25.r,
       ),
       title: Padding(
@@ -87,7 +87,7 @@ class CommonAppBar {
                 ),
                 Icon(
                   Icons.notification_add,
-                  color: ColorConfig.jsBlackColor,
+                  color: ColorConfig.jsLightBlackColor,
                 )
               ],
             ),

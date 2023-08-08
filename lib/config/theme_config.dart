@@ -14,6 +14,20 @@ class JSThemes {
       titleSpacing: 0,
     ),
     primaryColor: ColorConfig.jsPrimaryColor,
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: ColorConfig.jsPrimaryColor,
+      onPrimary: ColorConfig.jsPrimaryDisableColor,
+      secondary: ColorConfig.jsSecondaryColor,
+      onSecondary: ColorConfig.jsLightBlackColor,
+      error: ColorConfig.jsRedColor,
+      onError: ColorConfig.jsRedColor,
+      background: ColorConfig.jsWhiteColor,
+      onBackground: ColorConfig.jsCreamColor,
+      surface: ColorConfig.jsTextFiledBgColor,
+      onSurface: ColorConfig.jsCardBgColor,
+      secondaryContainer: ColorConfig.jsLightGreyColor,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity, 45.h),

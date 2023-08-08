@@ -38,7 +38,7 @@ class AppButton extends StatelessWidget {
                 title,
                 style: isButtonEnable.value
                     ? StyleConfig.regularWhiteText16
-                    : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsBlackColor),
+                    : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsLightBlackColor),
               ),
       ),
     );

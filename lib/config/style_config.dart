@@ -18,22 +18,27 @@ class StyleConfig {
   static TextStyle mediumSmallText = TextStyle(
     fontSize: 13.sp,
     fontFamily: JSFonts.outfitSemiBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle smallText = TextStyle(
     fontSize: 14.sp,
     fontFamily: JSFonts.outfitRegular,
     color: ColorConfig.jsBlackColor,
   );
+  static TextStyle smallTextLight = TextStyle(
+    fontSize: 14.sp,
+    fontFamily: JSFonts.outfitRegular,
+    color: ColorConfig.jsLightGreyColor,
+  );
   static TextStyle semiBoldSmallText = TextStyle(
     fontSize: 14.sp,
     fontFamily: JSFonts.outfitSemiBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle regularText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitRegular,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle regularWhiteText16 = TextStyle(
     fontSize: 16.sp,
@@ -43,22 +48,22 @@ class StyleConfig {
   static TextStyle boldText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle mediumText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitMedium,
-    color: ColorConfig.jsWhiteColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle mediumText18 = TextStyle(
     fontSize: 18.sp,
     fontFamily: JSFonts.outfitSemiBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle boldMediumText = TextStyle(
     fontSize: 18.sp,
     fontFamily: JSFonts.outfitBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle boldText20 = TextStyle(
     fontSize: 20.sp,
@@ -67,17 +72,17 @@ class StyleConfig {
   static TextStyle regularLargeText = TextStyle(
     fontSize: 24.sp,
     fontFamily: JSFonts.outfitRegular,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle mediumLargeText = TextStyle(
     fontSize: 30.sp,
     fontFamily: JSFonts.outfitSemiBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle semiBoldExtraLargeText = TextStyle(
     fontSize: 35.sp,
     fontFamily: JSFonts.outfitBold,
-    color: ColorConfig.jsBlackColor,
+    color: ColorConfig.jsLightBlackColor,
   );
 
   static ButtonStyle setDisableButtonBig() {

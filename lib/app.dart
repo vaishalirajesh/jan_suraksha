@@ -21,7 +21,7 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const SplashPage(),
+          home: SplashPage(),
           theme: JSThemes.jsThemeMobile,
         );
       },

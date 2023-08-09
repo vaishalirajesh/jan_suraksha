@@ -7,7 +7,7 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
-import 'package:jan_suraksha/view/widget/otp_field.dart';
+import 'package:jan_suraksha/view/widget/custom_otp_field/custom_otp_field.dart';
 
 import 'verify_otp_logic.dart';
 
@@ -57,9 +57,21 @@ class VerifyOtpPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      OTPInputField(
-                        onChangeOTP: verifyOtpLogic.onChangeOTP,
-                        onSubmitOTP: verifyOtpLogic.onSubmitOTP,
+                      OtpTextField(
+                        numberOfFields: 4,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        borderColor: ColorConfig.jsLightGreyColor,
+                        borderRadius: BorderRadius.circular(16.r),
+                        borderWidth: 1,
+                        textStyle: StyleConfig.semiBoldText20,
+                        enabledBorderColor: ColorConfig.jsLightGreyColor,
+                        focusedBorderColor: ColorConfig.jsLightGreyColor,
+                        cursorColor: ColorConfig.jsLightBlackColor,
+                        fieldWidth: 50.r,
+                        fieldHeight: 55.r,
+                        showFieldAsBox: true,
+                        onCodeChanged: verifyOtpLogic.onChangeOTP,
+                        onSubmit: verifyOtpLogic.onSubmitOTP,
                       ),
                       SizedBox(
                         height: 20.h,

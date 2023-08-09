@@ -44,6 +44,11 @@ class StyleConfig {
     fontFamily: JSFonts.outfitRegular,
     color: ColorConfig.jsLightBlackColor,
   );
+  static TextStyle semiBoldText16 = TextStyle(
+    fontSize: 16.sp,
+    fontFamily: JSFonts.outfitSemiBold,
+    color: ColorConfig.jsLightBlackColor,
+  );
   static TextStyle regularWhiteText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitRegular,

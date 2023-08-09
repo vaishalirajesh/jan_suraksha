@@ -13,4 +13,14 @@ class AppUtils {
         return "assets/images/";
     }
   }
+
+  // For hide account number digits. Show only last four digit visible.
+  static String getMaskedMobileNumber({required String mobileNumber}) {
+    if (mobileNumber.isEmpty || mobileNumber.length <= 4) {
+      return "-";
+    }
+    String subString = mobileNumber.substring(mobileNumber.length - 4);
+    String newString = "xxxxxx$subString";
+    return newString;
+  }
 }

@@ -35,7 +35,9 @@ flutter:
   assets:
     - assets/images/
     - assets/lottie/
-    - assets/fonts/
+    - assets/fonts/    - assets/    - assets/images/dashboard/
+
+
   fonts:
     - family: OutfitBold
       fonts:

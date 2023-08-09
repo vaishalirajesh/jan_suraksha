@@ -15,4 +15,5 @@ class ColorConfig {
   static final jsTextFiledBgColor = HexColor('#F1F4FA');
   static final jsGreenColor = HexColor('#00A669');
   static final jsGreyColor = HexColor('#C5C5C5');
+  static final jsTextGreyColor = HexColor("#454F5E");
 }

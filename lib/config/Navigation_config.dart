@@ -41,28 +41,29 @@ import '../view/screen/journey/application_form/application_form__binding.dart';
 import '../view/screen/journey/bank_selection/bank_selection_binding.dart';
 import '../view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 
+const SplashRoutes = "/";
+const MobileNumberInputPageRoute = "/MobileNumberInputPage";
+const DashboardPageRoute = "/DashboardPage";
+const PolicyDetailsPageRoute = "/PolicyDetailsPage";
+const ProfilePageRoute = "/ProfilePage";
+const ServicesPageRoute = "/ServicesPage";
+const SupportPageRoute = "/SupportPage";
+const AccountSelectionPageRoute = "/AccountSelectionPage";
+const AddressDetailsPageRoute = "/AddressDetailsPage";
+const ApplicationFormPageRoute = "/ApplicationFormPage";
+const BankSelectionPageRoute = "/BankSelectionPage";
+const CertificateInsurencePageRoute = "/CertificateInsurencePage";
+const CongratulationsPageRoute = "/CongratulationsPage";
+const CustomerVerificationPageRoute = "/CustomerVerificationPage";
+const GuradianDetailsPageRoute = "/GuradianDetailsPage";
+const NomineeDetailsPageRoute = "/NomineeDetailsPage";
+const PreviewApplicationPageRoute = "/PreviewApplicationPage";
+const SelectSchemePageRoute = "/SelectSchemePage";
+const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
+const TransactionsFailurePageRoute = "/TransactionsFailurePage";
+
 class NavigationConfig {
-  static List<GetPage> getpages() {
-    const SplashRoutes = "/";
-    const MobileNumberInputPageRoute = "/MobileNumberInputPage";
-    const DashboardPageRoute = "/DashboardPage";
-    const PolicyDetailsPageRoute = "/PolicyDetailsPage";
-    const ProfilePageRoute = "/ProfilePage";
-    const ServicesPageRoute = "/ServicesPage";
-    const SupportPageRoute = "/SupportPage";
-    const AccountSelectionPageRoute = "/AccountSelectionPage";
-    const AddressDetailsPageRoute = "/AddressDetailsPage";
-    const ApplicationFormPageRoute = "/ApplicationFormPage";
-    const BankSelectionPageRoute = "/BankSelectionPage";
-    const CertificateInsurencePageRoute = "/CertificateInsurencePage";
-    const CongratulationsPageRoute = "/CongratulationsPage";
-    const CustomerVerificationPageRoute = "/CustomerVerificationPage";
-    const GuradianDetailsPageRoute = "/GuradianDetailsPage";
-    const NomineeDetailsPageRoute = "/NomineeDetailsPage";
-    const PreviewApplicationPageRoute = "/PreviewApplicationPage";
-    const SelectSchemePageRoute = "/SelectSchemePage";
-    const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
-    const TransactionsFailurePageRoute = "/TransactionsFailurePage";
+  static List<GetPage> getPages() {
     return [
       GetPage(
           name: SplashRoutes,

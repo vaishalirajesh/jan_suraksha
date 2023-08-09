@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
-import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
+import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
 
 import 'config/navigation_config.dart';
 
@@ -23,8 +22,8 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         getPages: NavigationConfig.getPages(),
-        home: DashboardPage(),
-        initialBinding: DashboardBinding(),
+        initialBinding: SplashScreenBinding(),
+        initialRoute: NavigationConfig.initialRoute.name,
       ),
     );
   }

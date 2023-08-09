@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/view/screen/journey/scheme_selection/select_scheme_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/scheme_selection/select_scheme_view.dart';
+import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
 
-import 'config/Navigation_config.dart';
+import 'config/navigation_config.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -23,8 +22,8 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         getPages: NavigationConfig.getPages(),
-        home: SelectSchemePage(),
-        initialBinding: SelectSchemeBinding(),
+        initialBinding: SplashScreenBinding(),
+        initialRoute: NavigationConfig.initialRoute.name,
       ),
     );
   }

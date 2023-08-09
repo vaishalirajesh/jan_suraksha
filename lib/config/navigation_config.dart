@@ -63,6 +63,14 @@ const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
 const TransactionsFailurePageRoute = "/TransactionsFailurePage";
 
 class NavigationConfig {
+  static GetPage get initialRoute => splash;
+
+  static final GetPage splash = GetPage(
+    binding: SplashScreenBinding(),
+    name: SplashRoutes,
+    page: () => SplashScreenPage(),
+  );
+
   static List<GetPage> getPages() {
     return [
       GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),

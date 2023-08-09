@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/theme_config.dart';
-import 'package:jan_suraksha/view/screen/splash/splash_view.dart';
+
+import 'config/navigation_config.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -21,8 +22,8 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashPage(),
           theme: JSThemes.jsThemeMobile,
+          getPages: NavigationConfig.getPages(),
         );
       },
     );

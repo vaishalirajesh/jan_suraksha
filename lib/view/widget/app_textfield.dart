@@ -18,6 +18,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     required this.isReadOnly,
     this.title = '',
+    this.isAutoFocus = false,
     required this.isMandatory,
   }) : super(key: key);
   final String hintText;
@@ -31,6 +32,7 @@ class AppTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final bool isReadOnly;
   final bool isMandatory;
+  final bool isAutoFocus;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,7 @@ class AppTextField extends StatelessWidget {
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
           ),
           onChanged: onChanged,
+          autofocus: isAutoFocus,
         ),
       ],
     );

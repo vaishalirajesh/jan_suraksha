@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 
-
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
 

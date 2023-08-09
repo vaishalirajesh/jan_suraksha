@@ -8,7 +8,11 @@ import 'package:jan_suraksha/config/style_config.dart';
 // Common button widget
 class AppButton extends StatelessWidget {
   AppButton(
-      {Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading})
+      {Key? key,
+      required this.onPress,
+      required this.title,
+      required this.isButtonEnable,
+      required this.isDataLoading})
       : super(key: key);
   final VoidCallback onPress;
   final String title;
@@ -38,8 +42,38 @@ class AppButton extends StatelessWidget {
                 title,
                 style: isButtonEnable.value
                     ? StyleConfig.regularWhiteText16
-                    : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                    : StyleConfig.regularWhiteText16
+                        .copyWith(color: ColorConfig.jsLightBlackColor),
               ),
+      ),
+    );
+  }
+}
+
+class ListViewButtons extends StatelessWidget {
+  ListViewButtons({Key? key, required this.onPress, required this.title})
+      : super(key: key);
+  final VoidCallback onPress;
+  final String title;
+  RxBool isButtonEnable = true.obs;
+  RxBool isDataLoading = true.obs;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 25.h,
+      width: 1.sw,
+      child: ElevatedButton(
+        onPressed: isButtonEnable.value ? onPress : null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ColorConfig.jsPrimaryColor,
+          disabledBackgroundColor: ColorConfig.jsPrimaryDisableColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.r),
+          ),
+        ),
+        child: Text(title,
+            style: StyleConfig.regularWhiteText16.copyWith(fontSize: 12.sp)),
       ),
     );
   }

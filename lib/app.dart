@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/config/theme_config.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 
-import 'config/navigation_config.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -19,13 +19,12 @@ class _MainAppState extends State<MainApp> {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: JSThemes.jsThemeMobile,
-          getPages: NavigationConfig.getPages(),
-        );
-      },
+      builder: (BuildContext context, Widget? child) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        getPages: NavigationConfig.getPages(),
+        home: DashboardPage(),
+        initialBinding: DashboardBinding(),
+      ),
     );
   }
 }

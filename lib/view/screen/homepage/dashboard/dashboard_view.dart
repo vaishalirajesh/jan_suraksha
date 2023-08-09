@@ -22,14 +22,11 @@ class DashboardPage extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
+                    padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Welcome",
-                            style: StyleConfig.smallText
-                                .copyWith(fontSize: 24.sp)),
+                        Text("Welcome", style: StyleConfig.smallText.copyWith(fontSize: 24.sp)),
                         Icon(
                           Icons.notifications,
                           size: 24.r,
@@ -43,9 +40,7 @@ class DashboardPage extends StatelessWidget {
                         padding: EdgeInsets.only(top: 10.h, left: 20.w),
                         child: Text(
                           "Happy to have you onboard! \nLet's start by finding out which insurance you need.",
-                          style: StyleConfig.smallText.copyWith(
-                              fontSize: 12.sp,
-                              color: ColorConfig.jsDarkPinkColor),
+                          style: StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                         ),
                       ),
                     ],
@@ -64,8 +59,7 @@ class DashboardPage extends StatelessWidget {
                             direction: Axis.vertical,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10.w, top: 15.w, right: 10.w),
+                                padding: EdgeInsets.only(left: 10.w, top: 15.w, right: 10.w),
                                 child: Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
@@ -76,17 +70,13 @@ class DashboardPage extends StatelessWidget {
                                         bottomLeft: Radius.circular(20.0),
                                         bottomRight: Radius.circular(20.0),
                                       ),
-                                      border: Border.all(
-                                          color: ColorConfig.jsGreyColor,
-                                          width: 0.5.w)),
+                                      border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                                   height: 110.h,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 15.w, right: 20.w, top: 20.h),
+                                        padding: EdgeInsets.only(left: 15.w, right: 20.w, top: 20.h),
                                         child: Row(
                                           children: [
                                             Icon(
@@ -97,44 +87,33 @@ class DashboardPage extends StatelessWidget {
                                               width: 10.w,
                                             ),
                                             Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "PMJJBY",
                                                   style: StyleConfig.boldText16
-                                                      .copyWith(
-                                                          color: ColorConfig
-                                                              .jsTextGreyColor),
+                                                      .copyWith(color: ColorConfig.jsTextGreyColor),
                                                 ),
                                                 SizedBox(
                                                   height: 5.h,
                                                 ),
                                                 Text(
                                                   "Pay Annually",
-                                                  style: StyleConfig
-                                                      .mediumSmallText
-                                                      .copyWith(
-                                                          color: ColorConfig
-                                                              .jsTextGreyColor),
+                                                  style: StyleConfig.mediumSmallText
+                                                      .copyWith(color: ColorConfig.jsTextGreyColor),
                                                 )
                                               ],
                                             ),
                                             Expanded(
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
                                                     "Rs 232",
-                                                    style: StyleConfig
-                                                        .boldText20
-                                                        .copyWith(
-                                                            color: ColorConfig
-                                                                .jsTextGreyColor),
+                                                    style: StyleConfig.boldText20
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor),
                                                   )
                                                 ],
                                               ),
@@ -143,10 +122,7 @@ class DashboardPage extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20.w,
-                                            right: 20.w,
-                                            bottom: 15.h),
+                                        padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 15.h),
                                         child: ListViewButtons(
                                           onPress: () {},
                                           title: "View Details",
@@ -176,44 +152,44 @@ class DashboardPage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 5.0,
-          clipBehavior: Clip.antiAlias,
-          child: SizedBox(
-            height: kBottomNavigationBarHeight,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Ima(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.favorite_border_outlined),
-                  onPressed: () {
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.account_circle_outlined),
-                  onPressed: () {
-                    setState(() {});
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
+        // bottomNavigationBar: BottomAppBar(
+        //   shape: const CircularNotchedRectangle(),
+        //   notchMargin: 5.0,
+        //   clipBehavior: Clip.antiAlias,
+        //   child: SizedBox(
+        //     height: kBottomNavigationBarHeight,
+        //     child: Row(
+        //       mainAxisSize: MainAxisSize.max,
+        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //       children: <Widget>[
+        //         Ima(
+        //           icon: const Icon(Icons.home),
+        //           onPressed: () {
+        //             setState(() {});
+        //           },
+        //         ),
+        //         IconButton(
+        //           icon: const Icon(Icons.search),
+        //           onPressed: () {
+        //             setState(() {});
+        //           },
+        //         ),
+        //         IconButton(
+        //           icon: const Icon(Icons.favorite_border_outlined),
+        //           onPressed: () {
+        //             setState(() {});
+        //           },
+        //         ),
+        //         IconButton(
+        //           icon: const Icon(Icons.account_circle_outlined),
+        //           onPressed: () {
+        //             setState(() {});
+        //           },
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

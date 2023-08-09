@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/policy_details_screen/policy_details_binding.dart';
@@ -64,8 +66,7 @@ class NavigationConfig {
   static List<GetPage> getPages() {
     return [
       GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),
-      GetPage(
-          name: MobileNumberInputPageRoute, page: () => MobileNumberInputPage(), binding: MobileNumberInputBinding()),
+      GetPage(name: MobileNumberInputPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
       GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
       GetPage(name: PolicyDetailsPageRoute, page: () => PolicyDetailsPage(), binding: PolicyDetailsBinding()),
       GetPage(name: ProfilePageRoute, page: () => ProfilePage(), binding: ProfileBinding()),

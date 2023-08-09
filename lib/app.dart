@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/view/screen/journey/bank_selection/bank_selection_binding.dart';
 
-import 'config/Navigation_config.dart';
+import 'config/navigation_config.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -18,16 +19,11 @@ class _MainAppState extends State<MainApp> {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) => const GetMaterialApp(
+      builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        getPages: NavigationConfig.getpages(),
-        home: Scaffold(
-          body: SafeArea(
-            child: Center(
-              child: Text("Added widget here"),
-            ),
-          ),
-        ),
+        getPages: NavigationConfig.getPages(),
+        initialBinding: BankSelectionBinding(),
+        initialRoute: BankSelectionPageRoute,
       ),
     );
   }

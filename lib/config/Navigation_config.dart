@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:jan_suraksha/view/screen/auth/MobileNumberInput/MobileNumberInputBinding.dart';
-import 'package:jan_suraksha/view/screen/auth/MobileNumberInput/MobileNumberInputPage.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/policy_details_screen/policy_details_binding.dart';
@@ -41,101 +41,65 @@ import '../view/screen/journey/application_form/application_form__binding.dart';
 import '../view/screen/journey/bank_selection/bank_selection_binding.dart';
 import '../view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 
+const SplashRoutes = "/";
+const MobileNumberInputPageRoute = "/MobileNumberInputPage";
+const DashboardPageRoute = "/DashboardPage";
+const PolicyDetailsPageRoute = "/PolicyDetailsPage";
+const ProfilePageRoute = "/ProfilePage";
+const ServicesPageRoute = "/ServicesPage";
+const SupportPageRoute = "/SupportPage";
+const AccountSelectionPageRoute = "/AccountSelectionPage";
+const AddressDetailsPageRoute = "/AddressDetailsPage";
+const ApplicationFormPageRoute = "/ApplicationFormPage";
+const BankSelectionPageRoute = "/BankSelectionPage";
+const CertificateInsurencePageRoute = "/CertificateInsurencePage";
+const CongratulationsPageRoute = "/CongratulationsPage";
+const CustomerVerificationPageRoute = "/CustomerVerificationPage";
+const GuradianDetailsPageRoute = "/GuradianDetailsPage";
+const NomineeDetailsPageRoute = "/NomineeDetailsPage";
+const PreviewApplicationPageRoute = "/PreviewApplicationPage";
+const SelectSchemePageRoute = "/SelectSchemePage";
+const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
+const TransactionsFailurePageRoute = "/TransactionsFailurePage";
+
 class NavigationConfig {
-  static List<GetPage> getpages() {
-    const SplashRoutes = "/";
-    const MobileNumberInputPageRoute = "/MobileNumberInputPage";
-    const DashboardPageRoute = "/DashboardPage";
-    const PolicyDetailsPageRoute = "/PolicyDetailsPage";
-    const ProfilePageRoute = "/ProfilePage";
-    const ServicesPageRoute = "/ServicesPage";
-    const SupportPageRoute = "/SupportPage";
-    const AccountSelectionPageRoute = "/AccountSelectionPage";
-    const AddressDetailsPageRoute = "/AddressDetailsPage";
-    const ApplicationFormPageRoute = "/ApplicationFormPage";
-    const BankSelectionPageRoute = "/BankSelectionPage";
-    const CertificateInsurencePageRoute = "/CertificateInsurencePage";
-    const CongratulationsPageRoute = "/CongratulationsPage";
-    const CustomerVerificationPageRoute = "/CustomerVerificationPage";
-    const GuradianDetailsPageRoute = "/GuradianDetailsPage";
-    const NomineeDetailsPageRoute = "/NomineeDetailsPage";
-    const PreviewApplicationPageRoute = "/PreviewApplicationPage";
-    const SelectSchemePageRoute = "/SelectSchemePage";
-    const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
-    const TransactionsFailurePageRoute = "/TransactionsFailurePage";
+  static GetPage get initialRoute => splash;
+
+  static final GetPage splash = GetPage(
+    binding: SplashScreenBinding(),
+    name: SplashRoutes,
+    page: () => SplashScreenPage(),
+  );
+
+  static List<GetPage> getPages() {
     return [
-      GetPage(
-          name: SplashRoutes,
-          page: () => SplashScreenPage(),
-          binding: SplashScreenBinding()),
-      GetPage(
-          name: MobileNumberInputPageRoute,
-          page: () => MobileNumberInputPage(),
-          binding: MobileNumberInputBinding()),
-      GetPage(
-          name: DashboardPageRoute,
-          page: () => DashboardPage(),
-          binding: DashboardBinding()),
-      GetPage(
-          name: PolicyDetailsPageRoute,
-          page: () => PolicyDetailsPage(),
-          binding: PolicyDetailsBinding()),
-      GetPage(
-          name: ProfilePageRoute,
-          page: () => ProfilePage(),
-          binding: ProfileBinding()),
-      GetPage(
-          name: ServicesPageRoute,
-          page: () => ServicesPage(),
-          binding: ServicesBinding()),
-      GetPage(
-          name: SupportPageRoute,
-          page: () => SupportPage(),
-          binding: SupportBinding()),
-      GetPage(
-          name: AccountSelectionPageRoute,
-          page: () => AccountSelectionPage(),
-          binding: AccountSelectionBinding()),
-      GetPage(
-          name: AddressDetailsPageRoute,
-          page: () => AddressDetailsPage(),
-          binding: AddressDetailsBinding()),
-      GetPage(
-          name: ApplicationFormPageRoute,
-          page: () => ApplicationFormPage(),
-          binding: ApplicationFormBinding()),
-      GetPage(
-          name: BankSelectionPageRoute,
-          page: () => BankSelectionPage(),
-          binding: BankSelectionBinding()),
+      GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),
+      GetPage(name: MobileNumberInputPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
+      GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
+      GetPage(name: PolicyDetailsPageRoute, page: () => PolicyDetailsPage(), binding: PolicyDetailsBinding()),
+      GetPage(name: ProfilePageRoute, page: () => ProfilePage(), binding: ProfileBinding()),
+      GetPage(name: ServicesPageRoute, page: () => ServicesPage(), binding: ServicesBinding()),
+      GetPage(name: SupportPageRoute, page: () => SupportPage(), binding: SupportBinding()),
+      GetPage(name: AccountSelectionPageRoute, page: () => AccountSelectionPage(), binding: AccountSelectionBinding()),
+      GetPage(name: AddressDetailsPageRoute, page: () => AddressDetailsPage(), binding: AddressDetailsBinding()),
+      GetPage(name: ApplicationFormPageRoute, page: () => ApplicationFormPage(), binding: ApplicationFormBinding()),
+      GetPage(name: BankSelectionPageRoute, page: () => BankSelectionPage(), binding: BankSelectionBinding()),
       GetPage(
           name: CertificateInsurencePageRoute,
           page: () => CertificateInsurencePage(),
           binding: CertificateInsurenceBinding()),
-      GetPage(
-          name: CongratulationsPageRoute,
-          page: () => CongratulationsPage(),
-          binding: CongratulationsBinding()),
+      GetPage(name: CongratulationsPageRoute, page: () => CongratulationsPage(), binding: CongratulationsBinding()),
       GetPage(
           name: CustomerVerificationPageRoute,
           page: () => CustomerVerificationPage(),
           binding: CustomerVerificationBinding()),
-      GetPage(
-          name: GuradianDetailsPageRoute,
-          page: () => GuradianDetailsPage(),
-          binding: GuradianDetailsBinding()),
-      GetPage(
-          name: NomineeDetailsPageRoute,
-          page: () => NomineeDetailsPage(),
-          binding: NomineeDetailsBinding()),
+      GetPage(name: GuradianDetailsPageRoute, page: () => GuradianDetailsPage(), binding: GuradianDetailsBinding()),
+      GetPage(name: NomineeDetailsPageRoute, page: () => NomineeDetailsPage(), binding: NomineeDetailsBinding()),
       GetPage(
           name: PreviewApplicationPageRoute,
           page: () => PreviewApplicationPage(),
           binding: PreviewApplicationBinding()),
-      GetPage(
-          name: SelectSchemePageRoute,
-          page: () => SelectSchemePage(),
-          binding: SelectSchemeBinding()),
+      GetPage(name: SelectSchemePageRoute, page: () => SelectSchemePage(), binding: SelectSchemeBinding()),
       GetPage(
           name: TermsAndConditionsPageRoute,
           page: () => TermsAndConditionsPage(),

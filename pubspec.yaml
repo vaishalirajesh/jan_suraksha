@@ -20,9 +20,47 @@ dependencies:
 
   # For responsive UI
   flutter_screenutil: 5.7.0
+
+  # For svg picture support
+  flutter_svg: ^2.0.7
+  flutter_string_extractor: 0.1.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/images/dashboard/
+    - assets/images/scheme/
+  fonts:
+    - family: OutfitBold
+      fonts:
+        - asset: assets/fonts/Outfit-Bold.ttf
+    - family: OutfitRegular
+      fonts:
+        - asset: assets/fonts/Outfit-Regular.ttf
+    - family: OutfitSemiBold
+      fonts:
+        - asset: assets/fonts/Outfit-SemiBold.ttf
+    - family: OutfitExtraBold
+      fonts:
+        - asset: assets/fonts/Outfit-ExtraBold.ttf
+    - family: OutfitLight
+      fonts:
+        - asset: assets/fonts/Outfit-Light.ttf
+    - family: OutfitMedium
+      fonts:
+        - asset: assets/fonts/Outfit-Medium.ttf
+#    - family: OutfitItalic
+#      fonts:
+#        - asset: assets/fonts/Outfit-Italic.ttf
+
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

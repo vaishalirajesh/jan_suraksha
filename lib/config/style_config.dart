@@ -73,6 +73,11 @@ class StyleConfig {
     fontSize: 20.sp,
     fontFamily: JSFonts.outfitBold,
   );
+  static TextStyle semiBoldText20 = TextStyle(
+    fontSize: 20.sp,
+    fontFamily: JSFonts.outfitSemiBold,
+    color: ColorConfig.jsLightBlackColor,
+  );
   static TextStyle regularLargeText = TextStyle(
     fontSize: 24.sp,
     fontFamily: JSFonts.outfitRegular,

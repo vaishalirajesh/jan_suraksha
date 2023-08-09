@@ -1,12 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
-import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
-import 'package:jan_suraksha/view/widget/app_name.dart';
+import 'package:jan_suraksha/view/widget/app_button.dart';
+import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
+import 'package:jan_suraksha/view/widget/otp_field.dart';
 
 import 'verify_otp_logic.dart';
 
@@ -19,57 +20,83 @@ class VerifyOtpPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConfig.jsCreamColor,
         extendBody: true,
+        appBar: CommonAppBar.appbarWithTitle(
+          title: AppString.emptyText,
+        ),
         body: SizedBox(
           width: 1.sw,
-          child: Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 20.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                color: ColorConfig.jsCreamColor,
+                padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: RichText(
+                    textAlign: TextAlign.start,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: AppString.fetchOTP,
+                          style: StyleConfig.semiBoldText20.copyWith(color: ColorConfig.jsLightBlackColor),
+                        ),
+                        TextSpan(
+                          text: '${AppString.fetchOTPMobile}${verifyOtpLogic.mobile.value}',
+                          style: StyleConfig.semiBoldText20.copyWith(color: ColorConfig.jsPrimaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                SvgPicture.asset(
-                  AppImages.jsLogo,
-                  height: 90.h,
-                  width: 100.sw,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      OTPInputField(
+                        onChangeOTP: verifyOtpLogic.onChangeOTP,
+                        onSubmitOTP: verifyOtpLogic.onSubmitOTP,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          textAlign: TextAlign.start,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: AppString.notReceiveCode,
+                                style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsTextDarkGreyColor),
+                              ),
+                              TextSpan(
+                                text: AppString.resendCode,
+                                recognizer: TapGestureRecognizer()..onTap = () {},
+                                style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Obx(() {
+                        return AppButton(
+                          onPress: verifyOtpLogic.onPressSubmit,
+                          title: AppString.submit,
+                          isButtonEnable: verifyOtpLogic.otp.value.length >= 4 ? true.obs : false.obs,
+                          isDataLoading: false.obs,
+                        );
+                      }),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  AppString.startJourneyText,
-                  style: StyleConfig.boldLargeText.copyWith(color: ColorConfig.jsBlackColor),
-                ),
-                const AppName(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                // Align(
-                //   alignment: Alignment.centerLeft,
-                //   child: Text(
-                //     AppString.mobileNumber,
-                //     style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                //   ),
-                // ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                // Obx(() {
-                //   return AppButton(
-                //     onPress: loginLogic.onPressSentOTP,
-                //     title: AppString.sentOTP,
-                //     isButtonEnable: loginLogic.mobile.value.length >= 10 ? true.obs : false.obs,
-                //     isDataLoading: false.obs,
-                //   );
-                // })
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

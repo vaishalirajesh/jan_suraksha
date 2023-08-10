@@ -26,10 +26,91 @@ class BankSelectionPage extends StatelessWidget {
     "State bank of India",
     "Bank of Baroda",
     "Canara bank",
-    "Pnb bank",
+    "Punjab National Bank",
     "Bank of Baroda",
     "HDFC bank"
   ];
+  final banklist = {
+    "AXIS BANK": "AXIS",
+    "BANK OF INDIA": "BOI",
+    "YES BANK": "YESBANK",
+    "HSBC BANK OMAN SAOG": "HSBC",
+    "CENTRAL BANK OF INDIA": "CENTRALBANK",
+    "IDFC BANK LIMITED": "IDFC",
+    "CITI BANK": "CITIBANK",
+    "CITY UNION BANK LIMITED": "CUB",
+    "CORPORATION BANK": "CORPBANK",
+    "DENA BANK": "DENABANK",
+    "DEUSTCHE BANK": "DB",
+    "DCB BANK LIMITED": "DCB",
+    "DHANALAKSHMI BANK": "DHANBANK",
+    "DOMBIVLI NAGARI SAHAKARI BANK LIMITED": "DNSBANK",
+    "FIRSTRAND BANK LIMITED": "FIRSTRAND",
+    "HDFC BANK": "HDFC",
+    "HSBC BANK": "HSBC",
+    "ICICI BANK LIMITED": "ICICI",
+    "IDBI BANK": "IDBI",
+    "INDIAN BANK": "INDIANBANK",
+    "INDIAN OVERSEAS BANK": "IOB",
+    "INDUSIND BANK": "INDUSIND",
+    "JANASEVA SAHAKARI BANK LIMITED": "JANASEVABANK",
+    "KAPOL COOPERATIVE BANK LIMITED": "KAPOLBANK",
+    "KARNATAKA BANK LIMITED": "KARNATAKABANK",
+    "KARUR VYSYA BANK": "KVB",
+    "KOTAK MAHINDRA BANK LIMITED": "KOTAK",
+    "MAHANAGAR COOPERATIVE BANK": "MAHANAGARBANK",
+    "MAHARASHTRA STATE COOPERATIVE BANK": "MSCBANK",
+    "MASHREQBANK PSC": "MASHREQBANK",
+    "MIZUHO BANK LTD": "MIZUHOBANK",
+    "NEW INDIA COOPERATIVE BANK LIMITED": "NEWINDIABANK",
+    "NKGSB COOPERATIVE BANK LIMITED": "NKGSB",
+    "NUTAN NAGARIK SAHAKARI BANK LIMITED": "NUTANBANK",
+    "ORIENTAL BANK OF COMMERCE": "OBC",
+    "PARSIK BANK": "GPPARSIKBANK",
+    "PUNJAB AND MAHARSHTRA COOPERATIVE BANK": "PMC",
+    "PUNJAB AND SIND BANK": "PSB",
+    "PUNJAB NATIONAL BANK": "PNB",
+    "RAJKOT NAGRIK SAHAKARI BANK LIMITED": "RNSB",
+    "RESERVE BANK OF INDIA": "RBI",
+    "SHINHAN BANK": "SHINHAN",
+    "SOCIETE GENERALE": "SOCIETEGENERALE",
+    "SOUTH INDIAN BANK": "SOUTHINDIANBANK",
+    "STANDARD CHARTERED BANK": "SC",
+    "STATE BANK OF BIKANER AND JAIPUR": "SBBJ",
+    "STATE BANK OF HYDERABAD": "SBHYD",
+    "STATE BANK OF INDIA": "SBI",
+    "STATE BANK OF MAURITIUS LIMITED": "SBMGROUP",
+    "STATE BANK OF MYSORE": "SBM",
+    "STATE BANK OF PATIALA": "SBP",
+    "STATE BANK OF TRAVANCORE": "SBT",
+    "SYNDICATE BANK": "SYNDICATEBANK",
+    "TAMILNAD MERCANTILE BANK LIMITED": "TMBL",
+    "THE BANK OF NOVA SCOTIA": "SCOTIABANK",
+    "AHMEDABAD MERCANTILE COOPERATIVE BANK": "AMCOBANK",
+    "BHARAT COOPERATIVE BANK MUMBAI LIMITED": "BHARATBANK",
+    "FEDERAL BANK": "FEDERALBANK",
+    "THE GREATER BOMBAY COOPERATIVE BANK LIMITED": "GREATERBANK",
+    "JAMMU AND KASHMIR BANK LIMITED": "JKBANK",
+    "KALUPUR COMMERCIAL COOPERATIVE BANK": "KALUPURBANK",
+    "THE KARANATAKA STATE COOPERATIVE APEX BANK LIMITED": "KARNATAKAAPEX",
+    "KALYAN JANATA SAHAKARI BANK": "KALYANJANATA",
+    "LAXMI VILAS BANK": "LVB",
+    "THE MEHSANA URBAN COOPERATIVE BANK": "MUCBANK",
+    "THE NAINITAL BANK LIMITED": "NAINITALBANK",
+    "RBL BANK LIMITED": "RBL",
+    "THE ROYAL BANK OF SCOTLAND": "RBS",
+    "SARASWAT COOPERATIVE BANK LIMITED": "SARASWATBANK",
+    "THE SHAMRAO VITHAL COOPERATIVE BANK": "SVCBANK",
+    "THE SURATH PEOPLES COOPERATIVE BANK LIMITED": "SPCBL",
+    "THE TAMIL NADU STATE APEX COOPERATIVE BANK": "TNSCBANK",
+    "THE WEST BENGAL STATE COOPERATIVE BANK": "WBSCB",
+    "UCO BANK": "UCOBANK",
+    "UNION BANK OF INDIA": "UNIONBANK",
+    "UNITED BANK OF INDIA": "UNITEDBANK",
+    "VIJAYA BANK": "VIJAYABANK",
+    "BANK OF BARODA": "BOB"
+  };
+
   @override
   Widget build(BuildContext context) {
     return AddHeaderFooter(
@@ -40,7 +121,7 @@ class BankSelectionPage extends StatelessWidget {
         isDataLoading: false,
         isButtonEnable: false,
         isShowButton: false,
-        child: ConstrainedFlexView(MediaQuery.of(context).size.height * 0.79,
+        child: ConstrainedFlexView(MediaQuery.of(context).size.height * 1,
             axis: Axis.vertical,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +171,10 @@ class BankSelectionPage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(list[index]),
+                                SizedBox(
+                                    height: 30.r,
+                                    width: 30.r,
+                                    child: Image.asset(list[index])),
                                 Center(
                                   child: Container(
                                     alignment: Alignment.center,
@@ -98,6 +182,8 @@ class BankSelectionPage extends StatelessWidget {
                                     child: Text(
                                       listname[index],
                                       textAlign: TextAlign.center,
+                                      style: StyleConfig.boldText16.copyWith(
+                                          color: Colors.black, fontSize: 10.sp),
                                     ),
                                   ),
                                 ),
@@ -108,6 +194,42 @@ class BankSelectionPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.w),
+                    child: Text(
+                      "All Banks",
+                      style: StyleConfig.boldText16
+                          .copyWith(color: Colors.black, fontSize: 16.sp),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SizedBox(
+                    height: 300.h,
+                    child: ListView.separated(
+                      itemCount: 7,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Divider(height: 1),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: ListTile(
+                            title: Text(
+                              '${banklist.keys.elementAt(index).toLowerCase().capitalize}',
+                              style: StyleConfig.mediumText16
+                                  .copyWith(fontSize: 13.sp),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
                 ])));
   }
 }
+
+String capitalize(String s) => s[0].toUpperCase() + s.substring(1);

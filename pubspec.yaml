@@ -39,6 +39,9 @@ flutter:
     - assets/fonts/
     - assets/images/dashboard/
     - assets/images/scheme/
+    - assets/images/bankselection/
+    - assets/images/responsepage/
+
   fonts:
     - family: OutfitBold
       fonts:

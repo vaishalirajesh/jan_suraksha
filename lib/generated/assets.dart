@@ -41,6 +41,8 @@ class Assets {
   static const String imagesSplash = 'assets/images/splash.svg';
   static const String imagesUserProfileIcon =
       'assets/images/user_profile_icon.svg';
+  static const String responsepageFatherWithChildren =
+      'assets/images/responsepage/father_with_children.svg';
   static const String schemeSchemeselection =
       'assets/images/scheme/schemeselection.svg';
 }

@@ -35,11 +35,9 @@ class AddHeaderFooter extends StatelessWidget {
       case AppString.appBarWithTitle:
         return CommonAppBar.appbarWithTitle(title: title);
       case AppString.appBarWithSubtitle:
-        return CommonAppBar.appbarWithSubTitle(
-            title: title, subTitle: subTitle);
+        return CommonAppBar.appbarWithSubTitle(title: title, subTitle: subTitle);
       case AppString.appBarWithNotification:
-        return CommonAppBar.appbarWithNotification(
-            title: title, subTitle: subTitle);
+        return CommonAppBar.appbarWithNotification(title: title, subTitle: subTitle);
       default:
         return CommonAppBar.appbarWithTitle(title: title);
     }

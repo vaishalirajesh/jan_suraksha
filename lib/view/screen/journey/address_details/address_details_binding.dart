@@ -5,6 +5,6 @@ import 'address_details_logic.dart';
 class AddressDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => Address_detailsLogic());
+    Get.put<AddressDetailsLogic>(AddressDetailsLogic());
   }
 }

@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/generated/assets.dart';
+import 'package:jan_suraksha/view/screen/journey/application_form/application_form_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 
 import '../../../../config/style_config.dart';
 import '../../../widget/app_button.dart';
@@ -11,6 +13,7 @@ import 'dashboard_logic.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final logic = Get.find<DashboardLogic>();
@@ -32,14 +35,11 @@ class DashboardPage extends StatelessWidget {
                     Container(
                       color: ColorConfig.jsCreamColor,
                       child: Padding(
-                        padding:
-                            EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
+                        padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Welcome",
-                                style: StyleConfig.smallText
-                                    .copyWith(fontSize: 24.sp)),
+                            Text("Welcome", style: StyleConfig.smallText.copyWith(fontSize: 24.sp)),
                             Icon(
                               Icons.notifications,
                               size: 24.r,
@@ -56,9 +56,8 @@ class DashboardPage extends StatelessWidget {
                             padding: EdgeInsets.only(top: 10.h, left: 20.w),
                             child: Text(
                               "Happy to have you onboard! \nLet's start by finding out which insurance you need.",
-                              style: StyleConfig.smallText.copyWith(
-                                  fontSize: 12.sp,
-                                  color: ColorConfig.jsDarkPinkColor),
+                              style:
+                                  StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                             ),
                           ),
                         ],
@@ -81,8 +80,7 @@ class DashboardPage extends StatelessWidget {
                                 direction: Axis.vertical,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 10.w, top: 15.w, right: 10.w),
+                                    padding: EdgeInsets.only(left: 10.w, top: 15.w, right: 10.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -93,70 +91,50 @@ class DashboardPage extends StatelessWidget {
                                             bottomLeft: Radius.circular(10.0),
                                             bottomRight: Radius.circular(10.0),
                                           ),
-                                          border: Border.all(
-                                              color: ColorConfig.jsGreyColor,
-                                              width: 0.5.w)),
+                                          border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                                       height: 120.h,
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 15.w,
-                                                right: 20.w,
-                                                top: 15.h),
+                                            padding: EdgeInsets.only(left: 15.w, right: 20.w, top: 15.h),
                                             child: Row(
                                               children: [
                                                 SizedBox(
-                                                  child: SvgPicture.asset(Assets
-                                                      .dashboardSchemeLogo),
+                                                  child: SvgPicture.asset(Assets.dashboardSchemeLogo),
                                                   height: 50.h,
                                                 ),
                                                 SizedBox(
                                                   width: 15.w,
                                                 ),
                                                 Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       "PMJJBY",
-                                                      style: StyleConfig
-                                                          .boldText16
-                                                          .copyWith(
-                                                              color: ColorConfig
-                                                                  .jsTextGreyColor),
+                                                      style: StyleConfig.boldText16
+                                                          .copyWith(color: ColorConfig.jsTextGreyColor),
                                                     ),
                                                     SizedBox(
                                                       height: 5.h,
                                                     ),
                                                     Text(
                                                       "Pay Annually",
-                                                      style: StyleConfig
-                                                          .regularExtraSmallText
-                                                          .copyWith(
-                                                              color: ColorConfig
-                                                                  .jsTextGreyColor),
+                                                      style: StyleConfig.regularExtraSmallText
+                                                          .copyWith(color: ColorConfig.jsTextGreyColor),
                                                     )
                                                   ],
                                                 ),
                                                 Expanded(
                                                   child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    mainAxisSize: MainAxisSize.max,
                                                     children: [
                                                       Text(
                                                         "Rs 232",
-                                                        style: StyleConfig
-                                                            .boldText20
-                                                            .copyWith(
-                                                                color: ColorConfig
-                                                                    .jsTextGreyColor),
+                                                        style: StyleConfig.boldText20
+                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
                                                       )
                                                     ],
                                                   ),
@@ -165,12 +143,11 @@ class DashboardPage extends StatelessWidget {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.w,
-                                                right: 20.w,
-                                                bottom: 20.h),
+                                            padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
                                             child: ListViewButtons(
-                                              onPress: () {},
+                                              onPress: () {
+                                                Get.to(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+                                              },
                                               title: "View Details",
                                             ),
                                           ),
@@ -192,11 +169,8 @@ class DashboardPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 20.h, bottom: 12.5.h, left: 10.w),
-                      child: Text("My Policy",
-                          style: StyleConfig.mediumText16
-                              .copyWith(color: Colors.white)),
+                      padding: EdgeInsets.only(top: 20.h, bottom: 12.5.h, left: 10.w),
+                      child: Text("My Policy", style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -210,20 +184,14 @@ class DashboardPage extends StatelessWidget {
                               bottomLeft: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0),
                             ),
-                            border: Border.all(
-                                color: ColorConfig.jsCardBgBlueColor,
-                                width: 0.5.w)),
+                            border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                  height: 40.h,
-                                  width: 40.w,
-                                  child:
-                                      SvgPicture.asset(Assets.dashboardPolicy)),
+                              SizedBox(height: 40.h, width: 40.w, child: SvgPicture.asset(Assets.dashboardPolicy)),
                               Padding(
                                 padding: EdgeInsets.only(left: 15.w),
                                 child: Column(
@@ -232,17 +200,15 @@ class DashboardPage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Apply for fresh policy",
-                                      style: StyleConfig.mediumText16.copyWith(
-                                          color: ColorConfig.jsSecondaryColor),
+                                      style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsSecondaryColor),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       "Policy For PMJJBY and PMSBY",
-                                      style: StyleConfig.mediumText16.copyWith(
-                                          fontSize: 12.sp,
-                                          color: ColorConfig.jsTextGreyColor),
+                                      style: StyleConfig.mediumText16
+                                          .copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                     )
                                   ],
                                 ),
@@ -253,8 +219,7 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 20.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -265,9 +230,7 @@ class DashboardPage extends StatelessWidget {
                               bottomLeft: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0),
                             ),
-                            border: Border.all(
-                                color: ColorConfig.jsCardBgBlueColor,
-                                width: 0.5.w)),
+                            border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
                           child: Column(
@@ -279,17 +242,14 @@ class DashboardPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         "Name:",
-                                        style: StyleConfig.boldText16.copyWith(
-                                            fontSize: 16.sp,
-                                            color: ColorConfig.jsTextGreyColor),
+                                        style: StyleConfig.boldText16
+                                            .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                       ),
                                       SizedBox(
                                         width: 4.w,
                                       ),
                                       Text("Kajal Tala",
-                                          style: StyleConfig.smallText.copyWith(
-                                              color:
-                                                  ColorConfig.jsTextGreyColor))
+                                          style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
                                     ],
                                   ),
                                   SizedBox(
@@ -299,17 +259,15 @@ class DashboardPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         "Scheme:",
-                                        style: StyleConfig.boldText16.copyWith(
-                                            fontSize: 16.sp,
-                                            color: ColorConfig.jsTextGreyColor),
+                                        style: StyleConfig.boldText16
+                                            .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                       ),
                                       SizedBox(
                                         width: 4.w,
                                       ),
                                       Text(
                                         "PMSBY",
-                                        style: StyleConfig.smallText.copyWith(
-                                            color: ColorConfig.jsTextGreyColor),
+                                        style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor),
                                       )
                                     ],
                                   ),
@@ -319,22 +277,18 @@ class DashboardPage extends StatelessWidget {
                                 height: 5.w,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     child: Transform(
-                                      transform: new Matrix4.identity()
-                                        ..scale(0.8),
+                                      transform: new Matrix4.identity()..scale(0.8),
                                       child: Center(
                                         child: Chip(
                                           label: Text(
                                             "Active Policy",
                                             style: StyleConfig.smallTextLight
-                                                .copyWith(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp),
+                                                .copyWith(color: Colors.white, fontSize: 14.sp),
                                           ),
                                         ),
                                       ),
@@ -342,19 +296,16 @@ class DashboardPage extends StatelessWidget {
                                   ),
                                   SizedBox(),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.only(right: 30.w, top: 6.h),
+                                    padding: EdgeInsets.only(right: 30.w, top: 6.h),
                                     child: Text(
                                       "  Amount: 20",
-                                      style: StyleConfig.smallText
-                                          .copyWith(fontSize: 12.sp),
+                                      style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
                                     ),
                                   ),
                                   SizedBox()
                                 ],
                               ),
-                              ListViewButtons(
-                                  onPress: () {}, title: "Continue Journey")
+                              ListViewButtons(onPress: () {}, title: "Continue Journey")
                             ],
                           ),
                         ),
@@ -394,9 +345,7 @@ class DashboardPage extends StatelessWidget {
                         Text(
                           "Home",
                           style: StyleConfig.regularText16.copyWith(
-                              color: logic.index.value == 0
-                                  ? ColorConfig.jsSecondaryColor
-                                  : ColorConfig.jsGreyColor,
+                              color: logic.index.value == 0 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
                               fontSize: 10.sp),
                         )
                       ],
@@ -409,8 +358,7 @@ class DashboardPage extends StatelessWidget {
                         InkWell(
                           child: logic.index.value == 1
                               ? SvgPicture.asset(Assets.dashboardServiceEnabled)
-                              : SvgPicture.asset(
-                                  Assets.dashboardServiceDisabled),
+                              : SvgPicture.asset(Assets.dashboardServiceDisabled),
                           onTap: () {
                             logic.setIndex(1);
                           },
@@ -421,9 +369,7 @@ class DashboardPage extends StatelessWidget {
                         Text(
                           "Services",
                           style: StyleConfig.regularText16.copyWith(
-                              color: logic.index.value == 1
-                                  ? ColorConfig.jsSecondaryColor
-                                  : ColorConfig.jsGreyColor,
+                              color: logic.index.value == 1 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
                               fontSize: 10.sp),
                         )
                       ],
@@ -436,8 +382,7 @@ class DashboardPage extends StatelessWidget {
                         InkWell(
                           child: logic.index.value == 2
                               ? SvgPicture.asset(Assets.dashboardSupportEnabled)
-                              : SvgPicture.asset(
-                                  Assets.dashboardSupportDisabled),
+                              : SvgPicture.asset(Assets.dashboardSupportDisabled),
                           onTap: () {
                             logic.setIndex(2);
                           },
@@ -448,9 +393,7 @@ class DashboardPage extends StatelessWidget {
                         Text(
                           "Support",
                           style: StyleConfig.regularText16.copyWith(
-                              color: logic.index.value == 2
-                                  ? ColorConfig.jsSecondaryColor
-                                  : ColorConfig.jsGreyColor,
+                              color: logic.index.value == 2 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
                               fontSize: 9.sp),
                         )
                       ],
@@ -463,8 +406,7 @@ class DashboardPage extends StatelessWidget {
                         InkWell(
                           child: logic.index.value == 3
                               ? SvgPicture.asset(Assets.dashboardProfileEnabled)
-                              : SvgPicture.asset(
-                                  Assets.dashboardProfileDisabled),
+                              : SvgPicture.asset(Assets.dashboardProfileDisabled),
                           onTap: () {
                             logic.setIndex(3);
                           },
@@ -475,9 +417,7 @@ class DashboardPage extends StatelessWidget {
                         Text(
                           "Profile",
                           style: StyleConfig.regularText16.copyWith(
-                              color: logic.index.value == 3
-                                  ? ColorConfig.jsSecondaryColor
-                                  : ColorConfig.jsGreyColor,
+                              color: logic.index.value == 3 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
                               fontSize: 10.sp),
                         )
                       ],
@@ -498,8 +438,7 @@ class ConstrainedFlexView extends StatelessWidget {
   final double minSize;
   final Axis axis;
 
-  const ConstrainedFlexView(this.minSize,
-      {required this.child, required this.axis});
+  const ConstrainedFlexView(this.minSize, {required this.child, required this.axis});
 
   bool get isHz => axis == Axis.horizontal;
 
@@ -512,9 +451,8 @@ class ConstrainedFlexView extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: axis ?? Axis.vertical,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: isHz ? double.infinity : minSize,
-                maxWidth: isHz ? minSize : double.infinity),
+            constraints:
+                BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),
             child: child,
           ),
         );

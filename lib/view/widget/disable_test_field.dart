@@ -5,21 +5,22 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/theme_helper.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class DisableTextField extends StatelessWidget {
+  const DisableTextField({
     Key? key,
-    required this.hintText,
+    this.hintText = '',
     this.isShowSuffixIcon = false,
     this.isObscureText = false,
     this.isShowPassword = false,
     this.maxLength = 40,
     this.inputType = TextInputType.text,
-    required this.controller,
     this.onChanged,
     this.isReadOnly = false,
     this.title = '',
     this.isAutoFocus = false,
     required this.isMandatory,
+    required this.initialvale,
+    this.maxLine = 2,
   }) : super(key: key);
   final String hintText;
   final String title;
@@ -28,11 +29,12 @@ class AppTextField extends StatelessWidget {
   final bool isShowPassword;
   final int maxLength;
   final TextInputType? inputType;
-  final TextEditingController controller;
   final void Function(String)? onChanged;
   final bool isReadOnly;
   final bool isMandatory;
   final bool isAutoFocus;
+  final String initialvale;
+  final int maxLine;
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +62,9 @@ class AppTextField extends StatelessWidget {
           SizedBox(
             height: 15.h,
           ),
-        TextField(
-          controller: controller,
-          scrollPadding: EdgeInsets.only(bottom: 100.h),
+        TextFormField(
           obscureText: isObscureText,
+          initialValue: initialvale,
           maxLength: maxLength,
           keyboardType: inputType,
           style: StyleConfig.smallText,

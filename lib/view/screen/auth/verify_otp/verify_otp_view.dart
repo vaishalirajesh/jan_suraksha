@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
 import 'package:jan_suraksha/view/widget/custom_otp_field/custom_otp_field.dart';
@@ -21,9 +22,7 @@ class VerifyOtpPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        appBar: CommonAppBar.appbarWithTitle(
-          title: AppString.emptyText,
-        ),
+        appBar: CommonAppBar.appbarWithTitle(title: AppString.emptyText, onBackPress: AppUtils.onBackPressAuth),
         body: SizedBox(
           width: 1.sw,
           child: Column(

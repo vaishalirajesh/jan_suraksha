@@ -4,19 +4,22 @@ import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 
 class CommonAppBar {
-  static PreferredSizeWidget appbarWithTitle({required String title}) {
+  static PreferredSizeWidget appbarWithTitle({required String title, required VoidCallback onBackPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,
       centerTitle: true,
-      leading: Icon(
-        Icons.arrow_back_sharp,
-        color: ColorConfig.jsLightBlackColor,
-        size: 25.r,
+      leading: InkWell(
+        onTap: onBackPress,
+        child: Icon(
+          Icons.arrow_back_sharp,
+          color: ColorConfig.jsLightBlackColor,
+          size: 25.r,
+        ),
       ),
       title: Text(
         title,
-        style: StyleConfig.mediumText18,
+        style: StyleConfig.semiBoldText18,
       ),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(10.h),
@@ -27,21 +30,25 @@ class CommonAppBar {
     );
   }
 
-  static PreferredSizeWidget appbarWithSubTitle({required String title, required String subTitle}) {
+  static PreferredSizeWidget appbarWithSubTitle(
+      {required String title, required String subTitle, required VoidCallback backPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,
       centerTitle: true,
-      leading: Icon(
-        Icons.arrow_back_sharp,
-        color: ColorConfig.jsLightBlackColor,
-        size: 25.r,
+      leading: InkWell(
+        onTap: backPress,
+        child: Icon(
+          Icons.arrow_back_sharp,
+          color: ColorConfig.jsLightBlackColor,
+          size: 25.r,
+        ),
       ),
       title: Padding(
         padding: EdgeInsets.only(top: 10.h),
         child: Text(
           title,
-          style: StyleConfig.mediumText18,
+          style: StyleConfig.semiBoldText18,
         ),
       ),
       bottom: PreferredSize(

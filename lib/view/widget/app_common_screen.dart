@@ -26,6 +26,7 @@ class AddHeaderFooter extends StatelessWidget {
   String subTitle = '';
   String buttonTitle = '';
   VoidCallback onButtonClick;
+  VoidCallback onBackButtonCLick = () {};
   bool isButtonEnable = false;
   bool isDataLoading = false;
   bool isShowButton = true;
@@ -33,13 +34,13 @@ class AddHeaderFooter extends StatelessWidget {
   PreferredSizeWidget getAppBar() {
     switch (appbarName) {
       case AppString.appBarWithTitle:
-        return CommonAppBar.appbarWithTitle(title: title);
+        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
       case AppString.appBarWithSubtitle:
-        return CommonAppBar.appbarWithSubTitle(title: title, subTitle: subTitle);
+        return CommonAppBar.appbarWithSubTitle(title: title, subTitle: subTitle, backPress: onBackButtonCLick);
       case AppString.appBarWithNotification:
         return CommonAppBar.appbarWithNotification(title: title, subTitle: subTitle);
       default:
-        return CommonAppBar.appbarWithTitle(title: title);
+        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
     }
   }
 
@@ -52,7 +53,11 @@ class AddHeaderFooter extends StatelessWidget {
         body: child,
         bottomNavigationBar: isShowButton
             ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                padding: EdgeInsets.only(
+                  left: 20.w,
+                  right: 20.w,
+                  bottom: 20.h,
+                ),
                 child: AppButton(
                   onPress: onButtonClick,
                   title: buttonTitle,

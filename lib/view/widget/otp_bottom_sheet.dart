@@ -14,10 +14,11 @@ class OTPBottomSheet {
   static getBottomSheet({
     required Function(String) onChangeOTP,
     required Function(String) onSubmitOTP,
+    required Function() onButtonPress,
     required String mobileNumber,
     bool isForBank = false,
-    required bool isEnable,
-    required bool isLoading,
+    required RxBool isEnable,
+    required RxBool isLoading,
   }) {
     Get.bottomSheet(
       Container(
@@ -89,10 +90,10 @@ class OTPBottomSheet {
               height: 15.h,
             ),
             AppButton(
-              onPress: () {},
+              onPress: onButtonPress,
               title: AppString.continueText,
-              isButtonEnable: isEnable.obs,
-              isDataLoading: isLoading.obs,
+              isButtonEnable: isEnable,
+              isDataLoading: isLoading,
             )
           ],
         ),

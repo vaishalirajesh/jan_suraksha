@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 
 class AppUtils {
@@ -22,5 +24,23 @@ class AppUtils {
     String subString = mobileNumber.substring(mobileNumber.length - 4);
     String newString = "xxxxxx$subString";
     return newString;
+  }
+
+  static void onBackPress() {
+    Get.back();
+  }
+
+  static Future<bool> onWillPopScope() async {
+    Get.back();
+    return true;
+  }
+
+  static void onBackPressAuth() {
+    SystemNavigator.pop();
+  }
+
+  static Future<bool> onWillPopScopeAuth() async {
+    SystemNavigator.pop();
+    return true;
   }
 }

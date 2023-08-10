@@ -10,6 +10,12 @@ import 'package:jan_suraksha/view/screen/homepage/services/services_binding.dart
 import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
+import 'package:jan_suraksha/view/screen/journey/ExceededAgeCriteareaPage/exceeded_age_critearea_page_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/ExceededAgeCriteareaPage/exceeded_age_critearea_page_view.dart';
+import 'package:jan_suraksha/view/screen/journey/InsufficiantFundsPage/in_suffciant_funds_page_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/InsufficiantFundsPage/in_suffciant_funds_page_view.dart';
+import 'package:jan_suraksha/view/screen/journey/PolicyAvailaedPage/policy_availed_page_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/PolicyAvailaedPage/policy_availed_page_view.dart';
 import 'package:jan_suraksha/view/screen/journey/account_selection/account__selection__binding.dart';
 import 'package:jan_suraksha/view/screen/journey/account_selection/account__selection__view.dart';
 import 'package:jan_suraksha/view/screen/journey/address_details/address_details_binding.dart';
@@ -61,10 +67,13 @@ const PreviewApplicationPageRoute = "/PreviewApplicationPage";
 const SelectSchemePageRoute = "/SelectSchemePage";
 const TermsAndConditionsPageRoute = "/TermsAndConditionsPage";
 const TransactionsFailurePageRoute = "/TransactionsFailurePage";
+const ResponseScreenRoute = "/ResponseScreenRoute";
+const ExceededAgeCriteareaPageRoute = "/ExceededAgeCriteareaPagePage";
+const InSuffciantFundsPageRoute = "/InSuffciantFundsPagePage";
+const PolicyAvailedPageRoute = "/PolicyAvailedPageRoute";
 
 class NavigationConfig {
   static GetPage get initialRoute => splash;
-
   static final GetPage splash = GetPage(
     binding: SplashScreenBinding(),
     name: SplashRoutes,
@@ -73,6 +82,18 @@ class NavigationConfig {
 
   static List<GetPage> getPages() {
     return [
+      GetPage(
+          name: PolicyAvailedPageRoute,
+          page: () => PolicyAvailedPagePage(),
+          binding: PolicyAvailedPageBinding()),
+      GetPage(
+          name: ExceededAgeCriteareaPageRoute,
+          page: () => ExceededAgeCriteareaPagePage(),
+          binding: ExceededAgeCriteareaPageBinding()),
+      GetPage(
+          name: InSuffciantFundsPageRoute,
+          page: () => InSuffciantFundsPagePage(),
+          binding: InSuffciantFundsPageBinding()),
       GetPage(
           name: SplashRoutes,
           page: () => SplashScreenPage(),

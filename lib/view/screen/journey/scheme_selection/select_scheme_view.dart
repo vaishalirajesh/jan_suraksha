@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
@@ -23,7 +24,9 @@ class SelectSchemePage extends StatelessWidget {
           appbarName: AppString.appBarWithTitle,
           title: "Scheme Selection",
           buttonTitle: "Continue",
-          onButtonClick: () {},
+          onButtonClick: () {
+            Get.toNamed(BankSelectionPageRoute);
+          },
           isDataLoading: false,
           isButtonEnable: (logic.isSelected.value != 0),
           child: ConstrainedFlexView(MediaQuery.of(context).size.height * 0.79,

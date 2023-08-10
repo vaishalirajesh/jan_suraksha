@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/config/Navigation_config.dart';
-import 'package:jan_suraksha/view/screen/journey/ResponseView/response_view_binding.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
+import 'package:jan_suraksha/view/screen/homepage/profile/profile_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/profile/profile_view.dart';
+import 'package:jan_suraksha/view/screen/homepage/services/services_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
+import 'package:jan_suraksha/view/screen/homepage/support/support_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -21,9 +28,44 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         getPages: NavigationConfig.getPages(),
-        initialBinding: ResponseViewBinding(),
-        initialRoute: ResponseViewPageRoute,
+        initialBinding: DashboardBinding(),
+        initialRoute: DashboardPageRoute,
       ),
     );
+  }
+
+  Route? onGenerateRoute(RouteSettings settings) {
+    if (settings.name == ServicesPageRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => ServicesPage(),
+        binding: ServicesBinding(),
+      );
+    }
+
+    if (settings.name == SupportPageRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => SupportPage(),
+        binding: SupportBinding(),
+      );
+    }
+
+    if (settings.name == ProfilePageRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => ProfilePage(),
+        binding: ProfileBinding(),
+      );
+    }
+
+    if (settings.name == DashboardPageRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => DashboardPage(),
+        binding: DashboardBinding(),
+      );
+    }
+    return null;
   }
 }

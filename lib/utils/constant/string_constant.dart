@@ -17,10 +17,56 @@ class AppString {
   static const String notReceiveCode = "Didn't receive it? ";
   static const String resendCode = "Resend the code";
   static const String startJourneyText = 'Start your journey with';
+  static const String happy_to_have_you_onboard =
+      "Happy to have you onboard! \nLet's start by finding out which insurance you need.";
+
+  static const String str_welcome = "Welcome";
+
+  static const String str_pmjjby = "PMJJBY";
+
+  static const String str_pay_annually = "Pay Annually";
+
+  static const String str_rs = "Rs 232";
+
+  static const str_view_details = "View Details";
+
+  static const String str_my_policy = "My Policy";
+
+  static const String str_apply_for_fresh_loan = "Apply for fresh policy";
+
+  static const String str_policy_for = "Policy For PMJJBY and PMSBY";
+
+  static const String str_name = "Name:";
+
+  static const String str_name_value = "John Doe";
+
+  static const String str_scheme = "Scheme:";
+
+  static const String str_pmsby = "Scheme:";
+
+  static const String str_active_policy = "Active Policy";
+
+  static const String str_amount = "  Amount: 20";
+
+  static const String str_home = "Home";
+
+  static const String str_services = "Services";
+
+  static const String str_support = "Support";
+
+  static const String str_porfile = "Profile";
+
+  static String urn = "URN";
+
+  static String urnno = "PMJ0000001797";
+
+  static String date = "31/05/2023";
+  static String renual_date = "Renewal Date";
   static const String fetchOTP = 'Please wait while we fetch OTP Sent to ';
   static const String fetchOTPMobile = '+91 ';
   static const String enterOTP = 'Enter your OTP';
-  static const String registerMobileNumber = 'An OTP has been sent to your registered mobile number - ';
+  static const String registerMobileNumber =
+      'An OTP has been sent to your registered mobile number - ';
   static const String byTheBank = ' by the bank.';
   static const String resendOTP = 'Resend OTP';
   static const String continueText = 'Continue';
@@ -73,15 +119,21 @@ class AppString {
   static const String termAndCondition = 'Terms & Conditions';
   static const String iAgree = 'I Agree';
   static const String insuranceTitle = 'Certificate Of Insurance';
-  static const String tcText1 = "I hereby give my consent to become a member of '";
+  static const String tcText1 =
+      "I hereby give my consent to become a member of '";
   static const String tcText2 = 'Pradhan Mantri Jeevan Jyoti Bima Yojana’';
   static const String tcText3 = ' of ';
-  static const String tcText4 = 'I hereby give my consent to become a member of';
-  static const String tcText5 = 'I hereby give my consent to become a member of';
-  static const String tcText6 = 'I hereby give my consent to become a member of';
-  static const String tcText7 = 'I hereby give my consent to become a member of';
+  static const String tcText4 =
+      'I hereby give my consent to become a member of';
+  static const String tcText5 =
+      'I hereby give my consent to become a member of';
+  static const String tcText6 =
+      'I hereby give my consent to become a member of';
+  static const String tcText7 =
+      'I hereby give my consent to become a member of';
   static const String download = 'DOWNLOAD';
-  static const String ackInsurance = 'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
+  static const String ackInsurance =
+      'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
   static const String yojana = 'Pradhan Mantri Jeevan jyoti Bima Yojana';
   static const String nameMember = 'Name of Member';
   static const String aadharNo = 'Aadhar Number';
@@ -97,12 +149,15 @@ class AppString {
   static const String coverDate = 'Cover And Date';
   static const String lienPeriod = 'Lien Period**';
   static const String renewalDate = 'Annual Renewal Date';
-  static const String insurance1 = "* Rs.2 lakh is payable on member's death due to any cause.";
+  static const String insurance1 =
+      "* Rs.2 lakh is payable on member's death due to any cause.";
   static const String insurance2 =
       "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
-  static const String insurance3 = 'The terms and conditions of the scheme are available at ';
+  static const String insurance3 =
+      'The terms and conditions of the scheme are available at ';
   static const String insurance4 = 'https://jansuraksha.gov.in';
-  static const String insurance5 = 'Signature of authorised official of bank / post office';
+  static const String insurance5 =
+      'Signature of authorised official of bank / post office';
   static const String insurance6 = 'Date : 29/03/2022';
 // static const String e = '';
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
+import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 
 import '../../../../config/color_config.dart';
 import '../../../../generated/assets.dart';
@@ -23,7 +25,18 @@ class CustomerVerificationPage extends StatelessWidget {
           appbarName: AppString.appBarWithTitle,
           title: "Customer Verification",
           buttonTitle: "Continue",
-          onButtonClick: () {},
+          onButtonClick: () {
+            OTPBottomSheet.getBottomSheet(
+              onChangeOTP: (s) {},
+              onSubmitOTP: (s) {},
+              mobileNumber: '1234567890',
+              isEnable: true.obs,
+              isLoading: false.obs,
+              onButtonPress: () {
+                Get.toNamed(AccountSelectionPageRoute);
+              },
+            );
+          },
           isDataLoading: false,
           isButtonEnable: logic.isbuttonenabled.value,
           isShowButton: true,

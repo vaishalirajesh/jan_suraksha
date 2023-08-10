@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 
 import '../../../../config/color_config.dart';
 import '../../homepage/dashboard/dashboard_view.dart';
-import 'response_view_logic.dart';
 
 class ResponseViewPage extends StatelessWidget {
   String image;
@@ -30,8 +28,6 @@ class ResponseViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.find<ResponseViewLogic>();
-
     return Scaffold(
         backgroundColor: ColorConfig.jsCreamColor,
         appBar: AppBar(
@@ -83,6 +79,7 @@ class ResponseViewPage extends StatelessWidget {
                                 titleMessege,
                                 style: StyleConfig.smallTextLight.copyWith(
                                     color: ColorConfig.jsTextGreyColor),
+                                textAlign: TextAlign.center,
                               )
                             : Container(),
                       ],
@@ -110,11 +107,14 @@ class ResponseViewPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
+                                  onTap: () {
+                                    action[0]();
+                                  },
                                   child: Text(
-                                options.first,
-                                style: StyleConfig.smallTextLight.copyWith(
-                                    color: ColorConfig.jsPrimaryColor),
-                              )),
+                                    options.first,
+                                    style: StyleConfig.smallTextLight.copyWith(
+                                        color: ColorConfig.jsPrimaryColor),
+                                  )),
                               SizedBox(
                                 width: 20.w,
                               ),

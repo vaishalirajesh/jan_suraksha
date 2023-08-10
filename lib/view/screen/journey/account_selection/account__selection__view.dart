@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
@@ -19,7 +20,9 @@ class AccountSelectionPage extends StatelessWidget {
       title: "Account Holder Details ",
       appbarName: AppString.appBarWithTitle,
       buttonTitle: "Continue",
-      onButtonClick: () {},
+      onButtonClick: () {
+        Get.toNamed(PolicyAvailedPageRoute);
+      },
       isDataLoading: false,
       isButtonEnable: true,
       isShowButton: true,

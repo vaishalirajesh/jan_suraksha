@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
@@ -165,7 +166,9 @@ class BankSelectionPage extends StatelessWidget {
                       children: List.generate(
                         6,
                         (index) => InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(CustomerVerificationPageRoute);
+                          },
                           child: SizedBox(
                             height: 150.h,
                             child: Column(

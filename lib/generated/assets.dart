@@ -41,6 +41,13 @@ class Assets {
   static const String imagesSplash = 'assets/images/splash.svg';
   static const String imagesUserProfileIcon =
       'assets/images/user_profile_icon.svg';
+  static const String profileProfilePersonalInfo =
+      'assets/images/profile/profile_personal_info.svg';
+  static const String profileProfilePrivacyPolicy =
+      'assets/images/profile/profile_privacy_policy.svg';
+  static const String profileProfileTermsAndConditions =
+      'assets/images/profile/profile_terms_and_conditions.svg';
+  static const String profileShare = 'assets/images/profile/share.svg';
   static const String responsepageFatherWithChildren =
       'assets/images/responsepage/father_with_children.svg';
   static const String schemeSchemeselection =

@@ -72,7 +72,7 @@ class StyleConfig {
   static TextStyle boldText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitBold,
-    color: ColorConfig.jsLightBlackColor,
+    color: ColorConfig.jsTextGreyColor,
   );
   static TextStyle mediumText16 = TextStyle(
     fontSize: 16.sp,

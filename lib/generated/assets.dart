@@ -2,6 +2,14 @@
 class Assets {
   Assets._();
 
+  static const String bankselectionBob = 'assets/images/bankselection/bob.png';
+  static const String bankselectionBoi = 'assets/images/bankselection/boi.png';
+  static const String bankselectionCanara =
+      'assets/images/bankselection/canara.png';
+  static const String bankselectionHdfc =
+      'assets/images/bankselection/hdfc.png';
+  static const String bankselectionPnb = 'assets/images/bankselection/pnb.png';
+  static const String bankselectionSbi = 'assets/images/bankselection/sbi.png';
   static const String dashboardHomeDisabled =
       'assets/images/dashboard/home_disabled.svg';
   static const String dashboardHomeEnabled =
@@ -30,6 +38,11 @@ class Assets {
   static const String fontsOutfitMedium = 'assets/fonts/Outfit-Medium.ttf';
   static const String fontsOutfitRegular = 'assets/fonts/Outfit-Regular.ttf';
   static const String fontsOutfitSemiBold = 'assets/fonts/Outfit-SemiBold.ttf';
+  static const String imagesSplash = 'assets/images/splash.svg';
   static const String imagesUserProfileIcon =
       'assets/images/user_profile_icon.svg';
+  static const String responsepageFatherWithChildren =
+      'assets/images/responsepage/father_with_children.svg';
+  static const String schemeSchemeselection =
+      'assets/images/scheme/schemeselection.svg';
 }

@@ -449,7 +449,7 @@ class ConstrainedFlexView extends StatelessWidget {
         double viewSize = isHz ? constraints.maxWidth : constraints.maxHeight;
         if (viewSize > minSize) return child;
         return SingleChildScrollView(
-          scrollDirection: axis ?? Axis.vertical,
+          scrollDirection: Axis.vertical,
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),

@@ -14,7 +14,7 @@ import 'package:jan_suraksha/view/screen/journey/account_selection/account__sele
 import 'package:jan_suraksha/view/screen/journey/account_selection/account__selection__view.dart';
 import 'package:jan_suraksha/view/screen/journey/address_details/address_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/address_details/address_details_view.dart';
-import 'package:jan_suraksha/view/screen/journey/application_form/application_form__view.dart';
+import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/bank_selection/bank_selection_view.dart';
 import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_view.dart';
@@ -22,10 +22,10 @@ import 'package:jan_suraksha/view/screen/journey/congratulations/congratulations
 import 'package:jan_suraksha/view/screen/journey/congratulations/congratulations_screen_view.dart';
 import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_view.dart';
-import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details__binding.dart';
-import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details__view.dart';
-import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details__binding.dart';
-import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details__view.dart';
+import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_view.dart';
+import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_view.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/scheme_selection/select_scheme_binding.dart';
@@ -37,7 +37,7 @@ import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
 import 'package:jan_suraksha/view/screen/splash/splash_screen_view.dart';
 
 import '../view/screen/homepage/profile/profile_binding.dart';
-import '../view/screen/journey/application_form/application_form__binding.dart';
+import '../view/screen/journey/application_form/application_form_binding.dart';
 import '../view/screen/journey/bank_selection/bank_selection_binding.dart';
 import '../view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 

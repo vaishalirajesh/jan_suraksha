@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
-import 'application_form__logic.dart';
+import 'application_form_logic.dart';
 
 class ApplicationFormBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => Application_form_Logic());
+    Get.put<ApplicationFormLogic>(ApplicationFormLogic());
   }
 }

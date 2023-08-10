@@ -10,6 +10,11 @@ class StyleConfig {
     fontSize: 12.sp,
     fontFamily: JSFonts.outfitRegular,
   );
+  static TextStyle regularExtraSmallBText = TextStyle(
+    fontSize: 12.sp,
+    fontFamily: JSFonts.outfitRegular,
+    color: ColorConfig.jsBlackColor,
+  );
   static TextStyle semiBoldExtraSmallText = TextStyle(
     fontSize: 12.sp,
     fontFamily: JSFonts.outfitSemiBold,
@@ -18,6 +23,11 @@ class StyleConfig {
     fontSize: 12.sp,
     fontFamily: JSFonts.outfitRegular,
     color: ColorConfig.jsDarkPinkColor,
+  );
+  static TextStyle mediumExtraSmallBlackText = TextStyle(
+    fontSize: 12.sp,
+    fontFamily: JSFonts.outfitMedium,
+    color: ColorConfig.jsBlackColor,
   );
   static TextStyle mediumSmallText = TextStyle(
     fontSize: 13.sp,
@@ -28,6 +38,11 @@ class StyleConfig {
     fontSize: 14.sp,
     fontFamily: JSFonts.outfitRegular,
     color: ColorConfig.jsBlackColor,
+  );
+  static TextStyle smallTextGrey = TextStyle(
+    fontSize: 14.sp,
+    fontFamily: JSFonts.outfitRegular,
+    color: ColorConfig.jsTextGreyColor,
   );
   static TextStyle smallTextLight = TextStyle(
     fontSize: 14.sp,
@@ -42,6 +57,11 @@ class StyleConfig {
   static TextStyle regularText16 = TextStyle(
     fontSize: 16.sp,
     fontFamily: JSFonts.outfitRegular,
+    color: ColorConfig.jsLightBlackColor,
+  );
+  static TextStyle semiBoldText16 = TextStyle(
+    fontSize: 16.sp,
+    fontFamily: JSFonts.outfitSemiBold,
     color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle regularWhiteText16 = TextStyle(
@@ -59,9 +79,14 @@ class StyleConfig {
     fontFamily: JSFonts.outfitMedium,
     color: ColorConfig.jsLightBlackColor,
   );
-  static TextStyle mediumText18 = TextStyle(
+  static TextStyle semiBoldText18 = TextStyle(
     fontSize: 18.sp,
     fontFamily: JSFonts.outfitSemiBold,
+    color: ColorConfig.jsLightBlackColor,
+  );
+  static TextStyle mediumText18 = TextStyle(
+    fontSize: 18.sp,
+    fontFamily: JSFonts.outfitLight,
     color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle boldMediumText = TextStyle(
@@ -72,6 +97,16 @@ class StyleConfig {
   static TextStyle boldText20 = TextStyle(
     fontSize: 20.sp,
     fontFamily: JSFonts.outfitBold,
+  );
+  static TextStyle semiBoldText20 = TextStyle(
+    fontSize: 20.sp,
+    fontFamily: JSFonts.outfitSemiBold,
+    color: ColorConfig.jsLightBlackColor,
+  );
+  static TextStyle semiBoldText24 = TextStyle(
+    fontSize: 24.sp,
+    fontFamily: JSFonts.outfitSemiBold,
+    color: ColorConfig.jsLightBlackColor,
   );
   static TextStyle regularLargeText = TextStyle(
     fontSize: 24.sp,

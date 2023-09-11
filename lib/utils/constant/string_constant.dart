@@ -176,5 +176,8 @@ class AppString {
   static const String insurance5 = 'Signature of authorised official of bank / post office';
   static const String insurance6 = 'Date : 29/03/2022';
   static const String insurenceScheme = 'Government Sponsored Social Insurance Schemes';
+  static const String subjectText = "* Subject to Terms and Condition applied";
+  static const String pmsbyText =
+      'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
 // static const String e = '';
 }

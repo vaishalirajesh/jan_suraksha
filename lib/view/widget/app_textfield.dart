@@ -73,6 +73,7 @@ class AppTextField extends StatelessWidget {
           style: StyleConfig.smallText,
           readOnly: isReadOnly,
           cursorColor: ColorConfig.jsLightBlackColor,
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             hintText: hintText,
             counterText: AppString.emptyText,

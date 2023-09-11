@@ -7,6 +7,7 @@ class VerifyOtpLogic extends GetxController {
   RxString otp = ''.obs;
 
   RxString mobile = ''.obs;
+  RxBool isValideOTP = true.obs;
 
   @override
   void onInit() {
@@ -15,7 +16,11 @@ class VerifyOtpLogic extends GetxController {
   }
 
   void onPressSubmit() {
-    Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+    if (otp.value.length == 4) {
+      Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+    } else {
+      isValideOTP.value = false;
+    }
     // OTPBottomSheet.getBottomSheet(
     //   onChangeOTP: onChangeOTP,
     //   onSubmitOTP: onSubmitOTP,
@@ -27,6 +32,7 @@ class VerifyOtpLogic extends GetxController {
   }
 
   void onChangeOTP(String str) {
+    isValideOTP.value = true;
     otp.value = str;
   }
 

@@ -72,6 +72,14 @@ class VerifyOtpPage extends StatelessWidget {
                         onCodeChanged: verifyOtpLogic.onChangeOTP,
                         onSubmit: verifyOtpLogic.onSubmitOTP,
                       ),
+                      Obx(() {
+                        return !verifyOtpLogic.isValideOTP.value
+                            ? Text(
+                                'Please enter valid otp',
+                                style: StyleConfig.regularExtraSmallText.copyWith(color: Colors.red),
+                              )
+                            : const SizedBox.shrink();
+                      }),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -95,14 +103,12 @@ class VerifyOtpPage extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Obx(() {
-                        return AppButton(
-                          onPress: verifyOtpLogic.onPressSubmit,
-                          title: AppString.submit,
-                          isButtonEnable: verifyOtpLogic.otp.value.length >= 4 ? true.obs : false.obs,
-                          isDataLoading: false.obs,
-                        );
-                      }),
+                      AppButton(
+                        onPress: verifyOtpLogic.onPressSubmit,
+                        title: AppString.submit,
+                        isButtonEnable: true.obs,
+                        isDataLoading: false.obs,
+                      ),
                     ],
                   ),
                 ),

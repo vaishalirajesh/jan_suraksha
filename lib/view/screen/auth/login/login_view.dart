@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w300),
               ),
               SizedBox(
-                height: 80.h,
+                height: 70.h,
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -83,28 +83,29 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              AppTextField(
-                hintText: AppString.enterMobileNumber,
-                controller: loginLogic.mobileController,
-                isReadOnly: false,
-                isMandatory: false,
-                isAutoFocus: true,
-                inputType: TextInputType.phone,
-                maxLength: 10,
-                onChanged: loginLogic.onChangeMobile,
-                prefixText: '+91  ',
-              ),
+              Obx(() {
+                return AppTextField(
+                  hintText: AppString.enterMobileNumber,
+                  controller: loginLogic.mobileController,
+                  isReadOnly: false,
+                  isMandatory: false,
+                  isAutoFocus: true,
+                  inputType: TextInputType.phone,
+                  maxLength: 10,
+                  onChanged: loginLogic.onChangeMobile,
+                  prefixText: '+91  ',
+                  errorText: loginLogic.errorMsg.value,
+                );
+              }),
               SizedBox(
                 height: 15.h,
               ),
-              Obx(() {
-                return AppButton(
-                  onPress: loginLogic.onPressSentOTP,
-                  title: AppString.sentOTP,
-                  isButtonEnable: loginLogic.mobile.value.length >= 10 ? true.obs : false.obs,
-                  isDataLoading: false.obs,
-                );
-              })
+              AppButton(
+                onPress: loginLogic.onPressSentOTP,
+                title: AppString.sentOTP,
+                isButtonEnable: true.obs,
+                isDataLoading: false.obs,
+              )
             ],
           ),
         ),

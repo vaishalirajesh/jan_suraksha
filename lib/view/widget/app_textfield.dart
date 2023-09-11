@@ -21,6 +21,7 @@ class AppTextField extends StatelessWidget {
     this.isAutoFocus = false,
     this.prefixText = '',
     required this.isMandatory,
+    this.errorText = '',
   }) : super(key: key);
   final String hintText;
   final String title;
@@ -35,6 +36,7 @@ class AppTextField extends StatelessWidget {
   final bool isMandatory;
   final bool isAutoFocus;
   final String prefixText;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +78,7 @@ class AppTextField extends StatelessWidget {
             counterText: AppString.emptyText,
             hintStyle: StyleConfig.smallTextLight,
             prefixIconConstraints: BoxConstraints(minWidth: 24.w, maxHeight: 24.h),
+            errorText: errorText!.isEmpty ? null : errorText,
             filled: true,
             prefix: prefixText != ''
                 ? Text(

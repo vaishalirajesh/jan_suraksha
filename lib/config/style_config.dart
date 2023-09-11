@@ -118,6 +118,11 @@ class StyleConfig {
     fontFamily: JSFonts.outfitBold,
     color: ColorConfig.jsPrimaryColor,
   );
+  static TextStyle boldExtraLargeText = TextStyle(
+    fontSize: 40.sp,
+    fontFamily: JSFonts.outfitBold,
+    color: ColorConfig.jsPrimaryColor,
+  );
   static TextStyle mediumLargeText = TextStyle(
     fontSize: 30.sp,
     fontFamily: JSFonts.outfitSemiBold,

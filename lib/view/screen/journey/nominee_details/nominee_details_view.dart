@@ -155,8 +155,11 @@ class NomineeDetailsPage extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 AppString.applicantAdd,
-                                style:
-                                    StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor, fontSize: 15.sp),
+                                style: StyleConfig.regularText16.copyWith(
+                                    color: nomineeDetailsLogic.isChecked.value
+                                        ? ColorConfig.jsBlueColor
+                                        : ThemeHelper.getInstance()!.disabledColor,
+                                    fontSize: 15.sp),
                               ),
                             )
                           ],
@@ -186,7 +189,7 @@ class NomineeDetailsPage extends StatelessWidget {
                         ),
                         AppTextField(
                           isMandatory: true,
-                          title: AppString.city,
+                          title: AppString.cityName,
                           controller: nomineeDetailsLogic.cityController,
                           hintText: AppString.enterCity,
                           inputType: TextInputType.text,

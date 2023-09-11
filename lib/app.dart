@@ -10,6 +10,7 @@ import 'package:jan_suraksha/view/screen/homepage/services/services_binding.dart
 import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
+import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -28,8 +29,8 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         getPages: NavigationConfig.getPages(),
-        initialBinding: DashboardBinding(),
-        initialRoute: DashboardPageRoute,
+        initialBinding: SplashScreenBinding(),
+        initialRoute: NavigationConfig.initialRoute.name,
       ),
     );
   }

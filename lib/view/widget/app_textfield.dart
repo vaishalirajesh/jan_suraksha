@@ -19,6 +19,7 @@ class AppTextField extends StatelessWidget {
     this.isReadOnly = false,
     this.title = '',
     this.isAutoFocus = false,
+    this.prefixText = '',
     required this.isMandatory,
   }) : super(key: key);
   final String hintText;
@@ -33,6 +34,7 @@ class AppTextField extends StatelessWidget {
   final bool isReadOnly;
   final bool isMandatory;
   final bool isAutoFocus;
+  final String prefixText;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,12 @@ class AppTextField extends StatelessWidget {
             hintStyle: StyleConfig.smallTextLight,
             prefixIconConstraints: BoxConstraints(minWidth: 24.w, maxHeight: 24.h),
             filled: true,
+            prefix: prefixText != ''
+                ? Text(
+                    prefixText,
+                    style: StyleConfig.smallText,
+                  )
+                : const SizedBox.shrink(),
             fillColor: isReadOnly
                 ? ThemeHelper.getInstance()!.colorScheme.surface
                 : ThemeHelper.getInstance()!.colorScheme.background,

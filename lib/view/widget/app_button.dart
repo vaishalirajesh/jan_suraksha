@@ -8,11 +8,7 @@ import 'package:jan_suraksha/config/style_config.dart';
 // Common button widget
 class AppButton extends StatelessWidget {
   AppButton(
-      {Key? key,
-      required this.onPress,
-      required this.title,
-      required this.isButtonEnable,
-      required this.isDataLoading})
+      {Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading})
       : super(key: key);
   final VoidCallback onPress;
   final String title;
@@ -42,8 +38,7 @@ class AppButton extends StatelessWidget {
                 title,
                 style: isButtonEnable.value
                     ? StyleConfig.regularWhiteText16
-                    : StyleConfig.regularWhiteText16
-                        .copyWith(color: ColorConfig.jsLightBlackColor),
+                    : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsLightBlackColor),
               ),
       ),
     );
@@ -51,8 +46,7 @@ class AppButton extends StatelessWidget {
 }
 
 class ListViewButtons extends StatelessWidget {
-  ListViewButtons({Key? key, required this.onPress, required this.title})
-      : super(key: key);
+  ListViewButtons({Key? key, required this.onPress, required this.title}) : super(key: key);
   final VoidCallback onPress;
   final String title;
   RxBool isButtonEnable = true.obs;
@@ -61,7 +55,7 @@ class ListViewButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 25.h,
+      height: 26.h,
       width: 1.sw,
       child: ElevatedButton(
         onPressed: isButtonEnable.value ? onPress : null,
@@ -72,8 +66,7 @@ class ListViewButtons extends StatelessWidget {
             borderRadius: BorderRadius.circular(40.r),
           ),
         ),
-        child: Text(title,
-            style: StyleConfig.regularWhiteText16.copyWith(fontSize: 12.sp)),
+        child: Text(title, style: StyleConfig.regularWhiteText16.copyWith(fontSize: 12.sp)),
       ),
     );
   }

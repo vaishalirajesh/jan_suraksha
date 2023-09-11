@@ -62,8 +62,7 @@ class ResponseViewPage extends StatelessWidget {
                         title.isNotEmpty
                             ? Text(
                                 title,
-                                style: StyleConfig.boldLargeText.copyWith(
-                                    color: ColorConfig.jsPrimaryColor),
+                                style: StyleConfig.boldLargeText.copyWith(color: ColorConfig.jsPrimaryColor),
                               )
                             : Container(),
                       ],
@@ -77,9 +76,9 @@ class ResponseViewPage extends StatelessWidget {
                         titleMessege.isNotEmpty
                             ? Text(
                                 titleMessege,
-                                style: StyleConfig.smallTextLight.copyWith(
-                                    color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
                                 textAlign: TextAlign.center,
+                                maxLines: 4,
                               )
                             : Container(),
                       ],
@@ -93,8 +92,7 @@ class ResponseViewPage extends StatelessWidget {
                         subTitle.isNotEmpty
                             ? Text(
                                 subTitle,
-                                style: StyleConfig.smallTextLight.copyWith(
-                                    color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
                               )
                             : Container(),
                       ],
@@ -112,8 +110,7 @@ class ResponseViewPage extends StatelessWidget {
                                   },
                                   child: Text(
                                     options.first,
-                                    style: StyleConfig.smallTextLight.copyWith(
-                                        color: ColorConfig.jsPrimaryColor),
+                                    style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsPrimaryColor),
                                   )),
                               SizedBox(
                                 width: 20.w,
@@ -121,10 +118,8 @@ class ResponseViewPage extends StatelessWidget {
                               options.length > 1
                                   ? GestureDetector(
                                       child: Text(options.elementAt(1),
-                                          style: StyleConfig.smallTextLight
-                                              .copyWith(
-                                                  color: ColorConfig
-                                                      .jsTextGreyColor)))
+                                          style:
+                                              StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor)))
                                   : Container()
                             ],
                           )

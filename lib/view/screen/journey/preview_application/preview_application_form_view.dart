@@ -20,7 +20,7 @@ class PreviewApplicationPage extends StatelessWidget {
       return AddHeaderFooter(
         appbarName: AppString.appBarWithTitle,
         title: AppString.previewApplicationForm,
-        buttonTitle: AppString.continueText,
+        buttonTitle: AppString.submit,
         onButtonClick: previewApplicationFormLogic.onPressContinue,
         isDataLoading: false,
         isButtonEnable: previewApplicationFormLogic.isDataLoaded.value,
@@ -109,13 +109,13 @@ class PreviewApplicationPage extends StatelessWidget {
                           height: 15.h,
                         ),
                         const DisableTextField(
-                          isMandatory: true,
+                          isMandatory: false,
                           initialvale: 'abc insurer pvt. ltd.',
                           title: AppString.insurerName,
                           isReadOnly: true,
                         ),
                         SizedBox(
-                          height: 25.h,
+                          height: 40.h,
                         ),
                         Text(
                           AppString.appAddDetail,
@@ -179,7 +179,7 @@ class PreviewApplicationPage extends StatelessWidget {
                           isReadOnly: true,
                         ),
                         SizedBox(
-                          height: 25.h,
+                          height: 40.h,
                         ),
                         Text(
                           AppString.nomineeDetail,
@@ -228,18 +228,18 @@ class PreviewApplicationPage extends StatelessWidget {
                           height: 15.h,
                         ),
                         const DisableTextField(
-                          isMandatory: true,
-                          initialvale: 'Wife',
-                          title: AppString.relationWithApplicant,
+                          isMandatory: false,
+                          initialvale: '+91 1234567890',
+                          title: AppString.mobileNumber,
                           isReadOnly: true,
                         ),
                         SizedBox(
                           height: 15.h,
                         ),
                         const DisableTextField(
-                          isMandatory: false,
-                          initialvale: '+91 1234567890',
-                          title: AppString.mobileNumber,
+                          isMandatory: true,
+                          initialvale: 'Wife',
+                          title: AppString.relationWithApplicant,
                           isReadOnly: true,
                         ),
                         SizedBox(
@@ -252,7 +252,7 @@ class PreviewApplicationPage extends StatelessWidget {
                           isReadOnly: true,
                         ),
                         SizedBox(
-                          height: 25.h,
+                          height: 40.h,
                         ),
                         Text(
                           AppString.nomineeAddDetail,
@@ -316,7 +316,7 @@ class PreviewApplicationPage extends StatelessWidget {
                           isReadOnly: true,
                         ),
                         SizedBox(
-                          height: 25.h,
+                          height: 40.h,
                         ),
                         Text(
                           AppString.guardianDetail,

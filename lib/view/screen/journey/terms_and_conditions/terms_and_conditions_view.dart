@@ -32,7 +32,7 @@ class TermsAndConditionsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -50,11 +50,11 @@ class TermsAndConditionsPage extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: AppString.janText,
-                          style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsPrimaryColor),
+                          style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsPrimaryColor, fontSize: 26),
                         ),
                         TextSpan(
                           text: AppString.surakshaText,
-                          style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor),
+                          style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor, fontSize: 26),
                         ),
                       ],
                     ),
@@ -88,18 +88,18 @@ class TermsAndConditionsPage extends StatelessWidget {
                       style: StyleConfig.smallTextGrey,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText4,
                       style: StyleConfig.smallTextGrey.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText5,
                       style: StyleConfig.smallTextGrey,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText6,
                       style: StyleConfig.smallTextGrey.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
@@ -116,18 +116,18 @@ class TermsAndConditionsPage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppString.tcText1,
+                      text: AppString.tcText7,
                       style: StyleConfig.smallTextGrey,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText8,
                       style: StyleConfig.smallTextGrey.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText9,
                       style: StyleConfig.smallTextGrey,
                     ),
                   ],
@@ -137,25 +137,32 @@ class TermsAndConditionsPage extends StatelessWidget {
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText10,
                 style: StyleConfig.smallTextGrey,
               ),
               SizedBox(
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText11,
                 style: StyleConfig.smallTextGrey,
               ),
               SizedBox(
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText12,
+                style: StyleConfig.smallTextGrey,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                AppString.tcText13,
                 style: StyleConfig.smallTextGrey,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText14,
                 style: StyleConfig.smallTextGrey.copyWith(
                   color: ColorConfig.jsLightBlackColor,
                   fontFamily: JSFonts.outfitBold,
@@ -165,14 +172,14 @@ class TermsAndConditionsPage extends StatelessWidget {
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText15,
                 style: StyleConfig.smallTextGrey,
               ),
               SizedBox(
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText16,
                 style: StyleConfig.smallTextGrey
                     .copyWith(color: ColorConfig.jsPrimaryColor, fontFamily: JSFonts.outfitBold),
               ),
@@ -184,18 +191,18 @@ class TermsAndConditionsPage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppString.tcText1,
+                      text: AppString.tcText17,
                       style: StyleConfig.smallText,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText21,
                       style: StyleConfig.smallText.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText18,
                       style: StyleConfig.smallText,
                     ),
                   ],
@@ -209,18 +216,29 @@ class TermsAndConditionsPage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppString.tcText1,
+                      text: AppString.tcText19,
                       style: StyleConfig.smallText,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText21,
                       style: StyleConfig.smallText.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText20,
+                      style: StyleConfig.smallText,
+                    ),
+                    TextSpan(
+                      text: AppString.tcText21,
+                      style: StyleConfig.smallText.copyWith(
+                        color: ColorConfig.jsLightBlackColor,
+                        fontFamily: JSFonts.outfitBold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppString.tcText18,
                       style: StyleConfig.smallText,
                     ),
                   ],
@@ -234,18 +252,29 @@ class TermsAndConditionsPage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppString.tcText1,
+                      text: AppString.tcText22,
                       style: StyleConfig.smallText,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText21,
                       style: StyleConfig.smallText.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText20,
+                      style: StyleConfig.smallText,
+                    ),
+                    TextSpan(
+                      text: AppString.tcText21,
+                      style: StyleConfig.smallText.copyWith(
+                        color: ColorConfig.jsLightBlackColor,
+                        fontFamily: JSFonts.outfitBold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppString.tcText18,
                       style: StyleConfig.smallText,
                     ),
                   ],
@@ -259,18 +288,18 @@ class TermsAndConditionsPage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppString.tcText1,
+                      text: AppString.tcText23,
                       style: StyleConfig.smallText,
                     ),
                     TextSpan(
-                      text: AppString.tcText2,
+                      text: AppString.tcText21,
                       style: StyleConfig.smallText.copyWith(
                         color: ColorConfig.jsLightBlackColor,
                         fontFamily: JSFonts.outfitBold,
                       ),
                     ),
                     TextSpan(
-                      text: AppString.tcText3,
+                      text: AppString.tcText18,
                       style: StyleConfig.smallText,
                     ),
                   ],
@@ -280,7 +309,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                 height: 20.h,
               ),
               Text(
-                AppString.tcText2,
+                AppString.tcText24,
                 style: StyleConfig.smallText,
               ),
             ],

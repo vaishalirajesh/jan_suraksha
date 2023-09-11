@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
+import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 
 import '../../../../config/color_config.dart';
@@ -48,11 +49,16 @@ class CustomerVerificationPage extends StatelessWidget {
               children: [
                 Container(
                   color: ColorConfig.jsCreamColor,
-                  height: MediaQuery.of(context).size.height / 3.1,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.h, vertical: 30.h),
-                    child: SvgPicture.asset(Assets.schemeSchemeselection),
+                  padding: EdgeInsets.only(top: 40.h, bottom: 50.h),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      height: 100.h,
+                      width: 0.4.sw,
+                      child: Image.asset(
+                        AppImages.verification,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -65,13 +71,12 @@ class CustomerVerificationPage extends StatelessWidget {
                     children: [
                       Text(
                         "Account Number",
-                        style: StyleConfig.semiBoldExtraSmallText
-                            .copyWith(fontSize: 14.sp),
+                        style: StyleConfig.semiBoldExtraSmallText.copyWith(fontSize: 14.sp),
                       ),
                       Text(
                         " *",
-                        style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                            fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
+                        style: StyleConfig.semiBoldExtraSmallText
+                            .copyWith(fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
                       ),
                     ],
                   ),
@@ -100,13 +105,12 @@ class CustomerVerificationPage extends StatelessWidget {
                     children: [
                       Text(
                         "Re-Enter Account Number",
-                        style: StyleConfig.semiBoldExtraSmallText
-                            .copyWith(fontSize: 14.sp),
+                        style: StyleConfig.semiBoldExtraSmallText.copyWith(fontSize: 14.sp),
                       ),
                       Text(
                         " *",
-                        style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                            fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
+                        style: StyleConfig.semiBoldExtraSmallText
+                            .copyWith(fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
                       ),
                     ],
                   ),
@@ -133,13 +137,12 @@ class CustomerVerificationPage extends StatelessWidget {
                     children: [
                       Text(
                         "Date Of Birth",
-                        style: StyleConfig.semiBoldExtraSmallText
-                            .copyWith(fontSize: 14.sp),
+                        style: StyleConfig.semiBoldExtraSmallText.copyWith(fontSize: 14.sp),
                       ),
                       Text(
                         " *",
-                        style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                            fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
+                        style: StyleConfig.semiBoldExtraSmallText
+                            .copyWith(fontSize: 14.sp, color: ColorConfig.jsPrimaryColor),
                       ),
                     ],
                   ),

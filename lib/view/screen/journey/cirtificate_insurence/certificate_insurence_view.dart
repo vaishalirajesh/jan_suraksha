@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/config/font_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
+import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
 
 import 'certificate_insurence_logic.dart';
@@ -28,23 +30,36 @@ class CertificateInsurencePage extends StatelessWidget {
       child: AddHeaderFooter(
         appbarName: AppString.appBarWithTitle,
         title: AppString.insuranceTitle,
-        buttonTitle: AppString.emptyText,
+        buttonTitle: AppString.download,
         onButtonClick: () {},
         isDataLoading: false,
-        isButtonEnable: false,
+        isButtonEnable: true,
         isShowButton: false,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(20.h),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: buildDownloadWidget(),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: buildDownloadWidget(),
+                // ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  AppString.yojna,
+                  style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsBlackColor),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  AppString.COI,
+                  style: StyleConfig.boldText16.copyWith(fontFamily: JSFonts.outfitRegular),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 15.h,
+                  height: 25.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,16 +101,9 @@ class CertificateInsurencePage extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 SizedBox(
-                  height: 30.h,
-                ),
-                Text(
-                  AppString.ackInsurance,
-                  style: StyleConfig.semiBoldText20.copyWith(decoration: TextDecoration.underline),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 30.h,
+                  height: 20.h,
                 ),
                 Table(
                   border: TableBorder.all(color: ColorConfig.jsGreyColor),
@@ -407,9 +415,21 @@ class CertificateInsurencePage extends StatelessWidget {
                   AppString.insurance5,
                   style: StyleConfig.semiBoldSmallText,
                 ),
-                Text(
-                  AppString.insurance6,
-                  style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsBlackColor),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppString.insurance6,
+                    style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsBlackColor),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppButton(
+                  onPress: certificateInsurenceLogic.onPressDownload,
+                  title: "Download",
+                  isButtonEnable: true.obs,
+                  isDataLoading: false.obs,
                 ),
               ],
             ),

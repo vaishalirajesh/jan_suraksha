@@ -1,3 +1,5 @@
 import 'package:get/get.dart';
 
-class CertificateInsurenceLogic extends GetxController {}
+class CertificateInsurenceLogic extends GetxController {
+  void onPressDownload() {}
+}

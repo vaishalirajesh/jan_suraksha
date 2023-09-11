@@ -9,26 +9,28 @@ import 'package:jan_suraksha/utils/theme_helper.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 
 class SelectionWidget extends StatelessWidget {
-  const SelectionWidget(
-      {Key? key,
-      required this.isSelected,
-      required this.index,
-      required this.userName,
-      required this.accountNumber,
-      required this.cifNumber})
-      : super(key: key);
+  const SelectionWidget({
+    Key? key,
+    required this.isSelected,
+    required this.index,
+    required this.userName,
+    required this.accountNumber,
+    required this.cifNumber,
+    required this.onChnage,
+  }) : super(key: key);
   final bool isSelected;
   final int index;
   final String userName;
   final String cifNumber;
   final String accountNumber;
+  final VoidCallback onChnage;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GestureDetector(
-          onTap: () {},
+        InkWell(
+          onTap: onChnage,
           child: Container(
             height: 110.h,
             margin: EdgeInsets.only(top: 12.5.h),

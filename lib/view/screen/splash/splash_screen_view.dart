@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
-import 'package:jan_suraksha/view/widget/app_name.dart';
 
 import 'splash_screen_logic.dart';
 
@@ -16,22 +14,31 @@ class SplashScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConfig.jsLightCremeColor,
-      body: Center(
+      body: Container(
+        width: 1.sw,
+        height: 1.sh,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(AppImages.splashBg),
+            fit: BoxFit.fill,
+          ),
+          // color: Colors.grey,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              AppImages.jsLogo,
-              height: 90.h,
-              width: 100.sw,
+            Column(
+              children: [
+                SizedBox(height: 50.h),
+                SvgPicture.asset(AppImages.splashLogo),
+                SizedBox(height: 40.h),
+                SvgPicture.asset(AppImages.splash_text),
+              ],
             ),
-            SizedBox(
-              height: 10.h,
+            Image.asset(
+              AppImages.modiji,
+              height: 0.44.sh,
             ),
-            const AppName()
           ],
         ),
       ),

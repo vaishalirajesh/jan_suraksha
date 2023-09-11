@@ -36,8 +36,7 @@ class AccountSelectionPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Text(
               "Please select an account holder to proceed",
-              style: StyleConfig.smallTextLight
-                  .copyWith(color: ColorConfig.jsTextGreyColor),
+              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
             ),
           )),
           SizedBox(
@@ -46,13 +45,16 @@ class AccountSelectionPage extends StatelessWidget {
           Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const SelectionWidget(
-                isSelected: true,
-                index: 1,
-                userName: "Mrs. Kajal XXXXX XXXXX",
-                cifNumber: '12345678',
-                accountNumber: 'XXX12045',
-              ),
+              child: Obx(() {
+                return SelectionWidget(
+                  isSelected: !logic.selectedWidget.value,
+                  index: 1,
+                  userName: "Mrs. Kajal XXXXX XXXXX",
+                  cifNumber: '12345678',
+                  accountNumber: 'XXX12045',
+                  onChnage: logic.onChangeSelection,
+                );
+              }),
             ),
           ),
           SizedBox(
@@ -60,13 +62,16 @@ class AccountSelectionPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: const SelectionWidget(
-              isSelected: false,
-              index: 2,
-              userName: "Mrs. Kajal XXXXX XXXXX",
-              cifNumber: '12345678',
-              accountNumber: 'XXX12045',
-            ),
+            child: Obx(() {
+              return SelectionWidget(
+                isSelected: logic.selectedWidget.value,
+                index: 2,
+                userName: "Mrs. Kajal XXXXX XXXXX",
+                cifNumber: '12345678',
+                accountNumber: 'XXX12045',
+                onChnage: logic.onChangeSelection,
+              );
+            }),
           ),
         ],
       ),

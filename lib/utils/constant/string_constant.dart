@@ -30,7 +30,7 @@ class AppString {
 
   static const str_view_details = "View Details";
 
-  static const String str_my_policy = "My Policy";
+  static const String str_my_policy = "My Policies";
 
   static const String str_apply_for_fresh_loan = "Apply for fresh policy";
 
@@ -42,7 +42,7 @@ class AppString {
 
   static const String str_scheme = "Scheme:";
 
-  static const String str_pmsby = "Scheme:";
+  static const String str_pmsby = "PMSBY";
 
   static const String str_active_policy = "Active Policy";
 
@@ -62,11 +62,10 @@ class AppString {
 
   static String date = "31/05/2023";
   static String renual_date = "Renewal Date";
-  static const String fetchOTP = 'Please wait while we fetch OTP Sent to ';
+  static const String fetchOTP = 'Please enter OTP sent to \n';
   static const String fetchOTPMobile = '+91 ';
   static const String enterOTP = 'Enter your OTP';
-  static const String registerMobileNumber =
-      'An OTP has been sent to your registered mobile number - ';
+  static const String registerMobileNumber = 'An OTP has been sent to your registered mobile number - ';
   static const String byTheBank = ' by the bank.';
   static const String resendOTP = 'Resend OTP';
   static const String continueText = 'Continue';
@@ -119,21 +118,41 @@ class AppString {
   static const String termAndCondition = 'Terms & Conditions';
   static const String iAgree = 'I Agree';
   static const String insuranceTitle = 'Certificate Of Insurance';
-  static const String tcText1 =
-      "I hereby give my consent to become a member of '";
+  static const String tcText1 = "I hereby give my consent to become a member of '";
   static const String tcText2 = 'Pradhan Mantri Jeevan Jyoti Bima Yojana’';
   static const String tcText3 = ' of ';
-  static const String tcText4 =
-      'I hereby give my consent to become a member of';
-  static const String tcText5 =
-      'I hereby give my consent to become a member of';
-  static const String tcText6 =
-      'I hereby give my consent to become a member of';
-  static const String tcText7 =
-      'I hereby give my consent to become a member of';
-  static const String download = 'DOWNLOAD';
-  static const String ackInsurance =
-      'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
+  static const String tcText4 = 'SBI Life insurance company Limited ';
+  static const String tcText5 = 'which will be administered by your Bank / Post Office under Master Policy No.';
+  static const String tcText6 = '1234/588/01/57584';
+  static const String tcText7 = 'I hereby authorize you to debit Rs. ';
+  static const String tcText8 = '436/-';
+  static const String tcText9 =
+      ' from my bank account towards premium of life insurance cover of Rs 2 lakhs under PMJJBY.';
+  static const String tcText10 =
+      'I further authorize you to deduct in future after 25th May and not later than 1st of June every year until further instructions, an amount of Rs.436/- (Rupees four hundred thirty-six only), or any amount as decided from time to time, which may be intimated immediately if and when revised, towards renewal of coverage under the scheme. ';
+  static const String tcText11 =
+      'I have not authorized any other Bank / Post Office to debit premium in respect of this scheme. I am aware that in case of multiple enrolments for the scheme by me, my insurance cover will be restricted to Rs. two lakhs only and the premium paid by me for multiple enrolments shall be liable to be forfeited. ';
+  static const String tcText12 =
+      'I have read and understood the Scheme rules and I hereby give my consent to become a member of the Scheme. I am aware that the risk will not be covered during the first 30 days from the date of enrollment / re-joining into the scheme (lien period) and in case of death (other than due to accident) during lien period, no claim would be admissible. ';
+  static const String tcText13 =
+      'I authorize the Bank /Post Office to convey my personal details, given below, as required, regarding my admission into the group insurance scheme to ';
+  static const String tcText14 = 'SBI Life Insurance Company Limited';
+  static const String tcText15 =
+      'I hereby declare that the above statements are true in all respects and that I agree and declare that the above information shall form the basis of admission to the above scheme and that if any information be found untrue, my membership to the scheme shall be treated as cancelled.';
+  static const String tcText16 = 'If the enrolment takes place on any day during the months of - ';
+  static const String tcText17 = 'a. June, July & August –Annual premium of Rs. ';
+  static const String tcText18 = ' is payable';
+  static const String tcText19 = 'b. September, October & November –3 quarters of premium @ ';
+  static const String tcText20 = ' i.e. ';
+  static const String tcText21 = 'Rs. 114.00';
+  static const String tcText22 = 'c. December, January & February – 2 quarters of premium @ ';
+  static const String tcText23 = 'd. March, April & May – 1 Quarterly premium @ ';
+  static const String tcText24 =
+      'e. Risk cover will start from the date of auto-debit of premium from the account of the subscriber.';
+  static const String download = 'Download';
+  static const String ackInsurance = 'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
+  static const String yojna = 'Pradhan Mantri Jeevan Jyoti Bima Yojana';
+  static const String COI = 'Certificate of insurance (COI)';
   static const String yojana = 'Pradhan Mantri Jeevan jyoti Bima Yojana';
   static const String nameMember = 'Name of Member';
   static const String aadharNo = 'Aadhar Number';
@@ -149,15 +168,13 @@ class AppString {
   static const String coverDate = 'Cover And Date';
   static const String lienPeriod = 'Lien Period**';
   static const String renewalDate = 'Annual Renewal Date';
-  static const String insurance1 =
-      "* Rs.2 lakh is payable on member's death due to any cause.";
+  static const String insurance1 = "* Rs.2 lakh is payable on member's death due to any cause.";
   static const String insurance2 =
       "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
-  static const String insurance3 =
-      'The terms and conditions of the scheme are available at ';
+  static const String insurance3 = 'The terms and conditions of the scheme are available at ';
   static const String insurance4 = 'https://jansuraksha.gov.in';
-  static const String insurance5 =
-      'Signature of authorised official of bank / post office';
+  static const String insurance5 = 'Signature of authorised official of bank / post office';
   static const String insurance6 = 'Date : 29/03/2022';
+  static const String insurenceScheme = 'Government Sponsored Social Insurance Schemes';
 // static const String e = '';
 }

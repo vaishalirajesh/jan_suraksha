@@ -42,6 +42,11 @@ flutter:
     - assets/images/bankselection/
     - assets/images/responsepage/
     - assets/images/profile/
+    - js_logo.svg
+    - splash.png
+    - splash_text.svg
+    - splash_logo.svg
+    - modiji.png
 
   fonts:
     - family: OutfitBold

@@ -23,11 +23,13 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+        useInheritedMediaQuery: true,
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        useInheritedMediaQuery: true,
         getPages: NavigationConfig.getPages(),
         initialBinding: SplashScreenBinding(),
         initialRoute: NavigationConfig.initialRoute.name,

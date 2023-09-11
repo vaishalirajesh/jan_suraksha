@@ -22,7 +22,9 @@ class TermsAndConditionsPage extends StatelessWidget {
       appbarName: AppString.appBarWithTitle,
       title: AppString.termAndCondition,
       buttonTitle: AppString.iAgree,
-      onButtonClick: termsAndConditionsLogic.onPressButton,
+      onButtonClick: () {
+        termsAndConditionsLogic.onPressButton(context);
+      },
       isDataLoading: false,
       isButtonEnable: true,
       child: SingleChildScrollView(

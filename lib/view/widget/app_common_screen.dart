@@ -50,6 +50,7 @@ class AddHeaderFooter extends StatelessWidget {
       child: Scaffold(
         backgroundColor: ThemeHelper.getInstance()?.colorScheme.background,
         appBar: getAppBar(),
+        resizeToAvoidBottomInset: true,
         body: child,
         bottomNavigationBar: isShowButton
             ? Padding(

@@ -66,7 +66,7 @@ class AppTextField extends StatelessWidget {
           ),
         TextField(
           controller: controller,
-          scrollPadding: EdgeInsets.only(bottom: 100.h),
+          scrollPadding: EdgeInsets.only(bottom: 300.h),
           obscureText: isObscureText,
           maxLength: maxLength,
           keyboardType: inputType,

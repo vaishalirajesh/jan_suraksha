@@ -1,0 +1,12 @@
+{
+  "id": null,
+  "message": "Successfully fetched role product mapping list !!",
+  "status": 200,
+  "data": "[{\"userId\":22,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":9,\"imgPath\":\"fi fi-sr-file-spreadsheet PMSBY\",\"schemeId\":1,\"schemeName\":\"Pradhan Mantri Suraksha Bima Yojana\",\"shortName\":\"PMSBY\",\"routingPath\":null,\"orderId\":3},{\"userId\":22,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":9,\"imgPath\":\"fi fi-sr-document PMJJBY\",\"schemeId\":2,\"schemeName\":\"Pradhan Mantri Jeevan Jyoti Bima Yojana\",\"shortName\":\"PMJJBY\",\"routingPath\":null,\"orderId\":2}]",
+  "flag": null,
+  "branchList": null,
+  "listData": [],
+  "lastBusinessTypeId": null,
+  "file": null,
+  "fromCSC": null
+}

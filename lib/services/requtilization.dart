@@ -1,6 +1,5 @@
 import '../model/comman/PayLoad.dart';
-import 'encryption/encdec/extra.dart';
-import 'encryption/js_encryption.dart';
+import 'encryption/encdec/aesGcmEncryption.dart';
 
 Future<PayLoad> getPayLoad(dynamic request, String url) async {
   var encryptData = AesGcmEncryptionUtils.encryptNew(request);

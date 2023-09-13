@@ -1,0 +1,114 @@
+[
+  {
+    "uri": "users/v3/login",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/login_success.json",
+    "errorFile": "assets/mocks/login_error.json"
+  },
+  {
+    "uri": "users/v3/getAllMenuForBanker",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_all_menu_for_banker_success.json",
+    "errorFile": "assets/mocks/get_all_menu_for_banker_error.json"
+  },
+  {
+    "uri": "users/v3/roleProductMap/getSchemeByUserIdBusinessId/1",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_schema_by_user_id_success.json",
+    "errorFile": "assets/mocks/get_schema_by_user_id_error.json"
+  },
+  {
+    "uri": "users/v3/getUserDetailsById",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_user_deatil_by_id_success.json",
+    "errorFile": "assets/mocks/get_user_deatil_by_id_error.json"
+  },
+  {
+    "uri": "insurance/v3/application/create",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/create_application_success.json",
+    "errorFile": "assets/mocks/create_application_error.json"
+  },
+  {
+    "uri": "insurance/v3/application/updateStage",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/update_stage_success.json",
+    "errorFile": "assets/mocks/update_stage_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/updateEnrollmentVerificationType/101212405",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/update_stage_success.json",
+    "errorFile": "assets/mocks/update_stage_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/verifyPhysicalSignature",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/verify_physical_signature_success.json",
+    "errorFile": "assets/mocks/verify_physical_signature_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/verifyOtp",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/verify_physical_signature_success.json",
+    "errorFile": "assets/mocks/verify_physical_signature_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/updateSelectedAccountHolder",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/update_stage_success.json",
+    "errorFile": "assets/mocks/update_stage_error.json"
+  },
+  {
+    "uri": "insurance/v3/application/getStageDetails/104753270",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_user_deatil_by_id_success.json",
+    "errorFile": "assets/mocks/get_user_deatil_by_id_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/getApplicationFormDetails/104753270",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_user_deatil_by_id_success.json",
+    "errorFile": "assets/mocks/get_user_deatil_by_id_error.json"
+  },
+  {
+    "uri": "insurance/v3/application/getStageDetails/104753270",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_user_deatil_by_id_success.json",
+    "errorFile": "assets/mocks/get_user_deatil_by_id_error.json"
+  },
+  {
+    "uri": "users/v3/login/otp",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/verify_login_otp_success.json",
+    "errorFile": "assets/mocks/verify_login_otp_success.json"
+  }
+]

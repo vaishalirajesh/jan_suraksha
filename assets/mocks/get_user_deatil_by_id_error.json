@@ -1,0 +1,29 @@
+{
+  "id": null,
+  "message": "Successfully Fetched Details",
+  "status": 500,
+  "data": {
+    "termsAccepted": true,
+    "otpVerified": true,
+    "emailVerified": true,
+    "email": "paresh.ibo@opl.com",
+    "isPasswordSet": true,
+    "mobile": "9016191077",
+    "firstName": "paresh",
+    "middleName": "m",
+    "lastName": "radadiya",
+    "modifiedDate": "2023-07-28T13:32:57.124+00:00",
+    "signUpDate": "2023-03-17T05:18:42.000+00:00",
+    "userId": 22,
+    "userRoleId": 9,
+    "isLocked": false,
+    "userRoleIdString": "Bank Officer",
+    "userOrgName": "Indian Bank"
+  },
+  "flag": true,
+  "branchList": null,
+  "listData": [],
+  "lastBusinessTypeId": null,
+  "file": null,
+  "fromCSC": null
+}

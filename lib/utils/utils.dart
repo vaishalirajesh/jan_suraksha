@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/services/common/keys.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 
 class AppUtils {
@@ -42,5 +44,17 @@ class AppUtils {
   static Future<bool> onWillPopScopeAuth() async {
     SystemNavigator.pop();
     return true;
+  }
+
+  static void setAccessToken(String? value) {
+    TGSharedPreferences.getInstance().set(PREF_ACCESS_TOKEN_SIDBI, value);
+  }
+
+  static Future<String?> getAccessToken() async {
+    return await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN_SIDBI);
+  }
+
+  static Future<void> removeToken() async {
+    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN_SIDBI);
   }
 }

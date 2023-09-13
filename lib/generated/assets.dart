@@ -4,52 +4,33 @@ class Assets {
 
   static const String bankselectionBob = 'assets/images/bankselection/bob.png';
   static const String bankselectionBoi = 'assets/images/bankselection/boi.png';
-  static const String bankselectionCanara =
-      'assets/images/bankselection/canara.png';
-  static const String bankselectionHdfc =
-      'assets/images/bankselection/hdfc.png';
+  static const String bankselectionCanara = 'assets/images/bankselection/canara.png';
+  static const String bankselectionHdfc = 'assets/images/bankselection/hdfc.png';
   static const String bankselectionPnb = 'assets/images/bankselection/pnb.png';
   static const String bankselectionSbi = 'assets/images/bankselection/sbi.png';
-  static const String dashboardHomeDisabled =
-      'assets/images/dashboard/home_disabled.svg';
-  static const String dashboardHomeEnabled =
-      'assets/images/dashboard/home_enabled.svg';
-  static const String dashboardNotifications =
-      'assets/images/dashboard/notifications.svg';
+  static const String dashboardHomeDisabled = 'assets/images/dashboard/home_disabled.svg';
+  static const String dashboardHomeEnabled = 'assets/images/dashboard/home_enabled.svg';
+  static const String dashboardNotifications = 'assets/images/dashboard/notifications.svg';
   static const String dashboardPolicy = 'assets/images/dashboard/policy.svg';
-  static const String dashboardProfileDisabled =
-      'assets/images/dashboard/profile_disabled.svg';
-  static const String dashboardProfileEnabled =
-      'assets/images/dashboard/profile_enabled.svg';
-  static const String dashboardSchemeLogo =
-      'assets/images/dashboard/scheme_logo.svg';
-  static const String dashboardServiceDisabled =
-      'assets/images/dashboard/service_disabled.svg';
-  static const String dashboardServiceEnabled =
-      'assets/images/dashboard/service_enabled.svg';
-  static const String dashboardSupportDisabled =
-      'assets/images/dashboard/support_disabled.svg';
-  static const String dashboardSupportEnabled =
-      'assets/images/dashboard/support_enabled.svg';
+  static const String dashboardProfileDisabled = 'assets/images/dashboard/profile_disabled.svg';
+  static const String dashboardProfileEnabled = 'assets/images/dashboard/profile_enabled.svg';
+  static const String dashboardSchemeLogo = 'assets/images/dashboard/scheme_logo.svg';
+  static const String dashboardServiceDisabled = 'assets/images/dashboard/service_disabled.svg';
+  static const String dashboardServiceEnabled = 'assets/images/dashboard/service_enabled.svg';
+  static const String dashboardSupportDisabled = 'assets/images/dashboard/support_disabled.svg';
+  static const String dashboardSupportEnabled = 'assets/images/dashboard/support_enabled.svg';
   static const String fontsOutfitBold = 'assets/fonts/Outfit-Bold.ttf';
-  static const String fontsOutfitExtraBold =
-      'assets/fonts/Outfit-ExtraBold.ttf';
+  static const String fontsOutfitExtraBold = 'assets/fonts/Outfit-ExtraBold.ttf';
   static const String fontsOutfitLight = 'assets/fonts/Outfit-Light.ttf';
   static const String fontsOutfitMedium = 'assets/fonts/Outfit-Medium.ttf';
   static const String fontsOutfitRegular = 'assets/fonts/Outfit-Regular.ttf';
   static const String fontsOutfitSemiBold = 'assets/fonts/Outfit-SemiBold.ttf';
   static const String imagesSplash = 'assets/images/splash.svg';
-  static const String imagesUserProfileIcon =
-      'assets/images/user_profile_icon.svg';
-  static const String profileProfilePersonalInfo =
-      'assets/images/profile/profile_personal_info.svg';
-  static const String profileProfilePrivacyPolicy =
-      'assets/images/profile/profile_privacy_policy.svg';
-  static const String profileProfileTermsAndConditions =
-      'assets/images/profile/profile_terms_and_conditions.svg';
+  static const String imagesUserProfileIcon = 'assets/images/user_profile_icon.svg';
+  static const String profileProfilePersonalInfo = 'assets/images/profile/profile_personal_info.svg';
+  static const String profileProfilePrivacyPolicy = 'assets/images/profile/profile_privacy_policy.svg';
+  static const String profileProfileTermsAndConditions = 'assets/images/profile/profile_terms_and_conditions.svg';
   static const String profileShare = 'assets/images/profile/share.svg';
-  static const String responsepageFatherWithChildren =
-      'assets/images/responsepage/father_with_children.svg';
-  static const String schemeSchemeselection =
-      'assets/images/scheme/schemeselection.svg';
+  static const String responsepageFatherWithChildren = 'assets/images/responsepage/father_with_children.svg';
+  static const String schemeSchemeselection = 'assets/images/scheme/schemeselection.svg';
 }

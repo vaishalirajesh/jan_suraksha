@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gstmobieservice_marketplace/common/tg_log.dart';
 import 'package:jan_suraksha/config/theme_config.dart';
 
 import 'constant/string_constant.dart';
@@ -20,7 +19,6 @@ class ThemeHelper {
   }
 
   static initTheme(String bankName) {
-    TGLog.d("Bank Name : $bankName");
     switch (bankName) {
       case AppString.jsBankName:
         theme = JSThemes.jsThemeMobile;

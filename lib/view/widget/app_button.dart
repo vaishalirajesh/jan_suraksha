@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:gstmobieservice_marketplace/util/jumpingdot_util.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
+
+import 'jumpingdot_util.dart';
 
 // Common button widget
 class AppButton extends StatelessWidget {
@@ -21,7 +22,7 @@ class AppButton extends StatelessWidget {
       height: 52.h,
       width: 1.sw,
       child: ElevatedButton(
-        onPressed: isButtonEnable.value ? onPress : null,
+        onPressed: onPress,
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorConfig.jsPrimaryColor,
           disabledBackgroundColor: ColorConfig.jsPrimaryDisableColor,
@@ -29,17 +30,19 @@ class AppButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(40.r),
           ),
         ),
-        child: isDataLoading.value
-            ? JumpingDots(
-                color: ColorConfig.jsWhiteColor,
-                radius: 7,
-              )
-            : Text(
-                title,
-                style: isButtonEnable.value
-                    ? StyleConfig.regularWhiteText16
-                    : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsLightBlackColor),
-              ),
+        child: Obx(() {
+          return isDataLoading.value
+              ? JumpingDots(
+                  color: ColorConfig.jsWhiteColor,
+                  radius: 7,
+                )
+              : Text(
+                  title,
+                  style: isButtonEnable.value
+                      ? StyleConfig.regularWhiteText16
+                      : StyleConfig.regularWhiteText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                );
+        }),
       ),
     );
   }

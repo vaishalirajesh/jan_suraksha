@@ -105,7 +105,7 @@ class LoginPage extends StatelessWidget {
                   onPress: loginLogic.onPressSentOTP,
                   title: AppString.sentOTP,
                   isButtonEnable: true.obs,
-                  isDataLoading: false.obs,
+                  isDataLoading: loginLogic.isLoading,
                 )
               ],
             ),

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/style_config.dart';
-import 'package:jan_suraksha/generated/assets.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 
 import '../../../../config/color_config.dart';

@@ -132,8 +132,7 @@ class BankSelectionPage extends StatelessWidget {
                     height: 10.h,
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.h, left: 10.h, right: 10.h),
+                    padding: EdgeInsets.only(top: 10.h, left: 10.h, right: 10.h),
                     child: SizedBox(
                       height: 40.h,
                       width: 240.w,
@@ -144,15 +143,12 @@ class BankSelectionPage extends StatelessWidget {
                         cursorColor: ColorConfig.jsPrimaryColor,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
-                          prefixIcon: Icon(Icons.search_rounded,
-                              color: ThemeHelper.getInstance()!.primaryColor),
+                          prefixIcon: Icon(Icons.search_rounded, color: ThemeHelper.getInstance()!.primaryColor),
                           labelText: "Search",
                           floatingLabelBehavior: FloatingLabelBehavior.never,
-                          hintStyle: TextStyle(
-                              color: ThemeHelper.getInstance()!.primaryColor),
+                          hintStyle: TextStyle(color: ThemeHelper.getInstance()!.primaryColor),
                           border: InputBorder.none,
-                          labelStyle: TextStyle(
-                              color: ThemeHelper.getInstance()!.primaryColor),
+                          labelStyle: TextStyle(color: ThemeHelper.getInstance()!.primaryColor),
                         ),
                       ),
                     ),
@@ -174,10 +170,7 @@ class BankSelectionPage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                    height: 30.r,
-                                    width: 30.r,
-                                    child: Image.asset(list[index])),
+                                SizedBox(height: 30.r, width: 30.r, child: Image.asset(list[index])),
                                 Center(
                                   child: Container(
                                     alignment: Alignment.center,
@@ -185,8 +178,7 @@ class BankSelectionPage extends StatelessWidget {
                                     child: Text(
                                       listname[index],
                                       textAlign: TextAlign.center,
-                                      style: StyleConfig.boldText16.copyWith(
-                                          color: Colors.black, fontSize: 10.sp),
+                                      style: StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 10.sp),
                                     ),
                                   ),
                                 ),
@@ -204,8 +196,7 @@ class BankSelectionPage extends StatelessWidget {
                     padding: EdgeInsets.only(left: 16.w),
                     child: Text(
                       "All Banks",
-                      style: StyleConfig.boldText16
-                          .copyWith(color: Colors.black, fontSize: 16.sp),
+                      style: StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 16.sp),
                     ),
                   ),
                   SizedBox(
@@ -215,16 +206,14 @@ class BankSelectionPage extends StatelessWidget {
                     height: 300.h,
                     child: ListView.separated(
                       itemCount: 7,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Divider(height: 1),
+                      separatorBuilder: (BuildContext context, int index) => Divider(height: 1),
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: ListTile(
                             title: Text(
                               '${banklist.keys.elementAt(index).toLowerCase().capitalize}',
-                              style: StyleConfig.mediumText16
-                                  .copyWith(fontSize: 13.sp),
+                              style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
                             ),
                           ),
                         );

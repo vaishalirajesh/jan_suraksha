@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:gstmobieservice_marketplace/common/tg_log.dart';
 import 'package:jan_suraksha/view/screen/journey/address_details/address_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/address_details/address_details_view.dart';
 
@@ -13,7 +12,6 @@ class ApplicationFormLogic extends GetxController {
       const Duration(seconds: 2),
     ).then((value) {
       isDataLoaded.value = true;
-      TGLog.d("On chnage load value----------${isDataLoaded.value}");
     });
     super.onInit();
   }

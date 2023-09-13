@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
@@ -8,11 +7,9 @@ import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 
 import '../../../../config/color_config.dart';
-import '../../../../generated/assets.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
 import '../../../widget/app_textfield.dart';
-import '../../homepage/dashboard/dashboard_view.dart';
 import 'customer_verification_logic.dart';
 
 class CustomerVerificationPage extends StatelessWidget {

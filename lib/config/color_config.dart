@@ -1,4 +1,4 @@
-import 'package:gstmobieservice_marketplace/util/color_util.dart';
+import 'dart:ui';
 
 class ColorConfig {
   static final jsPrimaryColor = HexColor('#F7BC38');
@@ -24,4 +24,16 @@ class ColorConfig {
   static final jsCardBgborderColor = HexColor("#EAF6FF");
   static final jstextLightGreyColor = HexColor("#666E7A");
   static final jsTextBlueGreyColor = HexColor("#7A86A1");
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

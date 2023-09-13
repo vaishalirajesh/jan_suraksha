@@ -17,6 +17,7 @@ class ResponseViewPage extends StatelessWidget {
   String titleMessege;
 
   String title;
+
   ResponseViewPage({
     required this.image,
     required this.title,

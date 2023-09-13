@@ -1,5 +1,3 @@
 import 'package:get/get.dart';
 
-class InSuffciantFundsPageLogic extends GetxController {
-
-}
+class InSuffciantFundsPageLogic extends GetxController {}

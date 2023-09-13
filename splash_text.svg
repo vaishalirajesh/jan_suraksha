@@ -1,27 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="328" height="229" viewBox="0 0 328 229">
-  <g id="Group_15325" data-name="Group 15325" transform="translate(-22 -92.892)">
-    <g id="Rectangle_8779" data-name="Rectangle 8779" transform="translate(22 92.892)" fill="#164e85" stroke="rgba(255,255,255,0.28)" stroke-width="1">
-      <rect width="328" height="229" rx="20" stroke="none"/>
-      <rect x="0.5" y="0.5" width="327" height="228" rx="19.5" fill="none"/>
+<svg height="229" viewBox="0 0 328 229" width="328" xmlns="http://www.w3.org/2000/svg">
+    <g data-name="Group 15325" id="Group_15325" transform="translate(-22 -92.892)">
+        <g data-name="Rectangle 8779" fill="#164e85" id="Rectangle_8779"
+            stroke="rgba(255,255,255,0.28)" stroke-width="1" transform="translate(22 92.892)">
+            <rect height="229" rx="20" stroke="none" width="328" />
+            <rect fill="none" height="228" rx="19.5" width="327" x="0.5" y="0.5" />
+        </g>
+        <text data-name="Welcome to Jansurksha" fill="#fff"
+            font-family="Manrope-Bold, Manrope" font-size="20" font-weight="700"
+            id="Welcome_to_Jansurksha" transform="translate(66 137.892)">
+            <tspan x="0" y="0">Welcome to Jansurksha</tspan>
+        </text>
+        <g data-name="Group 15324" id="Group_15324" transform="translate(0 7)">
+            <g data-name="Group 15323" id="Group_15323" transform="translate(0 114)">
+                <text data-name="Digital Policy Application" fill="#fff"
+                    font-family="Manrope-Regular, Manrope" font-size="12" id="Digital_Policy_Application"
+                    transform="translate(66 162.5)">
+                    <tspan x="0" y="13">Digital Policy Application</tspan>
+                </text>
+                <circle cx="4" cy="4" data-name="Ellipse 81" fill="#f7bc38" id="Ellipse_81"
+                    r="4" transform="translate(43 168)" />
+            </g>
+            <g data-name="Group 15322" id="Group_15322" transform="translate(0 82)">
+                <text data-name="End-to-end Digitized Journey" fill="#fff"
+                    font-family="Manrope-Regular, Manrope" font-size="12" id="End-to-end_Digitized_Journey"
+                    transform="translate(66 162.5)">
+                    <tspan x="0" y="13">End-to-end Digitized Journey</tspan>
+                </text>
+                <circle cx="4" cy="4" data-name="Ellipse 81" fill="#f7bc38" id="Ellipse_81-2"
+                    r="4" transform="translate(43 168)" />
+            </g>
+            <g data-name="Group 15321" id="Group_15321" transform="translate(0 50)">
+                <text data-name="Ease of access (Digital &amp; Integrated)"
+                    fill="#fff"
+                    font-family="Manrope-Regular, Manrope" font-size="12" id="Ease_of_access_Digital_Integrated_"
+                    transform="translate(66 162.5)">
+                    <tspan x="0" y="13">Ease of access (Digital &amp; Integrated)</tspan>
+                </text>
+                <circle cx="4" cy="4" data-name="Ellipse 81" fill="#f7bc38" id="Ellipse_81-3"
+                    r="4" transform="translate(43 168)" />
+            </g>
+            <g data-name="Group 15320" id="Group_15320">
+                <text data-name="Single Portal for Government Sponsored Insurances"
+                    fill="#fff"
+                    font-family="Manrope-Regular, Manrope" font-size="12" id="Single_Portal_for_Government_Sponsored_Insurances"
+                    transform="translate(66 162.5)">
+                    <tspan x="0" y="13">Single Portal for Government Sponsored</tspan>
+                    <tspan x="0" y="31">Insurances</tspan>
+                </text>
+                <circle cx="4" cy="4" data-name="Ellipse 81" fill="#f7bc38" id="Ellipse_81-4"
+                    r="4" transform="translate(43 168)" />
+            </g>
+        </g>
     </g>
-    <text id="Welcome_to_Jansurksha" data-name="Welcome to Jansurksha" transform="translate(66 137.892)" fill="#fff" font-size="20" font-family="Manrope-Bold, Manrope" font-weight="700"><tspan x="0" y="0">Welcome to Jansurksha</tspan></text>
-    <g id="Group_15324" data-name="Group 15324" transform="translate(0 7)">
-      <g id="Group_15323" data-name="Group 15323" transform="translate(0 114)">
-        <text id="Digital_Policy_Application" data-name="Digital Policy Application" transform="translate(66 162.5)" fill="#fff" font-size="12" font-family="Manrope-Regular, Manrope"><tspan x="0" y="13">Digital Policy Application</tspan></text>
-        <circle id="Ellipse_81" data-name="Ellipse 81" cx="4" cy="4" r="4" transform="translate(43 168)" fill="#f7bc38"/>
-      </g>
-      <g id="Group_15322" data-name="Group 15322" transform="translate(0 82)">
-        <text id="End-to-end_Digitized_Journey" data-name="End-to-end Digitized Journey" transform="translate(66 162.5)" fill="#fff" font-size="12" font-family="Manrope-Regular, Manrope"><tspan x="0" y="13">End-to-end Digitized Journey</tspan></text>
-        <circle id="Ellipse_81-2" data-name="Ellipse 81" cx="4" cy="4" r="4" transform="translate(43 168)" fill="#f7bc38"/>
-      </g>
-      <g id="Group_15321" data-name="Group 15321" transform="translate(0 50)">
-        <text id="Ease_of_access_Digital_Integrated_" data-name="Ease of access (Digital &amp; Integrated)" transform="translate(66 162.5)" fill="#fff" font-size="12" font-family="Manrope-Regular, Manrope"><tspan x="0" y="13">Ease of access (Digital &amp; Integrated)</tspan></text>
-        <circle id="Ellipse_81-3" data-name="Ellipse 81" cx="4" cy="4" r="4" transform="translate(43 168)" fill="#f7bc38"/>
-      </g>
-      <g id="Group_15320" data-name="Group 15320">
-        <text id="Single_Portal_for_Government_Sponsored_Insurances" data-name="Single Portal for Government Sponsored Insurances" transform="translate(66 162.5)" fill="#fff" font-size="12" font-family="Manrope-Regular, Manrope"><tspan x="0" y="13">Single Portal for Government Sponsored </tspan><tspan x="0" y="31">Insurances</tspan></text>
-        <circle id="Ellipse_81-4" data-name="Ellipse 81" cx="4" cy="4" r="4" transform="translate(43 168)" fill="#f7bc38"/>
-      </g>
-    </g>
-  </g>
 </svg>

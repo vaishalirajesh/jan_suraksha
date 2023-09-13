@@ -1,5 +1,3 @@
 import 'package:get/get.dart';
 
-class PolicyAvailedPageLogic extends GetxController {
-
-}
+class PolicyAvailedPageLogic extends GetxController {}

@@ -10,6 +10,7 @@ class GuradianDetailsLogic extends GetxController {
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController addressController = TextEditingController(text: '');
   TextEditingController relationWithApplicantController = TextEditingController(text: '');
+
   void onPressContinue() {
     Get.to(() => PreviewApplicationPage(), binding: PreviewApplicationBinding());
   }

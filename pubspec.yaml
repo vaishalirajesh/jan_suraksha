@@ -9,11 +9,11 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
 
-  # For API services
-  gstmobieservice_marketplace:
-    git:
-      url: https://github.com/capitawrld/gstsahaymobileappservice_marketplace.git
-      ref: main
+  #  # For API services
+  #  gstmobieservice_marketplace:
+  #    git:
+  #      url: https://github.com/capitawrld/gstsahaymobileappservice_marketplace.git
+  #      ref: main
 
   # For Get state management
   get: ^4.6.5
@@ -25,6 +25,19 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_string_extractor: 0.1.0
   expandable: ^5.0.1
+  http: ^1.1.0
+
+  # For encryption
+  asn1lib: ^1.5.0
+  crypto: ^3.0.3
+  pointycastle: ^3.7.3
+  intl: ^0.18.1
+  webcrypto: ^0.5.3
+  yaml: ^3.1.2
+  basic_utils: ^5.6.1
+
+  shared_preferences: ^2.2.1
+  uuid: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +60,8 @@ flutter:
     - splash_text.svg
     - splash_logo.svg
     - modiji.png
+    - assets/mocks/
+    - assets/config/
 
   fonts:
     - family: OutfitBold

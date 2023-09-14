@@ -10,4 +10,6 @@ class AppImages {
   static const String modiji = 'modiji.png';
   static const String splashLogo = 'splash_logo.svg';
   static const String splash_text = 'splash_text.svg';
+  static const String round1 = 'assets/images/round1.svg';
+  static const String round2 = 'assets/images/round2.svg';
 }

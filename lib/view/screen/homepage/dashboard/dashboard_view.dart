@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/generated/assets.dart';
+import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/profile/profile_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
@@ -18,6 +19,7 @@ import '../../../../config/style_config.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_button.dart';
 import 'dashboard_logic.dart';
+import 'dart:math' as math;
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
@@ -26,43 +28,43 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.find<DashboardLogic>();
     return Obx(() {
-      return SafeArea(
-        child: Scaffold(
-          body: Builder(builder: (context) {
-            switch (logic.index.value) {
-              case (0):
-                return HomePage();
-              case (1):
-                return ServicesPage();
-              case (2):
-                return SupportPage();
-              case (3):
-                return ProfilePage();
-              default:
-                return HomePage();
-            }
-          }),
-          bottomNavigationBar: BottomAppBar(
-              shape: const CircularNotchedRectangle(),
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.h),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 33.h,
+      return Scaffold(
+        body: Builder(builder: (context) {
+          switch (logic.index.value) {
+            case (0):
+              return HomePage();
+            case (1):
+              return ServicesPage();
+            case (2):
+              return SupportPage();
+            case (3):
+              return ProfilePage();
+            default:
+              return HomePage();
+          }
+        }),
+        bottomNavigationBar: BottomAppBar(
+            shape: const CircularNotchedRectangle(),
+            clipBehavior: Clip.antiAlias,
+            child: SizedBox(
+              // height: 50.h,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      logic.setIndex(0);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            child: logic.index.value == 0
-                                ? SvgPicture.asset(Assets.dashboardHomeEnabled)
-                                : SvgPicture.asset(Assets.dashboardHomeDisabled),
-                            onTap: () {
-                              logic.setIndex(0);
-                            },
-                          ),
+                          logic.index.value == 0
+                              ? SvgPicture.asset(Assets.dashboardHomeEnabled)
+                              : SvgPicture.asset(Assets.dashboardHomeDisabled),
                           SizedBox(
                             height: 2.h,
                           ),
@@ -75,18 +77,19 @@ class DashboardPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 33.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      logic.setIndex(1);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            child: logic.index.value == 1
-                                ? SvgPicture.asset(Assets.dashboardServiceEnabled)
-                                : SvgPicture.asset(Assets.dashboardServiceDisabled),
-                            onTap: () {
-                              logic.setIndex(1);
-                            },
-                          ),
+                          logic.index.value == 1
+                              ? SvgPicture.asset(Assets.dashboardServiceEnabled)
+                              : SvgPicture.asset(Assets.dashboardServiceDisabled),
                           SizedBox(
                             height: 2.h,
                           ),
@@ -99,42 +102,45 @@ class DashboardPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 33.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      logic.setIndex(2);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            child: logic.index.value == 2
-                                ? SvgPicture.asset(Assets.dashboardSupportEnabled)
-                                : SvgPicture.asset(Assets.dashboardSupportDisabled),
-                            onTap: () {
-                              logic.setIndex(2);
-                            },
-                          ),
+                          logic.index.value == 2
+                              ? SvgPicture.asset(Assets.dashboardSupportEnabled)
+                              : SvgPicture.asset(Assets.dashboardSupportDisabled),
                           SizedBox(
                             height: 2.h,
                           ),
                           Text(
                             AppString.str_support,
                             style: StyleConfig.regularText16.copyWith(
-                                color: logic.index.value == 2 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
-                                fontSize: 9.sp),
+                              color: logic.index.value == 2 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
+                              fontSize: 9.sp,
+                            ),
                           )
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 33.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      logic.setIndex(3);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            child: logic.index.value == 3
-                                ? SvgPicture.asset(Assets.dashboardProfileEnabled)
-                                : SvgPicture.asset(Assets.dashboardProfileDisabled),
-                            onTap: () {
-                              logic.setIndex(3);
-                            },
-                          ),
+                          logic.index.value == 3
+                              ? SvgPicture.asset(Assets.dashboardProfileEnabled)
+                              : SvgPicture.asset(Assets.dashboardProfileDisabled),
                           SizedBox(
                             height: 2.h,
                           ),
@@ -146,11 +152,11 @@ class DashboardPage extends StatelessWidget {
                           )
                         ],
                       ),
-                    )
-                  ],
-                ),
-              )),
-        ),
+                    ),
+                  )
+                ],
+              ),
+            )),
       );
     });
   }
@@ -177,7 +183,7 @@ class HomePage extends StatelessWidget {
                     Container(
                       color: ColorConfig.jsCreamColor,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
+                        padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

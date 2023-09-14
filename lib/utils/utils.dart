@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/services/common/keys.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
@@ -67,5 +68,26 @@ class AppUtils {
 
   static Future<void> removeToken() async {
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN_SIDBI);
+  }
+
+  static String convertIndianCurrency(String? amount) {
+    var moneyString;
+
+    var _amount = double.parse(amount ?? "0.0");
+
+    var formatter = NumberFormat.currency(
+      symbol: '\u{20B9}',
+      locale: "en_IN",
+      decimalDigits: 3,
+    );
+    formatter.maximumFractionDigits = 0;
+
+    if (_amount != null || _amount != 0.0) {
+      moneyString = formatter.format(_amount);
+    } else {
+      moneyString = formatter.format(0.0);
+    }
+
+    return moneyString;
   }
 }

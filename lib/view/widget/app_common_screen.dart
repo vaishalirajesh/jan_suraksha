@@ -47,28 +47,26 @@ class AddHeaderFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeHelper.getInstance()?.colorScheme.background,
-        appBar: getAppBar(),
-        resizeToAvoidBottomInset: true,
-        body: child,
-        bottomNavigationBar: isShowButton
-            ? Padding(
-                padding: EdgeInsets.only(
-                  left: 20.w,
-                  right: 20.w,
-                  bottom: 20.h,
-                ),
-                child: AppButton(
-                  onPress: onButtonClick,
-                  title: buttonTitle,
-                  isButtonEnable: isButtonEnable.obs,
-                  isDataLoading: isDataLoading.obs,
-                ),
-              )
-            : const SizedBox.shrink(),
-      ),
+    return Scaffold(
+      backgroundColor: ThemeHelper.getInstance()?.colorScheme.background,
+      appBar: getAppBar(),
+      resizeToAvoidBottomInset: true,
+      body: child,
+      bottomNavigationBar: isShowButton
+          ? Padding(
+              padding: EdgeInsets.only(
+                left: 20.w,
+                right: 20.w,
+                bottom: 20.h,
+              ),
+              child: AppButton(
+                onPress: onButtonClick,
+                title: buttonTitle,
+                isButtonEnable: isButtonEnable.obs,
+                isDataLoading: isDataLoading.obs,
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

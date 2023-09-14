@@ -29,7 +29,7 @@ class SplashScreenPage extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: 50.h),
+                SizedBox(height: 60.h),
                 SvgPicture.asset(AppImages.splashLogo),
                 SizedBox(height: 40.h),
                 SvgPicture.asset(AppImages.splash_text),

@@ -54,17 +54,17 @@ class ProfilePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
-                                  height: 30.r,
-                                  width: 30.r,
+                                  height: 32.r,
+                                  width: 32.r,
                                   decoration: BoxDecoration(
                                     color: ColorConfig.jsLightGreyColor,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: SizedBox(
-                                      height: 10.r,
-                                      width: 10.r,
+                                      height: 12.r,
+                                      width: 12.r,
                                       child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
                                     ),
                                   )),
@@ -102,14 +102,14 @@ class ProfilePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
-                                  height: 30.r,
-                                  width: 30.r,
+                                  height: 32.r,
+                                  width: 32.r,
                                   decoration: BoxDecoration(
                                     color: ColorConfig.jsLightGreyColor,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: SizedBox(
                                       height: 10.r,
                                       width: 10.r,
@@ -150,14 +150,14 @@ class ProfilePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
-                                  height: 30.r,
-                                  width: 30.r,
+                                  height: 32.r,
+                                  width: 32.r,
                                   decoration: BoxDecoration(
                                     color: ColorConfig.jsLightGreyColor,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: SizedBox(
                                       height: 10.r,
                                       width: 10.r,
@@ -198,14 +198,14 @@ class ProfilePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
-                                  height: 30.r,
-                                  width: 30.r,
+                                  height: 32.r,
+                                  width: 32.r,
                                   decoration: BoxDecoration(
                                     color: ColorConfig.jsLightGreyColor,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: SizedBox(
                                       height: 10.r,
                                       width: 10.r,

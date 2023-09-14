@@ -5,6 +5,7 @@ import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
 import 'package:jan_suraksha/view/widget/selection.dart';
 
@@ -16,39 +17,59 @@ class AccountSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.find<Account_Selection_Logic>();
-    return AddHeaderFooter(
-      title: "Account Holder Details ",
-      appbarName: AppString.appBarWithTitle,
-      buttonTitle: "Continue",
-      onButtonClick: () {
-        Get.toNamed(PolicyAvailedPageRoute);
-      },
-      isDataLoading: false,
-      isButtonEnable: true,
-      isShowButton: true,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 25.h,
-          ),
-          Center(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text(
-              "Please select an account holder to proceed",
-              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
+    return WillPopScope(
+      onWillPop: AppUtils.onWillPopToDashboard,
+      child: AddHeaderFooter(
+        title: "Account Holder Details ",
+        appbarName: AppString.appBarWithTitle,
+        buttonTitle: "Continue",
+        onButtonClick: () {
+          Get.toNamed(PolicyAvailedPageRoute);
+        },
+        onBackButtonCLick: AppUtils.onBackToDashboard,
+        isDataLoading: false,
+        isButtonEnable: true,
+        isShowButton: true,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 25.h,
             ),
-          )),
-          SizedBox(
-            height: 25.h,
-          ),
-          Center(
-            child: Padding(
+            Center(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Text(
+                "Please select an account holder to proceed",
+                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
+              ),
+            )),
+            SizedBox(
+              height: 25.h,
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Obx(() {
+                  return SelectionWidget(
+                    isSelected: !logic.selectedWidget.value,
+                    index: 1,
+                    userName: "Mrs. Kajal XXXXX XXXXX",
+                    cifNumber: '12345678',
+                    accountNumber: 'XXX12045',
+                    onChnage: logic.onChangeSelection,
+                  );
+                }),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Obx(() {
                 return SelectionWidget(
-                  isSelected: !logic.selectedWidget.value,
-                  index: 1,
+                  isSelected: logic.selectedWidget.value,
+                  index: 2,
                   userName: "Mrs. Kajal XXXXX XXXXX",
                   cifNumber: '12345678',
                   accountNumber: 'XXX12045',
@@ -56,24 +77,8 @@ class AccountSelectionPage extends StatelessWidget {
                 );
               }),
             ),
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Obx(() {
-              return SelectionWidget(
-                isSelected: logic.selectedWidget.value,
-                index: 2,
-                userName: "Mrs. Kajal XXXXX XXXXX",
-                cifNumber: '12345678',
-                accountNumber: 'XXX12045',
-                onChnage: logic.onChangeSelection,
-              );
-            }),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

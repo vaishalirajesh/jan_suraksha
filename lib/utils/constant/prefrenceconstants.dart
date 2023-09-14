@@ -3,7 +3,9 @@ var refreshtoken = "";
 
 String? sessionkey = "";
 
+
 const PREF_GSTIN = "gstin";
+const PREF_LOGIN_RES = "login_response";
 const PREF_REFRESHTOKEN = "refreshtoken";
 const PREF_MOBILE = "mobileNumber";
 const PREF_PANNO = "panNo";

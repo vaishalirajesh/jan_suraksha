@@ -32,13 +32,14 @@ class VerifyOtpLogic extends GetxController {
 
   Future<void> onPressSubmit() async {
     if (otp.value.length == 4) {
-      if (await NetUtils.isInternetAvailable()) {
-        verifyOtp();
-      } else {
-        if (Get.context!.mounted) {
-          showSnackBarForintenetConnection(Get.context!, verifyOtp);
-        }
-      }
+      Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+      // if (await NetUtils.isInternetAvailable()) {
+      //   verifyOtp();
+      // } else {
+      //   if (Get.context!.mounted) {
+      //     showSnackBarForintenetConnection(Get.context!, verifyOtp);
+      //   }
+      // }
     } else {
       isValideOTP.value = false;
     }

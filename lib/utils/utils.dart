@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/services/common/keys.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 
 class AppUtils {
   static String path(str) {
@@ -34,6 +36,15 @@ class AppUtils {
 
   static Future<bool> onWillPopScope() async {
     Get.back();
+    return true;
+  }
+
+  static void onBackToDashboard() {
+    Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+  }
+
+  static Future<bool> onWillPopToDashboard() async {
+    Get.offAll(() => DashboardPage(), binding: DashboardBinding());
     return true;
   }
 

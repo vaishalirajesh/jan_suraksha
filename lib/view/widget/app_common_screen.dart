@@ -17,6 +17,7 @@ class AddHeaderFooter extends StatelessWidget {
     required this.onButtonClick,
     required this.isDataLoading,
     required this.isButtonEnable,
+    required this.onBackButtonCLick,
     this.isShowButton = true,
     this.subTitle = '',
   }) : super(key: key);
@@ -26,7 +27,7 @@ class AddHeaderFooter extends StatelessWidget {
   String subTitle = '';
   String buttonTitle = '';
   VoidCallback onButtonClick;
-  VoidCallback onBackButtonCLick = () {};
+  VoidCallback onBackButtonCLick;
   bool isButtonEnable = false;
   bool isDataLoading = false;
   bool isShowButton = true;

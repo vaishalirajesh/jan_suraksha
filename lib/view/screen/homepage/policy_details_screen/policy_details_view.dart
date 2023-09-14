@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 
 import 'policy_details_logic.dart';
 
@@ -10,6 +11,9 @@ class PolicyDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return WillPopScope(
+      onWillPop: AppUtils.onWillPopToDashboard,
+      child: Container(),
+    );
   }
 }

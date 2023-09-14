@@ -23,14 +23,12 @@ class CertificateInsurencePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        Get.offAll(() => DashboardPage(), binding: DashboardBinding());
-        return true;
-      },
+      onWillPop: AppUtils.onWillPopToDashboard,
       child: AddHeaderFooter(
         appbarName: AppString.appBarWithTitle,
         title: AppString.insuranceTitle,
         buttonTitle: AppString.download,
+        onBackButtonCLick: AppUtils.onBackToDashboard,
         onButtonClick: () {},
         isDataLoading: false,
         isButtonEnable: true,

@@ -20,9 +20,4 @@ const String KEY_OBJ_TASKS = "objTasks";
 const String KEY_OBJ_TASK = "objTask";
 
 //Headers
-const String PREF_ACCESS_TOKEN_SIDBI = 'access_token_sidbi';
-const String PREF_ACCESS_TOKEN_PNB = 'access_token_pnb';
-const String PREF_ACCESS_TOKEN_JAK = 'access_token_jak';
-const String PREF_ACCESS_TOKEN_IB = 'access_token_ib';
-const String PREF_ACCESS_TOKEN_UBI = 'access_token_ubi';
-const String PREF_ACCESS_TOKEN_SBI = 'access_token_sbi';
+const String PREF_ACCESS_TOKEN_SIDBI = 'access_token';

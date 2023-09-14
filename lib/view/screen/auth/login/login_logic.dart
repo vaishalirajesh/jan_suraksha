@@ -18,11 +18,10 @@ import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/session_constant.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
-import 'package:jan_suraksha/utils/internetcheckdialog.dart';
-import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/auth/verify_otp/verify_otp_binding.dart';
 import 'package:jan_suraksha/view/screen/auth/verify_otp/verify_otp_view.dart';
+import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class LoginLogic extends GetxController {
   TextEditingController mobileController = TextEditingController(text: '');
@@ -41,13 +40,22 @@ class LoginLogic extends GetxController {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (mobileController.text.length == 10 && validCharacters.hasMatch(mobileController.text)) {
         errorMsg.value = '';
-        if (await NetUtils.isInternetAvailable()) {
-          loginRequest();
-        } else {
-          if (Get.context!.mounted) {
-            showSnackBarForintenetConnection(Get.context!, loginRequest);
-          }
-        }
+
+        ///TODO: Remove Navigation and uncomment API call
+        // if (await NetUtils.isInternetAvailable()) {
+        //   loginRequest();
+        // } else {
+        //   if (Get.context!.mounted) {
+        //     showSnackBarForintenetConnection(Get.context!, loginRequest);
+        //   }
+        // }
+        Get.to(
+          () => const VerifyOtpPage(),
+          binding: VerifyOtpBinding(),
+          arguments: {
+            AppArguments.mobileNumber: mobile.value,
+          },
+        );
       } else {
         errorMsg.value = 'Please enter valid mobile number';
       }
@@ -57,7 +65,6 @@ class LoginLogic extends GetxController {
 
   Future<void> loginRequest() async {
     isLoading.value = true;
-    TGSession.getInstance().set(SESSION_MOBILENUMBER, mobileController.text);
     LoginRequest loginRequest = LoginRequest(
       email: 'paresh.bo@opl.com',
       password: 'Admin@123',
@@ -84,7 +91,9 @@ class LoginLogic extends GetxController {
     TGLog.d("LoginRequest : onSuccess()---$response");
     if (response.getLoginResponseData().status == RES_SUCCESS) {
       AppUtils.setAccessToken(response.getLoginResponseData().accessToken);
-      TGSharedPreferences.getInstance().set(PREF_MOBILE, mobileController.text);
+      TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
+      TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
+      TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile);
       setAccessTokenInRequestHeader();
       isLoading.value = false;
       Get.offAll(
@@ -97,9 +106,8 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in login");
       isLoading.value = false;
-
-      // LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0,
-      //     response?.getLoginResponseData()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0,
+          response?.getLoginResponseData()?.message ?? "", null);
     }
   }
 

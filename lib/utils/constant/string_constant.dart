@@ -186,4 +186,3 @@ class AppString {
       'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
 // static const String e = '';
 }
-̵

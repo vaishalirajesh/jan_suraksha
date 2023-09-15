@@ -114,7 +114,7 @@ class PreviewApplicationPage extends StatelessWidget {
                           ),
                           const DisableTextField(
                             isMandatory: false,
-                            initialvale: 'abc insurer pvt. ltd.',
+                            initialvale: 'SBI Life Insurance',
                             title: AppString.insurerName,
                             isReadOnly: true,
                           ),
@@ -142,7 +142,7 @@ class PreviewApplicationPage extends StatelessWidget {
                           ),
                           const DisableTextField(
                             isMandatory: false,
-                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX sfsf sbfdhs hsgdfgsf kfs',
+                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX',
                             title: AppString.addressLine2,
                             isReadOnly: true,
                           ),
@@ -278,8 +278,8 @@ class PreviewApplicationPage extends StatelessWidget {
                             height: 15.h,
                           ),
                           const DisableTextField(
-                            isMandatory: true,
-                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX sfsf sbfdhs hsgdfgsf kfs',
+                            isMandatory: false,
+                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX',
                             title: AppString.addressLine2,
                             isReadOnly: true,
                           ),

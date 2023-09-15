@@ -24,6 +24,7 @@ class ColorConfig {
   static final jsCardBgborderColor = HexColor("#EAF6FF");
   static final jstextLightGreyColor = HexColor("#666E7A");
   static final jsTextBlueGreyColor = HexColor("#7A86A1");
+  static final jsSearchTextGreyColor = HexColor("#777777");
 }
 
 class HexColor extends Color {

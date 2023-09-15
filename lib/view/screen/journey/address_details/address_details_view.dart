@@ -47,7 +47,7 @@ class AddressDetailsPage extends StatelessWidget {
                           ),
                           const DisableTextField(
                             isMandatory: false,
-                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX sfsf sbfdhs hsgdfgsf kfs',
+                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX',
                             title: AppString.addressLine2,
                             isReadOnly: true,
                           ),

@@ -201,7 +201,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                         style: StyleConfig.smallText,
                       ),
                       TextSpan(
-                        text: AppString.tcText21,
+                        text: AppString.tcText26,
                         style: StyleConfig.smallText.copyWith(
                           color: ColorConfig.jsLightBlackColor,
                           fontFamily: JSFonts.outfitBold,
@@ -237,7 +237,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                         style: StyleConfig.smallText,
                       ),
                       TextSpan(
-                        text: AppString.tcText21,
+                        text: AppString.tcText25,
                         style: StyleConfig.smallText.copyWith(
                           color: ColorConfig.jsLightBlackColor,
                           fontFamily: JSFonts.outfitBold,
@@ -273,7 +273,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                         style: StyleConfig.smallText,
                       ),
                       TextSpan(
-                        text: AppString.tcText21,
+                        text: AppString.tcText27,
                         style: StyleConfig.smallText.copyWith(
                           color: ColorConfig.jsLightBlackColor,
                           fontFamily: JSFonts.outfitBold,

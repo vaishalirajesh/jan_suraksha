@@ -136,23 +136,22 @@ class BankSelectionPage extends StatelessWidget {
                       height: 10.h,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.h, left: 10.h, right: 10.h),
-                      child: SizedBox(
-                        height: 40.h,
-                        width: 240.w,
-                        child: TextField(
-                          autofocus: false,
-                          style: StyleConfig.regularText16,
-                          onChanged: (_) {},
-                          cursorColor: ColorConfig.jsPrimaryColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 10.h),
-                            prefixIcon: Icon(Icons.search_rounded, color: ThemeHelper.getInstance()!.primaryColor),
-                            labelText: "Search",
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            hintStyle: TextStyle(color: ThemeHelper.getInstance()!.primaryColor),
-                            border: InputBorder.none,
-                            labelStyle: TextStyle(color: ThemeHelper.getInstance()!.primaryColor),
+                      padding: EdgeInsets.only(top: 5.h, left: 10.h, right: 10.h),
+                      child: TextField(
+                        autofocus: false,
+                        style: StyleConfig.regularText16,
+                        onChanged: (_) {},
+                        cursorColor: ColorConfig.jsPrimaryColor,
+                        scrollPadding: EdgeInsets.zero,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          prefixIcon: Icon(Icons.search_rounded, color: ThemeHelper.getInstance()!.primaryColor),
+                          labelText: "Search your bank",
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          hintStyle: StyleConfig.regularText16.copyWith(color: ColorConfig.jsSearchTextGreyColor),
+                          border: InputBorder.none,
+                          labelStyle: StyleConfig.regularText16.copyWith(
+                            color: ColorConfig.jsSearchTextGreyColor,
                           ),
                         ),
                       ),

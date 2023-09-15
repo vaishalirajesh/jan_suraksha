@@ -159,8 +159,10 @@ class CustomerVerificationPage extends StatelessWidget {
                     child: AppTextField(
                       hintText: 'Enter Date Of Birth',
                       controller: logic.dobTextController,
-                      isReadOnly: false,
+                      isReadOnly: true,
                       isMandatory: true,
+                      onTap: logic.selectDate,
+                      isDobField: true,
                     ),
                   ),
                   SizedBox(

@@ -75,7 +75,10 @@ class NomineeDetailsPage extends StatelessWidget {
                             isMandatory: true,
                             title: AppString.dateOfBirth,
                             controller: nomineeDetailsLogic.dobController,
-                            hintText: AppString.dateOfBirth,
+                            hintText: AppString.dateOfBirthType,
+                            isDobField: true,
+                            isReadOnly: true,
+                            onTap: nomineeDetailsLogic.selectDate,
                           ),
                           SizedBox(
                             height: 15.h,
@@ -182,7 +185,7 @@ class NomineeDetailsPage extends StatelessWidget {
                             height: 15.h,
                           ),
                           AppTextField(
-                            isMandatory: true,
+                            isMandatory: false,
                             title: AppString.addressLine2,
                             controller: nomineeDetailsLogic.addressTwoController,
                             hintText: AppString.enterAddress,

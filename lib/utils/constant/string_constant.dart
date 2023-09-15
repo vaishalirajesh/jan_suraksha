@@ -3,7 +3,7 @@ class AppString {
   static const String appBarWithSubtitle = 'appBarWithSubtitle';
   static const String appBarWithNotification = 'appBarWithNotification';
   static const String mobileNumber = 'Mobile Number';
-  static const String enterMobileNumber = 'enter mobile number';
+  static const String enterMobileNumber = 'Enter mobile number';
   static const String emptyText = '';
   static const String jsBankName = 'JanSuraksha';
   static const String mandatorySign = '*';
@@ -15,7 +15,7 @@ class AppString {
   static const String sentOTP = 'Send OTP';
   static const String submit = 'Submit';
   static const String notReceiveCode = "Didn't receive it? ";
-  static const String resendCode = "Resend the code";
+  static const String resendCode = "Resend OTP";
   static const String startJourneyText = 'Start your journey with';
   static const String happy_to_have_you_onboard =
       "Happy to have you onboard! \nLet's start by finding out which insurance you need.";
@@ -78,6 +78,7 @@ class AppString {
   static const String lastName = 'Last Name';
   static const String fatherName = 'Father/Husband Name';
   static const String dateOfBirth = 'Date of Birth';
+  static const String dateOfBirthType = 'DD / MM / YYYY';
   static const String relationWithApplicant = 'Relationship With The Applicant';
   static const String emailId = 'Email ID';
   static const String insurerName = 'Insurer Name';
@@ -94,20 +95,20 @@ class AppString {
   static const String selectRelation = 'Select Relationship';
   static const String nomineeDetails = 'Nominee Details';
   static const String gaurdianDetails = 'Guardian / Appointee Details';
-  static const String enterlastName = 'Enter Your Last Name';
-  static const String enterFirstName = 'Enter Your First Name';
-  static const String enterMiddleName = 'Enter Your Middle Name';
-  static const String enter = 'Enter Your Last Name';
+  static const String enterlastName = 'Enter Last Name';
+  static const String enterFirstName = 'Enter First Name';
+  static const String enterMiddleName = 'Enter Middle Name';
+  static const String enter = 'Enter Last Name';
   static const String enterDOB = 'DD / MM / YYYY';
   static const String enterMobile = 'Enter Mobile Number';
   static const String enterEmail = 'Enter Email ID';
   static const String enterAddress = 'Enter Address';
-  static const String enterCity = 'Select City';
-  static const String enterState = 'Select State';
-  static const String enterDisctrict = 'Select District';
+  static const String enterCity = 'Enter City';
+  static const String enterState = 'Enter State';
+  static const String enterDisctrict = 'Enter District';
   static const String enterPincode = 'Enter Pincode';
-  static const String enterYourName = 'Enter Your Name';
-  static const String enterYourAddress = 'Enter Your Address';
+  static const String enterYourName = 'Enter Name';
+  static const String enterYourAddress = 'Enter Address';
   static const String nomineeAddress = 'Nominee Address Details';
   static const String applicantAdd = "Same as Applicant's address";
   static const String appDetail = '1. Applicant Details';
@@ -149,6 +150,10 @@ class AppString {
   static const String tcText23 = 'd. March, April & May – 1 Quarterly premium @ ';
   static const String tcText24 =
       'e. Risk cover will start from the date of auto-debit of premium from the account of the subscriber.';
+  static const String tcText25 = 'Rs. 342/-';
+  static const String tcText26 = 'Rs. 436/-';
+  static const String tcText27 = 'Rs. 228/-';
+
   static const String download = 'Download';
   static const String ackInsurance = 'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
   static const String yojna = 'Pradhan Mantri Jeevan Jyoti Bima Yojana';
@@ -172,12 +177,13 @@ class AppString {
   static const String insurance2 =
       "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
   static const String insurance3 = 'The terms and conditions of the scheme are available at ';
-  static const String insurance4 = 'https://jansuraksha.gov.in';
-  static const String insurance5 = 'Signature of authorised official of bank / post office';
+  static const String insurance4 = ' https://jansuraksha.in/';
+  static const String insurance5 = 'This is a system generated document. No signature required.';
   static const String insurance6 = 'Date : 29/03/2022';
-  static const String insurenceScheme = 'Government Sponsored Social Insurance Schemes';
+  static const String insurenceScheme = "Government's Social Security Insurance Schemes ";
   static const String subjectText = "* Subject to Terms and Condition applied";
   static const String pmsbyText =
       'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
 // static const String e = '';
 }
+̵

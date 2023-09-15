@@ -101,7 +101,7 @@ class ApplicationFormPage extends StatelessWidget {
                           ),
                           const DisableTextField(
                             isMandatory: true,
-                            initialvale: 'abc insurer pvt. ltd.',
+                            initialvale: 'SBI Life Insurance',
                             title: AppString.insurerName,
                             isReadOnly: true,
                           ),

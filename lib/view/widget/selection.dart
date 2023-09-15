@@ -75,17 +75,17 @@ class SelectionWidget extends StatelessWidget {
                       SizedBox(
                         height: 5.h,
                       ),
-                      Text(
-                        "${AppString.cifNo}$cifNumber",
-                        style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsGreyColor),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Text(
-                        "${AppString.accountNo}$accountNumber",
-                        style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsGreyColor),
-                      ),
+                      // Text(
+                      //   "${AppString.cifNo}$cifNumber",
+                      //   style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsGreyColor),
+                      // ),
+                      // SizedBox(
+                      //   height: 5.h,
+                      // ),
+                      // Text(
+                      //   "${AppString.accountNo}$accountNumber",
+                      //   style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsGreyColor),
+                      // ),
                     ],
                   ),
                 ),

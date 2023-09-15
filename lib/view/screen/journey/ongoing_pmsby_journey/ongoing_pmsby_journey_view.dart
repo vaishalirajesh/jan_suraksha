@@ -74,7 +74,7 @@ class OngoingPmsbyJourneyPage extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Text(
-                                  AppString.str_policy_for,
+                                  "Policy for PMSBY",
                                   style: StyleConfig.mediumText16
                                       .copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                 )

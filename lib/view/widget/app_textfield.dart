@@ -17,11 +17,13 @@ class AppTextField extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.isReadOnly = false,
+    this.isDobField = false,
     this.title = '',
     this.isAutoFocus = false,
     this.prefixText = '',
     required this.isMandatory,
     this.errorText = '',
+    this.onTap,
   }) : super(key: key);
   final String hintText;
   final String title;
@@ -32,11 +34,13 @@ class AppTextField extends StatelessWidget {
   final TextInputType? inputType;
   final TextEditingController controller;
   final void Function(String)? onChanged;
+  final void Function()? onTap;
   final bool isReadOnly;
   final bool isMandatory;
   final bool isAutoFocus;
   final String prefixText;
   final String? errorText;
+  final bool isDobField;
 
   @override
   Widget build(BuildContext context) {
@@ -87,21 +91,21 @@ class AppTextField extends StatelessWidget {
                     style: StyleConfig.smallText,
                   )
                 : const SizedBox.shrink(),
-            fillColor: isReadOnly
+            fillColor: isReadOnly && !isDobField
                 ? ThemeHelper.getInstance()!.colorScheme.surface
                 : ThemeHelper.getInstance()!.colorScheme.background,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               borderSide: BorderSide(
                 width: 1,
-                color: isReadOnly
+                color: isReadOnly && !isDobField
                     ? ThemeHelper.getInstance()!.colorScheme.surface
                     : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: isReadOnly
+                  color: isReadOnly && !isDobField
                       ? ThemeHelper.getInstance()!.colorScheme.surface
                       : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
                   width: 1.0),
@@ -112,6 +116,7 @@ class AppTextField extends StatelessWidget {
           ),
           onChanged: onChanged,
           autofocus: isAutoFocus,
+          onTap: onTap,
         ),
       ],
     );

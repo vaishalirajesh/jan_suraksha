@@ -116,7 +116,7 @@ class SelectSchemePage extends StatelessWidget {
                                                     Center(
                                                       child: Column(
                                                         mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           SizedBox(
                                                             height: 20.h,
@@ -130,7 +130,7 @@ class SelectSchemePage extends StatelessWidget {
                                                             height: 5.h,
                                                           ),
                                                           Text(
-                                                            "₹ 436",
+                                                            "₹436",
                                                             style: StyleConfig.boldText20.copyWith(
                                                                 color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
                                                           )
@@ -213,7 +213,7 @@ class SelectSchemePage extends StatelessWidget {
                                                     Center(
                                                       child: Column(
                                                         mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           SizedBox(
                                                             height: 20.h,
@@ -227,7 +227,7 @@ class SelectSchemePage extends StatelessWidget {
                                                             height: 5.h,
                                                           ),
                                                           Text(
-                                                            "₹ 436",
+                                                            "₹20",
                                                             style: StyleConfig.boldText20.copyWith(
                                                                 color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
                                                           )

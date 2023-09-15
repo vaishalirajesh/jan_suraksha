@@ -53,7 +53,7 @@ class AccountSelectionPage extends StatelessWidget {
                   return SelectionWidget(
                     isSelected: !logic.selectedWidget.value,
                     index: 1,
-                    userName: "Mrs. Kajal XXXXX XXXXX",
+                    userName: "Mrs. Kajal ",
                     cifNumber: '12345678',
                     accountNumber: 'XXX12045',
                     onChnage: logic.onChangeSelection,
@@ -70,7 +70,7 @@ class AccountSelectionPage extends StatelessWidget {
                 return SelectionWidget(
                   isSelected: logic.selectedWidget.value,
                   index: 2,
-                  userName: "Mrs. Kajal XXXXX XXXXX",
+                  userName: "Mrs. Kajal ",
                   cifNumber: '12345678',
                   accountNumber: 'XXX12045',
                   onChnage: logic.onChangeSelection,

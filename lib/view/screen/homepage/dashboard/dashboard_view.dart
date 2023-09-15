@@ -591,34 +591,15 @@ class HomePage extends StatelessWidget {
                               SizedBox(
                                 height: 5.w,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    child: Transform(
-                                      transform: new Matrix4.identity()..scale(0.8),
-                                      child: Center(
-                                        child: Chip(
-                                          label: Text(
-                                            AppString.str_active_policy,
-                                            style: StyleConfig.smallTextLight
-                                                .copyWith(color: Colors.white, fontSize: 14.sp),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 30.w, top: 6.h),
+                                  child: Text(
+                                    AppString.str_amount,
+                                    style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
                                   ),
-                                  SizedBox(),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 30.w, top: 6.h),
-                                    child: Text(
-                                      AppString.str_amount,
-                                      style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
-                                    ),
-                                  ),
-                                  SizedBox()
-                                ],
+                                ),
                               ),
                               ListViewButtons(onPress: () {}, title: "Continue Journey")
                             ],

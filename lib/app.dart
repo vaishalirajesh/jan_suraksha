@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
@@ -23,6 +24,14 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+    ));
+
     super.initState();
   }
 
@@ -48,7 +57,7 @@ class _MainAppState extends State<MainApp> {
       return GetPageRoute(
         settings: settings,
         page: () => ServicesPage(),
-        binding: ServicesBinding(),
+        binding: ServicesTabBinding(),
       );
     }
 

@@ -96,7 +96,7 @@ class NavigationConfig {
       GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
       GetPage(name: PolicyDetailsPageRoute, page: () => PolicyDetailsPage(), binding: PolicyDetailsBinding()),
       GetPage(name: ProfilePageRoute, page: () => ProfilePage(), binding: ProfileBinding()),
-      GetPage(name: ServicesPageRoute, page: () => ServicesPage(), binding: ServicesBinding()),
+      GetPage(name: ServicesPageRoute, page: () => ServicesPage(), binding: ServicesTabBinding()),
       GetPage(name: SupportPageRoute, page: () => SupportPage(), binding: SupportBinding()),
       GetPage(name: AccountSelectionPageRoute, page: () => AccountSelectionPage(), binding: AccountSelectionBinding()),
       GetPage(name: AddressDetailsPageRoute, page: () => AddressDetailsPage(), binding: AddressDetailsBinding()),

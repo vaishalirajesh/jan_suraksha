@@ -10,7 +10,7 @@ class UpdateSelectedAccountHolderResponseMain {
     dynamic id,
     String? message,
     dynamic data,
-    num? status,
+    int? status,
     bool? flag,
   }) {
     _id = id;
@@ -30,13 +30,13 @@ class UpdateSelectedAccountHolderResponseMain {
   dynamic _id;
   String? _message;
   dynamic _data;
-  num? _status;
+  int? _status;
   bool? _flag;
   UpdateSelectedAccountHolderResponseMain copyWith({
     dynamic id,
     String? message,
     dynamic data,
-    num? status,
+    int? status,
     bool? flag,
   }) =>
       UpdateSelectedAccountHolderResponseMain(
@@ -49,7 +49,7 @@ class UpdateSelectedAccountHolderResponseMain {
   dynamic get id => _id;
   String? get message => _message;
   dynamic get data => _data;
-  num? get status => _status;
+  int? get status => _status;
   bool? get flag => _flag;
 
   Map<String, dynamic> toJson() {

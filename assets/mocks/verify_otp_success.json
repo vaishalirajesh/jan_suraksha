@@ -1,0 +1,22 @@
+{
+  "id": null,
+  "message": "SuccessFully Verified OTP",
+  "data": [
+    {
+      "id": null,
+      "applicationId": 101212406,
+      "accountHolderName": "Ankit Varshney",
+      "cif": "4561234567",
+      "dob": "30/05/1990",
+      "gender": "M",
+      "pmjjbyExists": false,
+      "pmsbyExists": false,
+      "kycUpdated": true,
+      "customerAccountNumber": "4523542102",
+      "urnCode": "JNS-PMJJBY-2023-24-101212406-2392",
+      "sizeOfACHolder": 1
+    }
+  ],
+  "status": 200,
+  "flag": true
+}

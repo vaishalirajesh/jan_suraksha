@@ -59,15 +59,15 @@ class AppUtils {
   }
 
   static void setAccessToken(String? value) {
-    TGSharedPreferences.getInstance().set(PREF_ACCESS_TOKEN_SIDBI, value);
+    TGSharedPreferences.getInstance().set(PREF_ACCESS_TOKEN, value);
   }
 
   static Future<String?> getAccessToken() async {
-    return await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN_SIDBI);
+    return await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN);
   }
 
   static Future<void> removeToken() async {
-    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN_SIDBI);
+    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
   }
 
   static String convertIndianCurrency(String? amount) {

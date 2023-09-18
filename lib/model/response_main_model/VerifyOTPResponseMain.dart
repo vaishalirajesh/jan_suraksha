@@ -1,14 +1,93 @@
 import 'dart:convert';
 
-UpdateSelectedAccountHolderRequest updateSelectedAccountHolderRequestFromJson(String str) =>
-    UpdateSelectedAccountHolderRequest.fromJson(json.decode(str));
+VerifyOtpResponseMain verifyOtpResponseMainFromJson(String str) => VerifyOtpResponseMain.fromJson(json.decode(str));
+String verifyOtpResponseMainToJson(VerifyOtpResponseMain data) => json.encode(data.toJson());
 
-String updateSelectedAccountHolderRequestToJson(UpdateSelectedAccountHolderRequest data) => json.encode(data.toJson());
-
-class UpdateSelectedAccountHolderRequest {
-  UpdateSelectedAccountHolderRequest({
+class VerifyOtpResponseMain {
+  VerifyOtpResponseMain({
     dynamic id,
-    num? applicationId,
+    String? message,
+    List<Data>? data,
+    int? status,
+    bool? flag,
+  }) {
+    _id = id;
+    _message = message;
+    _data = data;
+    _status = status;
+    _flag = flag;
+  }
+
+  VerifyOtpResponseMain.fromJson(dynamic json) {
+    _id = json['id'];
+    _message = json['message'];
+    if (json['data'] != null) {
+      _data = [];
+      json['data'].forEach((v) {
+        _data?.add(Data.fromJson(v));
+      });
+    }
+    _status = json['status'];
+    _flag = json['flag'];
+  }
+  dynamic _id;
+  String? _message;
+  List<Data>? _data;
+  int? _status;
+  bool? _flag;
+  VerifyOtpResponseMain copyWith({
+    dynamic id,
+    String? message,
+    List<Data>? data,
+    int? status,
+    bool? flag,
+  }) =>
+      VerifyOtpResponseMain(
+        id: id ?? _id,
+        message: message ?? _message,
+        data: data ?? _data,
+        status: status ?? _status,
+        flag: flag ?? _flag,
+      );
+  dynamic get id => _id;
+  String? get message => _message;
+  List<Data>? get data => _data;
+  int? get status => _status;
+  bool? get flag => _flag;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['message'] = _message;
+    if (_data != null) {
+      map['data'] = _data?.map((v) => v.toJson()).toList();
+    }
+    map['status'] = _status;
+    map['flag'] = _flag;
+    return map;
+  }
+}
+
+/// id : null
+/// applicationId : 101212406
+/// accountHolderName : "Ankit Varshney"
+/// cif : "4561234567"
+/// dob : "30/05/1990"
+/// gender : "M"
+/// pmjjbyExists : false
+/// pmsbyExists : false
+/// kycUpdated : true
+/// customerAccountNumber : "4523542102"
+/// urnCode : "JNS-PMJJBY-2023-24-101212406-2392"
+/// sizeOfACHolder : 1
+
+Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+String dataToJson(Data data) => json.encode(data.toJson());
+
+class Data {
+  Data({
+    dynamic id,
+    int? applicationId,
     String? accountHolderName,
     String? cif,
     String? dob,
@@ -18,10 +97,7 @@ class UpdateSelectedAccountHolderRequest {
     bool? kycUpdated,
     String? customerAccountNumber,
     String? urnCode,
-    num? sizeOfACHolder,
-    String? index,
-    bool? invalidAgeHolder,
-    dynamic holderId,
+    int? sizeOfACHolder,
   }) {
     _id = id;
     _applicationId = applicationId;
@@ -35,12 +111,9 @@ class UpdateSelectedAccountHolderRequest {
     _customerAccountNumber = customerAccountNumber;
     _urnCode = urnCode;
     _sizeOfACHolder = sizeOfACHolder;
-    _index = index;
-    _invalidAgeHolder = invalidAgeHolder;
-    _holderId = holderId;
   }
 
-  UpdateSelectedAccountHolderRequest.fromJson(dynamic json) {
+  Data.fromJson(dynamic json) {
     _id = json['id'];
     _applicationId = json['applicationId'];
     _accountHolderName = json['accountHolderName'];
@@ -53,13 +126,9 @@ class UpdateSelectedAccountHolderRequest {
     _customerAccountNumber = json['customerAccountNumber'];
     _urnCode = json['urnCode'];
     _sizeOfACHolder = json['sizeOfACHolder'];
-    _index = json['index'];
-    _invalidAgeHolder = json['invalidAgeHolder'];
-    _holderId = json['holderId'];
   }
-
   dynamic _id;
-  num? _applicationId;
+  int? _applicationId;
   String? _accountHolderName;
   String? _cif;
   String? _dob;
@@ -69,14 +138,10 @@ class UpdateSelectedAccountHolderRequest {
   bool? _kycUpdated;
   String? _customerAccountNumber;
   String? _urnCode;
-  num? _sizeOfACHolder;
-  String? _index;
-  bool? _invalidAgeHolder;
-  dynamic _holderId;
-
-  UpdateSelectedAccountHolderRequest copyWith({
+  int? _sizeOfACHolder;
+  Data copyWith({
     dynamic id,
-    num? applicationId,
+    int? applicationId,
     String? accountHolderName,
     String? cif,
     String? dob,
@@ -86,12 +151,9 @@ class UpdateSelectedAccountHolderRequest {
     bool? kycUpdated,
     String? customerAccountNumber,
     String? urnCode,
-    num? sizeOfACHolder,
-    String? index,
-    bool? invalidAgeHolder,
-    dynamic holderId,
+    int? sizeOfACHolder,
   }) =>
-      UpdateSelectedAccountHolderRequest(
+      Data(
         id: id ?? _id,
         applicationId: applicationId ?? _applicationId,
         accountHolderName: accountHolderName ?? _accountHolderName,
@@ -104,40 +166,19 @@ class UpdateSelectedAccountHolderRequest {
         customerAccountNumber: customerAccountNumber ?? _customerAccountNumber,
         urnCode: urnCode ?? _urnCode,
         sizeOfACHolder: sizeOfACHolder ?? _sizeOfACHolder,
-        index: index ?? _index,
-        invalidAgeHolder: invalidAgeHolder ?? _invalidAgeHolder,
-        holderId: holderId ?? _holderId,
       );
-
   dynamic get id => _id;
-
-  num? get applicationId => _applicationId;
-
+  int? get applicationId => _applicationId;
   String? get accountHolderName => _accountHolderName;
-
   String? get cif => _cif;
-
   String? get dob => _dob;
-
   String? get gender => _gender;
-
   bool? get pmjjbyExists => _pmjjbyExists;
-
   bool? get pmsbyExists => _pmsbyExists;
-
   bool? get kycUpdated => _kycUpdated;
-
   String? get customerAccountNumber => _customerAccountNumber;
-
   String? get urnCode => _urnCode;
-
-  num? get sizeOfACHolder => _sizeOfACHolder;
-
-  String? get index => _index;
-
-  bool? get invalidAgeHolder => _invalidAgeHolder;
-
-  dynamic get holderId => _holderId;
+  int? get sizeOfACHolder => _sizeOfACHolder;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -153,9 +194,6 @@ class UpdateSelectedAccountHolderRequest {
     map['customerAccountNumber'] = _customerAccountNumber;
     map['urnCode'] = _urnCode;
     map['sizeOfACHolder'] = _sizeOfACHolder;
-    map['index'] = _index;
-    map['invalidAgeHolder'] = _invalidAgeHolder;
-    map['holderId'] = _holderId;
     return map;
   }
 }

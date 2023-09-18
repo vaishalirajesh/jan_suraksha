@@ -1,5 +1,6 @@
 import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/flavor.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 
@@ -17,10 +18,23 @@ Map<String, String> defaultHeaders() {
 
 void setAccessTokenInRequestHeader() async {
   String? accesstoken = await AppUtils.getAccessToken();
-  if (accesstoken != null && accesstoken.isEmpty == false) {
-    TGRequest.defaultHeaders!['token'] = accesstoken;
+  String loginToken = await TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN) ?? '';
+  String refreshToken = await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN) ?? '';
+  String userName = await TGSharedPreferences.getInstance().get(PREF_LOGIN_USERNAME) ?? '';
+  if (accesstoken != null &&
+      accesstoken.isEmpty == false &&
+      loginToken.isNotEmpty &&
+      refreshToken.isNotEmpty &&
+      userName.isNotEmpty) {
+    TGRequest.defaultHeaders!['tk_ac'] = accesstoken;
+    TGRequest.defaultHeaders!['tk_rc'] = refreshToken;
+    TGRequest.defaultHeaders!['tk_lg'] = loginToken;
+    TGRequest.defaultHeaders!['ur_cu'] = userName;
   } else {
-    TGRequest.defaultHeaders!.remove('token');
+    TGRequest.defaultHeaders!.remove('tk_ac');
+    TGRequest.defaultHeaders!.remove('tk_rc');
+    TGRequest.defaultHeaders!.remove('tk_lg');
+    TGRequest.defaultHeaders!.remove('ur_cu');
   }
 }
 

@@ -3,10 +3,11 @@ var refreshtoken = "";
 
 String? sessionkey = "";
 
-
 const PREF_GSTIN = "gstin";
 const PREF_LOGIN_RES = "login_response";
 const PREF_REFRESHTOKEN = "refreshtoken";
+const PREF_LOGIN_TOKEN = "login_token";
+const PREF_LOGIN_USERNAME = "login_username";
 const PREF_MOBILE = "mobileNumber";
 const PREF_PANNO = "panNo";
 const PREF_BUSINESSNAME = "businessName";
@@ -41,3 +42,8 @@ const PREF_ENABLE_POPUP = "enablePopup";
 const String CONSENT_TYPE_USR_TYP_CONFIRM = 'USR_TYP_CONFM';
 const String CONSENT_TYPE_GST_API_ACCESS = 'GST_API_ACCESS';
 const String CONSENT_TYPE_T_AND_C = 'T_AND_C';
+
+const String PREF_APP_ID = 'PREF_APP_ID';
+const String PREF_ORG_ID = 'PREF_ORG_ID';
+const String PREF_ACCOUNT_HOLDER_DATA = 'PREF_ACCOUNT_HOLDER_DATA';
+const String PREF_USER_FORM_DATA = 'PREF_USER_FORM_DATA';

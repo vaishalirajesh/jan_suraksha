@@ -9,7 +9,7 @@ class CreateApplicationResponseMain {
     dynamic id,
     String? message,
     Data? data,
-    num? status,
+    int? status,
     bool? flag,
   }) {
     _id = id;
@@ -29,13 +29,13 @@ class CreateApplicationResponseMain {
   dynamic _id;
   String? _message;
   Data? _data;
-  num? _status;
+  int? _status;
   bool? _flag;
   CreateApplicationResponseMain copyWith({
     dynamic id,
     String? message,
     Data? data,
-    num? status,
+    int? status,
     bool? flag,
   }) =>
       CreateApplicationResponseMain(
@@ -48,7 +48,7 @@ class CreateApplicationResponseMain {
   dynamic get id => _id;
   String? get message => _message;
   Data? get data => _data;
-  num? get status => _status;
+  int? get status => _status;
   bool? get flag => _flag;
 
   Map<String, dynamic> toJson() {

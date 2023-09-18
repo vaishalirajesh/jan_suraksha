@@ -24,12 +24,12 @@ class ApplicationFormPage extends StatelessWidget {
           buttonTitle: AppString.continueText,
           onButtonClick: applicationFormLogic.onPressContinue,
           isDataLoading: false,
-          isButtonEnable: applicationFormLogic.isDataLoaded.value,
+          isButtonEnable: true,
           onBackButtonCLick: AppUtils.onBackToDashboard,
           child: Padding(
             padding: EdgeInsets.all(20.h),
             child: Obx(
-              () => !applicationFormLogic.isDataLoaded.value
+              () => !applicationFormLogic.isLoading.value
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
@@ -38,7 +38,7 @@ class ApplicationFormPage extends StatelessWidget {
                         children: [
                           DisableTextField(
                             isMandatory: true,
-                            initialvale: applicationFormLogic.firstName,
+                            initialvale: applicationFormLogic.updateSelectedAccountHolderResponseMain.data,
                             title: AppString.firstName,
                             isReadOnly: true,
                           ),

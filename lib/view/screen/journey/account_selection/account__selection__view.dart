@@ -9,6 +9,7 @@ import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
 import 'package:jan_suraksha/view/widget/selection.dart';
 
+import '../../../../model/response_main_model/VerifyOTPResponseMain.dart';
 import 'account__selection__logic.dart';
 
 class AccountSelectionPage extends StatelessWidget {
@@ -16,70 +17,63 @@ class AccountSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.find<Account_Selection_Logic>();
+    final logic = Get.find<AccountSelectionLogic>();
     return WillPopScope(
       onWillPop: AppUtils.onWillPopToDashboard,
-      child: AddHeaderFooter(
-        title: "Account Holder Details ",
-        appbarName: AppString.appBarWithTitle,
-        buttonTitle: "Continue",
-        onButtonClick: () {
-          Get.toNamed(PolicyAvailedPageRoute);
-        },
-        onBackButtonCLick: AppUtils.onBackToDashboard,
-        isDataLoading: false,
-        isButtonEnable: true,
-        isShowButton: true,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 25.h,
-            ),
-            Center(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                "Please select an account holder to proceed",
-                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
+      child: Obx(() {
+        return AddHeaderFooter(
+          title: "Account Holder Details ",
+          appbarName: AppString.appBarWithTitle,
+          buttonTitle: "Continue",
+          onButtonClick: logic.onPressContinue,
+          onBackButtonCLick: AppUtils.onBackToDashboard,
+          isDataLoading: logic.isLoading.value,
+          isButtonEnable: true,
+          isShowButton: true,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 25.h,
               ),
-            )),
-            SizedBox(
-              height: 25.h,
-            ),
-            Center(
-              child: Padding(
+              Center(
+                  child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Obx(() {
-                  return SelectionWidget(
-                    isSelected: !logic.selectedWidget.value,
-                    index: 1,
-                    userName: "Mrs. Kajal ",
-                    cifNumber: '12345678',
-                    accountNumber: 'XXX12045',
-                    onChnage: logic.onChangeSelection,
-                  );
-                }),
+                child: Text(
+                  "Please select an account holder to proceed",
+                  style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
+                ),
+              )),
+              SizedBox(
+                height: 25.h,
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Obx(() {
-                return SelectionWidget(
-                  isSelected: logic.selectedWidget.value,
-                  index: 2,
-                  userName: "Mrs. Kajal ",
-                  cifNumber: '12345678',
-                  accountNumber: 'XXX12045',
-                  onChnage: logic.onChangeSelection,
-                );
-              }),
-            ),
-          ],
-        ),
-      ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: ListView.builder(
+                      itemCount: logic.verifyOtpResponseMain.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Obx(
+                          () {
+                            return SelectionWidget(
+                              isSelected: !logic.selectedWidget[index].value,
+                              index: 1,
+                              userName: logic.verifyOtpResponseMain.data?[index].accountHolderName ?? '',
+                              onChnage: () {
+                                logic.accountHolderData = logic.verifyOtpResponseMain.data?[index] ?? Data();
+                              },
+                            );
+                          },
+                        );
+                      }),
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

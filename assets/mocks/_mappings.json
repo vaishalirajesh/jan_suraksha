@@ -110,5 +110,13 @@
     "httpStatus": 200,
     "successFile": "assets/mocks/verify_login_otp_success.json",
     "errorFile": "assets/mocks/verify_login_otp_success.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/verifyOtp",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/verify_otp_success.json",
+    "errorFile": "assets/mocks/verify_otp_error.json"
   }
 ]

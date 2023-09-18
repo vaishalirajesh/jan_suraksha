@@ -111,7 +111,18 @@ class AppTextField extends StatelessWidget {
                   width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
-            border: InputBorder.none,
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: ColorConfig.jsRedColor, width: 1.0),
+              borderRadius: BorderRadius.circular(16.0.r),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: isReadOnly && !isDobField
+                      ? ThemeHelper.getInstance()!.colorScheme.surface
+                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                  width: 1.0),
+              borderRadius: BorderRadius.circular(16.0.r),
+            ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
           ),
           onChanged: onChanged,

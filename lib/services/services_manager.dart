@@ -49,31 +49,61 @@ class TGService<T extends TGResponse, E extends TGError> {
     TGHttpClient.badCertificateCallbackEnabled = badCertificateCallbackEnabled;
   }
 
-  Future<T> get({required TGGetRequest request, onSuccess(T)?, onError(T)?}) async {
-    Uri uri = Uri.parse(request.getUrl());
-    TGLog.t("GET", uri);
-    final httpRes = await _getClient(request.getUri(), "GET").get(uri, headers: request.headers());
-    return _performCallback(httpRes, onError, onSuccess);
+  T _populateExceptionResponse(error) {
+    T t = creatorT();
+    t.timestamp = DateTime.now().millisecondsSinceEpoch;
+    t.httpStatus = 0;
+    t.contentLength = 0;
+    t.error = error.message;
+    t.body = error.message;
+    t.hasError = true;
+    return t;
   }
 
   Future<T> getSync({required TGGetRequest request}) async {
-    Uri uri = Uri.parse(request.getUrl());
-    TGLog.t("GET", uri);
-    final httpRes = await _getClient(request.getUri(), "GET").get(uri, headers: request.headers());
-    return Future.value(_prepareResponse(httpRes));
+    try {
+      Uri uri = Uri.parse(request.getUrl());
+      TGLog.t("GET", uri);
+      final httpRes = await _getClient(request.getUri(), "GET").get(uri, headers: request.headers());
+      return Future.value(_prepareResponse(httpRes));
+    } catch (error) {
+      T t = _populateExceptionResponse(error);
+      return t;
+    }
   }
 
   Future<T> post({required TGPostRequest request, onSuccess(T)?, onError(T)?}) async {
-    Uri uri = Uri.parse(request.getUrl());
-    TGLog.t("POST", uri);
-    TGLog.d("Request ${request.getUri()}\n${request.headers()}\n${request.body()}\n");
-    final httpRes = await _getClient(request.getUri(), "POST").post(
-      uri,
-      body: request.body(),
-      headers: request.headers(),
-    );
-    // TGLog.d("HTTP Call $httpRes");
-    return _performCallback(httpRes, onError, onSuccess);
+    try {
+      Uri uri = Uri.parse(request.getUrl());
+      TGLog.t("POST", uri);
+      TGLog.d("Post URL---------${request.getUrl()}");
+      TGLog.d("Request ${request.getUri()}\n${request.headers()}\n${request.body()}\n");
+      final httpRes = await _getClient(request.getUri(), "POST").post(
+        uri,
+        body: request.body(),
+        headers: request.headers(),
+      );
+      TGLog.d("HTTP Call $httpRes");
+      return _performCallback(httpRes, onError, onSuccess);
+    } catch (error) {
+      T t = _populateExceptionResponse(error);
+      onError!(t);
+      return t;
+    }
+  }
+
+  Future<T> get({required TGGetRequest request, onSuccess(T)?, onError(T)?}) async {
+    try {
+      Uri uri = Uri.parse(request.getUrl());
+      TGLog.t("GET", uri);
+      TGLog.d("Get URL---------${"request.getUrl()"}");
+      final httpRes = await _getClient(request.getUri(), "GET").get(uri, headers: request.headers());
+      return _performCallback(httpRes, onError, onSuccess);
+    } catch (error) {
+      T t = _populateExceptionResponse(error);
+      onError!(t);
+      return t;
+    }
   }
 
   Future<T> postSync({required TGPostRequest request}) async {
@@ -88,25 +118,37 @@ class TGService<T extends TGResponse, E extends TGError> {
   }
 
   Future<T> put({required TGPutRequest request, onSuccess(T)?, onError(T)?}) async {
-    Uri uri = Uri.parse(request.getUrl());
-    TGLog.t("PUT", uri);
-    final httpRes = await _getClient(request.getUri(), "PUT").put(
-      uri,
-      body: request.body(),
-      headers: request.headers(),
-    );
-    return _performCallback(httpRes, onError, onSuccess);
+    try {
+      Uri uri = Uri.parse(request.getUrl());
+      TGLog.t("PUT", uri);
+      final httpRes = await _getClient(request.getUri(), "PUT").put(
+        uri,
+        body: request.body(),
+        headers: request.headers(),
+      );
+      return _performCallback(httpRes, onError, onSuccess);
+    } catch (error) {
+      T t = _populateExceptionResponse(error);
+      onError!(t);
+      return t;
+    }
   }
 
   Future<T> delete({required TGDeleteRequest request, onSuccess(T)?, onError(T)?}) async {
-    Uri uri = Uri.parse(request.getUrl());
-    TGLog.t("DELETE", uri);
-    final httpRes = await _getClient(request.getUri(), "DELETE").delete(
-      uri,
-      body: request.body(),
-      headers: request.headers(),
-    );
-    return _performCallback(httpRes, onError, onSuccess);
+    try {
+      Uri uri = Uri.parse(request.getUrl());
+      TGLog.t("DELETE", uri);
+      final httpRes = await _getClient(request.getUri(), "DELETE").delete(
+        uri,
+        body: request.body(),
+        headers: request.headers(),
+      );
+      return _performCallback(httpRes, onError, onSuccess);
+    } catch (error) {
+      T t = _populateExceptionResponse(error);
+      onError!(t);
+      return t;
+    }
   }
 
   Future<T> upload({required TGUploadRequest request, onSuccess(T)?, onError(T)?}) async {
@@ -246,6 +288,9 @@ class TGService<T extends TGResponse, E extends TGError> {
         t.hasError = true;
         print(t.body);
       }
+    } else {
+      TGLog.e("Unable to prepare - " + (t.hasError ? E.toString() : T.toString()));
+      TGLog.e("Please check implementation of - " + (t.hasError ? E.toString() : T.toString()));
     }
   }
 }

@@ -18,9 +18,11 @@ import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/session_constant.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
+import 'package:jan_suraksha/utils/internetcheckdialog.dart';
+import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
-import 'package:jan_suraksha/view/screen/auth/verify_otp/verify_otp_binding.dart';
-import 'package:jan_suraksha/view/screen/auth/verify_otp/verify_otp_view.dart';
+import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class LoginLogic extends GetxController {
@@ -41,21 +43,21 @@ class LoginLogic extends GetxController {
       if (mobileController.text.length == 10 && validCharacters.hasMatch(mobileController.text)) {
         errorMsg.value = '';
 
-        ///TODO: Remove Navigation and uncomment API call
-        // if (await NetUtils.isInternetAvailable()) {
-        //   loginRequest();
-        // } else {
-        //   if (Get.context!.mounted) {
-        //     showSnackBarForintenetConnection(Get.context!, loginRequest);
-        //   }
-        // }
-        Get.to(
-          () => const VerifyOtpPage(),
-          binding: VerifyOtpBinding(),
-          arguments: {
-            AppArguments.mobileNumber: mobile.value,
-          },
-        );
+        if (await NetUtils.isInternetAvailable()) {
+          loginRequest();
+        } else {
+          if (Get.context!.mounted) {
+            showSnackBarForintenetConnection(Get.context!, loginRequest);
+          }
+        }
+
+        // Get.to(
+        //   () => const VerifyOtpPage(),
+        //   binding: VerifyOtpBinding(),
+        //   arguments: {
+        //     AppArguments.mobileNumber: mobile.value,
+        //   },
+        // );
       } else {
         errorMsg.value = 'Please enter valid mobile number';
       }
@@ -66,7 +68,7 @@ class LoginLogic extends GetxController {
   Future<void> loginRequest() async {
     isLoading.value = true;
     LoginRequest loginRequest = LoginRequest(
-      email: 'paresh.bo@opl.com',
+      email: 'paresh.ibo@opl.com',
       password: 'Admin@123',
       browserName: 'chorme',
       browserVersion: '123.00',
@@ -92,13 +94,26 @@ class LoginLogic extends GetxController {
     if (response.getLoginResponseData().status == RES_SUCCESS) {
       AppUtils.setAccessToken(response.getLoginResponseData().accessToken);
       TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
+      TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, response.getLoginResponseData().refreshToken);
+      TGSharedPreferences.getInstance().set(PREF_LOGIN_TOKEN, response.getLoginResponseData().loginToken.toString());
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String encoded = stringToBase64.encode(response.getLoginResponseData().userName ?? '');
+      TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
+      TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
       TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
       TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile);
       setAccessTokenInRequestHeader();
       isLoading.value = false;
-      Get.offAll(
-        () => const VerifyOtpPage(),
-        binding: VerifyOtpBinding(),
+      // Get.offAll(
+      //   () => const VerifyOtpPage(),
+      //   binding: VerifyOtpBinding(),
+      //   arguments: {
+      //     AppArguments.mobileNumber: mobile.value,
+      //   },
+      // );
+      Get.to(
+        () => CustomerVerificationPage(),
+        binding: CustomerVerificationBinding(),
         arguments: {
           AppArguments.mobileNumber: mobile.value,
         },

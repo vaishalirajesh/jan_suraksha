@@ -14,15 +14,11 @@ class SelectionWidget extends StatelessWidget {
     required this.isSelected,
     required this.index,
     required this.userName,
-    required this.accountNumber,
-    required this.cifNumber,
     required this.onChnage,
   }) : super(key: key);
   final bool isSelected;
   final int index;
   final String userName;
-  final String cifNumber;
-  final String accountNumber;
   final VoidCallback onChnage;
 
   @override
@@ -32,7 +28,7 @@ class SelectionWidget extends StatelessWidget {
         InkWell(
           onTap: onChnage,
           child: Container(
-            height: 110.h,
+            height: 80.h,
             margin: EdgeInsets.only(top: 12.5.h),
             padding: EdgeInsets.only(left: 25.w, right: 10.w, top: 10.h),
             decoration: BoxDecoration(

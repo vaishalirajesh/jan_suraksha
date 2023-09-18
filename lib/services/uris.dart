@@ -12,4 +12,5 @@ abstract class URIS {
   static const URI_GET_STAGE_DETAIL = 'insurance/v3/application/getStageDetails';
   static const URI_APP_FORM_DETAIL = 'insurance/v3/enrollment/getApplicationFormDetails/';
   static const URI_VERIFY_LOGIN_OTP = 'users/v3/login/otp';
+  static const URI_VERIFY_OTP = 'insurance/v3/enrollment/verifyOtp';
 }

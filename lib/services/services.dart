@@ -1,6 +1,7 @@
 import 'package:jan_suraksha/model/response_model/CreateApplicationResponse.dart';
 import 'package:jan_suraksha/model/response_model/EnrollmentOtpVerifyResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetAllMenuForBankerResponse.dart';
+import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetStageDetailResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetUserDetailByIdResponse.dart';
@@ -9,6 +10,7 @@ import 'package:jan_suraksha/model/response_model/UpdateEnrollmentVerificationTy
 import 'package:jan_suraksha/model/response_model/UpdateSelectedAccountHolderResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
 import 'package:jan_suraksha/model/response_model/VerifyLoginOtpResponse.dart';
+import 'package:jan_suraksha/model/response_model/VerifyOtpResponse.dart';
 import 'package:jan_suraksha/model/response_model/VerifyPhysicalSignatureResponse.dart';
 import 'package:jan_suraksha/model/response_model/error/service_error.dart';
 import 'package:jan_suraksha/services/request/tg_get_request.dart';
@@ -31,71 +33,84 @@ class ServiceManager {
   }
 
   void getAllMenuForBanker({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.getAllMenuForBanker");
     TGService<GetAllMenuForBankerResponse, ServiceError>(() => GetAllMenuForBankerResponse(), () => ServiceError())
         .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void getSchemaByUserId({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.getSchemaByUserId");
     TGService<GetSchemaByUserIdResponse, ServiceError>(() => GetSchemaByUserIdResponse(), () => ServiceError())
         .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void getUserDetailById({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.getUserDetailById");
     TGService<GetUserDetailByIdResponse, ServiceError>(() => GetUserDetailByIdResponse(), () => ServiceError())
         .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
-  void createApplicationResponse({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+  void createApplication({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.createApplication");
     TGService<CreateApplicationResponse, ServiceError>(() => CreateApplicationResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void updateApplicationStage({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.updateApplicationStage");
     TGService<UpdateStageResponse, ServiceError>(() => UpdateStageResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void verifyPhysicalSignature({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.verifyPhysicalSignature");
     TGService<VerifyPhysicalSignatureResponse, ServiceError>(
             () => VerifyPhysicalSignatureResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
-  void enrollmentOtpVerifyResponse({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+  void enrollmentOtpVerify({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.enrollmentOtpVerify");
     TGService<EnrollmentOtpVerifyResponse, ServiceError>(() => EnrollmentOtpVerifyResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void updateEnrollmentVerificationType({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.updateEnrollmentVerificationType");
     TGService<UpdateEnrollmentVerificationTypeResponse, ServiceError>(
             () => UpdateEnrollmentVerificationTypeResponse(), () => ServiceError())
         .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void getStageDetail({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.getStageDetail");
     TGService<GetStageDetailResponse, ServiceError>(() => GetStageDetailResponse(), () => ServiceError())
         .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
+  void getApplicationFormDetails({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.getApplicationFormDetails");
+    TGService<GetApplicationFormDetailsResponse, ServiceError>(
+            () => GetApplicationFormDetailsResponse(), () => ServiceError())
+        .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
   void updateSelectedAccountHolder({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.updateSelectedAccountHolder");
     TGService<UpdateSelectedAccountHolderResponse, ServiceError>(
             () => UpdateSelectedAccountHolderResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void verifyLoginOtp({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.LoginRequest");
+    TGLog.d("ServiceManager.verifyLoginOtp");
     TGService<VerifyLoginOtpResponse, ServiceError>(() => VerifyLoginOtpResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void verifyOTP({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.verifyOTP");
+    TGService<VerifyOTPResponse, ServiceError>(() => VerifyOTPResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 }

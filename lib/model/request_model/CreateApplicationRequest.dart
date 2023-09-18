@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-CreateApplication createApplicationFromJson(String str) => CreateApplication.fromJson(json.decode(str));
-String createApplicationToJson(CreateApplication data) => json.encode(data.toJson());
+CreateApplicationRequest createApplicationFromJson(String str) => CreateApplicationRequest.fromJson(json.decode(str));
+String createApplicationToJson(CreateApplicationRequest data) => json.encode(data.toJson());
 
-class CreateApplication {
-  CreateApplication({
+class CreateApplicationRequest {
+  CreateApplicationRequest({
     dynamic applicationId,
     String? schemeId,
     String? userId,
@@ -20,7 +20,7 @@ class CreateApplication {
     _dob = dob;
   }
 
-  CreateApplication.fromJson(dynamic json) {
+  CreateApplicationRequest.fromJson(dynamic json) {
     _applicationId = json['applicationId'];
     _schemeId = json['schemeId'];
     _userId = json['userId'];
@@ -34,7 +34,7 @@ class CreateApplication {
   String? _orgId;
   String? _accountNo;
   String? _dob;
-  CreateApplication copyWith({
+  CreateApplicationRequest copyWith({
     dynamic applicationId,
     String? schemeId,
     String? userId,
@@ -42,7 +42,7 @@ class CreateApplication {
     String? accountNo,
     String? dob,
   }) =>
-      CreateApplication(
+      CreateApplicationRequest(
         applicationId: applicationId ?? _applicationId,
         schemeId: schemeId ?? _schemeId,
         userId: userId ?? _userId,

@@ -165,7 +165,7 @@ class CustomerVerificationLogic extends GetxController {
     createApplicationResponseMain = response.createApplicationResponse();
     if (response.createApplicationResponse().status == RES_SUCCESS) {
       TGSharedPreferences.getInstance().set(PREF_APP_ID, response.createApplicationResponse().data?.id);
-      TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.createApplicationResponse().data?.orgId);
+      TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
       onUpdateVerification();
     } else {
       TGLog.d("Error in updateVerificationType");

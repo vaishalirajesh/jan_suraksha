@@ -27,6 +27,10 @@ class GetApplicationFormDetailsResponseMain {
     _flag = flag;
   }
 
+  set data(Data? value) {
+    _data = value;
+  }
+
   GetApplicationFormDetailsResponseMain.fromJson(dynamic json) {
     _id = json['id'];
     _message = json['message'];
@@ -607,6 +611,10 @@ class Data {
         consentForAutoDebit: consentForAutoDebit ?? _consentForAutoDebit,
       );
 
+  set nominee(List<Nominee>? value) {
+    _nominee = value;
+  }
+
   num? get id => _id;
 
   String? get createdDate => _createdDate;
@@ -1177,6 +1185,62 @@ class Nominee {
       map['address'] = _address?.toJson();
     }
     return map;
+  }
+
+  set firstName(String? value) {
+    _firstName = value;
+  }
+
+  set middleName(dynamic value) {
+    _middleName = value;
+  }
+
+  set lastName(dynamic value) {
+    _lastName = value;
+  }
+
+  set dateOfBirth(String? value) {
+    _dateOfBirth = value;
+  }
+
+  set mobileNumber(dynamic value) {
+    _mobileNumber = value;
+  }
+
+  set emailIdOfNominee(dynamic value) {
+    _emailIdOfNominee = value;
+  }
+
+  set relationOfNomineeApplicant(num? value) {
+    _relationOfNomineeApplicant = value;
+  }
+
+  set relationOfNomineeApplicantStr(String? value) {
+    _relationOfNomineeApplicantStr = value;
+  }
+
+  set nameOfGuardian(dynamic value) {
+    _nameOfGuardian = value;
+  }
+
+  set addressOfGuardian(dynamic value) {
+    _addressOfGuardian = value;
+  }
+
+  set relationShipOfGuardian(dynamic value) {
+    _relationShipOfGuardian = value;
+  }
+
+  set relationShipOfGuardianStr(dynamic value) {
+    _relationShipOfGuardianStr = value;
+  }
+
+  set mobileNumberOfGuardian(dynamic value) {
+    _mobileNumberOfGuardian = value;
+  }
+
+  set emailIdOfGuardian(dynamic value) {
+    _emailIdOfGuardian = value;
   }
 }
 

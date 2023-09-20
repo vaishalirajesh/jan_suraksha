@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
+import 'package:jan_suraksha/view/widget/app_loader.dart';
 import 'package:jan_suraksha/view/widget/disable_test_field.dart';
 
 import 'address_details_logic.dart';
@@ -15,85 +16,90 @@ class AddressDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return WillPopScope(
-        onWillPop: AppUtils.onWillPopScope,
-        child: AddHeaderFooter(
-          appbarName: AppString.appBarWithTitle,
-          title: AppString.addressDetails,
-          buttonTitle: AppString.continueText,
-          onButtonClick: addressDetailsLogic.onPressContinue,
-          isDataLoading: false,
-          isButtonEnable: addressDetailsLogic.isDataLoaded.value,
-          onBackButtonCLick: AppUtils.onBackPress,
-          child: Padding(
-            padding: EdgeInsets.all(20.h),
-            child: Obx(
-              () => !addressDetailsLogic.isDataLoaded.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          DisableTextField(
-                            isMandatory: true,
-                            initialvale: 'Shanti XXXXXX',
-                            title: AppString.addressLine1,
-                            isReadOnly: true,
+    return WillPopScope(
+      onWillPop: AppUtils.onWillPopScope,
+      child: Obx(() {
+        return Stack(
+          children: [
+            AddHeaderFooter(
+              appbarName: AppString.appBarWithTitle,
+              title: AppString.addressDetails,
+              buttonTitle: AppString.continueText,
+              onButtonClick: addressDetailsLogic.onPressContinue,
+              isDataLoading: false,
+              isButtonEnable: true,
+              onBackButtonCLick: AppUtils.onBackPress,
+              child: Padding(
+                padding: EdgeInsets.all(20.h),
+                child: Obx(
+                  () => !addressDetailsLogic.isLoading.value
+                      ? const SizedBox.shrink()
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              DisableTextField(
+                                isMandatory: true,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.addressLine1 ?? '',
+                                title: AppString.addressLine1,
+                                isReadOnly: true,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              DisableTextField(
+                                isMandatory: false,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.addressLine2 ?? '',
+                                title: AppString.addressLine2,
+                                isReadOnly: true,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              DisableTextField(
+                                isMandatory: true,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.city ?? '',
+                                title: AppString.city,
+                                isReadOnly: true,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              DisableTextField(
+                                isMandatory: true,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.district ?? '',
+                                title: AppString.district,
+                                isReadOnly: true,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              DisableTextField(
+                                isMandatory: true,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.state ?? '',
+                                title: AppString.state,
+                                isReadOnly: true,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              DisableTextField(
+                                isMandatory: false,
+                                initialvale: addressDetailsLogic.getAppData.data?.address?.pincode != null
+                                    ? '${addressDetailsLogic.getAppData.data?.address?.pincode}'
+                                    : '',
+                                title: AppString.pincode,
+                                isReadOnly: true,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          const DisableTextField(
-                            isMandatory: false,
-                            initialvale: 'Indira Gandhi Rd, Opp. XXXX XXXXX XX',
-                            title: AppString.addressLine2,
-                            isReadOnly: true,
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          const DisableTextField(
-                            isMandatory: true,
-                            initialvale: 'Kalol',
-                            title: AppString.city,
-                            isReadOnly: true,
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          const DisableTextField(
-                            isMandatory: true,
-                            initialvale: 'Ahmedabad',
-                            title: AppString.district,
-                            isReadOnly: true,
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          const DisableTextField(
-                            isMandatory: true,
-                            initialvale: 'Gujarat',
-                            title: AppString.state,
-                            isReadOnly: true,
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          const DisableTextField(
-                            isMandatory: false,
-                            initialvale: '123456',
-                            title: AppString.pincode,
-                            isReadOnly: true,
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                ),
+              ),
             ),
-          ),
-        ),
-      );
-    });
+            if (!addressDetailsLogic.isLoading.value) const AppLoader()
+          ],
+        );
+      }),
+    );
   }
 }

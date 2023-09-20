@@ -4,11 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/generated/assets.dart';
-import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/profile/profile_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
+import 'package:jan_suraksha/view/screen/journey/application_form/application_form_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_binding.dart';
@@ -19,7 +20,6 @@ import '../../../../config/style_config.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_button.dart';
 import 'dashboard_logic.dart';
-import 'dart:math' as math;
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
@@ -594,14 +594,22 @@ class HomePage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 30.w, top: 6.h),
+                                  padding: EdgeInsets.only(right: 30.w, top: 3.h),
                                   child: Text(
                                     AppString.str_amount,
                                     style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
                                   ),
                                 ),
                               ),
-                              ListViewButtons(onPress: () {}, title: "Continue Journey")
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              ListViewButtons(
+                                onPress: () {
+                                  Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+                                },
+                                title: "Continue Journey",
+                              )
                             ],
                           ),
                         ),

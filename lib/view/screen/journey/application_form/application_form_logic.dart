@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GetApplicationFormDetailsRequest.dart';
-import 'package:jan_suraksha/model/response_main_model/UpdateSelectedAccountHolderResponseMain.dart';
+import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
@@ -18,9 +18,8 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class ApplicationFormLogic extends GetxController {
   RxBool isLoading = false.obs;
-  String firstName = 'KEXXX';
-  UpdateSelectedAccountHolderResponseMain updateSelectedAccountHolderResponseMain =
-      UpdateSelectedAccountHolderResponseMain();
+  String dob = '';
+  GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
 
   @override
   void onInit() {
@@ -44,8 +43,8 @@ class ApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     isLoading.value = true;
-    String appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
-    var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
+    int appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    var encAppId = AesGcmEncryptionUtils.encryptNew('$appId');
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
         GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
@@ -59,6 +58,9 @@ class ApplicationFormLogic extends GetxController {
   _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
     TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
     if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
+      TGSharedPreferences.getInstance().set(PREF_USER_FORM_DATA,
+          getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
+      getAppData = response.getApplicationFormDetailsResponse();
       isLoading.value = false;
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");

@@ -1,11 +1,14 @@
 import 'package:jan_suraksha/model/response_model/CreateApplicationResponse.dart';
 import 'package:jan_suraksha/model/response_model/EnrollmentOtpVerifyResponse.dart';
+import 'package:jan_suraksha/model/response_model/GenerateCoiResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetAllMenuForBankerResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetStageDetailResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetUserDetailByIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/LoginResponse.dart';
+import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart';
+import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateEnrollmentVerificationTypeResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateSelectedAccountHolderResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
@@ -111,6 +114,24 @@ class ServiceManager {
   void verifyOTP({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
     TGLog.d("ServiceManager.verifyOTP");
     TGService<VerifyOTPResponse, ServiceError>(() => VerifyOTPResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void saveFormDetail({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.saveFormDetail");
+    TGService<SaveFormDetailResponse, ServiceError>(() => SaveFormDetailResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void premiumDeduction({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.saveFormDetail");
+    TGService<PremiumDeductionResponse, ServiceError>(() => PremiumDeductionResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void generateCoi({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.saveFormDetail");
+    TGService<GenerateCoiResponse, ServiceError>(() => GenerateCoiResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 }

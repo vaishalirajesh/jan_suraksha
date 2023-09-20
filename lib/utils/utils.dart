@@ -90,4 +90,17 @@ class AppUtils {
 
     return moneyString;
   }
+
+  static String convertDateFormat(String? date, String inFormat, String outFormat) {
+    if (date?.isNotEmpty == true || date != null) {
+      final format = DateFormat(inFormat);
+      DateTime gettingDate = format.parse(date!);
+      final DateFormat formatter = DateFormat(outFormat);
+      // Output Date Format
+      final String formatted = formatter.format(gettingDate);
+      return formatted;
+    } else {
+      return '-';
+    }
+  }
 }

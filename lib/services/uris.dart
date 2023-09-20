@@ -13,4 +13,7 @@ abstract class URIS {
   static const URI_APP_FORM_DETAIL = 'insurance/v3/enrollment/getApplicationFormDetails/';
   static const URI_VERIFY_LOGIN_OTP = 'users/v3/login/otp';
   static const URI_VERIFY_OTP = 'insurance/v3/enrollment/verifyOtp';
+  static const URI_SAVE_FORM_DETAIL = 'insurance/v3/enrollment/saveApplicationFormDetails';
+  static const URI_PREMIUM_DEDUCTION = 'insurance/v3/enrollment/premiumDeduction';
+  static const URI_GENERATE_COI = 'insurance/v3/enrollment/generateCOI';
 }

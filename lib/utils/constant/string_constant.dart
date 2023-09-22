@@ -2,9 +2,12 @@ class AppString {
   static const String appBarWithTitle = 'appBarWithTitle';
   static const String appBarWithSubtitle = 'appBarWithSubtitle';
   static const String appBarWithNotification = 'appBarWithNotification';
+  static const String appBarWithoutBackButton = "appbarwithoutbackbutton";
   static const String mobileNumber = 'Mobile Number';
   static const String urno = 'Unique Reference Number (URN)';
-  static const String enterMobileNumber = 'Enter mobile number';
+  static const String forgot_password = 'Forgot Password?';
+  static const String password = 'Password';
+  static const String enterMobileNumber = 'Mobile number / Email Address';
   static const String emptyText = '';
   static const String jsBankName = 'JanSuraksha';
   static const String mandatorySign = '*';

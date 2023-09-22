@@ -91,24 +91,16 @@ class AppTextField extends StatelessWidget {
                     style: StyleConfig.smallText,
                   )
                 : const SizedBox.shrink(),
-            fillColor: isReadOnly && !isDobField
-                ? ThemeHelper.getInstance()!.colorScheme.surface
-                : ThemeHelper.getInstance()!.colorScheme.background,
+            fillColor: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.background,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               borderSide: BorderSide(
                 width: 1,
-                color: isReadOnly && !isDobField
-                    ? ThemeHelper.getInstance()!.colorScheme.surface
-                    : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: isReadOnly && !isDobField
-                      ? ThemeHelper.getInstance()!.colorScheme.surface
-                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                  width: 1.0),
+              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             errorBorder: OutlineInputBorder(
@@ -116,11 +108,7 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: isReadOnly && !isDobField
-                      ? ThemeHelper.getInstance()!.colorScheme.surface
-                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                  width: 1.0),
+              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),

@@ -43,8 +43,8 @@ class ApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     isLoading.value = true;
-    int appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
-    var encAppId = AesGcmEncryptionUtils.encryptNew('$appId');
+    String appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
+    var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
         GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");

@@ -1,7 +1,7 @@
 abstract class URIS {
   static const URI_LOGIN = 'users/v3/login';
   static const URI_GET_ALL_MENU_BANKER = 'users/v3/getAllMenuForBanker';
-  static const URI_GET_SCHEMA_BY_USER_ID = 'users/v3/roleProductMap/getSchemeByUserIdBusinessId';
+  static const URI_GET_SCHEMA_BY_USER_ID = 'users/v3/roleProductMap/getSchemeByUserIdBusinessId/1';
   static const URI_GET_USER_DETAIL_BY_ID = 'users/v3/getUserDetailsById';
   static const URI_CREATE_APPLICATION = 'insurance/v3/application/create';
   static const URI_UPDATE_STAGE = 'insurance/v3/application/updateStage';
@@ -16,4 +16,5 @@ abstract class URIS {
   static const URI_SAVE_FORM_DETAIL = 'insurance/v3/enrollment/saveApplicationFormDetails';
   static const URI_PREMIUM_DEDUCTION = 'insurance/v3/enrollment/premiumDeduction';
   static const URI_GENERATE_COI = 'insurance/v3/enrollment/generateCOI';
+  static const URI_GEN_CAPTCH = "users/v3/signup/captcha/gen";
 }

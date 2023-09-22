@@ -28,6 +28,7 @@ class ApplicationFormPage extends StatelessWidget {
               onButtonClick: applicationFormLogic.onPressContinue,
               isDataLoading: false,
               isButtonEnable: true,
+              isShowButton: true,
               onBackButtonCLick: AppUtils.onBackToDashboard,
               child: Padding(
                 padding: EdgeInsets.all(20.h),

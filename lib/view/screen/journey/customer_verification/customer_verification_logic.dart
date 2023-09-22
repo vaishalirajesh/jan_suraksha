@@ -2,9 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/config/Navigation_config.dart';
-import 'package:jan_suraksha/model/request_model/CreateApplicationRequest.dart';
-import 'package:jan_suraksha/model/request_model/UpdateEnrollmentVerificationTypeRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyOTPRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/CreateApplicationResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/CreateApplicationResponse.dart';
@@ -12,6 +9,7 @@ import 'package:jan_suraksha/model/response_model/UpdateEnrollmentVerificationTy
 import 'package:jan_suraksha/model/response_model/VerifyOtpResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -26,6 +24,10 @@ import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
+
+import '../../../../config/Navigation_config.dart';
+import '../../../../model/request_model/CreateApplicationRequest.dart';
+import '../../../../model/request_model/UpdateEnrollmentVerificationTypeRequest.dart';
 
 class CustomerVerificationLogic extends GetxController {
   TextEditingController accountTextController = TextEditingController();
@@ -71,20 +73,7 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   String getMonth(int month) {
-    List<String> months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
+    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return months[month - 1];
   }
 
@@ -170,8 +159,7 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0,
-          response?.createApplicationResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0, response?.createApplicationResponse()?.message ?? "", null);
     }
   }
 
@@ -192,14 +180,17 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   Future<void> updateVerificationTypeRequest() async {
-    var encryptId = AesGcmEncryptionUtils.encryptNew(createApplicationResponseMain.data?.id.toString() ?? '');
-    var encryptType = AesGcmEncryptionUtils.encryptNew('1');
-    UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
-        UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
-    ServiceManager.getInstance().updateEnrollmentVerificationType(
-        request: updateEnrollmentVerificationTypeRequest,
-        onSuccess: (response) => _onSuccessVerificationType(response),
-        onError: (error) => _onErrorVerificationType(error));
+    if (TGMockService.applyMock) {
+      var encryptId = "1";
+      var encryptType = "1";
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+    } else {
+      var encryptId = AesGcmEncryptionUtils.encryptNew(createApplicationResponseMain.data?.id.toString() ?? '');
+      var encryptType = AesGcmEncryptionUtils.encryptNew('1');
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+    }
   }
 
   _onSuccessVerificationType(UpdateEnrollmentVerificationTypeResponse response) async {
@@ -222,8 +213,7 @@ class CustomerVerificationLogic extends GetxController {
       );
     } else {
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0,
-          response?.updateEnrollmentVerificationType()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0, response?.updateEnrollmentVerificationType()?.message ?? "", null);
     }
   }
 
@@ -270,8 +260,7 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
     }
   }
 

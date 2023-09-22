@@ -29,12 +29,7 @@ initTheme(BuildContext context) async {
 
 Future<void> initService() async {
   TGLog.d("initService()");
-  await TGService.init(
-      baseUrl: AppFlavor.baseUrl(),
-      applyMock: AppFlavor.applyMock(),
-      mockMappingsFile: AppFlavor.mockMappingsFile(),
-      headers: defaultHeaders(),
-      badCertificateCallbackEnabled: false);
+  await TGService.init(baseUrl: AppFlavor.baseUrl(), applyMock: AppFlavor.applyMock(), mockMappingsFile: AppFlavor.mockMappingsFile(), headers: defaultHeaders(), badCertificateCallbackEnabled: false);
   setAccessTokenInRequestHeader();
 }
 

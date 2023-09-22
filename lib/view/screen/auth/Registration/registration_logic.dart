@@ -2,33 +2,33 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/model/request_model/LoginRequest.dart';
-import 'package:jan_suraksha/model/response_model/LoginResponse.dart';
-import 'package:jan_suraksha/services/common/app_functions.dart';
-import 'package:jan_suraksha/services/common/tg_log.dart';
-import 'package:jan_suraksha/services/requtilization.dart';
-import 'package:jan_suraksha/services/response/tg_response.dart';
-import 'package:jan_suraksha/services/services.dart';
-import 'package:jan_suraksha/services/singleton/session.dart';
-import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
-import 'package:jan_suraksha/services/uris.dart';
-import 'package:jan_suraksha/utils/constant/argument_constant.dart';
-import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
-import 'package:jan_suraksha/utils/constant/session_constant.dart';
-import 'package:jan_suraksha/utils/constant/statusconstants.dart';
-import 'package:jan_suraksha/utils/erros_handle_util.dart';
-import 'package:jan_suraksha/utils/internetcheckdialog.dart';
-import 'package:jan_suraksha/utils/net_util.dart';
-import 'package:jan_suraksha/utils/utils.dart';
-import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_view.dart';
-import 'package:jan_suraksha/view/widget/progressloader.dart';
 
+import '../../../../model/request_model/LoginRequest.dart';
 import '../../../../model/response_main_model/GenerateCaptchaResponse.dart';
+import '../../../../model/response_model/LoginResponse.dart';
+import '../../../../services/common/app_functions.dart';
+import '../../../../services/common/tg_log.dart';
 import '../../../../services/request/EmptyGetRequest.dart';
 import '../../../../services/request/tg_post_request.dart';
+import '../../../../services/requtilization.dart';
+import '../../../../services/response/tg_response.dart';
+import '../../../../services/services.dart';
+import '../../../../services/singleton/session.dart';
+import '../../../../services/singleton/shared_preferences.dart';
+import '../../../../services/uris.dart';
+import '../../../../utils/constant/argument_constant.dart';
+import '../../../../utils/constant/prefrenceconstants.dart';
+import '../../../../utils/constant/session_constant.dart';
+import '../../../../utils/constant/statusconstants.dart';
+import '../../../../utils/erros_handle_util.dart';
+import '../../../../utils/internetcheckdialog.dart';
+import '../../../../utils/net_util.dart';
+import '../../../../utils/utils.dart';
+import '../../../widget/progressloader.dart';
+import '../../journey/customer_verification/customer_verification_binding.dart';
+import '../../journey/customer_verification/customer_verification_view.dart';
 
-class LoginLogic extends GetxController {
+class RegistrationLogic extends GetxController {
   TextEditingController mobileController = TextEditingController(text: '');
   RxString mobile = ''.obs;
   RxString errorMsg = ''.obs;
@@ -43,6 +43,10 @@ class LoginLogic extends GetxController {
   var captchaController = TextEditingController(text: "");
 
   String? captchaTrueValue = "";
+
+  var namecontroller = TextEditingController(text: "");
+
+  var emailAddressController = TextEditingController(text: "");
 
   @override
   void onInit() {
@@ -69,9 +73,7 @@ class LoginLogic extends GetxController {
   Future<void> onPressSentOTP() async {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     if (!isLoading.value) {
-      final validCharacters = RegExp(r'^[0-9]+$');
       errorMsg.value = '';
-
       if (await NetUtils.isInternetAvailable()) {
         loginRequest();
       } else {

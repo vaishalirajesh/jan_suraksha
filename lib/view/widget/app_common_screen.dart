@@ -18,7 +18,7 @@ class AddHeaderFooter extends StatelessWidget {
     required this.isDataLoading,
     required this.isButtonEnable,
     required this.onBackButtonCLick,
-    this.isShowButton = true,
+    this.isShowButton,
     this.subTitle = '',
   }) : super(key: key);
   Widget child;
@@ -30,7 +30,7 @@ class AddHeaderFooter extends StatelessWidget {
   VoidCallback onBackButtonCLick;
   bool isButtonEnable = false;
   bool isDataLoading = false;
-  bool isShowButton = true;
+  bool? isShowButton = true;
 
   PreferredSizeWidget getAppBar() {
     switch (appbarName) {
@@ -40,6 +40,8 @@ class AddHeaderFooter extends StatelessWidget {
         return CommonAppBar.appbarWithSubTitle(title: title, subTitle: subTitle, backPress: onBackButtonCLick);
       case AppString.appBarWithNotification:
         return CommonAppBar.appbarWithNotification(title: title, subTitle: subTitle);
+      case AppString.appBarWithoutBackButton:
+        return CommonAppBar.appbarWithoutTitleAndBackButton(title: title);
       default:
         return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
     }
@@ -52,7 +54,7 @@ class AddHeaderFooter extends StatelessWidget {
       appBar: getAppBar(),
       resizeToAvoidBottomInset: true,
       body: child,
-      bottomNavigationBar: isShowButton
+      bottomNavigationBar: isShowButton == null || isShowButton == true
           ? Padding(
               padding: EdgeInsets.only(
                 left: 20.w,

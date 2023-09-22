@@ -48,7 +48,7 @@
     "errorFile": "assets/mocks/update_stage_error.json"
   },
   {
-    "uri": "insurance/v3/enrollment/updateEnrollmentVerificationType/101212405",
+    "uri": "insurance/v3/enrollment/updateEnrollmentVerificationType/1/1",
     "method": "GET",
     "applyMock": true,
     "httpStatus": 200,
@@ -117,6 +117,14 @@
     "applyMock": true,
     "httpStatus": 200,
     "successFile": "assets/mocks/verify_otp_success.json",
+    "errorFile": "assets/mocks/verify_otp_error.json"
+  },
+  {
+    "uri": "users/v3/signup/captcha/gen",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/getCaptcha.json",
     "errorFile": "assets/mocks/verify_otp_error.json"
   }
 ]

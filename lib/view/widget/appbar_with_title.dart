@@ -30,8 +30,26 @@ class CommonAppBar {
     );
   }
 
-  static PreferredSizeWidget appbarWithSubTitle(
-      {required String title, required String subTitle, required VoidCallback backPress}) {
+  static PreferredSizeWidget appbarWithoutTitleAndBackButton({required String title}) {
+    return AppBar(
+      backgroundColor: ColorConfig.jsCreamColor,
+      elevation: 0,
+      centerTitle: true,
+      leading: InkWell(),
+      title: Text(
+        title,
+        style: StyleConfig.semiBoldText18,
+      ),
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(20.h),
+        child: Container(
+          color: ColorConfig.jsCreamColor,
+        ),
+      ),
+    );
+  }
+
+  static PreferredSizeWidget appbarWithSubTitle({required String title, required String subTitle, required VoidCallback backPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,

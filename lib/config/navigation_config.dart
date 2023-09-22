@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:jan_suraksha/view/screen/auth/Registration/registration_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/Registration/registration_view.dart';
 import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
 import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
@@ -71,6 +73,7 @@ const ResponseScreenRoute = "/ResponseScreenRoute";
 const ExceededAgeCriteareaPageRoute = "/ExceededAgeCriteareaPagePage";
 const InSuffciantFundsPageRoute = "/InSuffciantFundsPagePage";
 const PolicyAvailedPageRoute = "/PolicyAvailedPageRoute";
+const RegistrationPageRoute = "/RegistrationPage";
 
 class NavigationConfig {
   static GetPage get initialRoute => splash;
@@ -83,14 +86,8 @@ class NavigationConfig {
   static List<GetPage> getPages() {
     return [
       GetPage(name: PolicyAvailedPageRoute, page: () => PolicyAvailedPagePage(), binding: PolicyAvailedPageBinding()),
-      GetPage(
-          name: ExceededAgeCriteareaPageRoute,
-          page: () => ExceededAgeCriteareaPagePage(),
-          binding: ExceededAgeCriteareaPageBinding()),
-      GetPage(
-          name: InSuffciantFundsPageRoute,
-          page: () => InSuffciantFundsPagePage(),
-          binding: InSuffciantFundsPageBinding()),
+      GetPage(name: ExceededAgeCriteareaPageRoute, page: () => ExceededAgeCriteareaPagePage(), binding: ExceededAgeCriteareaPageBinding()),
+      GetPage(name: InSuffciantFundsPageRoute, page: () => InSuffciantFundsPagePage(), binding: InSuffciantFundsPageBinding()),
       GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),
       GetPage(name: MobileNumberInputPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
       GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
@@ -102,30 +99,16 @@ class NavigationConfig {
       GetPage(name: AddressDetailsPageRoute, page: () => AddressDetailsPage(), binding: AddressDetailsBinding()),
       GetPage(name: ApplicationFormPageRoute, page: () => ApplicationFormPage(), binding: ApplicationFormBinding()),
       GetPage(name: BankSelectionPageRoute, page: () => BankSelectionPage(), binding: BankSelectionBinding()),
-      GetPage(
-          name: CertificateInsurencePageRoute,
-          page: () => CertificateInsurencePage(),
-          binding: CertificateInsurenceBinding()),
+      GetPage(name: RegistrationPageRoute, page: () => RegistrationPage(), binding: RegistrationBinding()),
+      GetPage(name: CertificateInsurencePageRoute, page: () => CertificateInsurencePage(), binding: CertificateInsurenceBinding()),
       GetPage(name: CongratulationsPageRoute, page: () => CongratulationsPage(), binding: CongratulationsBinding()),
-      GetPage(
-          name: CustomerVerificationPageRoute,
-          page: () => CustomerVerificationPage(),
-          binding: CustomerVerificationBinding()),
+      GetPage(name: CustomerVerificationPageRoute, page: () => CustomerVerificationPage(), binding: CustomerVerificationBinding()),
       GetPage(name: GuradianDetailsPageRoute, page: () => GuradianDetailsPage(), binding: GuradianDetailsBinding()),
       GetPage(name: NomineeDetailsPageRoute, page: () => NomineeDetailsPage(), binding: NomineeDetailsBinding()),
-      GetPage(
-          name: PreviewApplicationPageRoute,
-          page: () => PreviewApplicationPage(),
-          binding: PreviewApplicationBinding()),
+      GetPage(name: PreviewApplicationPageRoute, page: () => PreviewApplicationPage(), binding: PreviewApplicationBinding()),
       GetPage(name: SelectSchemePageRoute, page: () => SelectSchemePage(), binding: SelectSchemeBinding()),
-      GetPage(
-          name: TermsAndConditionsPageRoute,
-          page: () => TermsAndConditionsPage(),
-          binding: TermsAndConditionsBinding()),
-      GetPage(
-          name: TransactionsFailurePageRoute,
-          page: () => TransactionsFailurePage(),
-          binding: TransactionsFailureBinding()),
+      GetPage(name: TermsAndConditionsPageRoute, page: () => TermsAndConditionsPage(), binding: TermsAndConditionsBinding()),
+      GetPage(name: TransactionsFailurePageRoute, page: () => TransactionsFailurePage(), binding: TransactionsFailureBinding()),
     ];
   }
 }

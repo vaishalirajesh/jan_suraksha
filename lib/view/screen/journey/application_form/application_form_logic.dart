@@ -19,8 +19,7 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 class ApplicationFormLogic extends GetxController {
   RxBool isLoading = false.obs;
   String firstName = 'KEXXX';
-  UpdateSelectedAccountHolderResponseMain updateSelectedAccountHolderResponseMain =
-      UpdateSelectedAccountHolderResponseMain();
+  UpdateSelectedAccountHolderResponseMain updateSelectedAccountHolderResponseMain = UpdateSelectedAccountHolderResponseMain();
 
   @override
   void onInit() {
@@ -44,10 +43,9 @@ class ApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     isLoading.value = true;
-    String appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    String appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
-    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
-        GetApplicationFormDetailsRequest(appId: encAppId);
+    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest = GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(
       request: getApplicationFormDetailsRequest,
@@ -63,8 +61,7 @@ class ApplicationFormLogic extends GetxController {
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0,
-          response?.getApplicationFormDetailsResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0, response?.getApplicationFormDetailsResponse()?.message ?? "", null);
     }
   }
 

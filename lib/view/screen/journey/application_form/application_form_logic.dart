@@ -6,6 +6,7 @@ import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
+import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
@@ -58,7 +59,7 @@ class ApplicationFormLogic extends GetxController {
   _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
     TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
     if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
-      TGSharedPreferences.getInstance().set(PREF_USER_FORM_DATA,
+      TGSession.getInstance().set(PREF_USER_FORM_DATA,
           getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
       getAppData = response.getApplicationFormDetailsResponse();
       isLoading.value = false;

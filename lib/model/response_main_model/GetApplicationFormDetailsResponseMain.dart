@@ -1447,4 +1447,28 @@ class Address {
     map['isOtherClaimant'] = _isOtherClaimant;
     return map;
   }
+
+  set addressLine1(String? value) {
+    _addressLine1 = value;
+  }
+
+  set addressLine2(String? value) {
+    _addressLine2 = value;
+  }
+
+  set district(String? value) {
+    _district = value;
+  }
+
+  set city(String? value) {
+    _city = value;
+  }
+
+  set state(String? value) {
+    _state = value;
+  }
+
+  set pincode(num? value) {
+    _pincode = value;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
+import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
@@ -17,7 +18,7 @@ class AddressDetailsLogic extends GetxController {
 
   Future<void> getData() async {
     Future.delayed(const Duration(seconds: 1), () async {
-      String data = await TGSharedPreferences.getInstance().get(PREF_USER_FORM_DATA);
+      String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA);
       getAppData = getApplicationFormDetailsResponseMainFromJson(data);
       isLoading.value = true;
     });

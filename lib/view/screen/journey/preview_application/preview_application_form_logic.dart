@@ -9,6 +9,7 @@ import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
+import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
@@ -33,7 +34,7 @@ class PreviewApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     Future.delayed(const Duration(seconds: 1), () async {
-      String data = await TGSharedPreferences.getInstance().get(PREF_USER_FORM_DATA);
+      String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA);
       getAppData = getApplicationFormDetailsResponseMainFromJson(data);
       isDataLoaded.value = true;
     });

@@ -23,6 +23,7 @@ class AppTextField extends StatelessWidget {
     this.prefixText = '',
     required this.isMandatory,
     this.errorText = '',
+    this.suffix,
     this.onTap,
   }) : super(key: key);
   final String hintText;
@@ -41,6 +42,7 @@ class AppTextField extends StatelessWidget {
   final String prefixText;
   final String? errorText;
   final bool isDobField;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +82,7 @@ class AppTextField extends StatelessWidget {
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             hintText: hintText,
+            suffix: suffix,
             counterText: AppString.emptyText,
             hintStyle: StyleConfig.smallTextLight,
             prefixIconConstraints: BoxConstraints(minWidth: 24.w, maxHeight: 24.h),
@@ -91,16 +94,24 @@ class AppTextField extends StatelessWidget {
                     style: StyleConfig.smallText,
                   )
                 : const SizedBox.shrink(),
-            fillColor: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.background,
+            fillColor: isReadOnly && !isDobField
+                ? ThemeHelper.getInstance()!.colorScheme.surface
+                : ThemeHelper.getInstance()!.colorScheme.background,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               borderSide: BorderSide(
                 width: 1,
-                color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                color: isReadOnly && !isDobField
+                    ? ThemeHelper.getInstance()!.colorScheme.surface
+                    : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
+              borderSide: BorderSide(
+                  color: isReadOnly && !isDobField
+                      ? ThemeHelper.getInstance()!.colorScheme.surface
+                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             errorBorder: OutlineInputBorder(
@@ -108,7 +119,11 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
+              borderSide: BorderSide(
+                  color: isReadOnly && !isDobField
+                      ? ThemeHelper.getInstance()!.colorScheme.surface
+                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),

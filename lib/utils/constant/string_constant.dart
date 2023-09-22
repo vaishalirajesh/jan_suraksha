@@ -1,5 +1,6 @@
 class AppString {
   static const String appBarWithTitle = 'appBarWithTitle';
+  static const String appBarWithTitleAndProgressBar = 'appBarWithTitleAndProgressBar';
   static const String appBarWithSubtitle = 'appBarWithSubtitle';
   static const String appBarWithNotification = 'appBarWithNotification';
   static const String appBarWithoutBackButton = "appbarwithoutbackbutton";
@@ -161,6 +162,7 @@ class AppString {
   static const String download = 'Download';
   static const String ackInsurance = 'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
   static const String yojna = 'Pradhan Mantri Jeevan Jyoti Bima Yojana';
+  static const String yojna2 = 'Pradhan Mantri Suraksha Bima Yojana';
   static const String COI = 'Certificate of insurance (COI)';
   static const String yojana = 'Pradhan Mantri Jeevan jyoti Bima Yojana';
   static const String nameMember = 'Name of Member';

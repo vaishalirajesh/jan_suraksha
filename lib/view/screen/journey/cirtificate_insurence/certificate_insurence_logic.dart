@@ -23,11 +23,17 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 class CertificateInsurenceLogic extends GetxController {
   RxBool isLoading = true.obs;
   GenerateCoiResponseMain generateCoiData = GenerateCoiResponseMain();
+  RxInt schemeId = 1.obs;
 
   @override
   void onInit() {
+    getSchemeDetail();
     getDetail();
     super.onInit();
+  }
+
+  Future<void> getSchemeDetail() async {
+    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 1;
   }
 
   void onPressDownload() {
@@ -46,11 +52,10 @@ class CertificateInsurenceLogic extends GetxController {
 
   Future<void> getDetail() async {
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
-    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '1';
     var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID) ?? '13';
     GenerateCoiRequest generateCoiRequest = GenerateCoiRequest(
       applicationId: appId.toString(),
-      schemeId: schemeId.toString(),
+      schemeId: schemeId.value.toString(),
       orgId: orgId.toString(),
       isDownload: false,
     );

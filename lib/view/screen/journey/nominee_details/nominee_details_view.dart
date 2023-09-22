@@ -26,13 +26,14 @@ class NomineeDetailsPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-              appbarName: AppString.appBarWithTitle,
+              appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.nomineeDetails,
               buttonTitle: AppString.continueText,
               onButtonClick: nomineeDetailsLogic.onPressContinue,
               isDataLoading: false,
               onBackButtonCLick: AppUtils.onBackPress,
               isButtonEnable: true,
+              progress: 0.6,
               child: Padding(
                 padding: EdgeInsets.all(20.h),
                 child: Obx(
@@ -48,6 +49,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.firstNameController,
                                 hintText: AppString.enterFirstName,
                                 inputType: TextInputType.text,
+                                errorText: nomineeDetailsLogic.fNameErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -80,6 +82,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 isDobField: true,
                                 isReadOnly: true,
                                 onTap: nomineeDetailsLogic.selectDate,
+                                errorText: nomineeDetailsLogic.dobErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -100,6 +103,28 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.relationWithApplicantController,
                                 hintText: AppString.selectRelation,
                                 inputType: TextInputType.text,
+                                // suffix: DropdownButtonFormField(
+                                //   padding: EdgeInsets.zero,
+                                //   dropdownColor: ColorConfig.jsPrimaryColor,
+                                //   value: nomineeDetailsLogic.selectedValue.value,
+                                //   decoration: InputDecoration(
+                                //     contentPadding: EdgeInsets.zero,
+                                //     isDense: true,
+                                //     border: null,
+                                //   ),
+                                //   onChanged: (newValue) {
+                                //     nomineeDetailsLogic.selectedValue.value = newValue ?? '';
+                                //   },
+                                //   items: nomineeDetailsLogic.items.map<DropdownMenuItem<String>>((String value) {
+                                //     return DropdownMenuItem<String>(
+                                //       value: value,
+                                //       child: Text(
+                                //         value,
+                                //         overflow: TextOverflow.ellipsis,
+                                //       ),
+                                //     );
+                                //   }).toList(),
+                                // ),
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -181,6 +206,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.addressOneController,
                                 hintText: AppString.enterAddress,
                                 inputType: TextInputType.streetAddress,
+                                errorText: nomineeDetailsLogic.addressErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -201,6 +227,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.cityController,
                                 hintText: AppString.enterCity,
                                 inputType: TextInputType.text,
+                                errorText: nomineeDetailsLogic.cityErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -211,6 +238,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.districtController,
                                 hintText: AppString.enterDisctrict,
                                 inputType: TextInputType.text,
+                                errorText: nomineeDetailsLogic.districtErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -220,6 +248,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 title: AppString.state,
                                 controller: nomineeDetailsLogic.stateController,
                                 hintText: AppString.enterState,
+                                errorText: nomineeDetailsLogic.stateErrorMsg.value,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -231,6 +260,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 hintText: AppString.enterPincode,
                                 inputType: TextInputType.number,
                                 maxLength: 6,
+                                errorText: nomineeDetailsLogic.pinCodeErrorMsg.value,
                               ),
                             ],
                           ),

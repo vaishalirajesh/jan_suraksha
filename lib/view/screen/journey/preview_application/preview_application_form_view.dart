@@ -24,13 +24,14 @@ class PreviewApplicationPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-              appbarName: AppString.appBarWithTitle,
+              appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.previewApplicationForm,
               buttonTitle: AppString.submit,
               onButtonClick: previewApplicationFormLogic.onPressContinue,
               isDataLoading: previewApplicationFormLogic.isLoading.value,
               onBackButtonCLick: AppUtils.onBackToDashboard,
               isButtonEnable: true,
+              progress: 0.8,
               child: Padding(
                 padding: EdgeInsets.all(20.h),
                 child: Obx(

@@ -30,6 +30,39 @@ class CommonAppBar {
     );
   }
 
+  static PreferredSizeWidget appbarWithTitleAndProgressBar({
+    required String title,
+    required VoidCallback onBackPress,
+    required double? progress,
+  }) {
+    return AppBar(
+      backgroundColor: ColorConfig.jsCreamColor,
+      elevation: 0,
+      centerTitle: true,
+      leading: InkWell(
+        onTap: onBackPress,
+        child: Icon(
+          Icons.arrow_back_sharp,
+          color: ColorConfig.jsLightBlackColor,
+          size: 25.r,
+        ),
+      ),
+      title: Text(
+        title,
+        style: StyleConfig.semiBoldText18,
+      ),
+      bottom: PreferredSize(
+        preferredSize: Size(0, 3.h),
+        child: LinearProgressIndicator(
+            value: progress,
+            semanticsLabel: '',
+            minHeight: 2.h,
+            color: ColorConfig.jsPrimaryColor,
+            backgroundColor: Colors.transparent),
+      ),
+    );
+  }
+
   static PreferredSizeWidget appbarWithoutTitleAndBackButton({required String title}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
@@ -49,7 +82,8 @@ class CommonAppBar {
     );
   }
 
-  static PreferredSizeWidget appbarWithSubTitle({required String title, required String subTitle, required VoidCallback backPress}) {
+  static PreferredSizeWidget appbarWithSubTitle(
+      {required String title, required String subTitle, required VoidCallback backPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,

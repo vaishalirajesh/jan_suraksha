@@ -73,7 +73,20 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   String getMonth(int month) {
-    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
     return months[month - 1];
   }
 
@@ -83,13 +96,6 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   void onPressContinue() {
-    onCustomerVerification();
-    // var data = AesGcmEncryptionUtils.decryptNew(
-    //     "WkZnZmJsdit0U1QvN1RJKzdBQ0lUcmtjcCtHYWhkTUd5azIxVVlMVk9FNklrTDc3RUdtT2VqUXErV1VBWGN6WC94VGpwV3RjdDYzRU13RlMrQW4yQ1JCdHl4d1N3MmlOeUhRUlAzWTFaZTBzcUtTOVJ4Mm9ZemVsL2dEYXYzemdWN0U9Ojo5NmQ2OGUxYWMyNDgxOGJl");
-    //
-    // TGLog.d('decryprt data--$data');
-    return;
-
     if (!isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (accountTextController.text.isEmpty) {
@@ -159,7 +165,8 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0, response?.createApplicationResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0,
+          response?.createApplicationResponse()?.message ?? "", null);
     }
   }
 
@@ -183,13 +190,21 @@ class CustomerVerificationLogic extends GetxController {
     if (TGMockService.applyMock) {
       var encryptId = "1";
       var encryptType = "1";
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
-      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(
+          request: updateEnrollmentVerificationTypeRequest,
+          onSuccess: (response) => _onSuccessVerificationType(response),
+          onError: (error) => _onErrorVerificationType(error));
     } else {
       var encryptId = AesGcmEncryptionUtils.encryptNew(createApplicationResponseMain.data?.id.toString() ?? '');
       var encryptType = AesGcmEncryptionUtils.encryptNew('1');
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
-      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(
+          request: updateEnrollmentVerificationTypeRequest,
+          onSuccess: (response) => _onSuccessVerificationType(response),
+          onError: (error) => _onErrorVerificationType(error));
     }
   }
 
@@ -213,7 +228,8 @@ class CustomerVerificationLogic extends GetxController {
       );
     } else {
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0, response?.updateEnrollmentVerificationType()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0,
+          response?.updateEnrollmentVerificationType()?.message ?? "", null);
     }
   }
 
@@ -260,7 +276,8 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
     }
   }
 

@@ -22,13 +22,14 @@ class GuradianDetailsPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-              appbarName: AppString.appBarWithTitle,
+              appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.gaurdianDetails,
               buttonTitle: AppString.continueText,
               onButtonClick: guradianDetailsLogic.onPressContinue,
               isDataLoading: false,
               onBackButtonCLick: AppUtils.onBackPress,
               isButtonEnable: true,
+              progress: 0.7,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(20.h),
@@ -44,6 +45,7 @@ class GuradianDetailsPage extends StatelessWidget {
                                   controller: guradianDetailsLogic.firstNameController,
                                   hintText: AppString.enterYourName,
                                   inputType: TextInputType.text,
+                                  errorText: guradianDetailsLogic.fNameErrorMsg.value,
                                 ),
                                 SizedBox(
                                   height: 15.h,
@@ -54,6 +56,7 @@ class GuradianDetailsPage extends StatelessWidget {
                                   controller: guradianDetailsLogic.addressController,
                                   hintText: AppString.enterYourAddress,
                                   inputType: TextInputType.text,
+                                  errorText: guradianDetailsLogic.addressErrorMsg.value,
                                 ),
                                 SizedBox(
                                   height: 15.h,
@@ -64,6 +67,7 @@ class GuradianDetailsPage extends StatelessWidget {
                                   controller: guradianDetailsLogic.relationWithApplicantController,
                                   hintText: AppString.selectRelation,
                                   inputType: TextInputType.text,
+                                  errorText: guradianDetailsLogic.relationErrorMsg.value,
                                 ),
                                 SizedBox(
                                   height: 15.h,

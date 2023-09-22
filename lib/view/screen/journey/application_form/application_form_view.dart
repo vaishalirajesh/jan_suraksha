@@ -22,7 +22,7 @@ class ApplicationFormPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-              appbarName: AppString.appBarWithTitle,
+              appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.applicationForm,
               buttonTitle: AppString.continueText,
               onButtonClick: applicationFormLogic.onPressContinue,
@@ -30,6 +30,7 @@ class ApplicationFormPage extends StatelessWidget {
               isButtonEnable: true,
               isShowButton: true,
               onBackButtonCLick: AppUtils.onBackToDashboard,
+              progress: 0.4,
               child: Padding(
                 padding: EdgeInsets.all(20.h),
                 child: Obx(

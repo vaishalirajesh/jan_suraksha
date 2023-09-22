@@ -49,13 +49,14 @@ class CertificateInsurencePage extends StatelessWidget {
                         height: 10.h,
                       ),
                       Text(
-                        AppString.yojna,
+                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna : AppString.yojna2,
                         style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsBlackColor),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         AppString.COI,
-                        style: StyleConfig.boldText16.copyWith(fontFamily: JSFonts.outfitRegular),
+                        style: StyleConfig.boldText16
+                            .copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -64,10 +65,22 @@ class CertificateInsurencePage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset(
-                            AppUtils.path(AppImages.sbiLogo),
-                            height: 30.r,
-                            width: 30.r,
+                          Row(
+                            children: [
+                              Image.network(
+                                certificateInsurenceLogic.generateCoiData.data!.bankLogoUrl ?? '',
+                                height: 30.r,
+                                // width: 30.r,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Image.network(
+                                certificateInsurenceLogic.generateCoiData.data!.logoUrl ?? '',
+                                height: 30.r,
+                                // width: 30.r,
+                              ),
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,8 +89,8 @@ class CertificateInsurencePage extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                 AppImages.jsLogo,
-                                height: 20.h,
-                                width: 20.w,
+                                height: 25.h,
+                                width: 25.w,
                               ),
                               SizedBox(
                                 width: 3.w,
@@ -88,11 +101,11 @@ class CertificateInsurencePage extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text: AppString.janText,
-                                      style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                      style: StyleConfig.boldText18.copyWith(color: ColorConfig.jsPrimaryColor),
                                     ),
                                     TextSpan(
                                       text: AppString.surakshaText,
-                                      style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsBlueColor),
+                                      style: StyleConfig.boldText18.copyWith(color: ColorConfig.jsBlueColor),
                                     ),
                                   ],
                                 ),
@@ -114,7 +127,7 @@ class CertificateInsurencePage extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(10.r),
                                 child: Text(
-                                  AppString.yojana,
+                                  certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna : AppString.yojna2,
                                   style: StyleConfig.mediumExtraSmallBlackText,
                                   textAlign: TextAlign.center,
                                 ),
@@ -122,7 +135,7 @@ class CertificateInsurencePage extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(10.r),
                                 child: Text(
-                                  certificateInsurenceLogic.generateCoiData.data?.nameOfBank ?? '-',
+                                  certificateInsurenceLogic.generateCoiData.data?.nameOfInsurer ?? '-',
                                   style: StyleConfig.regularExtraSmallBText,
                                   textAlign: TextAlign.center,
                                 ),

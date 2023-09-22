@@ -22,13 +22,14 @@ class AddressDetailsPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-              appbarName: AppString.appBarWithTitle,
+              appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.addressDetails,
               buttonTitle: AppString.continueText,
               onButtonClick: addressDetailsLogic.onPressContinue,
               isDataLoading: false,
               isButtonEnable: true,
               onBackButtonCLick: AppUtils.onBackPress,
+              progress: 0.5,
               child: Padding(
                 padding: EdgeInsets.all(20.h),
                 child: Obx(

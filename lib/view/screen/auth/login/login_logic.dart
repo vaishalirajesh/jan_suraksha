@@ -46,7 +46,7 @@ class LoginLogic extends GetxController {
 
   @override
   void onInit() {
-    Future.delayed(Duration(seconds: 10)).then((value) {
+    Future.delayed(const Duration(seconds: 4)).then((value) {
       getcaptcha();
     });
 
@@ -101,7 +101,11 @@ class LoginLogic extends GetxController {
   }
 
   getcaptcha() {
-    ServiceManager.getInstance().getCaptcha(request: EmptyTgGetRequest(), onSuccess: (response) => _onsuccsessCaptchGet(response), onError: (response) => _onErrorResponse(response));
+    ServiceManager.getInstance().getCaptcha(
+      request: EmptyTgGetRequest(),
+      onSuccess: (response) => _onsuccsessCaptchGet(response),
+      onError: (response) => _onErrorResponse(response),
+    );
   }
 
   Future<void> loginRequest() async {
@@ -115,13 +119,17 @@ class LoginLogic extends GetxController {
       deviceOs: 'windows',
       deviceOsVersion: 'windows-10',
       deviceType: 'desktop',
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+      userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
       userType: '2',
     );
     var jsonRequest = jsonEncode(loginRequest.toJson());
     TGLog.d("Auto Login Request $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
-    ServiceManager.getInstance().loginRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessAutoLogin(response), onError: (error) => _onErrorAutoLogin(error));
+    ServiceManager.getInstance().loginRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessAutoLogin(response),
+        onError: (error) => _onErrorAutoLogin(error));
   }
 
   _onSuccessAutoLogin(LoginResponse response) async {
@@ -158,7 +166,8 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in login");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0, response?.getLoginResponseData()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0,
+          response?.getLoginResponseData()?.message ?? "", null);
     }
   }
 

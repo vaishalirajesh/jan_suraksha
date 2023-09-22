@@ -20,6 +20,7 @@ class AddHeaderFooter extends StatelessWidget {
     required this.onBackButtonCLick,
     this.isShowButton,
     this.subTitle = '',
+    this.progress,
   }) : super(key: key);
   Widget child;
   String appbarName = '';
@@ -31,11 +32,15 @@ class AddHeaderFooter extends StatelessWidget {
   bool isButtonEnable = false;
   bool isDataLoading = false;
   bool? isShowButton = true;
+  double? progress;
 
   PreferredSizeWidget getAppBar() {
     switch (appbarName) {
       case AppString.appBarWithTitle:
         return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
+      case AppString.appBarWithTitleAndProgressBar:
+        return CommonAppBar.appbarWithTitleAndProgressBar(
+            title: title, onBackPress: onBackButtonCLick, progress: progress);
       case AppString.appBarWithSubtitle:
         return CommonAppBar.appbarWithSubTitle(title: title, subTitle: subTitle, backPress: onBackButtonCLick);
       case AppString.appBarWithNotification:

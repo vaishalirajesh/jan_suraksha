@@ -32,5 +32,7 @@ class Assets {
   static const String profileProfileTermsAndConditions = 'assets/images/profile/profile_terms_and_conditions.svg';
   static const String profileShare = 'assets/images/profile/share.svg';
   static const String responsepageFatherWithChildren = 'assets/images/responsepage/father_with_children.svg';
+  static const String schemePmjjbyScheme = 'assets/images/scheme/pmjjby_scheme.png';
+  static const String schemePmsby = 'assets/images/scheme/pmsby.png';
   static const String schemeSchemeselection = 'assets/images/scheme/schemeselection.svg';
 }

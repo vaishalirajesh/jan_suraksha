@@ -44,13 +44,15 @@ import 'package:jan_suraksha/view/screen/journey/transaction_failure/transaction
 import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
 import 'package:jan_suraksha/view/screen/splash/splash_screen_view.dart';
 
+import '../view/screen/homepage/personal_info_binding.dart';
+import '../view/screen/homepage/personal_info_view.dart';
 import '../view/screen/homepage/profile/profile_binding.dart';
 import '../view/screen/journey/application_form/application_form_binding.dart';
 import '../view/screen/journey/bank_selection/bank_selection_binding.dart';
 import '../view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 
 const SplashRoutes = "/";
-const MobileNumberInputPageRoute = "/MobileNumberInputPage";
+const LoginPageRoute = "/MobileNumberInputPage";
 const DashboardPageRoute = "/DashboardPage";
 const PolicyDetailsPageRoute = "/PolicyDetailsPage";
 const ProfilePageRoute = "/ProfilePage";
@@ -74,6 +76,7 @@ const ExceededAgeCriteareaPageRoute = "/ExceededAgeCriteareaPagePage";
 const InSuffciantFundsPageRoute = "/InSuffciantFundsPagePage";
 const PolicyAvailedPageRoute = "/PolicyAvailedPageRoute";
 const RegistrationPageRoute = "/RegistrationPage";
+const PersonalInfoPageRoute = '/PersonalInfoPage';
 
 class NavigationConfig {
   static GetPage get initialRoute => splash;
@@ -85,11 +88,12 @@ class NavigationConfig {
 
   static List<GetPage> getPages() {
     return [
+      GetPage(name: PersonalInfoPageRoute, page: () => PersonalInfoPage(), binding: PersonalInfoBinding()),
       GetPage(name: PolicyAvailedPageRoute, page: () => PolicyAvailedPagePage(), binding: PolicyAvailedPageBinding()),
       GetPage(name: ExceededAgeCriteareaPageRoute, page: () => ExceededAgeCriteareaPagePage(), binding: ExceededAgeCriteareaPageBinding()),
       GetPage(name: InSuffciantFundsPageRoute, page: () => InSuffciantFundsPagePage(), binding: InSuffciantFundsPageBinding()),
       GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),
-      GetPage(name: MobileNumberInputPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
+      GetPage(name: LoginPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
       GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
       GetPage(name: PolicyDetailsPageRoute, page: () => PolicyDetailsPage(), binding: PolicyDetailsBinding()),
       GetPage(name: ProfilePageRoute, page: () => ProfilePage(), binding: ProfileBinding()),

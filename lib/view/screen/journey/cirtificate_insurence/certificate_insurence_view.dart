@@ -55,8 +55,7 @@ class CertificateInsurencePage extends StatelessWidget {
                       ),
                       Text(
                         AppString.COI,
-                        style: StyleConfig.boldText16
-                            .copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
+                        style: StyleConfig.boldText16.copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -67,19 +66,23 @@ class CertificateInsurencePage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Image.network(
-                                certificateInsurenceLogic.generateCoiData.data!.bankLogoUrl ?? '',
-                                height: 30.r,
-                                // width: 30.r,
-                              ),
+                              certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl != null
+                                  ? Image.network(
+                                      certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl ?? '',
+                                      height: 30.r,
+                                      // width: 30.r,
+                                    )
+                                  : Container(),
                               SizedBox(
                                 width: 10.w,
                               ),
-                              Image.network(
-                                certificateInsurenceLogic.generateCoiData.data!.logoUrl ?? '',
-                                height: 30.r,
-                                // width: 30.r,
-                              ),
+                              certificateInsurenceLogic.generateCoiData.data?.logoUrl != null
+                                  ? Image.network(
+                                      certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
+                                      height: 30.r,
+                                      // width: 30.r,
+                                    )
+                                  : Container(),
                             ],
                           ),
                           Row(
@@ -229,10 +232,7 @@ class CertificateInsurencePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(10.r),
                               child: Text(
-                                AppUtils.convertDateFormat(
-                                    certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
-                                    'yyyy-mm-dd',
-                                    'dd/mm/yyyy'),
+                                AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
                                 style: StyleConfig.regularExtraSmallBText,
                                 textAlign: TextAlign.center,
                               ),
@@ -322,8 +322,7 @@ class CertificateInsurencePage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(10.r),
                               child: Text(
-                                AppUtils.convertDateFormat(
-                                    certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
                                 style: StyleConfig.regularExtraSmallBText,
                                 textAlign: TextAlign.center,
                               ),

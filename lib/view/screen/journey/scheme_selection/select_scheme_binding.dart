@@ -5,6 +5,6 @@ import 'select_scheme_logic.dart';
 class SelectSchemeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => SelectSchemeLogic());
+    Get.put<SelectSchemeLogic>(SelectSchemeLogic());
   }
 }

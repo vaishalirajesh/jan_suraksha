@@ -57,8 +57,8 @@ class NomineeDetailsLogic extends GetxController {
 
   @override
   void onInit() {
-    // getData();
-    getMasterList();
+    getData();
+    // getMasterList();
     super.onInit();
   }
 
@@ -73,9 +73,7 @@ class NomineeDetailsLogic extends GetxController {
   }
 
   Future<void> getList() async {
-    List<String> list = [
-      "RELEATION_SHIP",
-    ];
+    var list = ["RELEATION_SHIP"];
     var jsonRequest = jsonEncode(list);
     TGPostRequest tgPostRequest = await getPlainPayLoad(jsonRequest, URIS.URI_GET_MASTER_LIST);
     TGLog.d("GetMasterListRequest Decrypt:--------${tgPostRequest.body()}");

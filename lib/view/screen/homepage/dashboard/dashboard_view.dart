@@ -12,6 +12,9 @@ import 'package:jan_suraksha/view/screen/journey/application_form/application_fo
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
+import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_view.dart';
+import 'package:jan_suraksha/view/widget/app_loader.dart';
 
 import '../../../../config/navigation_config.dart';
 import '../../../../config/style_config.dart';
@@ -21,132 +24,161 @@ import 'dashboard_logic.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
+  final dashboardLogic = Get.find<DashboardLogic>();
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.find<DashboardLogic>();
     return Obx(() {
-      return Scaffold(
-        body: Builder(builder: (context) {
-          switch (logic.index.value) {
-            case (0):
-              return HomePage();
-            case (1):
-              return ServicesPage();
-            case (2):
-              return SupportPage();
-            case (3):
-              return ProfilePage();
-            default:
-              return HomePage();
-          }
-        }),
-        bottomNavigationBar: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            clipBehavior: Clip.antiAlias,
-            child: SizedBox(
-              // height: 50.h,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      logic.setIndex(0);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          logic.index.value == 0 ? SvgPicture.asset(Assets.dashboardHomeEnabled) : SvgPicture.asset(Assets.dashboardHomeDisabled),
-                          SizedBox(
-                            height: 2.h,
+      return Stack(
+        children: [
+          Scaffold(
+            body: Builder(builder: (context) {
+              switch (dashboardLogic.index.value) {
+                case (0):
+                  return HomePage();
+                case (1):
+                  return ServicesPage();
+                case (2):
+                  return SupportPage();
+                case (3):
+                  return ProfilePage();
+                default:
+                  return HomePage();
+              }
+            }),
+            bottomNavigationBar: BottomAppBar(
+                shape: const CircularNotchedRectangle(),
+                clipBehavior: Clip.antiAlias,
+                child: SizedBox(
+                  // height: 50.h,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          dashboardLogic.setIndex(0);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              dashboardLogic.index.value == 0
+                                  ? SvgPicture.asset(Assets.dashboardHomeEnabled)
+                                  : SvgPicture.asset(Assets.dashboardHomeDisabled),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                AppString.str_home,
+                                style: StyleConfig.regularText16.copyWith(
+                                    color: dashboardLogic.index.value == 0
+                                        ? ColorConfig.jsSecondaryColor
+                                        : ColorConfig.jsGreyColor,
+                                    fontSize: 10.sp),
+                              )
+                            ],
                           ),
-                          Text(
-                            AppString.str_home,
-                            style: StyleConfig.regularText16.copyWith(color: logic.index.value == 0 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
-                          )
-                        ],
+                        ),
                       ),
-                    ),
+                      InkWell(
+                        onTap: () {
+                          dashboardLogic.setIndex(1);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              dashboardLogic.index.value == 1
+                                  ? SvgPicture.asset(Assets.dashboardServiceEnabled)
+                                  : SvgPicture.asset(Assets.dashboardServiceDisabled),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                AppString.str_services,
+                                style: StyleConfig.regularText16.copyWith(
+                                    color: dashboardLogic.index.value == 1
+                                        ? ColorConfig.jsSecondaryColor
+                                        : ColorConfig.jsGreyColor,
+                                    fontSize: 10.sp),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          dashboardLogic.setIndex(2);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              dashboardLogic.index.value == 2
+                                  ? SvgPicture.asset(Assets.dashboardSupportEnabled)
+                                  : SvgPicture.asset(Assets.dashboardSupportDisabled),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                AppString.str_support,
+                                style: StyleConfig.regularText16.copyWith(
+                                  color: dashboardLogic.index.value == 2
+                                      ? ColorConfig.jsSecondaryColor
+                                      : ColorConfig.jsGreyColor,
+                                  fontSize: 9.sp,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          dashboardLogic.setIndex(3);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              dashboardLogic.index.value == 3
+                                  ? SvgPicture.asset(Assets.dashboardProfileEnabled)
+                                  : SvgPicture.asset(Assets.dashboardProfileDisabled),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                AppString.str_porfile,
+                                style: StyleConfig.regularText16.copyWith(
+                                    color: dashboardLogic.index.value == 3
+                                        ? ColorConfig.jsSecondaryColor
+                                        : ColorConfig.jsGreyColor,
+                                    fontSize: 10.sp),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  InkWell(
-                    onTap: () {
-                      logic.setIndex(1);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          logic.index.value == 1 ? SvgPicture.asset(Assets.dashboardServiceEnabled) : SvgPicture.asset(Assets.dashboardServiceDisabled),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            AppString.str_services,
-                            style: StyleConfig.regularText16.copyWith(color: logic.index.value == 1 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      logic.setIndex(2);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          logic.index.value == 2 ? SvgPicture.asset(Assets.dashboardSupportEnabled) : SvgPicture.asset(Assets.dashboardSupportDisabled),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            AppString.str_support,
-                            style: StyleConfig.regularText16.copyWith(
-                              color: logic.index.value == 2 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
-                              fontSize: 9.sp,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      logic.setIndex(3);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.r, vertical: 15.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          logic.index.value == 3 ? SvgPicture.asset(Assets.dashboardProfileEnabled) : SvgPicture.asset(Assets.dashboardProfileDisabled),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            AppString.str_porfile,
-                            style: StyleConfig.regularText16.copyWith(color: logic.index.value == 3 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )),
+                )),
+          ),
+          if (dashboardLogic.isLoading.value) const AppLoader(),
+        ],
       );
     });
   }
 }
 
 class HomePage extends StatelessWidget {
+  final dashboardLogic = Get.find<DashboardLogic>();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -169,33 +201,33 @@ class HomePage extends StatelessWidget {
                             padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(AppString.str_welcome, style: StyleConfig.smallText.copyWith(fontSize: 24.sp))],
+                              children: [
+                                Text(AppString.str_welcome, style: StyleConfig.smallText.copyWith(fontSize: 24.sp))
+                              ],
                             ),
                           ),
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.h, left: 20.w),
-                                child: Text(
-                                  AppString.happy_to_have_you_onboard,
-                                  style: StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
-                                ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.h, left: 20.w),
+                              child: Text(
+                                AppString.happy_to_have_you_onboard,
+                                style:
+                                    StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Container(
                           height: 10.h,
                         ),
-                        Container(
-                            child: Padding(
+                        Padding(
                           padding: const EdgeInsets.only(bottom: 30),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
@@ -233,15 +265,20 @@ class HomePage extends StatelessWidget {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    AppString.str_pmjjby,
-                                                    style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                                    dashboardLogic.schemeDetail != null &&
+                                                            dashboardLogic.schemeDetail[1] != null
+                                                        ? dashboardLogic.schemeDetail[1]['shortName']
+                                                        : '',
+                                                    style: StyleConfig.boldText16
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                                   ),
                                                   SizedBox(
                                                     height: 1.h,
                                                   ),
                                                   Text(
                                                     AppString.str_pay_annually,
-                                                    style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                                    style: StyleConfig.regularExtraSmallText
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
                                                   )
                                                 ],
                                               ),
@@ -254,7 +291,10 @@ class HomePage extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 12.w),
                                           child: Text(
-                                            AppString.str_rs,
+                                            dashboardLogic.schemeDetail != null &&
+                                                    dashboardLogic.schemeDetail[1]['premiumAmount'] != null
+                                                ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}"
+                                                : '0',
                                             style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
                                           ),
                                         ),
@@ -263,7 +303,8 @@ class HomePage extends StatelessWidget {
                                           child: Expanded(
                                             child: ListViewButtons(
                                               onPress: () {
-                                                Get.to(() => const OngoingPmjjbyJourneyPage(), binding: OngoingPmjjbyJourneyBinding());
+                                                Get.to(() => const OngoingPmjjbyJourneyPage(),
+                                                    binding: OngoingPmjjbyJourneyBinding());
                                               },
                                               title: AppString.str_view_details,
                                             ),
@@ -312,15 +353,20 @@ class HomePage extends StatelessWidget {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    AppString.str_pmsby,
-                                                    style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                                    dashboardLogic.schemeDetail != null &&
+                                                            dashboardLogic.schemeDetail[0] != null
+                                                        ? dashboardLogic.schemeDetail[0]['shortName']
+                                                        : '',
+                                                    style: StyleConfig.boldText16
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                                   ),
                                                   SizedBox(
                                                     height: 1.h,
                                                   ),
                                                   Text(
                                                     AppString.str_pay_annually,
-                                                    style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                                    style: StyleConfig.regularExtraSmallText
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
                                                   )
                                                 ],
                                               ),
@@ -333,7 +379,10 @@ class HomePage extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 12.w),
                                           child: Text(
-                                            AppString.str_rs,
+                                            dashboardLogic.schemeDetail != null &&
+                                                    dashboardLogic.schemeDetail[0]['premiumAmount'] != null
+                                                ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}"
+                                                : '0',
                                             style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
                                           ),
                                         ),
@@ -342,7 +391,8 @@ class HomePage extends StatelessWidget {
                                           child: Expanded(
                                             child: ListViewButtons(
                                               onPress: () {
-                                                Get.to(() => const OngoingPmjjbyJourneyPage(), binding: OngoingPmjjbyJourneyBinding());
+                                                Get.to(() => const OngoingPmjjbyJourneyPage(),
+                                                    binding: OngoingPmjjbyJourneyBinding());
                                               },
                                               title: AppString.str_view_details,
                                             ),
@@ -358,7 +408,7 @@ class HomePage extends StatelessWidget {
                               )
                             ],
                           ),
-                        )),
+                        ),
                       ],
                     ),
                   ),
@@ -372,7 +422,8 @@ class HomePage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 30.h, bottom: 20.h, left: 10.w),
-                      child: Text(AppString.str_my_policy, style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
+                      child:
+                          Text(AppString.str_my_policy, style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -413,7 +464,8 @@ class HomePage extends StatelessWidget {
                                     ),
                                     Text(
                                       AppString.str_policy_for,
-                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
+                                      style: StyleConfig.mediumText16
+                                          .copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                     )
                                   ],
                                 ),
@@ -448,12 +500,14 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           AppString.str_name,
-                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                          style: StyleConfig.boldText16
+                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                         ),
                                         SizedBox(
                                           width: 4.w,
                                         ),
-                                        Text(AppString.str_name_value, style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
+                                        Text(AppString.str_name_value,
+                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
                                       ],
                                     ),
                                   ),
@@ -463,7 +517,8 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           AppString.str_scheme,
-                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                          style: StyleConfig.boldText16
+                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                         ),
                                         SizedBox(
                                           width: 4.w,
@@ -498,7 +553,7 @@ class HomePage extends StatelessWidget {
                               ),
                               ListViewButtons(
                                 onPress: () {
-                                  Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+                                  Get.to(() => TermsAndConditionsPage(), binding: TermsAndConditionsBinding());
                                 },
                                 title: "Continue Journey",
                               )
@@ -532,12 +587,14 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           AppString.str_name,
-                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                          style: StyleConfig.boldText16
+                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                         ),
                                         SizedBox(
                                           width: 4.w,
                                         ),
-                                        Text(AppString.str_name_value, style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
+                                        Text(AppString.str_name_value,
+                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
                                       ],
                                     ),
                                   ),
@@ -547,7 +604,8 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           AppString.str_scheme,
-                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                          style: StyleConfig.boldText16
+                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                         ),
                                         SizedBox(
                                           width: 4.w,
@@ -620,7 +678,8 @@ class ConstrainedFlexView extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),
+            constraints:
+                BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),
             child: child,
           ),
         );

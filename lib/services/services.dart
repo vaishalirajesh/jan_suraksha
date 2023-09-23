@@ -1,3 +1,4 @@
+import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/EnrollmentOtpVerifyResponse.dart';
 import 'package:jan_suraksha/model/response_model/GenerateCoiResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetAllMenuForBankerResponse.dart';
@@ -146,6 +147,12 @@ class ServiceManager {
   void getMasterList({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
     TGLog.d("ServiceManager.saveFormDetail");
     TGService<GetMasterListResponse, ServiceError>(() => GetMasterListResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void consentOtpSend({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.saveFormDetail");
+    TGService<OTPResponse, ServiceError>(() => OTPResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 }

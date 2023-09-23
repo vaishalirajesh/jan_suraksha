@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jan_suraksha/services/services.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 
 import '../../../../model/request_model/GetSchemaByUserIdRequest.dart';
 import '../../../../model/response_model/GetSchemaByUserIdResponse.dart';
@@ -10,12 +12,14 @@ class SelectSchemeLogic extends GetxController {
 
   @override
   void onInit() {
-    getSchemees();
     super.onInit();
   }
 
-  void getSchemees() {
-    ServiceManager.getInstance().getSchemaByUserId(request: GetSchemaByUserIdRequest(), onSuccess: (response) => _onsuccsessresponse(response), onError: (response) => _onErrorResponse(response));
+  Future<void> getSchemees() async {
+    ServiceManager.getInstance().getSchemaByUserId(
+        request: GetSchemaByUserIdRequest(id: '1'),
+        onSuccess: (response) => _onsuccsessresponse(response),
+        onError: (response) => _onErrorResponse(response));
   }
 
   _onsuccsessresponse(GetSchemaByUserIdResponse response) {

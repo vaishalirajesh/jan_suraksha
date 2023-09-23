@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyOTPRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/CreateApplicationResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/CreateApplicationResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateEnrollmentVerificationTypeResponse.dart';
+import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
 import 'package:jan_suraksha/model/response_model/VerifyOtpResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
@@ -45,6 +47,7 @@ class CustomerVerificationLogic extends GetxController {
   DateTime date = DateTime.now();
   String dob = '';
   RxString otp = ''.obs;
+  var appId;
 
   Future selectDate() async {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
@@ -90,12 +93,20 @@ class CustomerVerificationLogic extends GetxController {
     return months[month - 1];
   }
 
+  @override
+  Future<void> onInit() async {
+    appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    super.onInit();
+  }
+
   void onChangeAccountNo(String? str) {
     accountErrorMsg.value = '';
     reAccountErrorMsg.value = '';
   }
 
   void onPressContinue() {
+    onCustomerVerification();
+    return;
     if (!isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (accountTextController.text.isEmpty) {
@@ -161,7 +172,7 @@ class CustomerVerificationLogic extends GetxController {
     if (response.createApplicationResponse().status == RES_SUCCESS) {
       TGSharedPreferences.getInstance().set(PREF_APP_ID, response.createApplicationResponse().data?.id);
       TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
-      onUpdateVerification();
+      updateStage();
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
@@ -172,6 +183,47 @@ class CustomerVerificationLogic extends GetxController {
 
   _onErrorCreateApplication(TGResponse errorResponse) {
     TGLog.d("CreateApplicationRequest : onError()--${errorResponse.error}");
+    isLoading.value = false;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> updateStage() async {
+    if (await NetUtils.isInternetAvailable()) {
+      updateStageDeatil();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, updateStageDeatil);
+      }
+    }
+  }
+
+  Future<void> updateStageDeatil() async {
+    isLoading.value = true;
+    UpdateStageRequest updateStageRequest = UpdateStageRequest(applicationId: appId, stageId: 2);
+    var jsonRequest = jsonEncode(updateStageRequest.toJson());
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
+    TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
+    ServiceManager.getInstance().updateApplicationStage(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessUpdateStage(response),
+      onError: (error) => _onErrorUpdateStage(error),
+    );
+  }
+
+  _onSuccessUpdateStage(UpdateStageResponse response) async {
+    TGLog.d("UpdateStageRequest : onSuccess()---$response");
+    if (response.updateApplicationStage().status == RES_SUCCESS) {
+      onUpdateVerification();
+    } else {
+      TGLog.d("Error in UpdateStageRequest");
+      isLoading.value = false;
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
+    }
+  }
+
+  _onErrorUpdateStage(TGResponse errorResponse) {
+    TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }
@@ -270,9 +322,8 @@ class CustomerVerificationLogic extends GetxController {
   _onSuccessVerifyOTP(VerifyOTPResponse response) async {
     TGLog.d("VerifyOtpRequest : onSuccess()---$response");
     if (response.verifyOTP().status == RES_SUCCESS) {
-      isLoading.value = false;
       TGSession.getInstance().set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
-      Get.toNamed(AccountSelectionPageRoute);
+      updateStageDeatilAfterOTPVerify();
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
@@ -285,5 +336,29 @@ class CustomerVerificationLogic extends GetxController {
     TGLog.d("VerifyOtpRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> updateStageDeatilAfterOTPVerify() async {
+    UpdateStageRequest updateStageRequest = UpdateStageRequest(applicationId: appId, stageId: 3);
+    var jsonRequest = jsonEncode(updateStageRequest.toJson());
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
+    TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
+    ServiceManager.getInstance().updateApplicationStage(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessUpdateStageAfterOTPVerify(response),
+      onError: (error) => _onErrorUpdateStage(error),
+    );
+  }
+
+  _onSuccessUpdateStageAfterOTPVerify(UpdateStageResponse response) async {
+    TGLog.d("UpdateStageRequest : onSuccess()---$response");
+    if (response.updateApplicationStage().status == RES_SUCCESS) {
+      Get.toNamed(AccountSelectionPageRoute);
+    } else {
+      TGLog.d("Error in UpdateStageRequest");
+      isLoading.value = false;
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
+    }
   }
 }

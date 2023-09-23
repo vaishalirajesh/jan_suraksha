@@ -137,7 +137,7 @@
   },
   {
     "uri": "insurance/v3/enrollment/saveApplicationFormDetails",
-    "method": "GET",
+    "method": "POST",
     "applyMock": true,
     "httpStatus": 200,
     "successFile": "assets/mocks/save_app_data_success.json",
@@ -150,5 +150,29 @@
     "httpStatus": 200,
     "successFile": "assets/mocks/get_master_key_data_success.json",
     "errorFile": "assets/mocks/save_app_data_error.json"
+  },
+  {
+    "uri": "users/login/otp",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/conset_otp_send_success.json",
+    "errorFile": "assets/mocks/conset_otp_send_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/premiumDeduction",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/premium_deduction_success.json",
+    "errorFile": "assets/mocks/premium_deduction_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/generateCOI",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/coi_success.json",
+    "errorFile": "assets/mocks/premium_deduction_error.json"
   }
 ]

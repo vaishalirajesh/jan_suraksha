@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/Navigation_config.dart';
 import 'package:jan_suraksha/model/request_model/UpdateSelectedAccountHolderRequest.dart';
+import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/VerifyOTPResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/UpdateSelectedAccountHolderResponse.dart';
+import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
@@ -85,8 +88,7 @@ class AccountSelectionLogic extends GetxController {
   _onSuccessUpdateSelectedAccountHolder(UpdateSelectedAccountHolderResponse response) async {
     TGLog.d("UpdateSelectedAccountHolderRequest : onSuccess()---$response");
     if (response.updateSelectedAccountHolder().status == RES_SUCCESS) {
-      isLoading.value = false;
-      Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+      updateStage();
     } else if (response.updateSelectedAccountHolder().status == POLICY_NOT_AVAILABLE) {
       /// TODO: Add new page and policy not available code
       Get.toNamed(PolicyAvailedPageRoute);
@@ -99,6 +101,49 @@ class AccountSelectionLogic extends GetxController {
 
   _onErrorUpdateSelectedAccountHolder(TGResponse errorResponse) {
     TGLog.d("UpdateSelectedAccountHolderRequest : onError()--${errorResponse.error}");
+    isLoading.value = false;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> updateStage() async {
+    if (await NetUtils.isInternetAvailable()) {
+      updateStageDeatil();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, updateStageDeatil);
+      }
+    }
+  }
+
+  Future<void> updateStageDeatil() async {
+    isLoading.value = true;
+    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    UpdateStageRequest updateStageRequest = UpdateStageRequest(applicationId: appId, stageId: 4);
+    var jsonRequest = jsonEncode(updateStageRequest.toJson());
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
+    TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
+    ServiceManager.getInstance().updateApplicationStage(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessUpdateStage(response),
+      onError: (error) => _onErrorUpdateStage(error),
+    );
+  }
+
+  _onSuccessUpdateStage(UpdateStageResponse response) async {
+    TGLog.d("UpdateStageRequest : onSuccess()---$response");
+    if (response.updateApplicationStage().status == RES_SUCCESS) {
+      isLoading.value = false;
+      Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+    } else {
+      TGLog.d("Error in UpdateStageRequest");
+      isLoading.value = false;
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
+    }
+  }
+
+  _onErrorUpdateStage(TGResponse errorResponse) {
+    TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }

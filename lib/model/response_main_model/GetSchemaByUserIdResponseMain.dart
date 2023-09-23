@@ -8,7 +8,7 @@ class GetSchemaBYUserIdResponseMain {
   GetSchemaBYUserIdResponseMain({
     dynamic id,
     String? message,
-    num? status,
+    int? status,
     String? data,
     dynamic flag,
     dynamic branchList,
@@ -49,7 +49,7 @@ class GetSchemaBYUserIdResponseMain {
 
   dynamic _id;
   String? _message;
-  num? _status;
+  int? _status;
   String? _data;
   dynamic _flag;
   dynamic _branchList;
@@ -61,7 +61,7 @@ class GetSchemaBYUserIdResponseMain {
   GetSchemaBYUserIdResponseMain copyWith({
     dynamic id,
     String? message,
-    num? status,
+    int? status,
     String? data,
     dynamic flag,
     dynamic branchList,
@@ -87,7 +87,7 @@ class GetSchemaBYUserIdResponseMain {
 
   String? get message => _message;
 
-  num? get status => _status;
+  int? get status => _status;
 
   String? get data => _data;
 

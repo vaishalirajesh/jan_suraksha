@@ -26,7 +26,7 @@ class TermsAndConditionsPage extends StatelessWidget {
           appbarName: AppString.appBarWithTitle,
           title: AppString.termAndCondition,
           buttonTitle: AppString.iAgree,
-          onButtonClick: termsAndConditionsLogic.onSubmit,
+          onButtonClick: termsAndConditionsLogic.onPressContinue,
           onBackButtonCLick: AppUtils.onBackToDashboard,
           isDataLoading: termsAndConditionsLogic.isLoading.value,
           isButtonEnable: true,

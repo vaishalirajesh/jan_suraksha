@@ -9,7 +9,7 @@ class UpdateStageResponseMain {
     dynamic id,
     String? message,
     num? data,
-    num? status,
+    int? status,
     bool? flag,
   }) {
     _id = id;
@@ -29,13 +29,13 @@ class UpdateStageResponseMain {
   dynamic _id;
   String? _message;
   num? _data;
-  num? _status;
+  int? _status;
   bool? _flag;
   UpdateStageResponseMain copyWith({
     dynamic id,
     String? message,
     num? data,
-    num? status,
+    int? status,
     bool? flag,
   }) =>
       UpdateStageResponseMain(
@@ -48,7 +48,7 @@ class UpdateStageResponseMain {
   dynamic get id => _id;
   String? get message => _message;
   num? get data => _data;
-  num? get status => _status;
+  int? get status => _status;
   bool? get flag => _flag;
 
   Map<String, dynamic> toJson() {

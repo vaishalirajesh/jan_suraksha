@@ -139,6 +139,8 @@ class RegistrationLogic extends GetxController {
       TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
       TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
       TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile);
+      TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.getLoginResponseData().userOrgId);
+      TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getLoginResponseData().userId);
       setAccessTokenInRequestHeader();
       isLoading.value = false;
       // Get.offAll(

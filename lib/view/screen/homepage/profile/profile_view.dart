@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
 
@@ -49,34 +50,39 @@ class ProfilePage extends StatelessWidget {
                         border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                              child: Container(
-                                  height: 32.r,
-                                  width: 32.r,
-                                  decoration: BoxDecoration(
-                                    color: ColorConfig.jsLightGreyColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: SizedBox(
-                                      height: 12.r,
-                                      width: 12.r,
-                                      child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(PersonalInfoPageRoute);
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                child: Container(
+                                    height: 32.r,
+                                    width: 32.r,
+                                    decoration: BoxDecoration(
+                                      color: ColorConfig.jsLightGreyColor,
+                                      shape: BoxShape.circle,
                                     ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              "Personal Info",
-                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
-                            )
-                          ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SizedBox(
+                                        height: 12.r,
+                                        width: 12.r,
+                                        child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "Personal Info",
+                                style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),

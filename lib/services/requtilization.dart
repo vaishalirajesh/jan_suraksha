@@ -6,3 +6,7 @@ Future<PayLoad> getPayLoad(dynamic request, String url) async {
 
   return PayLoad(data: encryptData, uri: url);
 }
+
+Future<ReqPlainPayLoad> getPlainPayLoad(dynamic request, String url) async {
+  return ReqPlainPayLoad(request, uri: url);
+}

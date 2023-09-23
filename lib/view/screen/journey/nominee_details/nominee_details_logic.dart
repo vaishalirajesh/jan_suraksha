@@ -1,15 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
+import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
+import 'package:jan_suraksha/services/request/tg_post_request.dart';
+import 'package:jan_suraksha/services/requtilization.dart';
+import 'package:jan_suraksha/services/response/tg_response.dart';
+import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
+import 'package:jan_suraksha/utils/constant/statusconstants.dart';
+import 'package:jan_suraksha/utils/erros_handle_util.dart';
+import 'package:jan_suraksha/utils/internetcheckdialog.dart';
+import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_view.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
+import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class NomineeDetailsLogic extends GetxController {
   RxBool isChecked = true.obs;
@@ -44,8 +57,53 @@ class NomineeDetailsLogic extends GetxController {
 
   @override
   void onInit() {
-    getData();
+    // getData();
+    getMasterList();
     super.onInit();
+  }
+
+  Future<void> getMasterList() async {
+    if (await NetUtils.isInternetAvailable()) {
+      getList();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, getList);
+      }
+    }
+  }
+
+  Future<void> getList() async {
+    List<String> list = [
+      "RELEATION_SHIP",
+    ];
+    var jsonRequest = jsonEncode(list);
+    TGPostRequest tgPostRequest = await getPlainPayLoad(jsonRequest, URIS.URI_GET_MASTER_LIST);
+    TGLog.d("GetMasterListRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().getMasterList(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessGetMasterList(response),
+      onError: (error) => _onErrorGetMasterList(error),
+    );
+  }
+
+  _onSuccessGetMasterList(GetMasterListResponse response) async {
+    TGLog.d("GetMasterListRequest : onSuccess()---$response");
+    if (response.getMasterList().status == RES_SUCCESS) {
+      isLoading.value = true;
+    } else {
+      TGLog.d("Error in GetMasterListRequest");
+      isLoading.value = true;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
+    }
+    getData();
+  }
+
+  _onErrorGetMasterList(TGResponse errorResponse) {
+    TGLog.d("GetMasterListRequest : onError()--${errorResponse.error}");
+    isLoading.value = true;
+    handleServiceFailError(Get.context!, errorResponse.error);
+    getData();
   }
 
   Future<void> getData() async {

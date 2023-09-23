@@ -126,5 +126,29 @@
     "httpStatus": 200,
     "successFile": "assets/mocks/getCaptcha.json",
     "errorFile": "assets/mocks/verify_otp_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/getApplicationFormDetails/101212404",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_app_data_success.json",
+    "errorFile": "assets/mocks/get_app_data_error.json"
+  },
+  {
+    "uri": "insurance/v3/enrollment/saveApplicationFormDetails",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/save_app_data_success.json",
+    "errorFile": "assets/mocks/save_app_data_error.json"
+  },
+  {
+    "uri": "oneform/v3/master/getMasterListByKey",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_master_key_data_success.json",
+    "errorFile": "assets/mocks/save_app_data_error.json"
   }
 ]

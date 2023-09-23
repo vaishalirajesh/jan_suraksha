@@ -96,7 +96,7 @@ class TGService<T extends TGResponse, E extends TGError> {
     try {
       Uri uri = Uri.parse(request.getUrl());
       TGLog.t("GET", uri);
-      TGLog.d("Get URL---------${"request.getUrl()"}");
+      TGLog.d("Get URL---------${request.getUrl()}");
       final httpRes = await _getClient(request.getUri(), "GET").get(uri, headers: request.headers());
       return _performCallback(httpRes, onError, onSuccess);
     } catch (error) {

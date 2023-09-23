@@ -10,11 +10,12 @@ abstract class URIS {
   static const URI_ENROLLMENT_VERIFY_OTP = 'insurance/v3/enrollment/verifyOtp';
   static const URI_UPDATE_SELECTED_ACCOUNT_HOLDER = 'insurance/v3/enrollment/updateSelectedAccountHolder';
   static const URI_GET_STAGE_DETAIL = 'insurance/v3/application/getStageDetails';
-  static const URI_APP_FORM_DETAIL = 'insurance/v3/enrollment/getApplicationFormDetails/';
+  static const URI_APP_FORM_DETAIL = 'insurance/v3/enrollment/getApplicationFormDetails';
   static const URI_VERIFY_LOGIN_OTP = 'users/v3/login/otp';
   static const URI_VERIFY_OTP = 'insurance/v3/enrollment/verifyOtp';
   static const URI_SAVE_FORM_DETAIL = 'insurance/v3/enrollment/saveApplicationFormDetails';
   static const URI_PREMIUM_DEDUCTION = 'insurance/v3/enrollment/premiumDeduction';
   static const URI_GENERATE_COI = 'insurance/v3/enrollment/generateCOI';
   static const URI_GEN_CAPTCH = "users/v3/signup/captcha/gen";
+  static const URI_GET_MASTER_LIST = "oneform/v3/master/getMasterListByKey";
 }

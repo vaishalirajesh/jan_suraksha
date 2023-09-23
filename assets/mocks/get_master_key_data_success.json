@@ -1,0 +1,152 @@
+{
+  "id": null,
+  "status": 200,
+  "message": "Data Found.",
+  "data": {
+    "KYC_DOCUMENTS": [
+      {
+        "id": 1,
+        "value": "PAN"
+      },
+      {
+        "id": 3,
+        "value": "PASSPORT"
+      },
+      {
+        "id": 4,
+        "value": "DRIVING LICENCE"
+      },
+      {
+        "id": 5,
+        "value": "MGNREGA CARD"
+      },
+      {
+        "id": 6,
+        "value": "VOTER’S ID CARD"
+      }
+    ],
+    "CAUSE_OF_DEATH_DISABILITY": [
+      {
+        "id": 3,
+        "value": "Accidental"
+      }
+    ],
+    "NATURE_OF_LOSS": [
+      {
+        "id": 1,
+        "value": "Death"
+      },
+      {
+        "id": 2,
+        "value": "Disability"
+      }
+    ],
+    "CAUSE_OF_DEATH": [
+      {
+        "id": 1,
+        "value": "Accidental death within 30 days of lien period"
+      },
+      {
+        "id": 2,
+        "value": "Death"
+      }
+    ],
+    "RELEATION_SHIP": [
+      {
+        "id": 13,
+        "value": "Husband"
+      },
+      {
+        "id": 10,
+        "value": "Wife"
+      },
+      {
+        "id": 1,
+        "value": "Father"
+      },
+      {
+        "id": 2,
+        "value": "Mother"
+      },
+      {
+        "id": 3,
+        "value": "Son"
+      },
+      {
+        "id": 4,
+        "value": "Daughter"
+      },
+      {
+        "id": 7,
+        "value": "Brother"
+      },
+      {
+        "id": 8,
+        "value": "Sister"
+      },
+      {
+        "id": 9,
+        "value": "Grand father"
+      },
+      {
+        "id": 14,
+        "value": "Grand mother"
+      },
+      {
+        "id": 15,
+        "value": "Grand son"
+      },
+      {
+        "id": 16,
+        "value": "Grand daughter"
+      },
+      {
+        "id": 17,
+        "value": "Mother in law"
+      },
+      {
+        "id": 18,
+        "value": "Father in law"
+      },
+      {
+        "id": 19,
+        "value": "Brother in law"
+      },
+      {
+        "id": 20,
+        "value": "Sister in law"
+      },
+      {
+        "id": 11,
+        "value": "Nephew"
+      },
+      {
+        "id": 12,
+        "value": "Niece"
+      },
+      {
+        "id": 5,
+        "value": "Uncle"
+      },
+      {
+        "id": 6,
+        "value": "Aunt"
+      },
+      {
+        "id": 21,
+        "value": "Others"
+      }
+    ],
+    "TYPE_OF_DISABILITY": [
+      {
+        "id": 1,
+        "value": "Partial Disability"
+      },
+      {
+        "id": 2,
+        "value": "Total Disability"
+      }
+    ]
+  },
+  "listData": []
+}

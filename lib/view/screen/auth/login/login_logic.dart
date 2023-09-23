@@ -20,6 +20,8 @@ import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
+import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
@@ -157,8 +159,8 @@ class LoginLogic extends GetxController {
       //   },
       // );
       Get.to(
-        () => CustomerVerificationPage(),
-        binding: CustomerVerificationBinding(),
+        () => DashboardPage(),
+        binding: DashboardBinding(),
         arguments: {
           AppArguments.mobileNumber: mobile.value,
         },

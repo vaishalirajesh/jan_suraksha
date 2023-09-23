@@ -1,31 +1,11 @@
 import 'dart:convert';
 
-/// applicationId : 104753270
-/// firstName : "sayyed"
-/// middleName : "sahin"
-/// lastName : "shabnam"
-/// fatherHusbandName : "nimesh"
-/// dob : "2000-06-09T18:30:00.000Z"
-/// mobileNo : "8115197664"
-/// address : {"id":314025197,"addressLine1":"room no 503 bldg no 3 c patthar nagar apna","addressLine2":null,"city":"MUMBAI","state":"MAHARASHTRA","district":"Mumbai Suburban","pincode":400051,"isActive":true}
-/// insuranceName : "Life Insurance Corporation of India"
-/// emailAddress : "nimesh@opl.com"
-/// kycId1 : "pan"
-/// kycId1number : "fmskk9089a"
-/// kycId2 : null
-/// kycId2number : null
-/// isSameApplicantAddress : false
-/// isNomineeDeatilsSameEnroll : true
-/// dedupErrorMsg : null
-/// nominee : [{"id":209365237,"firstName":"md tarik","middleName":null,"lastName":null,"dateOfBirth":"1997-05-20T18:30:00.000+00:00","mobileNumber":null,"emailIdOfNominee":null,"relationOfNomineeApplicant":13,"address":{"id":314037364,"addressLine1":"ahmedabad","addressLine2":"majhagawaan amethi","city":"AMETHI JADID, UP","state":"UTTAR PRADESH","district":"UP","pincode":227805,"isActive":true},"isActive":true}]
-/// savingType : 1
-/// isNomineeUpdate : false
+SaveFormDetailsRequest saveFormDetailsRequestFromJson(String str) => SaveFormDetailsRequest.fromJson(json.decode(str));
 
-SaveFormDetailRequest saveFormDetailRequestFromJson(String str) => SaveFormDetailRequest.fromJson(json.decode(str));
-String saveFormDetailRequestToJson(SaveFormDetailRequest data) => json.encode(data.toJson());
+String saveFormDetailsRequestToJson(SaveFormDetailsRequest data) => json.encode(data.toJson());
 
-class SaveFormDetailRequest {
-  SaveFormDetailRequest({
+class SaveFormDetailsRequest {
+  SaveFormDetailsRequest({
     num? applicationId,
     String? firstName,
     String? middleName,
@@ -44,7 +24,6 @@ class SaveFormDetailRequest {
     bool? isNomineeDeatilsSameEnroll,
     dynamic dedupErrorMsg,
     List<RequestNominee>? nominee,
-    num? savingType,
     bool? isNomineeUpdate,
   }) {
     _applicationId = applicationId;
@@ -65,11 +44,10 @@ class SaveFormDetailRequest {
     _isNomineeDeatilsSameEnroll = isNomineeDeatilsSameEnroll;
     _dedupErrorMsg = dedupErrorMsg;
     _nominee = nominee;
-    _savingType = savingType;
     _isNomineeUpdate = isNomineeUpdate;
   }
 
-  SaveFormDetailRequest.fromJson(dynamic json) {
+  SaveFormDetailsRequest.fromJson(dynamic json) {
     _applicationId = json['applicationId'];
     _firstName = json['firstName'];
     _middleName = json['middleName'];
@@ -93,9 +71,9 @@ class SaveFormDetailRequest {
         _nominee?.add(RequestNominee.fromJson(v));
       });
     }
-    _savingType = json['savingType'];
     _isNomineeUpdate = json['isNomineeUpdate'];
   }
+
   num? _applicationId;
   String? _firstName;
   String? _middleName;
@@ -114,9 +92,9 @@ class SaveFormDetailRequest {
   bool? _isNomineeDeatilsSameEnroll;
   dynamic _dedupErrorMsg;
   List<RequestNominee>? _nominee;
-  num? _savingType;
   bool? _isNomineeUpdate;
-  SaveFormDetailRequest copyWith({
+
+  SaveFormDetailsRequest copyWith({
     num? applicationId,
     String? firstName,
     String? middleName,
@@ -135,10 +113,9 @@ class SaveFormDetailRequest {
     bool? isNomineeDeatilsSameEnroll,
     dynamic dedupErrorMsg,
     List<RequestNominee>? nominee,
-    num? savingType,
     bool? isNomineeUpdate,
   }) =>
-      SaveFormDetailRequest(
+      SaveFormDetailsRequest(
         applicationId: applicationId ?? _applicationId,
         firstName: firstName ?? _firstName,
         middleName: middleName ?? _middleName,
@@ -157,28 +134,45 @@ class SaveFormDetailRequest {
         isNomineeDeatilsSameEnroll: isNomineeDeatilsSameEnroll ?? _isNomineeDeatilsSameEnroll,
         dedupErrorMsg: dedupErrorMsg ?? _dedupErrorMsg,
         nominee: nominee ?? _nominee,
-        savingType: savingType ?? _savingType,
         isNomineeUpdate: isNomineeUpdate ?? _isNomineeUpdate,
       );
+
   num? get applicationId => _applicationId;
+
   String? get firstName => _firstName;
+
   String? get middleName => _middleName;
+
   String? get lastName => _lastName;
+
   String? get fatherHusbandName => _fatherHusbandName;
+
   String? get dob => _dob;
+
   String? get mobileNo => _mobileNo;
+
   RequestAddress? get address => _address;
+
   String? get insuranceName => _insuranceName;
+
   String? get emailAddress => _emailAddress;
+
   String? get kycId1 => _kycId1;
+
   String? get kycId1number => _kycId1number;
+
   dynamic get kycId2 => _kycId2;
+
   dynamic get kycId2number => _kycId2number;
+
   bool? get isSameApplicantAddress => _isSameApplicantAddress;
+
   bool? get isNomineeDeatilsSameEnroll => _isNomineeDeatilsSameEnroll;
+
   dynamic get dedupErrorMsg => _dedupErrorMsg;
+
   List<RequestNominee>? get nominee => _nominee;
-  num? get savingType => _savingType;
+
   bool? get isNomineeUpdate => _isNomineeUpdate;
 
   Map<String, dynamic> toJson() {
@@ -205,24 +199,13 @@ class SaveFormDetailRequest {
     if (_nominee != null) {
       map['nominee'] = _nominee?.map((v) => v.toJson()).toList();
     }
-    map['savingType'] = _savingType;
     map['isNomineeUpdate'] = _isNomineeUpdate;
     return map;
   }
 }
 
-/// id : 209365237
-/// firstName : "md tarik"
-/// middleName : null
-/// lastName : null
-/// dateOfBirth : "1997-05-20T18:30:00.000+00:00"
-/// mobileNumber : null
-/// emailIdOfNominee : null
-/// relationOfNomineeApplicant : 13
-/// address : {"id":314037364,"addressLine1":"ahmedabad","addressLine2":"majhagawaan amethi","city":"AMETHI JADID, UP","state":"UTTAR PRADESH","district":"UP","pincode":227805,"isActive":true}
-/// isActive : true
-
 RequestNominee nomineeFromJson(String str) => RequestNominee.fromJson(json.decode(str));
+
 String nomineeToJson(RequestNominee data) => json.encode(data.toJson());
 
 class RequestNominee {
@@ -237,6 +220,11 @@ class RequestNominee {
     num? relationOfNomineeApplicant,
     RequestAddress? address,
     bool? isActive,
+    String? nameOfGuardian,
+    num? relationShipOfGuardian,
+    String? addressOfGuardian,
+    String? mobileNumberOfGuardian,
+    String? emailIdOfGuardian,
   }) {
     _id = id;
     _firstName = firstName;
@@ -248,6 +236,15 @@ class RequestNominee {
     _relationOfNomineeApplicant = relationOfNomineeApplicant;
     _address = address;
     _isActive = isActive;
+    _nameOfGuardian = nameOfGuardian;
+    _relationShipOfGuardian = relationShipOfGuardian;
+    _addressOfGuardian = addressOfGuardian;
+    _mobileNumberOfGuardian = mobileNumberOfGuardian;
+    _emailIdOfGuardian = emailIdOfGuardian;
+  }
+
+  set nameOfGuardian(String? value) {
+    _nameOfGuardian = value;
   }
 
   RequestNominee.fromJson(dynamic json) {
@@ -261,7 +258,13 @@ class RequestNominee {
     _relationOfNomineeApplicant = json['relationOfNomineeApplicant'];
     _address = json['address'] != null ? RequestAddress.fromJson(json['address']) : null;
     _isActive = json['isActive'];
+    _nameOfGuardian = json['nameOfGuardian'];
+    _relationShipOfGuardian = json['relationShipOfGuardian'];
+    _addressOfGuardian = json['addressOfGuardian'];
+    _mobileNumberOfGuardian = json['mobileNumberOfGuardian'];
+    _emailIdOfGuardian = json['emailIdOfGuardian'];
   }
+
   num? _id;
   String? _firstName;
   dynamic _middleName;
@@ -272,6 +275,12 @@ class RequestNominee {
   num? _relationOfNomineeApplicant;
   RequestAddress? _address;
   bool? _isActive;
+  String? _nameOfGuardian;
+  num? _relationShipOfGuardian;
+  String? _addressOfGuardian;
+  String? _mobileNumberOfGuardian;
+  String? _emailIdOfGuardian;
+
   RequestNominee copyWith({
     num? id,
     String? firstName,
@@ -283,6 +292,11 @@ class RequestNominee {
     num? relationOfNomineeApplicant,
     RequestAddress? address,
     bool? isActive,
+    String? nameOfGuardian,
+    num? relationShipOfGuardian,
+    String? addressOfGuardian,
+    String? mobileNumberOfGuardian,
+    String? emailIdOfGuardian,
   }) =>
       RequestNominee(
         id: id ?? _id,
@@ -295,17 +309,42 @@ class RequestNominee {
         relationOfNomineeApplicant: relationOfNomineeApplicant ?? _relationOfNomineeApplicant,
         address: address ?? _address,
         isActive: isActive ?? _isActive,
+        nameOfGuardian: nameOfGuardian ?? _nameOfGuardian,
+        relationShipOfGuardian: relationShipOfGuardian ?? _relationShipOfGuardian,
+        addressOfGuardian: addressOfGuardian ?? _addressOfGuardian,
+        mobileNumberOfGuardian: mobileNumberOfGuardian ?? _mobileNumberOfGuardian,
+        emailIdOfGuardian: emailIdOfGuardian ?? _emailIdOfGuardian,
       );
+
   num? get id => _id;
+
   String? get firstName => _firstName;
+
   dynamic get middleName => _middleName;
+
   dynamic get lastName => _lastName;
+
   String? get dateOfBirth => _dateOfBirth;
+
   dynamic get mobileNumber => _mobileNumber;
+
   dynamic get emailIdOfNominee => _emailIdOfNominee;
+
   num? get relationOfNomineeApplicant => _relationOfNomineeApplicant;
+
   RequestAddress? get address => _address;
+
   bool? get isActive => _isActive;
+
+  String? get nameOfGuardian => _nameOfGuardian;
+
+  num? get relationShipOfGuardian => _relationShipOfGuardian;
+
+  String? get addressOfGuardian => _addressOfGuardian;
+
+  String? get mobileNumberOfGuardian => _mobileNumberOfGuardian;
+
+  String? get emailIdOfGuardian => _emailIdOfGuardian;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -321,20 +360,33 @@ class RequestNominee {
       map['address'] = _address?.toJson();
     }
     map['isActive'] = _isActive;
+    map['nameOfGuardian'] = _nameOfGuardian;
+    map['relationShipOfGuardian'] = _relationShipOfGuardian;
+    map['addressOfGuardian'] = _addressOfGuardian;
+    map['mobileNumberOfGuardian'] = _mobileNumberOfGuardian;
+    map['emailIdOfGuardian'] = _emailIdOfGuardian;
     return map;
+  }
+
+  set relationShipOfGuardian(num? value) {
+    _relationShipOfGuardian = value;
+  }
+
+  set addressOfGuardian(String? value) {
+    _addressOfGuardian = value;
+  }
+
+  set mobileNumberOfGuardian(String? value) {
+    _mobileNumberOfGuardian = value;
+  }
+
+  set emailIdOfGuardian(String? value) {
+    _emailIdOfGuardian = value;
   }
 }
 
-/// id : 314037364
-/// addressLine1 : "ahmedabad"
-/// addressLine2 : "majhagawaan amethi"
-/// city : "AMETHI JADID, UP"
-/// state : "UTTAR PRADESH"
-/// district : "UP"
-/// pincode : 227805
-/// isActive : true
-
 RequestAddress addressFromJson(String str) => RequestAddress.fromJson(json.decode(str));
+
 String addressToJson(RequestAddress data) => json.encode(data.toJson());
 
 class RequestAddress {
@@ -368,6 +420,7 @@ class RequestAddress {
     _pincode = json['pincode'];
     _isActive = json['isActive'];
   }
+
   num? _id;
   String? _addressLine1;
   String? _addressLine2;
@@ -376,6 +429,7 @@ class RequestAddress {
   String? _district;
   num? _pincode;
   bool? _isActive;
+
   RequestAddress copyWith({
     num? id,
     String? addressLine1,
@@ -396,13 +450,21 @@ class RequestAddress {
         pincode: pincode ?? _pincode,
         isActive: isActive ?? _isActive,
       );
+
   num? get id => _id;
+
   String? get addressLine1 => _addressLine1;
+
   String? get addressLine2 => _addressLine2;
+
   String? get city => _city;
+
   String? get state => _state;
+
   String? get district => _district;
+
   num? get pincode => _pincode;
+
   bool? get isActive => _isActive;
 
   Map<String, dynamic> toJson() {

@@ -10,7 +10,6 @@ import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
-import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
@@ -58,58 +57,63 @@ class PreviewApplicationFormLogic extends GetxController {
 
   Future<void> saveData() async {
     isLoading.value = true;
-    request.SaveFormDetailRequest saveFormDetailRequest = request.SaveFormDetailRequest(
-        dob: getAppData.data?.dob,
-        applicationId: getAppData.data?.id,
-        address: request.RequestAddress(
-          id: getAppData.data?.address?.id,
-          addressLine1: getAppData.data?.address?.addressLine1,
-          addressLine2: getAppData.data?.address?.addressLine2,
-          city: getAppData.data?.address?.city,
-          district: getAppData.data?.address?.district,
-          isActive: getAppData.data?.address?.isActive,
-          pincode: getAppData.data?.address?.pincode,
-          state: getAppData.data?.address?.state,
-        ),
-        dedupErrorMsg: null,
-        emailAddress: getAppData.data?.emailAddress,
-        fatherHusbandName: getAppData.data?.fatherHusbandName,
-        firstName: getAppData.data?.firstName,
-        insuranceName: getAppData.data?.insuranceName,
-        isNomineeDeatilsSameEnroll: getAppData.data?.isNomineeDeatilsSameEnroll,
-        isNomineeUpdate: false,
-        isSameApplicantAddress: getAppData.data?.isSameApplicantAddress,
-        kycId1: getAppData.data?.kycId1,
-        kycId1number: getAppData.data?.kycId1number,
-        kycId2: getAppData.data?.kycId2,
-        kycId2number: getAppData.data?.kycId2number,
-        lastName: getAppData.data?.lastName,
-        middleName: getAppData.data?.middleName,
-        mobileNo: getAppData.data?.mobileNo,
-        nominee: [
-          request.RequestNominee(
-            middleName: getAppData.data?.nominee?.first.middleName,
-            lastName: getAppData.data?.nominee?.first.lastName,
-            firstName: getAppData.data?.nominee?.first.firstName,
-            isActive: getAppData.data?.nominee?.first.isActive,
-            id: getAppData.data?.nominee?.first.id,
-            address: request.RequestAddress(
-              id: getAppData.data?.nominee?.first.address?.id,
-              addressLine1: getAppData.data?.nominee?.first.address?.addressLine1,
-              addressLine2: getAppData.data?.nominee?.first.address?.addressLine2,
-              city: getAppData.data?.nominee?.first.address?.city,
-              district: getAppData.data?.nominee?.first.address?.district,
-              isActive: getAppData.data?.nominee?.first.address?.isActive,
-              pincode: getAppData.data?.nominee?.first.address?.pincode,
-              state: getAppData.data?.nominee?.first.address?.state,
-            ),
-            mobileNumber: getAppData.data?.nominee?.first.mobileNumber,
-            dateOfBirth: getAppData.data?.nominee?.first.dateOfBirth,
-            emailIdOfNominee: getAppData.data?.nominee?.first.emailIdOfNominee,
-            relationOfNomineeApplicant: getAppData.data?.nominee!.first.relationOfNomineeApplicant,
+    request.SaveFormDetailsRequest saveFormDetailRequest = request.SaveFormDetailsRequest(
+      dob: getAppData.data?.dob,
+      applicationId: getAppData.data?.id,
+      address: request.RequestAddress(
+        id: getAppData.data?.address?.id,
+        addressLine1: getAppData.data?.address?.addressLine1,
+        addressLine2: getAppData.data?.address?.addressLine2,
+        city: getAppData.data?.address?.city,
+        district: getAppData.data?.address?.district,
+        isActive: getAppData.data?.address?.isActive,
+        pincode: getAppData.data?.address?.pincode,
+        state: getAppData.data?.address?.state,
+      ),
+      dedupErrorMsg: null,
+      emailAddress: getAppData.data?.emailAddress,
+      fatherHusbandName: getAppData.data?.fatherHusbandName,
+      firstName: getAppData.data?.firstName,
+      insuranceName: getAppData.data?.insuranceName,
+      isNomineeDeatilsSameEnroll: getAppData.data?.isNomineeDeatilsSameEnroll,
+      isNomineeUpdate: false,
+      isSameApplicantAddress: getAppData.data?.isSameApplicantAddress,
+      kycId1: getAppData.data?.kycId1,
+      kycId1number: getAppData.data?.kycId1number,
+      kycId2: getAppData.data?.kycId2,
+      kycId2number: getAppData.data?.kycId2number,
+      lastName: getAppData.data?.lastName,
+      middleName: getAppData.data?.middleName,
+      mobileNo: getAppData.data?.mobileNo,
+      nominee: [
+        request.RequestNominee(
+          middleName: getAppData.data?.nominee?.first.middleName,
+          lastName: getAppData.data?.nominee?.first.lastName,
+          firstName: getAppData.data?.nominee?.first.firstName,
+          isActive: getAppData.data?.nominee?.first.isActive,
+          id: getAppData.data?.nominee?.first.id,
+          addressOfGuardian: getAppData.data?.nominee?.first.addressOfGuardian,
+          emailIdOfGuardian: getAppData.data?.nominee?.first.emailIdOfGuardian,
+          mobileNumberOfGuardian: getAppData.data?.nominee?.first.mobileNumberOfGuardian,
+          nameOfGuardian: getAppData.data?.nominee?.first.nameOfGuardian,
+          relationShipOfGuardian: getAppData.data?.nominee?.first.relationShipOfGuardian,
+          address: request.RequestAddress(
+            id: getAppData.data?.nominee?.first.address?.id,
+            addressLine1: getAppData.data?.nominee?.first.address?.addressLine1,
+            addressLine2: getAppData.data?.nominee?.first.address?.addressLine2,
+            city: getAppData.data?.nominee?.first.address?.city,
+            district: getAppData.data?.nominee?.first.address?.district,
+            isActive: getAppData.data?.nominee?.first.address?.isActive,
+            pincode: getAppData.data?.nominee?.first.address?.pincode,
+            state: getAppData.data?.nominee?.first.address?.state,
           ),
-        ],
-        savingType: getAppData.data?.savingType);
+          mobileNumber: getAppData.data?.nominee?.first.mobileNumber,
+          dateOfBirth: getAppData.data?.nominee?.first.dateOfBirth,
+          emailIdOfNominee: getAppData.data?.nominee?.first.emailIdOfNominee,
+          relationOfNomineeApplicant: getAppData.data?.nominee!.first.relationOfNomineeApplicant,
+        ),
+      ],
+    );
     var jsonRequest = jsonEncode(saveFormDetailRequest.toJson());
     TGLog.d("SaveFormDetailRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SAVE_FORM_DETAIL);

@@ -4,6 +4,7 @@ import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetails
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
@@ -44,10 +45,12 @@ class ApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     isLoading.value = true;
-    String appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
+    String appId = '';
+    appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
+    var mockAppId = "101212404";
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
-        GetApplicationFormDetailsRequest(appId: encAppId);
+        GetApplicationFormDetailsRequest(appId: TGMockService.applyMock ? mockAppId : encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(
       request: getApplicationFormDetailsRequest,

@@ -41,3 +41,25 @@ class ResPayLoad {
         "encData": encData,
       };
 }
+
+class ReqPlainPayLoad extends TGPostRequest {
+  dynamic data;
+  String? uri;
+
+  ReqPlainPayLoad(this.data, {required this.uri});
+
+  ReqPlainPayLoad.fromJson(Map<String, dynamic> json) {
+    data;
+    uri = json['uri'];
+  }
+
+  @override
+  dynamic body() {
+    return data;
+  }
+
+  @override
+  String getUri() {
+    return uri!;
+  }
+}

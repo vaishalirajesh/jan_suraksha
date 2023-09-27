@@ -32,7 +32,7 @@ import '../../../../services/request/tg_post_request.dart';
 import '../../../widget/otp_bottom_sheet_auth.dart';
 
 class LoginLogic extends GetxController {
-  TextEditingController mobileController = TextEditingController(text: '');
+  TextEditingController mobileController = TextEditingController(text: '7069168115');
   RxString mobile = ''.obs;
   RxString errorMsg = ''.obs;
   RxBool isLoading = false.obs;
@@ -234,10 +234,10 @@ class LoginLogic extends GetxController {
       Get.to(
         () => DashboardPage(),
         binding: DashboardBinding(),
-        arguments: {
-          AppArguments.mobileNumber: mobile.value,
-        },
       );
+    } else if (response.getLoginResponseData().status == RES_UNAUTHORISED) {
+      otpError.value = "Error in verify otp, Please check OTP";
+      isVerifyingOTP.value = false;
     } else {
       TGLog.d("Error in Login");
       isVerifyingOTP.value = false;
@@ -257,6 +257,7 @@ class LoginLogic extends GetxController {
     print(response);
     captchaString.value = response.verifyOTP().data?.bytes ?? "";
     captchaTrueValue = latin1.decode(base64.decode(response.verifyOTP().data?.captchaString ?? ''));
+    captchaController.text = captchaTrueValue ?? '';
   }
 
   _onErrorResponse(response) {}

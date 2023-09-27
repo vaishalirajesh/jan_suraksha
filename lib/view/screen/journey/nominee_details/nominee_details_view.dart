@@ -29,7 +29,7 @@ class NomineeDetailsPage extends StatelessWidget {
               appbarName: AppString.appBarWithTitleAndProgressBar,
               title: AppString.nomineeDetails,
               buttonTitle: AppString.continueText,
-              onButtonClick: nomineeDetailsLogic.getMasterList,
+              onButtonClick: nomineeDetailsLogic.onPressContinue,
               isDataLoading: false,
               onBackButtonCLick: AppUtils.onBackPress,
               isButtonEnable: true,

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/model/request_model/EmailOtpRequest.dart';
-import 'package:jan_suraksha/model/request_model/GetEnrollmentListRequest.dart';
+import 'package:jan_suraksha/model/request_model/GetEnrollmnetListrequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyEmailOtpRequest.dart';
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
@@ -62,7 +62,7 @@ class DashboardLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME);
+    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
     getSchemaDeatil();
     super.onInit();
   }
@@ -106,7 +106,11 @@ class DashboardLogic extends GetxController {
   _onSuccessGetSchemaByUserId(GetSchemaByUserIdResponse response) async {
     TGLog.d("GetSchemaByUserIdRequest : onSuccess()---$response");
     if (response.getSchemaByUserId().status == RES_SUCCESS) {
-      schemeDetail = json.decode(response.getSchemaByUserId().data ?? '');
+      TGLog.d("Scheme Value-------${response.getSchemaByUserId().data}");
+      if (response.getSchemaByUserId().data != null) {
+        schemeDetail = json.decode(response.getSchemaByUserId().data ?? '');
+      }
+      // isLoading.value = false;
       getSchemasList();
     } else {
       TGLog.d("Error in GetSchemaByUserIdRequest");
@@ -133,7 +137,8 @@ class DashboardLogic extends GetxController {
   }
 
   Future<void> getSchemeList() async {
-    GetEnrollmentListRequest getEnrollmentListRequest = GetEnrollmentListRequest();
+    GetEnrollmnetListrequest getEnrollmentListRequest =
+        GetEnrollmnetListrequest(type: 1, paginationFROM: 0, paginationTO: 10);
     var jsonRequest = jsonEncode(getEnrollmentListRequest.toJson());
     TGLog.d("GetEnrollmentListRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);
@@ -148,12 +153,14 @@ class DashboardLogic extends GetxController {
   _onSuccessGetEnrollmentList(GetEnrollmentListResponse response) async {
     TGLog.d("GetEnrollmentListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
-      schemeList = json.decode(response.getEnrollmentList().data ?? '');
-      schemeList.forEach((element) {
-        isOptOut.add(false.obs);
-      });
+      if (response.getEnrollmentList().data != null) {
+        schemeList = json.decode(response.getEnrollmentList().data ?? '');
+        schemeList.forEach((element) {
+          isOptOut.add(false.obs);
+        });
+      }
       TGLog.d("Schema lenght--${schemeList.length}");
-      bool isFromReg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG);
+      bool isFromReg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
       if (isFromReg) {
         openBottomSheet();
         TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);

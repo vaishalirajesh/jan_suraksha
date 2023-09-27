@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: logic.onWillPop,
+      onWillPop: AppUtils.onWillPopToDashboard,
       child: AddHeaderFooter(
           appbarName: AppString.appBarWithNotification,
           title: "John Doe",

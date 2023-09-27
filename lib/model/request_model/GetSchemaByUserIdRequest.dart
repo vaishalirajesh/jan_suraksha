@@ -8,7 +8,7 @@ class GetSchemaByUserIdRequest extends TGGetRequest {
 
   @override
   String getUri() {
-    return '${URIS.URI_GET_SCHEMA_BY_USER_ID}/$id';
+    return '${URIS.URI_GET_SCHEMA_BY_USER_ID}/$id/$id';
   }
 
   @override

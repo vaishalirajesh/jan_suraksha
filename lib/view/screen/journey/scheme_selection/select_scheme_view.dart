@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
 import 'package:jan_suraksha/view/screen/journey/scheme_selection/select_scheme_logic.dart';
@@ -170,7 +173,8 @@ class SelectSchemePage extends StatelessWidget {
                                                       height: 5.h,
                                                     ),
                                                     Text(
-                                                      dashboardLogic.schemeDetail[1]['premiumAmount'] != null
+                                                      dashboardLogic.schemeDetail != null &&
+                                                              dashboardLogic.schemeDetail[1]['premiumAmount'] != null
                                                           ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}"
                                                           : '0',
                                                       style: StyleConfig.boldText20.copyWith(
@@ -197,7 +201,10 @@ class SelectSchemePage extends StatelessWidget {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  dashboardLogic.schemeDetail[1]['shortName'] ?? '',
+                                  dashboardLogic.schemeDetail != null &&
+                                          dashboardLogic.schemeDetail[1]['shortName'] != null
+                                      ? "₹${dashboardLogic.schemeDetail[1]['shortName']}"
+                                      : '-',
                                   style: StyleConfig.semiBoldExtraSmallText.copyWith(
                                     color: logic.isSelected.value == 1
                                         ? ThemeHelper.getInstance()!.colorScheme.background
@@ -267,7 +274,8 @@ class SelectSchemePage extends StatelessWidget {
                                                       height: 5.h,
                                                     ),
                                                     Text(
-                                                      dashboardLogic.schemeDetail[0]['premiumAmount'] != null
+                                                      dashboardLogic.schemeDetail != null &&
+                                                              dashboardLogic.schemeDetail[0]['premiumAmount'] != null
                                                           ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}"
                                                           : '0',
                                                       style: StyleConfig.boldText20.copyWith(
@@ -294,7 +302,10 @@ class SelectSchemePage extends StatelessWidget {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  dashboardLogic.schemeDetail[0]['shortName'] ?? '',
+                                  dashboardLogic.schemeDetail != null &&
+                                          dashboardLogic.schemeDetail[0]['shortName'] != null
+                                      ? "₹${dashboardLogic.schemeDetail[0]['shortName']}"
+                                      : '-',
                                   style: StyleConfig.semiBoldExtraSmallText.copyWith(
                                     color: logic.isSelected.value == 2
                                         ? ThemeHelper.getInstance()!.colorScheme.background
@@ -325,7 +336,12 @@ class SelectSchemePage extends StatelessWidget {
           padding: EdgeInsets.all(20.r),
           child: AppButton(
             onPress: () {
-              Get.toNamed(BankSelectionPageRoute);
+              if (logic.isSelected.value == 0) {
+                showSnackBar(Get.context!, "Please select scheme");
+              } else {
+                TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
+                Get.toNamed(BankSelectionPageRoute);
+              }
             },
             title: "Continue",
             isButtonEnable: true.obs,

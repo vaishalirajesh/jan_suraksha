@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/model/request_model/ConsentOTPSendRequest.dart';
-import 'package:jan_suraksha/model/request_model/ConsentOTPVerifyRequest.dart';
+import 'package:jan_suraksha/model/request_model/OtpConsentRequest.dart';
 import 'package:jan_suraksha/model/request_model/PreminumDeductionRequest.dart';
 import 'package:jan_suraksha/model/request_model/TermConitionRequest.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
+import 'package:jan_suraksha/model/request_model/VerifySignupOtpRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/LoginResponseMainModel.dart';
 import 'package:jan_suraksha/model/response_model/GetTermConditionResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
@@ -30,6 +30,7 @@ import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success
 import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success_view.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
+import 'package:webviewx/webviewx.dart';
 
 class TermsAndConditionsLogic extends GetxController {
   RxString otp = ''.obs;
@@ -39,11 +40,15 @@ class TermsAndConditionsLogic extends GetxController {
   var appId;
   LoginResponseMainModel userData = LoginResponseMainModel();
   String content = '';
+  RxString otpError = ''.obs;
+  var mobile;
+  late WebViewXController webViewXController;
 
   @override
   Future<void> onInit() async {
     getConsentData();
     // userData = await TGSharedPreferences.getInstance().get(PREF_LOGIN_RES);
+    mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
     appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
     super.onInit();
   }
@@ -58,9 +63,13 @@ class TermsAndConditionsLogic extends GetxController {
     }
   }
 
+  Future<void> loadData() async {}
+
   Future<void> getData() async {
     isDataLoaded.value = false;
-    var encUserId = AesGcmEncryptionUtils.encryptNew('123124');
+    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
+
+    var encUserId = AesGcmEncryptionUtils.encryptNew(appId.toString());
     TermConditionRequest termConditionRequest =
         TermConditionRequest(id: TGMockService.applyMock ? '123124' : encUserId);
     ServiceManager.getInstance().getTermConition(
@@ -74,6 +83,7 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("TermConditionRequest : onSuccess()---$response");
     if (response.getTermConition().status == RES_SUCCESS) {
       content = response.getTermConition().data ?? '';
+      // await webViewXController.loadContent(response.getTermConition().data, SourceType.html);
       isDataLoaded.value = true;
     } else {
       TGLog.d("Error in TermConditionRequest");
@@ -91,16 +101,16 @@ class TermsAndConditionsLogic extends GetxController {
 
   void onPressButton(BuildContext context) {
     OTPBottomSheet.getBottomSheet(
-      context: context,
-      title: '',
-      subTitle: '',
-      onChangeOTP: onChangeOTP,
-      onSubmitOTP: onSubmitOTP,
-      mobileNumber: '1234567890',
-      isEnable: true.obs,
-      isLoading: isOTPVerifying,
-      onButtonPress: verifyOTP,
-    );
+        context: context,
+        title: '',
+        subTitle: '',
+        onChangeOTP: onChangeOTP,
+        onSubmitOTP: onSubmitOTP,
+        mobileNumber: mobile,
+        isEnable: true.obs,
+        isLoading: isOTPVerifying,
+        onButtonPress: verifyOTP,
+        errorText: otpError);
   }
 
   void onChangeOTP(String str) {
@@ -127,18 +137,18 @@ class TermsAndConditionsLogic extends GetxController {
 
   Future<void> sendOTP() async {
     isLoading.value = true;
-    ConsentOtpSendRequest consentOtpSendRequest = ConsentOtpSendRequest(
-      firstName: 'Vaishali',
-      lastName: 'Patel',
-      middleName: 'Rajesh',
-      userType: '1',
-      email: 'paresh.ibo@opl.com',
+
+    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+    OtpConsentRequest consentOtpSendRequest = OtpConsentRequest(
+      mobile: mobile,
+      otpType: 3,
+      userType: 1,
       isTermsAccepted: true,
-      otpRequestType: 5,
+      userId: userId,
     );
     var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());
     TGLog.d("ConsentOtpSendRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_OTP);
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_GET_OTP);
     TGLog.d("ConsentOtpSendRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
@@ -162,15 +172,13 @@ class TermsAndConditionsLogic extends GetxController {
 
   Future<void> verifyOTP() async {
     isOTPVerifying.value = true;
-    ConsentOtpVerifyRequest consentOtpSendRequest = ConsentOtpVerifyRequest(
-      userType: 2,
-      email: 'paresh.ibo@opl.com',
-      otp: '123456',
-      otpRequestType: 5,
-    );
-    var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());
+    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+    var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
+    VerifySignupOtpRequest verifySignupOtpRequest =
+        VerifySignupOtpRequest(mobile: mobile, otpType: 3, userId: userId, otp: otp.value);
+    var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_OTP);
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
     TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
@@ -194,7 +202,7 @@ class TermsAndConditionsLogic extends GetxController {
   Future<void> iAgree() async {
     isOTPVerifying.value = true;
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
-    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '1';
+    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '';
     PremiumDeductionRequest premiumDeductionRequest =
         PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
     var jsonRequest = jsonEncode(premiumDeductionRequest.toJson());

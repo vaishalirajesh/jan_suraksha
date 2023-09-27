@@ -2,10 +2,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jan_suraksha/services/common/keys.dart';
+import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
+
+import '../services/common/tg_log.dart';
 
 class AppUtils {
   static String path(str) {
@@ -111,4 +114,12 @@ class AppUtils {
       return ' ₹436';
     }
   }
+
+  static String getDecryptedString(String data) {
+    TGLog.d('Decrypted data-from APp Utils---${AesGcmEncryptionUtils.decryptNew(data)}');
+    return '';
+  }
+
+  static String data =
+      "[{\"userId\":7,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":5,\"imgPath\":\"fi fi-sr-file-spreadsheet PMSBY\",\"schemeId\":1,\"schemeName\":\"Pradhan Mantri Suraksha Bima Yojana\",\"shortName\":\"PMSBY\",\"routingPath\":null,\"orderId\":3,\"premiumAmount\":20,\"defaultAmount\":20},{\"userId\":7,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":5,\"imgPath\":\"fi fi-sr-document PMJJBY\",\"schemeId\":2,\"schemeName\":\"Pradhan Mantri Jeevan Jyoti Bima Yojana\",\"shortName\":\"PMJJBY\",\"routingPath\":null,\"orderId\":2,\"premiumAmount\":436,\"defaultAmount\":114}]";
 }

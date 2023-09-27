@@ -276,9 +276,10 @@ class HomePage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1] != null
-                                              ? dashboardLogic.schemeDetail[1]['shortName']
-                                              : '',
+                                          dashboardLogic.schemeDetail != null &&
+                                                  dashboardLogic.schemeDetail[1]['shortName'] != null
+                                              ? "₹${dashboardLogic.schemeDetail[1]['shortName']}"
+                                              : '-',
                                           style: StyleConfig.boldText16
                                               .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                         ),
@@ -295,7 +296,7 @@ class HomePage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Padding(
@@ -365,9 +366,10 @@ class HomePage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0] != null
-                                              ? dashboardLogic.schemeDetail[0]['shortName']
-                                              : '',
+                                          dashboardLogic.schemeDetail != null &&
+                                                  dashboardLogic.schemeDetail[0]['shortName'] != null
+                                              ? "₹${dashboardLogic.schemeDetail[0]['shortName']}"
+                                              : '-',
                                           style: StyleConfig.boldText16
                                               .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                         ),
@@ -402,8 +404,7 @@ class HomePage extends StatelessWidget {
                                 child: Expanded(
                                   child: ListViewButtons(
                                     onPress: () {
-                                      Get.to(() => const OngoingPmsbyJourneyPage(),
-                                          binding: OngoingPmsbyJourneyBinding());
+                                      Get.to(() => TermsAndConditionsPage(), binding: TermsAndConditionsBinding());
                                     },
                                     title: AppString.str_view_details,
                                   ),
@@ -485,104 +486,106 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(
                       child: dashboardLogic.schemeList.isEmpty
-                          ? ListView.builder(
-                              itemCount: 3,
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, int index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 10.w,
-                                    right: 10.w,
-                                    bottom: 20.h,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: ColorConfig.jsCreamColor,
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(10.0),
-                                        ),
-                                        border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(20.h),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ? dashboardLogic.isLoading.value
+                              ? ListView.builder(
+                                  itemCount: 3,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, int index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 10.w,
+                                        right: 10.w,
+                                        bottom: 20.h,
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorConfig.jsCreamColor,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              topRight: Radius.circular(10.0),
+                                              bottomLeft: Radius.circular(10.0),
+                                              bottomRight: Radius.circular(10.0),
+                                            ),
+                                            border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(20.h),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      AppString.str_name,
-                                                      style: StyleConfig.boldText16.copyWith(
-                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          AppString.str_name,
+                                                          style: StyleConfig.boldText16.copyWith(
+                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 4.w,
+                                                        ),
+                                                        Text('',
+                                                            style: StyleConfig.smallText
+                                                                .copyWith(color: ColorConfig.jsTextGreyColor))
+                                                      ],
                                                     ),
-                                                    SizedBox(
-                                                      width: 4.w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          AppString.str_scheme,
+                                                          style: StyleConfig.boldText16.copyWith(
+                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 4.w,
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            '',
+                                                            overflow: TextOverflow.clip,
+                                                            style: StyleConfig.smallText
+                                                                .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
-                                                    Text('',
-                                                        style: StyleConfig.smallText
-                                                            .copyWith(color: ColorConfig.jsTextGreyColor))
-                                                  ],
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 5.w,
+                                              ),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(right: 30.w, top: 3.h),
+                                                  child: Text(
+                                                    " ${AppString.str_amount} 0",
+                                                    style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
+                                                  ),
                                                 ),
                                               ),
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      AppString.str_scheme,
-                                                      style: StyleConfig.boldText16.copyWith(
-                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 4.w,
-                                                    ),
-                                                    Expanded(
-                                                      child: Text(
-                                                        '',
-                                                        overflow: TextOverflow.clip,
-                                                        style: StyleConfig.smallText
-                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
+                                              SizedBox(
+                                                height: 10.h,
                                               ),
+                                              ListViewButtons(
+                                                onPress: () {},
+                                                title: "Continue Journey",
+                                              )
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: 5.w,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(right: 30.w, top: 3.h),
-                                              child: Text(
-                                                " ${AppString.str_amount} 0",
-                                                style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          ListViewButtons(
-                                            onPress: () {},
-                                            title: "Continue Journey",
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              })
+                                    );
+                                  })
+                              : const SizedBox.shrink()
                           : ListView.builder(
                               itemCount: dashboardLogic.schemeList.length,
                               shrinkWrap: true,

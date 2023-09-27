@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
+import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
@@ -12,6 +13,7 @@ import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
@@ -27,6 +29,10 @@ import 'package:jan_suraksha/view/screen/journey/preview_application/preview_app
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
+
+import '../../../../model/request_model/GetApplicationFormDetailsRequest.dart';
+import '../../../../services/encryption/encdec/aesGcmEncryption.dart';
+import '../../../../services/mock/mock_service.dart';
 
 class NomineeDetailsLogic extends GetxController {
   RxBool isChecked = true.obs;
@@ -112,23 +118,27 @@ class NomineeDetailsLogic extends GetxController {
 
   Future<void> getData() async {
     Future.delayed(const Duration(seconds: 1), () async {
-      String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA);
-      getAppData = getApplicationFormDetailsResponseMainFromJson(data);
-      nominee = getAppData.data?.nominee!.first ?? Nominee();
-      firstNameController.text = nominee.firstName ?? '';
-      latsNameController.text = nominee.lastName ?? '';
-      middleNameController.text = nominee.middleName ?? '';
-      dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
-      mobileController.text = nominee.mobileNumber ?? '';
-      relationWithApplicantController.text = nominee.relationOfNomineeApplicantStr ?? '';
-      emailController.text = nominee.emailIdOfNominee ?? '';
-      addressOneController.text = nominee.address?.addressLine1 ?? '';
-      addressTwoController.text = nominee.address?.addressLine2 ?? '';
-      cityController.text = nominee.address?.city ?? '';
-      districtController.text = nominee.address?.district ?? '';
-      stateController.text = nominee.address?.state ?? '';
-      pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
-      isLoading.value = true;
+      String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA) ?? '';
+      if (data.isNotEmpty) {
+        getAppData = getApplicationFormDetailsResponseMainFromJson(data);
+        nominee = getAppData.data?.nominee?.first ?? Nominee();
+        firstNameController.text = nominee.firstName ?? '';
+        latsNameController.text = nominee.lastName ?? '';
+        middleNameController.text = nominee.middleName ?? '';
+        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        mobileController.text = nominee.mobileNumber ?? '';
+        relationWithApplicantController.text = nominee.relationOfNomineeApplicantStr ?? '';
+        emailController.text = nominee.emailIdOfNominee ?? '';
+        addressOneController.text = nominee.address?.addressLine1 ?? '';
+        addressTwoController.text = nominee.address?.addressLine2 ?? '';
+        cityController.text = nominee.address?.city ?? '';
+        districtController.text = nominee.address?.district ?? '';
+        stateController.text = nominee.address?.state ?? '';
+        pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
+        isLoading.value = true;
+      } else {
+        getUserData();
+      }
     });
   }
 
@@ -404,6 +414,66 @@ class NomineeDetailsLogic extends GetxController {
 
   _onErrorSaveData(TGResponse errorResponse) {
     TGLog.d("SaveFormDetailRequest : onError()--${errorResponse.error}");
+    isLoading.value = true;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> getUserData() async {
+    if (await NetUtils.isInternetAvailable()) {
+      getNomineeData();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, getNomineeData);
+      }
+    }
+  }
+
+  Future<void> getNomineeData() async {
+    String appId = '';
+    appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
+    var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
+    var mockAppId = "101212404";
+    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
+        GetApplicationFormDetailsRequest(appId: TGMockService.applyMock ? mockAppId : encAppId);
+    TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
+    ServiceManager.getInstance().getApplicationFormDetails(
+      request: getApplicationFormDetailsRequest,
+      onSuccess: (response) => _onSuccessVerifyOTP(response),
+      onError: (error) => _onErrorVerifyOTP(error),
+    );
+  }
+
+  _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
+    TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
+    if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
+      TGSession.getInstance().set(PREF_USER_FORM_DATA,
+          getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
+      getAppData = response.getApplicationFormDetailsResponse();
+      nominee = getAppData.data?.nominee?.first ?? Nominee();
+      firstNameController.text = nominee.firstName ?? '';
+      latsNameController.text = nominee.lastName ?? '';
+      middleNameController.text = nominee.middleName ?? '';
+      dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+      mobileController.text = nominee.mobileNumber ?? '';
+      relationWithApplicantController.text = nominee.relationOfNomineeApplicantStr ?? '';
+      emailController.text = nominee.emailIdOfNominee ?? '';
+      addressOneController.text = nominee.address?.addressLine1 ?? '';
+      addressTwoController.text = nominee.address?.addressLine2 ?? '';
+      cityController.text = nominee.address?.city ?? '';
+      districtController.text = nominee.address?.district ?? '';
+      stateController.text = nominee.address?.state ?? '';
+      pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
+      isLoading.value = true;
+    } else {
+      TGLog.d("Error in GetApplicationFormDetailsRequest");
+      isLoading.value = true;
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0,
+          response?.getApplicationFormDetailsResponse()?.message ?? "", null);
+    }
+  }
+
+  _onErrorVerifyOTP(TGResponse errorResponse) {
+    TGLog.d("GetApplicationFormDetailsRequest : onError()--${errorResponse.error}");
     isLoading.value = true;
     handleServiceFailError(Get.context!, errorResponse.error);
   }

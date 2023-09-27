@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyOTPRequest.dart';
@@ -25,6 +26,7 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
@@ -33,14 +35,15 @@ import '../../../../model/request_model/CreateApplicationRequest.dart';
 import '../../../../model/request_model/UpdateEnrollmentVerificationTypeRequest.dart';
 
 class CustomerVerificationLogic extends GetxController {
-  TextEditingController accountTextController = TextEditingController();
-  TextEditingController reAccountTextController = TextEditingController();
+  TextEditingController accountTextController = TextEditingController(text: '1234567890');
+  TextEditingController reAccountTextController = TextEditingController(text: '1234567890');
   TextEditingController dobTextController = TextEditingController();
   CreateApplicationResponseMain createApplicationResponseMain = CreateApplicationResponseMain();
   RxString accountErrorMsg = ''.obs;
   RxString reAccountErrorMsg = ''.obs;
   RxString dobErrorMsg = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isOtpVerifying = false.obs;
   RxBool isButtonEnabled = true.obs;
 
   final validCharacters = RegExp(r'^[0-9]+$');
@@ -48,7 +51,10 @@ class CustomerVerificationLogic extends GetxController {
   DateTime date = DateTime.now();
   String dob = '';
   RxString otp = ''.obs;
+  RxString otpError = ''.obs;
+
   var appId;
+  var schemeId;
 
   Future selectDate() async {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
@@ -61,20 +67,6 @@ class CustomerVerificationLogic extends GetxController {
       lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDatePickerMode: DatePickerMode.day,
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: ColorConfig.jsPrimaryColor,
-              onPrimary: ColorConfig.jsWhiteColor,
-              surface: ColorConfig.jsPrimaryColor,
-              onSurface: ColorConfig.jsBlackColor,
-            ),
-            dialogBackgroundColor: ColorConfig.jsWhiteColor,
-          ),
-          child: child!,
-        );
-      },
     );
     if (picked != null) {
       date = picked;
@@ -86,7 +78,11 @@ class CustomerVerificationLogic extends GetxController {
       dobErrorMsg.value = '';
       reAccountErrorMsg.value = '';
       dobTextController.text = '${date.day}/${date.month}/${date.year}';
-      dob = '$date';
+      String x = "2022-09-29T07:26:52.000Z";
+      var dateTime = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+      //DateFormat('yyyy-MM-ddThh:mm:ss.000Z').parse(date.toString());
+      TGLog.d("Date----$dateTime");
+      dob = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
     }
   }
 
@@ -111,6 +107,7 @@ class CustomerVerificationLogic extends GetxController {
   @override
   Future<void> onInit() async {
     appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID);
     super.onInit();
   }
 
@@ -160,14 +157,15 @@ class CustomerVerificationLogic extends GetxController {
 
   Future<void> createApplication() async {
     var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID);
+    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     isLoading.value = true;
     CreateApplicationRequest createApplicationRequest = CreateApplicationRequest(
-      dob: '2001-06-12T18:30:00.000Z',
-      accountNo: '451421101',
+      dob: dob,
+      accountNo: accountTextController.text,
       applicationId: null,
       orgId: orgId.toString(),
-      schemeId: '2',
-      userId: '22',
+      schemeId: schemeId.toString(),
+      userId: userId.toString(),
     );
     var jsonRequest = jsonEncode(createApplicationRequest.toJson());
     TGLog.d("CreateApplicationRequest $jsonRequest");
@@ -184,6 +182,7 @@ class CustomerVerificationLogic extends GetxController {
     TGLog.d("CreateApplicationRequest : onSuccess()---$response");
     createApplicationResponseMain = response.createApplicationResponse();
     if (response.createApplicationResponse().status == RES_SUCCESS) {
+      appId = response.createApplicationResponse().data?.id;
       TGSharedPreferences.getInstance().set(PREF_APP_ID, response.createApplicationResponse().data?.id);
       TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
       updateStage();
@@ -282,17 +281,19 @@ class CustomerVerificationLogic extends GetxController {
         context: Get.context!,
         onChangeOTP: (s) {
           otp.value = s;
-          TGLog.d("Otp---------${otp.value}");
+          otpError.value = '';
         },
         onSubmitOTP: (s) {
           otp.value = s;
+          otpError.value = '';
         },
         title: '',
         subTitle: '',
         mobileNumber: createApplicationResponseMain.data?.mobileNo ?? '',
         isEnable: true.obs,
-        isLoading: isLoading,
+        isLoading: isOtpVerifying,
         onButtonPress: onVerifyOTP,
+        errorText: otpError,
       );
     } else {
       isLoading.value = false;
@@ -308,17 +309,23 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   Future<void> onVerifyOTP() async {
-    if (await NetUtils.isInternetAvailable()) {
-      verifyOTP();
+    if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
+      otpError.value = 'Please enter valid Otp';
+      return;
     } else {
-      if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, verifyOTP);
+      otpError.value = '';
+      if (await NetUtils.isInternetAvailable()) {
+        verifyOTP();
+      } else {
+        if (Get.context!.mounted) {
+          showSnackBarForintenetConnection(Get.context!, verifyOTP);
+        }
       }
     }
   }
 
   Future<void> verifyOTP() async {
-    isLoading.value = true;
+    isOtpVerifying.value = true;
     VerifyOtpRequest verifyOtpRequest = VerifyOtpRequest(
       applicationId: createApplicationResponseMain.data?.id,
       orgId: createApplicationResponseMain.data?.orgId,
@@ -340,9 +347,12 @@ class CustomerVerificationLogic extends GetxController {
     if (response.verifyOTP().status == RES_SUCCESS) {
       TGSession.getInstance().set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
       updateStageDeatilAfterOTPVerify();
+    } else if (response.verifyOTP().status == RES_UNAUTHORISED) {
+      otpError.value = "Error in verify otp, Please check OTP";
+      isOtpVerifying.value = false;
     } else {
       TGLog.d("Error in updateVerificationType");
-      isLoading.value = false;
+      isOtpVerifying.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
     }
@@ -350,7 +360,7 @@ class CustomerVerificationLogic extends GetxController {
 
   _onErrorVerifyOTP(TGResponse errorResponse) {
     TGLog.d("VerifyOtpRequest : onError()--${errorResponse.error}");
-    isLoading.value = false;
+    isOtpVerifying.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 
@@ -373,6 +383,7 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;
+      isOtpVerifying.value = false;
       LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
           response.updateApplicationStage().message ?? "", null);
     }

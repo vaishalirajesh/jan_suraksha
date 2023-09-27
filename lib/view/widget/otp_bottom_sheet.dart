@@ -19,6 +19,7 @@ class OTPBottomSheet {
     required String title,
     required String subTitle,
     bool isForBank = false,
+    RxString? errorText,
     required BuildContext context,
     required RxBool isEnable,
     required RxBool isLoading,
@@ -70,6 +71,20 @@ class OTPBottomSheet {
               onSubmit: onSubmitOTP,
               // end onSubmit
             ),
+            Obx(() {
+              return errorText != null && errorText.value.isNotEmpty
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          errorText.value ?? '',
+                          style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  : SizedBox();
+            }),
             SizedBox(
               height: 10.h,
             ),

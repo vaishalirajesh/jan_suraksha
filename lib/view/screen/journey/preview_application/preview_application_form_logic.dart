@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
@@ -16,6 +17,7 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
@@ -23,6 +25,7 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 class PreviewApplicationFormLogic extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isDataLoaded = false.obs;
+  RxBool isAdultUser = true.obs;
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
 
   @override
@@ -35,6 +38,8 @@ class PreviewApplicationFormLogic extends GetxController {
     Future.delayed(const Duration(seconds: 1), () async {
       String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA);
       getAppData = getApplicationFormDetailsResponseMainFromJson(data);
+      isAdultUser.value =
+          isAdult(AppUtils.convertDateFormat(getAppData.data?.nominee?.first.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy'));
       isDataLoaded.value = true;
     });
   }
@@ -143,5 +148,18 @@ class PreviewApplicationFormLogic extends GetxController {
     TGLog.d("SaveFormDetailRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  bool isAdult(String birthDateString) {
+    String datePattern = "dd/mm/yyyy";
+
+    DateTime birthDate = DateFormat(datePattern).parse(birthDateString);
+    DateTime today = DateTime.now();
+
+    int yearDiff = today.year - birthDate.year;
+    int monthDiff = today.month - birthDate.month;
+    int dayDiff = today.day - birthDate.day;
+
+    return yearDiff > 18 || yearDiff == 18 && monthDiff > 0 || yearDiff == 18 && monthDiff == 0 && dayDiff >= 0;
   }
 }

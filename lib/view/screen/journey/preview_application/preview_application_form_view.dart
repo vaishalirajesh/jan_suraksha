@@ -19,7 +19,7 @@ class PreviewApplicationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: AppUtils.onWillPopToDashboard,
+      onWillPop: AppUtils.onWillPopScope,
       child: Obx(() {
         return Stack(
           children: [
@@ -347,75 +347,87 @@ class PreviewApplicationPage extends StatelessWidget {
                               SizedBox(
                                 height: 40.h,
                               ),
-                              Text(
-                                AppString.guardianDetail,
-                                style: StyleConfig.mediumText18.copyWith(
-                                  color: ColorConfig.jsPrimaryColor,
-                                  fontFamily: JSFonts.outfitMedium,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              DisableTextField(
-                                isMandatory: true,
-                                isReadOnly: true,
-                                title: AppString.name,
-                                hintText: AppString.enterYourName,
-                                inputType: TextInputType.text,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.nameOfGuardian ?? '',
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              DisableTextField(
-                                isMandatory: true,
-                                isReadOnly: true,
-                                title: AppString.address,
-                                hintText: AppString.enterYourAddress,
-                                inputType: TextInputType.text,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.addressOfGuardian ?? '',
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              DisableTextField(
-                                isMandatory: true,
-                                isReadOnly: true,
-                                title: AppString.relationNominee,
-                                hintText: AppString.selectRelation,
-                                inputType: TextInputType.text,
-                                initialvale: previewApplicationFormLogic
-                                        .getAppData.data!.nominee?.first.relationShipOfGuardianStr ??
-                                    '',
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              DisableTextField(
-                                isMandatory: false,
-                                isReadOnly: true,
-                                title: AppString.mobileNumber,
-                                hintText: AppString.enterMobile,
-                                inputType: TextInputType.phone,
-                                initialvale: previewApplicationFormLogic
-                                        .getAppData.data!.nominee?.first.mobileNumberOfGuardian ??
-                                    '',
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              DisableTextField(
-                                isMandatory: false,
-                                isReadOnly: true,
-                                title: AppString.emailId,
-                                hintText: AppString.enterEmail,
-                                inputType: TextInputType.emailAddress,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.emailIdOfGuardian ?? '',
-                              ),
+                              Obx(() {
+                                return (previewApplicationFormLogic.isAdultUser.value)
+                                    ? Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppString.guardianDetail,
+                                            style: StyleConfig.mediumText18.copyWith(
+                                              color: ColorConfig.jsPrimaryColor,
+                                              fontFamily: JSFonts.outfitMedium,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          DisableTextField(
+                                            isMandatory: true,
+                                            isReadOnly: true,
+                                            title: AppString.name,
+                                            hintText: AppString.enterYourName,
+                                            inputType: TextInputType.text,
+                                            initialvale: previewApplicationFormLogic
+                                                    .getAppData.data!.nominee?.first.nameOfGuardian ??
+                                                '',
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          DisableTextField(
+                                            isMandatory: true,
+                                            isReadOnly: true,
+                                            title: AppString.address,
+                                            hintText: AppString.enterYourAddress,
+                                            inputType: TextInputType.text,
+                                            initialvale: previewApplicationFormLogic
+                                                    .getAppData.data!.nominee?.first.addressOfGuardian ??
+                                                '',
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          DisableTextField(
+                                            isMandatory: true,
+                                            isReadOnly: true,
+                                            title: AppString.relationNominee,
+                                            hintText: AppString.selectRelation,
+                                            inputType: TextInputType.text,
+                                            initialvale: previewApplicationFormLogic
+                                                    .getAppData.data!.nominee?.first.relationShipOfGuardianStr ??
+                                                '',
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          DisableTextField(
+                                            isMandatory: false,
+                                            isReadOnly: true,
+                                            title: AppString.mobileNumber,
+                                            hintText: AppString.enterMobile,
+                                            inputType: TextInputType.phone,
+                                            initialvale: previewApplicationFormLogic
+                                                    .getAppData.data!.nominee?.first.mobileNumberOfGuardian ??
+                                                '',
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          DisableTextField(
+                                            isMandatory: false,
+                                            isReadOnly: true,
+                                            title: AppString.emailId,
+                                            hintText: AppString.enterEmail,
+                                            inputType: TextInputType.emailAddress,
+                                            initialvale: previewApplicationFormLogic
+                                                    .getAppData.data!.nominee?.first.emailIdOfGuardian ??
+                                                '',
+                                          ),
+                                        ],
+                                      )
+                                    : const SizedBox.shrink();
+                              }),
                             ],
                           ),
                         ),

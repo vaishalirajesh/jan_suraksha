@@ -5,12 +5,16 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/ConsentOTPSendRequest.dart';
 import 'package:jan_suraksha/model/request_model/ConsentOTPVerifyRequest.dart';
 import 'package:jan_suraksha/model/request_model/PreminumDeductionRequest.dart';
+import 'package:jan_suraksha/model/request_model/TermConitionRequest.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/LoginResponseMainModel.dart';
+import 'package:jan_suraksha/model/response_model/GetTermConditionResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
+import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -30,20 +34,66 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 class TermsAndConditionsLogic extends GetxController {
   RxString otp = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isDataLoaded = false.obs;
   RxBool isOTPVerifying = false.obs;
   var appId;
   LoginResponseMainModel userData = LoginResponseMainModel();
+  String content = '';
 
   @override
   Future<void> onInit() async {
+    getConsentData();
     // userData = await TGSharedPreferences.getInstance().get(PREF_LOGIN_RES);
     appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
     super.onInit();
   }
 
+  Future<void> getConsentData() async {
+    if (await NetUtils.isInternetAvailable()) {
+      getData();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, getData);
+      }
+    }
+  }
+
+  Future<void> getData() async {
+    isDataLoaded.value = false;
+    var encUserId = AesGcmEncryptionUtils.encryptNew('123124');
+    TermConditionRequest termConditionRequest =
+        TermConditionRequest(id: TGMockService.applyMock ? '123124' : encUserId);
+    ServiceManager.getInstance().getTermConition(
+      request: termConditionRequest,
+      onSuccess: (response) => _onSuccessTermCondition(response),
+      onError: (error) => _onErrorTermCondition(error),
+    );
+  }
+
+  _onSuccessTermCondition(TermConitionResponse response) async {
+    TGLog.d("TermConditionRequest : onSuccess()---$response");
+    if (response.getTermConition().status == RES_SUCCESS) {
+      content = response.getTermConition().data ?? '';
+      isDataLoaded.value = true;
+    } else {
+      TGLog.d("Error in TermConditionRequest");
+      isDataLoaded.value = true;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getTermConition().status ?? 0, response.getTermConition().message ?? "", null);
+    }
+  }
+
+  _onErrorTermCondition(TGResponse errorResponse) {
+    TGLog.d("TermConditionRequest : onError()--${errorResponse.error}");
+    isDataLoaded.value = true;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
   void onPressButton(BuildContext context) {
     OTPBottomSheet.getBottomSheet(
       context: context,
+      title: '',
+      subTitle: '',
       onChangeOTP: onChangeOTP,
       onSubmitOTP: onSubmitOTP,
       mobileNumber: '1234567890',
@@ -90,7 +140,7 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("ConsentOtpSendRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_OTP);
     TGLog.d("ConsentOtpSendRequest Decrypt:--------${tgPostRequest.body()}");
-    ServiceManager.getInstance().consentOtpSend(
+    ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
       onSuccess: (response) => _onSuccessSendOTP(response),
       onError: (error) => _onErrorSaveData(error),
@@ -99,14 +149,14 @@ class TermsAndConditionsLogic extends GetxController {
 
   _onSuccessSendOTP(OTPResponse response) async {
     TGLog.d("ConsentOtpSendRequest : onSuccess()---$response");
-    if (response.consentOtpSend().status == RES_SUCCESS) {
+    if (response.getOtpResponse().status == RES_SUCCESS) {
       isLoading.value = false;
       onPressButton(Get.context!);
     } else {
       TGLog.d("Error in ConsentOtpSendRequest");
       isLoading.value = false;
       LoaderUtils.handleErrorResponse(
-          Get.context!, response.consentOtpSend().status ?? 0, response.consentOtpSend().message ?? "", null);
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -122,7 +172,7 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_OTP);
     TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
-    ServiceManager.getInstance().consentOtpSend(
+    ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
       onSuccess: (response) => _onSuccessVerifyOTP(response),
       onError: (error) => _onErrorSaveData(error),
@@ -131,13 +181,13 @@ class TermsAndConditionsLogic extends GetxController {
 
   _onSuccessVerifyOTP(OTPResponse response) async {
     TGLog.d("ConsentOtpVerifyRequest : onSuccess()---$response");
-    if (response.consentOtpSend().status == RES_SUCCESS) {
+    if (response.getOtpResponse().status == RES_SUCCESS) {
       onSubmit();
     } else {
       TGLog.d("Error in ConsentOtpVerifyRequest");
       isOTPVerifying.value = false;
       LoaderUtils.handleErrorResponse(
-          Get.context!, response.consentOtpSend().status ?? 0, response.consentOtpSend().message ?? "", null);
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 

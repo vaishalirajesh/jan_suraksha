@@ -22,13 +22,12 @@ import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
-import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/customer_verification/customer_verification_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 import '../../../../model/response_main_model/GenerateCaptchaResponse.dart';
 import '../../../../services/request/EmptyGetRequest.dart';
 import '../../../../services/request/tg_post_request.dart';
+import '../../../widget/otp_bottom_sheet_auth.dart';
 
 class LoginLogic extends GetxController {
   TextEditingController mobileController = TextEditingController(text: '');
@@ -37,6 +36,7 @@ class LoginLogic extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isMobilenumber = false.obs;
   RxString captchaString = "".obs;
+  RxString otp = ''.obs;
 
   var passwordController = TextEditingController(text: "");
 
@@ -69,6 +69,26 @@ class LoginLogic extends GetxController {
   }
 
   Future<void> onPressSentOTP() async {
+    OTPBottomSheetAuth.getBottomSheet(
+      context: Get.context!,
+      onChangeOTP: (s) {
+        otp.value = s;
+        TGLog.d("Otp---------${otp.value}");
+      },
+      onSubmitOTP: (s) {
+        otp.value = s;
+      },
+      title: 'User Verification',
+      mobileNumber: mobileController.text ?? '',
+      isEnable: (otp.value.length == 6 ? true : false).obs,
+      isLoading: isLoading,
+      onButtonPress: onPressVerifyOtp,
+      isEdit: false.obs,
+      subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+    );
+  }
+
+  Future<void> onPressVerifyOtp() async {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     if (!isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');

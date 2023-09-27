@@ -19,4 +19,10 @@ abstract class URIS {
   static const URI_GEN_CAPTCH = "users/v3/signup/captcha/gen";
   static const URI_GET_MASTER_LIST = "oneform/v3/master/getMasterListByKey";
   static const URI_OTP = "users/login/otp";
+  static const URI_SIGN_UP = "users/v3/signup/new";
+  static const URI_SIGN_UP_VERIFY_OTP = "users/v3/signup/verifyOTP";
+  static const URI_SIGN_UP_EMAIL_OTP = "users/v3/signup/sendEmailOTP";
+  static const URI_ENROLLMENT_LIST = "insurance/v3/mobile/getEnrollmentList";
+  static const URI_ORG_MASTER_LIST = "insurance/V3/insurer/getOrganisationMstListByUserTypeId";
+  static const URI_GET_TERM_CONDITION = "insurance/v3/mobile/getConsentData";
 }

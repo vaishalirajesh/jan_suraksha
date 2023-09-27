@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyOTPRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/CreateApplicationResponseMain.dart';
@@ -60,6 +61,20 @@ class CustomerVerificationLogic extends GetxController {
       lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDatePickerMode: DatePickerMode.day,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: ColorConfig.jsPrimaryColor,
+              onPrimary: ColorConfig.jsWhiteColor,
+              surface: ColorConfig.jsPrimaryColor,
+              onSurface: ColorConfig.jsBlackColor,
+            ),
+            dialogBackgroundColor: ColorConfig.jsWhiteColor,
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null) {
       date = picked;
@@ -105,8 +120,6 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   void onPressContinue() {
-    onCustomerVerification();
-    return;
     if (!isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (accountTextController.text.isEmpty) {
@@ -146,12 +159,13 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   Future<void> createApplication() async {
+    var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID);
     isLoading.value = true;
     CreateApplicationRequest createApplicationRequest = CreateApplicationRequest(
       dob: '2001-06-12T18:30:00.000Z',
       accountNo: '451421101',
       applicationId: null,
-      orgId: '13',
+      orgId: orgId.toString(),
       schemeId: '2',
       userId: '22',
     );
@@ -273,6 +287,8 @@ class CustomerVerificationLogic extends GetxController {
         onSubmitOTP: (s) {
           otp.value = s;
         },
+        title: '',
+        subTitle: '',
         mobileNumber: createApplicationResponseMain.data?.mobileNo ?? '',
         isEnable: true.obs,
         isLoading: isLoading,

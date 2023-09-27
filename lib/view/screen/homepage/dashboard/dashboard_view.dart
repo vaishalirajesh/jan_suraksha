@@ -12,6 +12,8 @@ import 'package:jan_suraksha/view/screen/journey/application_form/application_fo
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
+import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_view.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_view.dart';
 import 'package:jan_suraksha/view/widget/app_loader.dart';
@@ -189,244 +191,249 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Stack(
+              Padding(
+                padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(() {
+                      return Text(
+                        'Welcome, ${dashboardLogic.userName.value}',
+                        style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                      );
+                    }),
+                    InkWell(
+                      onTap: () {
+                        Get.offAll(() => TermsAndConditionsPage(), binding: TermsAndConditionsBinding());
+                      },
+                      child: Icon(
+                        Icons.notifications,
+                        size: 25.r,
+                        color: ColorConfig.jsSecondaryColor,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Row(
                 children: [
-                  Container(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(AppString.str_welcome, style: StyleConfig.smallText.copyWith(fontSize: 24.sp))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.h, left: 20.w),
-                              child: Text(
-                                AppString.happy_to_have_you_onboard,
-                                style:
-                                    StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 10.h,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 30),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                child: SvgPicture.asset(Assets.dashboardSchemeLogo),
-                                                height: 40.h,
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    dashboardLogic.schemeDetail != null &&
-                                                            dashboardLogic.schemeDetail[1] != null
-                                                        ? dashboardLogic.schemeDetail[1]['shortName']
-                                                        : '',
-                                                    style: StyleConfig.boldText16
-                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  Text(
-                                                    AppString.str_pay_annually,
-                                                    style: StyleConfig.regularExtraSmallText
-                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                          child: Text(
-                                            dashboardLogic.schemeDetail != null &&
-                                                    dashboardLogic.schemeDetail[1]['premiumAmount'] != null
-                                                ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}"
-                                                : '0',
-                                            style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Expanded(
-                                            child: ListViewButtons(
-                                              onPress: () {
-                                                Get.to(() => const OngoingPmjjbyJourneyPage(),
-                                                    binding: OngoingPmjjbyJourneyBinding());
-                                              },
-                                              title: AppString.str_view_details,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                child: SvgPicture.asset(Assets.dashboardSchemeLogo),
-                                                height: 40.h,
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    dashboardLogic.schemeDetail != null &&
-                                                            dashboardLogic.schemeDetail[0] != null
-                                                        ? dashboardLogic.schemeDetail[0]['shortName']
-                                                        : '',
-                                                    style: StyleConfig.boldText16
-                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  Text(
-                                                    AppString.str_pay_annually,
-                                                    style: StyleConfig.regularExtraSmallText
-                                                        .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                          child: Text(
-                                            dashboardLogic.schemeDetail != null &&
-                                                    dashboardLogic.schemeDetail[0]['premiumAmount'] != null
-                                                ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}"
-                                                : '0',
-                                            style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Expanded(
-                                            child: ListViewButtons(
-                                              onPress: () {
-                                                Get.to(() => const OngoingPmjjbyJourneyPage(),
-                                                    binding: OngoingPmjjbyJourneyBinding());
-                                              },
-                                              title: AppString.str_view_details,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h, left: 20.w),
+                    child: Text(
+                      AppString.happy_to_have_you_onboard,
+                      style: StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                     ),
                   ),
                 ],
+              ),
+              Container(
+                height: 10.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 30.h, left: 10.w, right: 10.w, top: 10.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0),
+                            ),
+                            border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      child: SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                      height: 40.h,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1] != null
+                                              ? dashboardLogic.schemeDetail[1]['shortName']
+                                              : '',
+                                          style: StyleConfig.boldText16
+                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          AppString.str_pay_annually,
+                                          style: StyleConfig.regularExtraSmallText
+                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                child: Text(
+                                  dashboardLogic.schemeDetail != null &&
+                                          dashboardLogic.schemeDetail[1]['premiumAmount'] != null
+                                      ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}"
+                                      : '0',
+                                  style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Expanded(
+                                  child: ListViewButtons(
+                                    onPress: () {
+                                      Get.to(() => const OngoingPmjjbyJourneyPage(),
+                                          binding: OngoingPmjjbyJourneyBinding());
+                                    },
+                                    title: AppString.str_view_details,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0),
+                            ),
+                            border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      child: SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                      height: 40.h,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0] != null
+                                              ? dashboardLogic.schemeDetail[0]['shortName']
+                                              : '',
+                                          style: StyleConfig.boldText16
+                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          AppString.str_pay_annually,
+                                          style: StyleConfig.regularExtraSmallText
+                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                child: Text(
+                                  dashboardLogic.schemeDetail != null &&
+                                          dashboardLogic.schemeDetail[0]['premiumAmount'] != null
+                                      ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}"
+                                      : '0',
+                                  style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Expanded(
+                                  child: ListViewButtons(
+                                    onPress: () {
+                                      Get.to(() => const OngoingPmsbyJourneyPage(),
+                                          binding: OngoingPmsbyJourneyBinding());
+                                    },
+                                    title: AppString.str_view_details,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    )
+                  ],
+                ),
               ),
               Container(
                 color: ColorConfig.jsSecondaryColor,
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 30.h, bottom: 20.h, left: 10.w),
+                      padding: EdgeInsets.only(top: 30.h, left: 10.w),
                       child:
                           Text(AppString.str_my_policy, style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                       child: InkWell(
                         onTap: () {
                           Get.toNamed(SelectSchemePageRoute);
@@ -454,6 +461,7 @@ class HomePage extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
                                       AppString.str_apply_for_fresh_loan,
@@ -475,180 +483,217 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                            ),
-                            border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
-                        child: Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          AppString.str_name,
-                                          style: StyleConfig.boldText16
-                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                        ),
-                                        SizedBox(
-                                          width: 4.w,
-                                        ),
-                                        Text(AppString.str_name_value,
-                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
-                                      ],
-                                    ),
+                    SizedBox(
+                      child: dashboardLogic.schemeList.isEmpty
+                          ? ListView.builder(
+                              itemCount: 3,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 10.w,
+                                    right: 10.w,
+                                    bottom: 20.h,
                                   ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          AppString.str_scheme,
-                                          style: StyleConfig.boldText16
-                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: ColorConfig.jsCreamColor,
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(10.0),
                                         ),
-                                        SizedBox(
-                                          width: 4.w,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            AppString.str_pmsby,
-                                            overflow: TextOverflow.clip,
-                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor),
+                                        border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.h),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      AppString.str_name,
+                                                      style: StyleConfig.boldText16.copyWith(
+                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4.w,
+                                                    ),
+                                                    Text('',
+                                                        style: StyleConfig.smallText
+                                                            .copyWith(color: ColorConfig.jsTextGreyColor))
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      AppString.str_scheme,
+                                                      style: StyleConfig.boldText16.copyWith(
+                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4.w,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        '',
+                                                        overflow: TextOverflow.clip,
+                                                        style: StyleConfig.smallText
+                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            height: 5.w,
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(right: 30.w, top: 3.h),
+                                              child: Text(
+                                                " ${AppString.str_amount} 0",
+                                                style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          ListViewButtons(
+                                            onPress: () {},
+                                            title: "Continue Journey",
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.w,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 30.w, top: 3.h),
-                                  child: Text(
-                                    AppString.str_amount,
-                                    style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
+                                );
+                              })
+                          : ListView.builder(
+                              itemCount: dashboardLogic.schemeList.length,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 10.w,
+                                    right: 10.w,
+                                    bottom: 20.h,
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              ListViewButtons(
-                                onPress: () {
-                                  Get.to(() => TermsAndConditionsPage(), binding: TermsAndConditionsBinding());
-                                },
-                                title: "Continue Journey",
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: ColorConfig.jsCreamColor,
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(10.0),
+                                        ),
+                                        border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.h),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      AppString.str_name,
+                                                      style: StyleConfig.boldText16.copyWith(
+                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4.w,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                          dashboardLogic.schemeList.isNotEmpty &&
+                                                                  dashboardLogic.schemeList[index]['name'] != null
+                                                              ? dashboardLogic.schemeList[index]['name']
+                                                              : '',
+                                                          style: StyleConfig.smallText
+                                                              .copyWith(color: ColorConfig.jsTextGreyColor)),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      AppString.str_scheme,
+                                                      style: StyleConfig.boldText16.copyWith(
+                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4.w,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        dashboardLogic.schemeList.isNotEmpty &&
+                                                                dashboardLogic.schemeList[index]['schemeName'] != null
+                                                            ? dashboardLogic.schemeList[index]['schemeName']
+                                                            : '',
+                                                        overflow: TextOverflow.clip,
+                                                        style: StyleConfig.smallText
+                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5.w,
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(right: 30.w, top: 3.h),
+                                              child: Text(
+                                                " ${AppString.str_amount}${dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['scheme'] != null ? AppUtils.getAmountFromSchemeId(dashboardLogic.schemeList[index]['scheme']) : ''}",
+                                                style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          ListViewButtons(
+                                            onPress: () {
+                                              Get.offAll(() => ApplicationFormPage(),
+                                                  binding: ApplicationFormBinding());
+                                            },
+                                            title: "Continue Journey",
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                            ),
-                            border: Border.all(color: ColorConfig.jsCardBgBlueColor, width: 0.5.w)),
-                        child: Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          AppString.str_name,
-                                          style: StyleConfig.boldText16
-                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                        ),
-                                        SizedBox(
-                                          width: 4.w,
-                                        ),
-                                        Text(AppString.str_name_value,
-                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          AppString.str_scheme,
-                                          style: StyleConfig.boldText16
-                                              .copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                        ),
-                                        SizedBox(
-                                          width: 4.w,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            AppString.str_pmsby,
-                                            overflow: TextOverflow.clip,
-                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.w,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 30.w, top: 3.h),
-                                  child: Text(
-                                    AppString.str_amount,
-                                    style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              ListViewButtons(
-                                onPress: () {
-                                  Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
-                                },
-                                title: "Continue Journey",
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               )

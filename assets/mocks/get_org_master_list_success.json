@@ -1,0 +1,860 @@
+{
+  "id": null,
+  "message": "Success",
+  "data": [
+    {
+      "id": 814,
+      "value": " Navsarjan Industrial Co-Op. Bank Ltd.        "
+    },
+    {
+      "id": 823,
+      "value": " Sampada Sahakari Bank Ltd"
+    },
+    {
+      "id": 279,
+      "value": " Standard Chartered Bank"
+    },
+    {
+      "id": 499,
+      "value": " Uttar Bihar Gramin Bank"
+    },
+    {
+      "id": 269,
+      "value": "AEsaf Small Finance Bank Ltd"
+    },
+    {
+      "id": 280,
+      "value": "AU Small Finance Bank Ltd"
+    },
+    {
+      "id": 542,
+      "value": "Aadarsh Co-Op. Urban Bank "
+    },
+    {
+      "value": "Abhinandan Urban Co Operative Bank Ltd ",
+      "id": 467
+    },
+    {
+      "value": "Abhyudaya Co Operative Bank Ltd",
+      "id": 81
+    },
+    {
+      "value": "Abhyudaya Cooperative Bank",
+      "id": 343
+    },
+    {
+      "id": 402,
+      "value": "Adarniya P.d.patil Saheb Sahakari Bank Ltd"
+    },
+    {
+      "id": 394,
+      "value": "Adarsh Co-op. Bank Ltd, Sirohi"
+    },
+    {
+      "id": 636,
+      "value": "Adilabad Dist. Co-Op. Central Bank Ltd"
+    },
+    {
+      "value": "Adilabad District Cooperative Central Bank",
+      "id": 147
+    },
+    {
+      "id": 695,
+      "value": "Agrasen Bank"
+    },
+    {
+      "value": "Agrasen Nag Sah Bank Ltd",
+      "id": 903
+    },
+    {
+      "value": "Ahmadnagar Shahar Sahakari Bank Ltd",
+      "id": 932
+    },
+    {
+      "id": 362,
+      "value": "Ahmednagar Dist. Central Co-op. Bank Ltd"
+    },
+    {
+      "id": 267,
+      "value": "Ahmednagar Merchants Co Op Bank Ltd"
+    },
+    {
+      "value": "Airtel Payments Bank Ltd",
+      "id": 268
+    },
+    {
+      "value": "Ajmer Central Co-op. Bank Ltd",
+      "id": 370
+    },
+    {
+      "id": 82,
+      "value": "Akhand Anand Co-Op bank ltd"
+    },
+    {
+      "value": "Akhanda Anand Cooperative Bank Ltd",
+      "id": 951
+    },
+    {
+      "value": "Alapuzha Dist. Co-Op. Bank Ltd",
+      "id": 869
+    },
+    {
+      "value": "Alibag Co-Op Urban Bank Ltd",
+      "id": 148
+    },
+    {
+      "value": "Almora Urban Cooperative Bank Ltd",
+      "id": 179
+    },
+    {
+      "value": "Almora Zila Sahkari Bank Ltd",
+      "id": 69
+    },
+    {
+      "id": 302,
+      "value": "AlmoraUrban Co-op. Bank Ltd., Almora"
+    },
+    {
+      "id": 849,
+      "value": "Aluva Urban Co-Op. Bank"
+    },
+    {
+      "id": 83,
+      "value": "Aluva Urban Cooperative Bank Ltd"
+    },
+    {
+      "id": 679,
+      "value": "Alwar Central 'Co-Op. Bank Ltd"
+    },
+    {
+      "id": 635,
+      "value": "Aman Sahakari Bank Ltd"
+    },
+    {
+      "id": 630,
+      "value": "Amarnath Co-Op. Bank Ltd"
+    },
+    {
+      "value": "Ambarnath Jaihind Co-Op. Bank Ltd",
+      "id": 637
+    },
+    {
+      "value": "Amreli Jilla Madhyastha Sahakari Bank Ltd",
+      "id": 84
+    },
+    {
+      "id": 473,
+      "value": "Anantpur Dist. Co-Op. Central Bank Ltd"
+    },
+    {
+      "value": "Andaman & Nicobar State Co-Op. Bank Ltd",
+      "id": 675
+    },
+    {
+      "value": "Andhra Pradesh Grameena Bank",
+      "id": 76
+    },
+    {
+      "id": 149,
+      "value": "Andhra Pragati Gram. Bank"
+    },
+    {
+      "value": "Andhra Pragati Gramin Bank",
+      "id": 500
+    },
+    {
+      "value": "Angul Central Co-Operative Bank",
+      "id": 855
+    },
+    {
+      "value": "Angul United Central Cooperative Bank Ltd",
+      "id": 146
+    },
+    {
+      "id": 639,
+      "value": "Ap Rajarajeswari Mahila O-Op. Bank "
+    },
+    {
+      "id": 590,
+      "value": "Ap State Co-Op. Bank Ltd"
+    },
+    {
+      "id": 331,
+      "value": "Apani Sahakari Bank"
+    },
+    {
+      "id": 85,
+      "value": "Apna Sahakari Bank "
+    },
+    {
+      "id": 622,
+      "value": "Apna Sahakari Bank Ltd"
+    },
+    {
+      "value": "Arunachal Pradesh Rural Bank",
+      "id": 36
+    },
+    {
+      "value": "Arunachal Pradesh State Co-Op. Apex Bank Ltd",
+      "id": 680
+    },
+    {
+      "value": "Arvind Sahakari Bank Ltd",
+      "id": 802
+    },
+    {
+      "id": 244,
+      "value": "Aryavart Bank"
+    },
+    {
+      "id": 941,
+      "value": "Ashok Sahakari Bank Ltd"
+    },
+    {
+      "id": 406,
+      "value": "Ashoknagar Co-op. Bank Ltd "
+    },
+    {
+      "value": "Aska Central Co-Operative Bank",
+      "id": 518
+    },
+    {
+      "value": "Assam Gramin Vikash Bank",
+      "id": 35
+    },
+    {
+      "id": 930,
+      "value": "Aurangabad Dist. Co-Op. Bank"
+    },
+    {
+      "id": 41,
+      "value": "BDCC BANK LTD"
+    },
+    {
+      "id": 299,
+      "value": "Bagalkot Dist. Co-op. Bank"
+    },
+    {
+      "id": 921,
+      "value": "Baharaich District Co-Op. Bank Ltd., Baharaich"
+    },
+    {
+      "value": "Balageria Central Co-op. Bank Ltd",
+      "id": 357
+    },
+    {
+      "id": 604,
+      "value": "Balasore-Bhadrak  Central Co-Op Bank"
+    },
+    {
+      "id": 818,
+      "value": "Balotra Urban Co-Op. Bankltd"
+    },
+    {
+      "id": 614,
+      "value": "Banas Mercantile Co-Op. Bank, Palanpur"
+    },
+    {
+      "id": 349,
+      "value": "Banaskantha Dist. Central Coop Bank"
+    },
+    {
+      "value": "Bangalore Rural & Ramnagar Dist. Central Co-Op. Bank",
+      "id": 848
+    },
+    {
+      "value": "Bangiya Gramin Vikash Bank",
+      "id": 33
+    },
+    {
+      "value": "Bangiya Vikash Gramin Bank",
+      "id": 979
+    },
+    {
+      "value": "Bank of Baroda",
+      "id": 17
+    },
+    {
+      "value": "Bank of India",
+      "id": 14
+    },
+    {
+      "id": 27,
+      "value": "Bank of Maharashtra"
+    },
+    {
+      "id": 605,
+      "value": "Banki  Central Co-Operative Bank"
+    },
+    {
+      "id": 688,
+      "value": "Banswara Central Co-Op. Bank Ltd."
+    },
+    {
+      "value": "Bapunagar Mahila Co-Op. Bank",
+      "id": 972
+    },
+    {
+      "id": 627,
+      "value": "Baramati Sahakari Bank Ltd,, Baramati"
+    },
+    {
+      "id": 689,
+      "value": "Baran Kendriya Sahakari Bank Ltd., Baran"
+    },
+    {
+      "id": 410,
+      "value": "Baran Nagrik Sahkari Bank Ltd"
+    },
+    {
+      "value": "Baroda Gujarat Gramin Bank",
+      "id": 48
+    },
+    {
+      "value": "Baroda Gujarat Gramin Bank",
+      "id": 243
+    },
+    {
+      "value": "Baroda Rajasthan Kshetriya Gramin Bank",
+      "id": 53
+    },
+    {
+      "id": 242,
+      "value": "Baroda Rajasthan Kshetriya Gramin Bank"
+    },
+    {
+      "value": "Baroda UP Bank",
+      "id": 65
+    },
+    {
+      "id": 80,
+      "value": "Basaveshwar Sahakari Bank Niyamit Bagalkot"
+    },
+    {
+      "id": 648,
+      "value": "Basoda Nagrik Sahakari Bank Ltd-Basoda"
+    },
+    {
+      "value": "Bassein Catholic Bank",
+      "id": 629
+    },
+    {
+      "value": "Bassein Catholic Co-op Bank ",
+      "id": 86
+    },
+    {
+      "id": 863,
+      "value": "Bavla Sahkari Bank Ltd"
+    },
+    {
+      "value": "Beed Dist. Co-Op. Bank, Beed",
+      "id": 789
+    },
+    {
+      "id": 543,
+      "value": "Begusarai Central Co-Op. Bank "
+    },
+    {
+      "id": 390,
+      "value": "Betul Nagrik Sahkari Bank Betul"
+    },
+    {
+      "id": 537,
+      "value": "Bhagini Nivedita Bank Ltd"
+    },
+    {
+      "id": 87,
+      "value": "Bhagini Nivedita sahakari Bank Ltd.(Pune)"
+    },
+    {
+      "value": "Bhandara Dist. Central Co-op. Bank Ltd",
+      "id": 430
+    },
+    {
+      "id": 917,
+      "value": "Bhatkal Urban Co-Op. Bank Ltd., Bhatkal"
+    },
+    {
+      "id": 638,
+      "value": "Bhavana Rishi Co-Op. Urban Bank Ltd"
+    },
+    {
+      "id": 367,
+      "value": "Bhavnagar District Co Op Bank Ltd"
+    },
+    {
+      "id": 427,
+      "value": "Bhawanipatna  Central Co-op Bank"
+    },
+    {
+      "value": "Bhilwara Urban Co-Op. Bank Ltd",
+      "id": 982
+    },
+    {
+      "value": "Bicholim Urban Cooperative Bank Ltd",
+      "id": 564
+    },
+    {
+      "value": "Bidar Dist. Co-Op. Bank Ltd",
+      "id": 454
+    },
+    {
+      "value": "Bijapur Dist. Co-Op. Bank ",
+      "id": 601
+    },
+    {
+      "id": 559,
+      "value": "Birdev Sahakari Bank Ltd"
+    },
+    {
+      "id": 847,
+      "value": "Bolangir Dist. Central Co-Op. Bank"
+    },
+    {
+      "id": 966,
+      "value": "Brahmadeodada Mane Sahakari Bank Ltd"
+    },
+    {
+      "value": "Canara Bank",
+      "id": 12
+    },
+    {
+      "value": "Capital Local Area Bank Ltd",
+      "id": 176
+    },
+    {
+      "id": 510,
+      "value": "Catholic Syrian Bank Ltd"
+    },
+    {
+      "id": 25,
+      "value": "Central Bank of India"
+    },
+    {
+      "id": 346,
+      "value": "Central Co-op. Bank, Bhilwara"
+    },
+    {
+      "value": "Chaitanya Godavari Grameena Bank",
+      "id": 150
+    },
+    {
+      "id": 74,
+      "value": "Chamoli Zila Sahkari Bank Ltd"
+    },
+    {
+      "value": "Chandigarh State Co-Op. Bank",
+      "id": 589
+    },
+    {
+      "value": "Charada Nagrik Sahakari Bank Ltd., Charada-Mansa",
+      "id": 431
+    },
+    {
+      "id": 88,
+      "value": "Chembur Nagarik Sahakari Bank Ltd"
+    },
+    {
+      "id": 975,
+      "value": "Chennai Central Co-Op. Bank Ltd."
+    },
+    {
+      "value": "Chhatisgarh Rajya Sahkari Bank Maryadit(Apex Bank)",
+      "id": 480
+    },
+    {
+      "value": "Chhattisgarh Rajya Gramin Bank",
+      "id": 246
+    },
+    {
+      "value": "Chhattisgarh Rajya Gramin Bank",
+      "id": 46
+    },
+    {
+      "value": "Chikmagalur Dcc Bank",
+      "id": 645
+    },
+    {
+      "id": 994,
+      "value": "Chikodi Bank Ltd"
+    },
+    {
+      "id": 682,
+      "value": "Chitradurga Dcc Bank"
+    },
+    {
+      "value": "Chittoor Dist. Co-Op. Central Bank Ltd.",
+      "id": 887
+    },
+    {
+      "id": 507,
+      "value": "Chittorgarh Kendriya Sahkari Bank Ltd"
+    },
+    {
+      "id": 345,
+      "value": "Chittorgarh Urban Co-op. Bank Ltd"
+    },
+    {
+      "id": 486,
+      "value": "Citizen Co-Op. Bank Ltd., Noida"
+    },
+    {
+      "id": 89,
+      "value": "Citizen Co-Operative Bank Ltd"
+    },
+    {
+      "id": 619,
+      "value": "Citizen Credit Co-Op. Bank Ltd"
+    },
+    {
+      "value": "Citizen Urban Co-Op. Bank",
+      "id": 469
+    },
+    {
+      "value": "City Union Bank Ltd",
+      "id": 502
+    },
+    {
+      "value": "Coastal Local Area Bank Ltd",
+      "id": 437
+    },
+    {
+      "value": "Coimbatore Dist. Central Co-Op. Bank ",
+      "id": 580
+    },
+    {
+      "value": "Col. R.D.Sainin Sahakari Bank Ltd",
+      "id": 546
+    },
+    {
+      "value": "Commercial Co-Op. Bank",
+      "id": 461
+    },
+    {
+      "id": 329,
+      "value": "Commercial Co-op Bank Ltd., Kolhapur"
+    },
+    {
+      "id": 947,
+      "value": "Contai Co-Op. Bank Ltd"
+    },
+    {
+      "id": 690,
+      "value": "Cooperative Bank Of Mehsana, Mehsana,"
+    },
+    {
+      "value": "Cuddalore District Central Co-Operative Bank Ltd.",
+      "id": 935
+    },
+    {
+      "value": "DCB Bank",
+      "id": 259
+    },
+    {
+      "id": 360,
+      "value": "DCB Haridwar"
+    },
+    {
+      "value": "DCB Kotdwar",
+      "id": 359
+    },
+    {
+      "id": 369,
+      "value": "DCB, Shahjhanpur"
+    },
+    {
+      "id": 361,
+      "value": "DCB, Tehri"
+    },
+    {
+      "value": "DCCB, Datia ",
+      "id": 325
+    },
+    {
+      "value": "DMK Jaoli Sahakari Bank",
+      "id": 262
+    },
+    {
+      "value": "Dakshin Bihar Gramin Bank",
+      "id": 496
+    },
+    {
+      "id": 809,
+      "value": "Dapoli Urban Co-Op Bank Ltd., Dapoli"
+    },
+    {
+      "value": "Darjeeling District Central Co-Op Bank Ltd",
+      "id": 596
+    },
+    {
+      "id": 186,
+      "value": "Darjeeling District Central Cooperative Bank Ltd"
+    },
+    {
+      "id": 371,
+      "value": "Davanagere Dist. Cental Co-op. Bank Ltd, Davanagere"
+    },
+    {
+      "id": 90,
+      "value": "Davangere District Central Co-operative Bank Ltd"
+    },
+    {
+      "id": 991,
+      "value": "Dcb Dehradun"
+    },
+    {
+      "id": 965,
+      "value": "Dcb, Budaun"
+    },
+    {
+      "id": 856,
+      "value": "Dcb, Chamoli"
+    },
+    {
+      "id": 515,
+      "value": "Dcb, Unnao"
+    },
+    {
+      "id": 681,
+      "value": "Dcb, Uttarkashi"
+    },
+    {
+      "value": "Dcc Bank Mahaboob Nagar",
+      "id": 837
+    },
+    {
+      "id": 587,
+      "value": "Dcc Bank Nalgonda"
+    },
+    {
+      "id": 980,
+      "value": "Dcc Bank Nizamabad"
+    },
+    {
+      "value": "Dcc Bank, Medak",
+      "id": 892
+    },
+    {
+      "value": "Dccb Ltd., Bhind",
+      "id": 736
+    },
+    {
+      "id": 659,
+      "value": "Dccb Ltd., Gwalior"
+    },
+    {
+      "id": 563,
+      "value": "Dccb, Morena"
+    },
+    {
+      "id": 253,
+      "value": "Deendayal Nagari Sahakari Bank Ltd-Ambajogai(BEED)"
+    },
+    {
+      "id": 971,
+      "value": "Department Of Post"
+    },
+    {
+      "value": "Development Co-Op. Bank Ltd., Kanpur",
+      "id": 705
+    },
+    {
+      "id": 450,
+      "value": "Dhanera Mercantile Co-Op. Bank , Dhanera"
+    },
+    {
+      "value": "Dhanlakshmi Bank Ltd",
+      "id": 766
+    },
+    {
+      "id": 494,
+      "value": "Dharmapuri Dist. Central Co-Op. Bank"
+    },
+    {
+      "id": 466,
+      "value": "Dhule & Nadurbar Dist. Central Co-Op. Bank "
+    },
+    {
+      "value": "Dhule Vikas Sahkari Bank Ltd.",
+      "id": 663
+    },
+    {
+      "id": 493,
+      "value": "Dindigul Central Co-Op. Bank"
+    },
+    {
+      "value": "Dist. Central Co-Op. Bank Ltd., Shivpuri",
+      "id": 660
+    },
+    {
+      "value": "Dist. Co-Op. Bank Ltd., Muzaffarnagar",
+      "id": 726
+    },
+    {
+      "value": "Dist. Co-Op. Central Bank Ltd, Khammam",
+      "id": 840
+    },
+    {
+      "value": "Dist. Co-Op. Central Bank, Kadapa",
+      "id": 788
+    },
+    {
+      "id": 927,
+      "value": "Dist. Co-Op. Central Bank, Kurnool"
+    },
+    {
+      "id": 557,
+      "value": "Distict Co-Op. Bank Ltd., Lucknow"
+    },
+    {
+      "id": 487,
+      "value": "Distr. Co-Op. Bank Ltd., Barabanki"
+    },
+    {
+      "value": "District Central Co Operative Bank Betul",
+      "id": 389
+    },
+    {
+      "value": "District Central Co Operative Bank Bhopal",
+      "id": 306
+    },
+    {
+      "value": "District Central Co Operative Bank Hoshangabad",
+      "id": 703
+    },
+    {
+      "id": 701,
+      "value": "District Central Co Operative Bank Raisen"
+    },
+    {
+      "id": 536,
+      "value": "District Central Co Operative Bank Rajgarh"
+    },
+    {
+      "value": "District Central Co Operative Bank Sehore",
+      "id": 926
+    },
+    {
+      "id": 443,
+      "value": "District Central Co Operative Bank Shajapur"
+    },
+    {
+      "id": 307,
+      "value": "District Central Co Operative Bank Vidisha"
+    },
+    {
+      "id": 650,
+      "value": "District Co-Op. Bank Ltd., Saharanpur"
+    },
+    {
+      "value": "District Cooperative Bank Limited Lakhimpur",
+      "id": 609
+    },
+    {
+      "value": "District Cooperative Bank Limited., Pilibhit",
+      "id": 433
+    },
+    {
+      "id": 759,
+      "value": "Distt. Co-Op. Bank, Raebareli"
+    },
+    {
+      "id": 311,
+      "value": "Dombivli Nagari Sahakari Bank"
+    },
+    {
+      "id": 733,
+      "value": "Dr.Annasaheb Chougule Urban Co-Op Banl Ltd."
+    },
+    {
+      "id": 525,
+      "value": "Durgapur Steel Peoples' Co-Op Bank Ltd"
+    },
+    {
+      "value": "Ellaquai Dehati Bank",
+      "id": 248
+    },
+    {
+      "id": 63,
+      "value": "Ellaqui Dehati Bank  Srinagar"
+    },
+    {
+      "value": "Equitas Small Finance Bank Limited",
+      "id": 265
+    },
+    {
+      "id": 506,
+      "value": "Ernakulam Dist. Co-Op. Bank"
+    },
+    {
+      "value": "Erode Dist. Central Co-Op. Bank",
+      "id": 915
+    },
+    {
+      "id": 919,
+      "value": "Esaf  Small Finance Bank Ltd"
+    },
+    {
+      "value": "Fazilka Central Co-Op. Bank",
+      "id": 528
+    },
+    {
+      "id": 828,
+      "value": "Feroke Co-Op. Urban Bank"
+    },
+    {
+      "id": 616,
+      "value": "Ferozepur Central Co-Op. Bank "
+    },
+    {
+      "value": "G&Y DCC Bank Ltd",
+      "id": 286
+    },
+    {
+      "id": 862,
+      "value": "Gadchiroli Dist. Central Co-Op. Bank Ltd"
+    },
+    {
+      "value": "Gandhibag Sahakari Bank Ltd",
+      "id": 581
+    },
+    {
+      "value": "Gandhinagar Urban Co-Op. Bank Ltd",
+      "id": 600
+    },
+    {
+      "id": 968,
+      "value": "Godavari Urban Co-Op Bank Ltd"
+    },
+    {
+      "value": "Godhra Urban Co-Op. Bank Ltd.",
+      "id": 556
+    },
+    {
+      "value": "Gondal Nagrik Sahkari Bank Ltd.",
+      "id": 673
+    },
+    {
+      "value": "Zila Sahkari Bank Ltd., Jhansi",
+      "id": 702
+    },
+    {
+      "value": "Zila Sahkari Bank Ltd., Kanpur",
+      "id": 644
+    },
+    {
+      "id": 654,
+      "value": "Zila Sahkari Bank Ltd., Meerut"
+    },
+    {
+      "value": "Zila Sahkari Bank, Bulandshahr",
+      "id": 177
+    },
+    {
+      "id": 51,
+      "value": "department of posts"
+    }
+  ],
+  "status": 200,
+  "flag": true
+}

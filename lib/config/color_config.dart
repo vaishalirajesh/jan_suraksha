@@ -4,6 +4,7 @@ class ColorConfig {
   static final jsPrimaryColor = HexColor('#F7BC38');
   static final jsSecondaryColor = HexColor('#24699E');
   static final jsPrimaryDisableColor = HexColor('#FFF8E8');
+  static final jsGreyDisableColor = HexColor('#E8E8E8');
   static final jsWhiteColor = HexColor('#FFFFFF');
   static final jsLightBlackColor = HexColor('#212121');
   static final jsBlackColor = HexColor('#000000');
@@ -25,6 +26,7 @@ class ColorConfig {
   static final jstextLightGreyColor = HexColor("#666E7A");
   static final jsTextBlueGreyColor = HexColor("#7A86A1");
   static final jsSearchTextGreyColor = HexColor("#777777");
+  static final jsOptOutTextGreyColor = HexColor("#9A9A9A");
 }
 
 class HexColor extends Color {

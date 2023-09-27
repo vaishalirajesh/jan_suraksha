@@ -12,6 +12,8 @@ import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/auth/Registration/registration_logic.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 
 import '../../../widget/app_button.dart';
 import '../../../widget/app_textfield.dart';
@@ -21,7 +23,7 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginLogic = Get.find<RegistrationLogic>();
+    final signUpLogic = Get.find<RegistrationLogic>();
     return WillPopScope(
       onWillPop: AppUtils.onWillPopScopeAuth,
       child: Scaffold(
@@ -39,13 +41,6 @@ class RegistrationPage extends StatelessWidget {
                 height: 50.h,
                 width: 60.sw,
               ),
-              // SizedBox(
-              //   height: 20.h,
-              // ),
-              // Text(
-              //   AppString.startJourneyText,
-              //   style: StyleConfig.boldLargeText.copyWith(color: ColorConfig.jsBlackColor),
-              // ),
               RichText(
                 textAlign: TextAlign.start,
                 text: TextSpan(
@@ -66,7 +61,10 @@ class RegistrationPage extends StatelessWidget {
               ),
               Text(
                 AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextBlueGreyColor, fontFamily: JSFonts.outfitRegular, fontWeight: FontWeight.w300),
+                style: StyleConfig.smallText.copyWith(
+                    color: ColorConfig.jsTextBlueGreyColor,
+                    fontFamily: JSFonts.outfitRegular,
+                    fontWeight: FontWeight.w300),
               ),
               SizedBox(
                 height: 30.h,
@@ -86,99 +84,47 @@ class RegistrationPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Name",
-                              style: StyleConfig.regularText16.copyWith(
-                                color: ColorConfig.jsBlackColor,
-                                fontFamily: JSFonts.outfitRegular,
-                              ),
-                            ),
-                            Text(" *",
-                                style: StyleConfig.regularText16.copyWith(
-                                  color: ColorConfig.jsPrimaryColor,
-                                  fontFamily: JSFonts.outfitRegular,
-                                ))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
                       Obx(() {
                         return AppTextField(
                           hintText: "Enter Name",
-                          controller: loginLogic.mobileController,
+                          controller: signUpLogic.nameController,
                           isReadOnly: false,
                           isMandatory: true,
-                          isAutoFocus: true,
+                          isAutoFocus: false,
+                          title: 'Name',
                           inputType: TextInputType.emailAddress,
                           maxLength: 30,
-                          onChanged: loginLogic.onChangeMobile,
-                          errorText: loginLogic.errorMsg.value,
+                          onChanged: signUpLogic.onChangeMobile,
+                          errorText: signUpLogic.errorMsg.value,
                         );
                       }),
                       SizedBox(
                         height: 15.h,
                       ),
-                      Obx(() {
-                        return !loginLogic.isMobilenumber.value
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Mobile Number",
-                                          style: StyleConfig.regularText16.copyWith(
-                                            color: ColorConfig.jsBlackColor,
-                                            fontFamily: JSFonts.outfitRegular,
-                                          ),
-                                        ),
-                                        Text(" *",
-                                            style: StyleConfig.regularText16.copyWith(
-                                              color: ColorConfig.jsPrimaryColor,
-                                              fontFamily: JSFonts.outfitRegular,
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Container();
-                      }),
+                      AppTextField(
+                        isObscureText: false,
+                        hintText: "Enter Mobile Number",
+                        title: "Enter Mobile Number",
+                        controller: signUpLogic.mobileController,
+                        isReadOnly: false,
+                        isMandatory: true,
+                        isAutoFocus: false,
+                        inputType: TextInputType.number,
+                        maxLength: 10,
+                        onChanged: signUpLogic.onChangeMobile,
+                        errorText: signUpLogic.errorMsg.value,
+                      ),
                       SizedBox(
-                        height: 15.h,
+                        height: 20.h,
                       ),
                       Obx(() {
-                        return !loginLogic.isMobilenumber.value
-                            ? AppTextField(
-                                isObscureText: true,
-                                hintText: "Enter Mobile Number",
-                                controller: loginLogic.passwordController,
-                                isReadOnly: false,
-                                isMandatory: false,
-                                isAutoFocus: true,
-                                inputType: TextInputType.text,
-                                maxLength: 10,
-                                onChanged: loginLogic.onChangeMobile,
-                                errorText: loginLogic.errorMsg.value,
-                              )
-                            : Container();
-                      }),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      Obx(() {
-                        return loginLogic.captchaString.value.isNotEmpty
+                        return signUpLogic.captchaString.value.isNotEmpty
                             ? Row(
                                 children: [
-                                  SizedBox(width: 0.6.sw, height: 40, child: Image.memory(Base64Decoder().convert(loginLogic.captchaString.value))),
+                                  SizedBox(
+                                      width: 0.6.sw,
+                                      height: 40,
+                                      child: Image.memory(Base64Decoder().convert(signUpLogic.captchaString.value))),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -200,63 +146,62 @@ class RegistrationPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    style: StyleConfig.regularText16
+                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
                                   )
                                 ],
                               );
                       }),
                       SizedBox(
-                        height: 15.h,
+                        height: 20.h,
                       ),
                       AppTextField(
-                        isObscureText: true,
+                        isObscureText: false,
                         hintText: "Enter Captcha",
-                        controller: loginLogic.captchaController,
+                        controller: signUpLogic.captchaController,
                         isReadOnly: false,
                         isMandatory: false,
-                        isAutoFocus: true,
+                        isAutoFocus: false,
                         inputType: TextInputType.text,
                         maxLength: 10,
-                        onChanged: loginLogic.onChangeCaptcha,
-                        errorText: loginLogic.errorMsg.value,
+                        onChanged: signUpLogic.onChangeCaptcha,
+                        errorText: signUpLogic.errorMsg.value,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: SizedBox(
-                          height: 100,
-                          child: Column(
-                            children: [
-                              AppButton(
-                                onPress: loginLogic.onPressSentOTP,
-                                title: "Get Verification code",
-                                isButtonEnable: false.obs,
-                                isDataLoading: loginLogic.isLoading,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(LoginPageRoute);
-                                },
-                                child: RichText(
-                                  textAlign: TextAlign.start,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Already have and account ? ",
-                                        style: StyleConfig.regularText16,
-                                      ),
-                                      TextSpan(
-                                        text: "Login",
-                                        style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor),
-                                      ),
-                                    ],
-                                  ),
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Column(
+                          children: [
+                            AppButton(
+                              onPress: signUpLogic.onPressSentOTP,
+                              title: "Get Verification code",
+                              isButtonEnable: true.obs,
+                              isDataLoading: signUpLogic.isLoading,
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.offAll(() => const LoginPage(), binding: LoginBinding());
+                              },
+                              child: RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Already have and account ? ",
+                                      style: StyleConfig.regularText16,
+                                    ),
+                                    TextSpan(
+                                      text: "Login",
+                                      style: StyleConfig.regularText16
+                                          .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       )
                     ],

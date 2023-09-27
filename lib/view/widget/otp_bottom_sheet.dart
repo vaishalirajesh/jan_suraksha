@@ -16,6 +16,8 @@ class OTPBottomSheet {
     required Function(String) onSubmitOTP,
     required Function() onButtonPress,
     required String mobileNumber,
+    required String title,
+    required String subTitle,
     bool isForBank = false,
     required BuildContext context,
     required RxBool isEnable,
@@ -37,14 +39,14 @@ class OTPBottomSheet {
               height: 2.h,
             ),
             Text(
-              AppString.enterOTP,
+              title.isNotEmpty ? title : AppString.enterOTP,
               style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
             ),
             SizedBox(
               height: 5.h,
             ),
             Text(
-              '${AppString.registerMobileNumber}${AppUtils.getMaskedMobileNumber(mobileNumber: mobileNumber)}${isForBank ? AppString.byTheBank : AppString.emptyText}',
+              '${subTitle.isNotEmpty ? subTitle : AppString.registerMobileNumber}${AppUtils.getMaskedMobileNumber(mobileNumber: mobileNumber)}${isForBank ? AppString.byTheBank : AppString.emptyText}',
               style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
               textAlign: TextAlign.center,
             ),

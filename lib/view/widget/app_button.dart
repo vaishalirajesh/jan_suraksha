@@ -8,7 +8,9 @@ import 'jumpingdot_util.dart';
 
 // Common button widget
 class AppButton extends StatelessWidget {
-  AppButton({Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading}) : super(key: key);
+  AppButton(
+      {Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading})
+      : super(key: key);
   final VoidCallback onPress;
   final String title;
   RxBool isButtonEnable = true.obs;
@@ -23,7 +25,7 @@ class AppButton extends StatelessWidget {
         onPressed: onPress,
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorConfig.jsPrimaryColor,
-          disabledBackgroundColor: ColorConfig.jsPrimaryDisableColor,
+          disabledBackgroundColor: ColorConfig.jsGreyDisableColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.r),
           ),

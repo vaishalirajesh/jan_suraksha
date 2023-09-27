@@ -12,6 +12,8 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
+import 'package:jan_suraksha/view/screen/auth/Registration/registration_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/Registration/registration_view.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
 
@@ -60,7 +62,10 @@ class LoginPage extends StatelessWidget {
               ),
               Text(
                 AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextBlueGreyColor, fontFamily: JSFonts.outfitRegular, fontWeight: FontWeight.w300),
+                style: StyleConfig.smallText.copyWith(
+                    color: ColorConfig.jsTextBlueGreyColor,
+                    fontFamily: JSFonts.outfitRegular,
+                    fontWeight: FontWeight.w300),
               ),
               SizedBox(
                 height: 30.h,
@@ -80,70 +85,49 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppString.mobileNumber,
-                          style: StyleConfig.regularText16.copyWith(
-                            color: ColorConfig.jsBlackColor,
-                            fontFamily: JSFonts.outfitRegular,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
                       Obx(() {
                         return AppTextField(
                           hintText: AppString.enterMobileNumber,
                           controller: loginLogic.mobileController,
+                          title: AppString.enterMobileNumber,
                           isReadOnly: false,
                           isMandatory: true,
-                          isAutoFocus: true,
+                          isAutoFocus: false,
                           inputType: TextInputType.emailAddress,
                           maxLength: 30,
                           onChanged: loginLogic.onChangeMobile,
                           errorText: loginLogic.errorMsg.value,
                         );
                       }),
-                      SizedBox(
-                        height: 15.h,
-                      ),
                       Obx(() {
                         return !loginLogic.isMobilenumber.value
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      AppString.password,
-                                      style: StyleConfig.regularText16.copyWith(
-                                        color: ColorConfig.jsBlackColor,
-                                        fontFamily: JSFonts.outfitRegular,
+                            ? Padding(
+                                padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '${AppString.password}',
+                                        style: StyleConfig.mediumText16,
                                       ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      AppString.forgot_password,
-                                      style: StyleConfig.regularExtraSmallBText.copyWith(
-                                        color: ColorConfig.jsBlueColor,
-                                        fontFamily: JSFonts.outfitRegular,
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        AppString.forgot_password,
+                                        style: StyleConfig.regularExtraSmallBText.copyWith(
+                                          color: ColorConfig.jsBlueColor,
+                                          fontFamily: JSFonts.outfitRegular,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )
                             : Container();
                       }),
-                      Offstage(
-                        offstage: !loginLogic.isMobilenumber.value,
-                        child: SizedBox(
-                          height: 15.h,
-                        ),
-                      ),
                       Obx(() {
                         return !loginLogic.isMobilenumber.value
                             ? AppTextField(
@@ -152,22 +136,26 @@ class LoginPage extends StatelessWidget {
                                 controller: loginLogic.passwordController,
                                 isReadOnly: false,
                                 isMandatory: false,
-                                isAutoFocus: true,
+                                isAutoFocus: false,
                                 inputType: TextInputType.text,
                                 maxLength: 10,
                                 onChanged: loginLogic.onChangeMobile,
                                 errorText: loginLogic.errorMsg.value,
                               )
-                            : Container();
+                            : const SizedBox.shrink();
                       }),
                       SizedBox(
-                        height: 15.h,
+                        height: 20.h,
                       ),
                       Obx(() {
                         return loginLogic.captchaString.value.isNotEmpty
                             ? Row(
                                 children: [
-                                  SizedBox(width: 0.6.sw, height: 40, child: Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
+                                  SizedBox(
+                                      width: 0.6.sw,
+                                      height: 40,
+                                      child:
+                                          Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -189,13 +177,14 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    style: StyleConfig.regularText16
+                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
                                   )
                                 ],
                               );
                       }),
                       SizedBox(
-                        height: 15.h,
+                        height: 20.h,
                       ),
                       AppTextField(
                         isObscureText: true,
@@ -203,7 +192,7 @@ class LoginPage extends StatelessWidget {
                         controller: loginLogic.captchaController,
                         isReadOnly: false,
                         isMandatory: false,
-                        isAutoFocus: true,
+                        isAutoFocus: false,
                         inputType: TextInputType.text,
                         maxLength: 10,
                         onChanged: loginLogic.onChangeCaptcha,
@@ -211,40 +200,38 @@ class LoginPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
-                        child: SizedBox(
-                          height: 100,
-                          child: Column(
-                            children: [
-                              AppButton(
-                                onPress: loginLogic.onPressSentOTP,
-                                title: "Get Verification code",
-                                isButtonEnable: false.obs,
-                                isDataLoading: loginLogic.isLoading,
+                        child: Column(
+                          children: [
+                            AppButton(
+                              onPress: loginLogic.onPressSentOTP,
+                              title: "Get Verification code",
+                              isButtonEnable: true.obs,
+                              isDataLoading: false.obs,
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Don't have an account ? ",
+                                    style: StyleConfig.regularText16,
+                                  ),
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
+                                      },
+                                    text: "Register",
+                                    style: StyleConfig.regularText16
+                                        .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Don't have an account ? ",
-                                      style: StyleConfig.regularText16,
-                                    ),
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Get.toNamed(RegistrationPageRoute);
-                                        },
-                                      text: "Register",
-                                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       )
                     ],

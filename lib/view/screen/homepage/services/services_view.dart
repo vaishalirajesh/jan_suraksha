@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
-import 'package:jan_suraksha/view/widget/app_common_screen.dart';
+import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_view.dart';
 
 import '../../../../config/color_config.dart';
 import '../../../../config/style_config.dart';
@@ -20,13 +22,14 @@ class ServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: AppUtils.onWillPopToDashboard,
+      onWillPop: dashboardLogic.onWillPop,
       child: Scaffold(
         backgroundColor: ColorConfig.jsCreamColor,
         appBar: AppBar(
           backgroundColor: ColorConfig.jsCreamColor,
           toolbarHeight: 110.h,
           elevation: 0,
+          automaticallyImplyLeading: false,
           title: Padding(
             padding: EdgeInsets.only(
               top: 10.h,
@@ -125,270 +128,213 @@ class ServicesPage extends StatelessWidget {
                                     ),
                                     Offstage(
                                       offstage: dashboardLogic.isExpandedScheme.value,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                            child: Divider(),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(20.0),
-                                            child: Column(
+                                      child: ListView.builder(
+                                          itemCount: dashboardLogic.schemeList.length,
+                                          shrinkWrap: true,
+                                          physics: const BouncingScrollPhysics(),
+                                          itemBuilder: (context, int index) {
+                                            return Column(
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.str_name,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.str_name_value,
-                                                            style: StyleConfig.smallText
-                                                                .copyWith(color: ColorConfig.jsTextGreyColor))
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.str_scheme,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(
-                                                          AppString.str_pmjjby,
-                                                          style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    SizedBox()
-                                                  ],
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                  child: Divider(),
                                                 ),
-                                                SizedBox(
-                                                  height: 100.h,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.urn,
-                                                          style: StyleConfig.regularText16.copyWith(
-                                                              fontSize: 10.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.urnno,
-                                                            style: StyleConfig.smallText.copyWith(
-                                                                fontSize: 10.sp, color: ColorConfig.jsTextGreyColor)),
-                                                      ],
-                                                    ),
-                                                    SizedBox(),
-                                                    SizedBox(),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.renual_date,
-                                                          style: StyleConfig.regularText16.copyWith(
-                                                              fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.date,
-                                                            style: StyleConfig.smallText.copyWith(
-                                                                fontSize: 12.sp, color: ColorConfig.jsTextGreyColor))
-                                                      ],
-                                                    ),
-                                                    SizedBox()
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 60.w,
-                                                ),
-                                                SizedBox(
-                                                  height: 5.w,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      child: Transform(
-                                                        transform: new Matrix4.identity()..scale(0.8),
-                                                        child: Center(
-                                                          child: Chip(
-                                                            backgroundColor: ColorConfig.jsGreenColor,
-                                                            label: Text(
-                                                              AppString.str_active_policy,
-                                                              style: StyleConfig.smallTextLight
-                                                                  .copyWith(color: Colors.white, fontSize: 14.sp),
+                                                Padding(
+                                                  padding: EdgeInsets.all(20.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                AppString.str_name,
+                                                                style: StyleConfig.boldText16.copyWith(
+                                                                    fontSize: 16.sp,
+                                                                    color: ColorConfig.jsTextGreyColor),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 4.w,
+                                                              ),
+                                                              Text(
+                                                                dashboardLogic.schemeList.isNotEmpty &&
+                                                                        dashboardLogic.schemeList[index]['name'] != null
+                                                                    ? dashboardLogic.schemeList[index]['name']
+                                                                    : '',
+                                                                style: StyleConfig.smallText
+                                                                    .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                AppString.str_scheme,
+                                                                style: StyleConfig.boldText16.copyWith(
+                                                                    fontSize: 16.sp,
+                                                                    color: ColorConfig.jsTextGreyColor),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 4.w,
+                                                              ),
+                                                              Text(
+                                                                dashboardLogic.schemeList.isNotEmpty &&
+                                                                        dashboardLogic.schemeList[index]
+                                                                                ['schemeName'] !=
+                                                                            null
+                                                                    ? dashboardLogic.schemeList[index]['schemeName']
+                                                                    : '',
+                                                                style: StyleConfig.smallText
+                                                                    .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          SizedBox()
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10.h,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(
+                                                                  AppString.urn,
+                                                                  style: StyleConfig.regularText16.copyWith(
+                                                                      fontSize: 10.sp,
+                                                                      color: ColorConfig.jsTextGreyColor),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 4.w,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      dashboardLogic.schemeList.isNotEmpty &&
+                                                                              dashboardLogic.schemeList[index]['urn'] !=
+                                                                                  null
+                                                                          ? dashboardLogic.schemeList[index]['urn']
+                                                                          : '-',
+                                                                      style: StyleConfig.smallText.copyWith(
+                                                                          fontSize: 10.sp,
+                                                                          color: ColorConfig.jsTextGreyColor)),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(right: 30.w, top: 10.h),
-                                                      child: Text(
-                                                        AppString.str_amount,
-                                                        style: StyleConfig.smallText.copyWith(
-                                                            fontSize: 12.sp, color: ColorConfig.jstextLightGreyColor),
-                                                      ),
-                                                    ),
-                                                    SizedBox(),
-                                                    SizedBox(),
-                                                    SizedBox()
-                                                  ],
-                                                ),
-                                                ListViewButtons(onPress: () {}, title: "Opt-Out")
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                            child: Divider(),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(20.0),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.str_name,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.str_name_value,
-                                                            style: StyleConfig.smallText
-                                                                .copyWith(color: ColorConfig.jsTextGreyColor))
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.str_scheme,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(
-                                                          AppString.str_pmjjby,
-                                                          style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    SizedBox()
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 10.h,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.urn,
-                                                          style: StyleConfig.regularText16.copyWith(
-                                                              fontSize: 10.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.urnno,
-                                                            style: StyleConfig.smallText.copyWith(
-                                                                fontSize: 10.sp, color: ColorConfig.jsTextGreyColor)),
-                                                      ],
-                                                    ),
-                                                    SizedBox(),
-                                                    SizedBox(),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          AppString.renual_date,
-                                                          style: StyleConfig.regularText16.copyWith(
-                                                              fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 4.w,
-                                                        ),
-                                                        Text(AppString.date,
-                                                            style: StyleConfig.smallText.copyWith(
-                                                                fontSize: 12.sp, color: ColorConfig.jsTextGreyColor))
-                                                      ],
-                                                    ),
-                                                    SizedBox()
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 60.w,
-                                                ),
-                                                SizedBox(
-                                                  height: 5.w,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      child: Transform(
-                                                        transform: new Matrix4.identity()..scale(0.8),
-                                                        child: Center(
-                                                          child: Chip(
-                                                            backgroundColor: ColorConfig.jsGreenColor,
-                                                            label: Text(
-                                                              AppString.str_active_policy,
-                                                              style: StyleConfig.smallTextLight
-                                                                  .copyWith(color: Colors.white, fontSize: 14.sp),
+                                                          SizedBox(
+                                                            width: 4.w,
+                                                          ),
+                                                          Expanded(
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  AppString.renual_date,
+                                                                  style: StyleConfig.regularText16.copyWith(
+                                                                      fontSize: 12.sp,
+                                                                      color: ColorConfig.jsTextGreyColor),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 4.w,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      dashboardLogic.schemeList.isNotEmpty &&
+                                                                              dashboardLogic.schemeList[index]
+                                                                                      ['enrollDate'] !=
+                                                                                  null
+                                                                          ? AppUtils.convertDateFormat(
+                                                                              dashboardLogic.schemeList[index]
+                                                                                  ['enrollDate'],
+                                                                              'yyyy-mm-dd',
+                                                                              'dd/mm/yyyy')
+                                                                          : '-',
+                                                                      style: StyleConfig.smallText.copyWith(
+                                                                          fontSize: 12.sp,
+                                                                          color: ColorConfig.jsTextGreyColor)),
+                                                                )
+                                                              ],
                                                             ),
                                                           ),
-                                                        ),
+                                                          SizedBox()
+                                                        ],
                                                       ),
-                                                    ),
-                                                    SizedBox(),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(right: 30.w, top: 10.h),
-                                                      child: Text(
-                                                        AppString.str_amount,
-                                                        style: StyleConfig.smallText.copyWith(
-                                                            fontSize: 12.sp, color: ColorConfig.jstextLightGreyColor),
+                                                      SizedBox(
+                                                        width: 60.w,
                                                       ),
-                                                    ),
-                                                    SizedBox(),
-                                                    SizedBox(),
-                                                    SizedBox()
-                                                  ],
+                                                      SizedBox(
+                                                        height: 5.w,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          SizedBox(
+                                                            child: Transform(
+                                                              transform: Matrix4.identity()..scale(0.8),
+                                                              child: Center(
+                                                                child: Chip(
+                                                                  backgroundColor: ColorConfig.jsGreenColor,
+                                                                  label: Text(
+                                                                    AppString.str_active_policy,
+                                                                    style: StyleConfig.smallTextLight
+                                                                        .copyWith(color: Colors.white, fontSize: 14.sp),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets.only(right: 30.w, top: 10.h),
+                                                            child: Text(
+                                                              " ${AppString.str_amount}${dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['scheme'] != null ? AppUtils.getAmountFromSchemeId(dashboardLogic.schemeList[index]['scheme']) : ''}",
+                                                              style: StyleConfig.smallText.copyWith(
+                                                                  fontSize: 12.sp,
+                                                                  color: ColorConfig.jstextLightGreyColor),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Obx(() {
+                                                        return SizedBox(
+                                                          height: 26.h,
+                                                          width: 1.sw,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              dashboardLogic.isOptOut[index].value
+                                                                  ? null
+                                                                  : dashboardLogic.openOPTOutBottomSheet(index: index);
+                                                            },
+                                                            style: ElevatedButton.styleFrom(
+                                                              backgroundColor: dashboardLogic.isOptOut[index].value
+                                                                  ? ColorConfig.jsGreyDisableColor
+                                                                  : ColorConfig.jsPrimaryColor,
+                                                              disabledBackgroundColor:
+                                                                  ColorConfig.jsPrimaryDisableColor,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(40.r),
+                                                              ),
+                                                            ),
+                                                            child: Text(
+                                                                dashboardLogic.isOptOut[index].value
+                                                                    ? 'Opt-out Request Submitted successfully'
+                                                                    : "Opt-Out",
+                                                                style: StyleConfig.regularWhiteText16
+                                                                    .copyWith(fontSize: 12.sp)),
+                                                          ),
+                                                        );
+                                                      })
+                                                    ],
+                                                  ),
                                                 ),
-                                                ListViewButtons(onPress: () {}, title: "Opt-Out")
                                               ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                            );
+                                          }),
                                     ),
                                   ],
                                 )),
@@ -444,270 +390,192 @@ class ServicesPage extends StatelessWidget {
                                   ),
                                   Offstage(
                                     offstage: dashboardLogic.isExpandedNominee.value,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                          child: Divider(),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(20.0),
-                                          child: Column(
+                                    child: ListView.builder(
+                                        itemCount: dashboardLogic.schemeList.length,
+                                        shrinkWrap: true,
+                                        physics: const BouncingScrollPhysics(),
+                                        itemBuilder: (context, int index) {
+                                          return Column(
                                             children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.str_name,
-                                                        style: StyleConfig.boldText16.copyWith(
-                                                            fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.str_name_value,
-                                                          style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor))
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.str_scheme,
-                                                        style: StyleConfig.boldText16.copyWith(
-                                                            fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(
-                                                        AppString.str_pmjjby,
-                                                        style: StyleConfig.smallText
-                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  SizedBox()
-                                                ],
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                child: Divider(),
                                               ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.urn,
-                                                        style: StyleConfig.regularText16.copyWith(
-                                                            fontSize: 10.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.urnno,
-                                                          style: StyleConfig.smallText.copyWith(
-                                                              fontSize: 10.sp, color: ColorConfig.jsTextGreyColor)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(),
-                                                  SizedBox(),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.renual_date,
-                                                        style: StyleConfig.regularText16.copyWith(
-                                                            fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.date,
-                                                          style: StyleConfig.smallText.copyWith(
-                                                              fontSize: 12.sp, color: ColorConfig.jsTextGreyColor))
-                                                    ],
-                                                  ),
-                                                  SizedBox()
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 60.w,
-                                              ),
-                                              SizedBox(
-                                                height: 5.w,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    child: Transform(
-                                                      transform: new Matrix4.identity()..scale(0.8),
-                                                      child: Center(
-                                                        child: Chip(
-                                                          backgroundColor: ColorConfig.jsGreenColor,
-                                                          label: Text(
-                                                            AppString.str_active_policy,
-                                                            style: StyleConfig.smallTextLight
-                                                                .copyWith(color: Colors.white, fontSize: 14.sp),
+                                              Padding(
+                                                padding: EdgeInsets.all(20.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              AppString.str_name,
+                                                              style: StyleConfig.boldText16.copyWith(
+                                                                  fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 4.w,
+                                                            ),
+                                                            Text(
+                                                              dashboardLogic.schemeList.isNotEmpty &&
+                                                                      dashboardLogic.schemeList[index]['name'] != null
+                                                                  ? dashboardLogic.schemeList[index]['name']
+                                                                  : '',
+                                                              style: StyleConfig.smallText
+                                                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              AppString.str_scheme,
+                                                              style: StyleConfig.boldText16.copyWith(
+                                                                  fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 4.w,
+                                                            ),
+                                                            Text(
+                                                              dashboardLogic.schemeList.isNotEmpty &&
+                                                                      dashboardLogic.schemeList[index]['schemeName'] !=
+                                                                          null
+                                                                  ? dashboardLogic.schemeList[index]['schemeName']
+                                                                  : '',
+                                                              style: StyleConfig.smallText
+                                                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        SizedBox()
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                AppString.urn,
+                                                                style: StyleConfig.regularText16.copyWith(
+                                                                    fontSize: 10.sp,
+                                                                    color: ColorConfig.jsTextGreyColor),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 4.w,
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                    dashboardLogic.schemeList.isNotEmpty &&
+                                                                            dashboardLogic.schemeList[index]['urn'] !=
+                                                                                null
+                                                                        ? dashboardLogic.schemeList[index]['urn']
+                                                                        : '-',
+                                                                    style: StyleConfig.smallText.copyWith(
+                                                                        fontSize: 10.sp,
+                                                                        color: ColorConfig.jsTextGreyColor)),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: 30.w, top: 10.h),
-                                                    child: Text(
-                                                      AppString.str_amount,
-                                                      style: StyleConfig.smallText.copyWith(
-                                                          fontSize: 12.sp, color: ColorConfig.jstextLightGreyColor),
-                                                    ),
-                                                  ),
-                                                  SizedBox(),
-                                                  SizedBox(),
-                                                  SizedBox()
-                                                ],
-                                              ),
-                                              ListViewButtons(onPress: () {}, title: "Nominee Update")
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                          child: Divider(),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(20.0),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.str_name,
-                                                        style: StyleConfig.boldText16.copyWith(
-                                                            fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.str_name_value,
-                                                          style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor))
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.str_scheme,
-                                                        style: StyleConfig.boldText16.copyWith(
-                                                            fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(
-                                                        AppString.str_pmjjby,
-                                                        style: StyleConfig.smallText
-                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  SizedBox()
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.urn,
-                                                        style: StyleConfig.regularText16.copyWith(
-                                                            fontSize: 10.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.urnno,
-                                                          style: StyleConfig.smallText.copyWith(
-                                                              fontSize: 10.sp, color: ColorConfig.jsTextGreyColor)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(),
-                                                  SizedBox(),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        AppString.renual_date,
-                                                        style: StyleConfig.regularText16.copyWith(
-                                                            fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(AppString.date,
-                                                          style: StyleConfig.smallText.copyWith(
-                                                              fontSize: 12.sp, color: ColorConfig.jsTextGreyColor))
-                                                    ],
-                                                  ),
-                                                  SizedBox()
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 60.w,
-                                              ),
-                                              SizedBox(
-                                                height: 5.w,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    child: Transform(
-                                                      transform: new Matrix4.identity()..scale(0.8),
-                                                      child: Center(
-                                                        child: Chip(
-                                                          backgroundColor: ColorConfig.jsGreenColor,
-                                                          label: Text(
-                                                            AppString.str_active_policy,
-                                                            style: StyleConfig.smallTextLight
-                                                                .copyWith(color: Colors.white, fontSize: 14.sp),
+                                                        SizedBox(
+                                                          width: 4.w,
+                                                        ),
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                AppString.renual_date,
+                                                                style: StyleConfig.regularText16.copyWith(
+                                                                    fontSize: 12.sp,
+                                                                    color: ColorConfig.jsTextGreyColor),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 4.w,
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                    dashboardLogic.schemeList.isNotEmpty &&
+                                                                            dashboardLogic.schemeList[index]
+                                                                                    ['enrollDate'] !=
+                                                                                null
+                                                                        ? AppUtils.convertDateFormat(
+                                                                            dashboardLogic.schemeList[index]
+                                                                                ['enrollDate'],
+                                                                            'yyyy-mm-dd',
+                                                                            'dd/mm/yyyy')
+                                                                        : '-',
+                                                                    style: StyleConfig.smallText.copyWith(
+                                                                        fontSize: 12.sp,
+                                                                        color: ColorConfig.jsTextGreyColor)),
+                                                              )
+                                                            ],
                                                           ),
                                                         ),
-                                                      ),
+                                                        SizedBox()
+                                                      ],
                                                     ),
-                                                  ),
-                                                  SizedBox(),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: 30.w, top: 10.h),
-                                                    child: Text(
-                                                      AppString.str_amount,
-                                                      style: StyleConfig.smallText.copyWith(
-                                                          fontSize: 12.sp, color: ColorConfig.jstextLightGreyColor),
+                                                    SizedBox(
+                                                      width: 60.w,
                                                     ),
-                                                  ),
-                                                  SizedBox(),
-                                                  SizedBox(),
-                                                  SizedBox()
-                                                ],
+                                                    SizedBox(
+                                                      height: 5.w,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        SizedBox(
+                                                          child: Transform(
+                                                            transform: Matrix4.identity()..scale(0.8),
+                                                            child: Center(
+                                                              child: Chip(
+                                                                backgroundColor: ColorConfig.jsGreenColor,
+                                                                label: Text(
+                                                                  AppString.str_active_policy,
+                                                                  style: StyleConfig.smallTextLight
+                                                                      .copyWith(color: Colors.white, fontSize: 14.sp),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets.only(right: 30.w, top: 10.h),
+                                                          child: Text(
+                                                            " ${AppString.str_amount}${dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['scheme'] != null ? AppUtils.getAmountFromSchemeId(dashboardLogic.schemeList[index]['scheme']) : ''}",
+                                                            style: StyleConfig.smallText.copyWith(
+                                                                fontSize: 12.sp,
+                                                                color: ColorConfig.jstextLightGreyColor),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    ListViewButtons(
+                                                        onPress: () {
+                                                          Get.to(() => NomineeDetailsPage(),
+                                                              binding: NomineeDetailsBinding(),
+                                                              arguments: {
+                                                                AppArguments.screenName: "Service",
+                                                              });
+                                                        },
+                                                        title: "Nominee Update")
+                                                  ],
+                                                ),
                                               ),
-                                              ListViewButtons(onPress: () {}, title: "Nominee Update")
                                             ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                          );
+                                        }),
                                   ),
                                 ],
                               )),

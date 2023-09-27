@@ -77,6 +77,7 @@ class SelectSchemePage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 0.4.sh,
+              padding: EdgeInsets.only(left: 10.w, right: 10.w),
               decoration: BoxDecoration(
                 color: ColorConfig.jsWhiteColor,
                 shape: BoxShape.rectangle,
@@ -321,7 +322,7 @@ class SelectSchemePage extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(20.r),
           child: AppButton(
             onPress: () {
               Get.toNamed(BankSelectionPageRoute);

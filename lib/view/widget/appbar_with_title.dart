@@ -124,6 +124,7 @@ class CommonAppBar {
       backgroundColor: ColorConfig.jsCreamColor,
       toolbarHeight: 110.h,
       elevation: 0,
+      automaticallyImplyLeading: false,
       title: Padding(
         padding: EdgeInsets.only(
           top: 10.h,

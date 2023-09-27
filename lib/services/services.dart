@@ -1,13 +1,16 @@
-import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/EnrollmentOtpVerifyResponse.dart';
 import 'package:jan_suraksha/model/response_model/GenerateCoiResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetAllMenuForBankerResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
+import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
+import 'package:jan_suraksha/model/response_model/GetOrgMasterListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetStageDetailResponse.dart';
+import 'package:jan_suraksha/model/response_model/GetTermConditionResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetUserDetailByIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/LoginResponse.dart';
+import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
 import 'package:jan_suraksha/model/response_model/UpdateEnrollmentVerificationTypeResponse.dart';
@@ -133,26 +136,44 @@ class ServiceManager {
   }
 
   void premiumDeduction({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.saveFormDetail");
+    TGLog.d("ServiceManager.premiumDeduction");
     TGService<PremiumDeductionResponse, ServiceError>(() => PremiumDeductionResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void generateCoi({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.saveFormDetail");
+    TGLog.d("ServiceManager.generateCoi");
     TGService<GenerateCoiResponse, ServiceError>(() => GenerateCoiResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
   void getMasterList({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.saveFormDetail");
+    TGLog.d("ServiceManager.getMasterList");
     TGService<GetMasterListResponse, ServiceError>(() => GetMasterListResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 
-  void consentOtpSend({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
-    TGLog.d("ServiceManager.saveFormDetail");
+  void otpRequest({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.otpRequest");
     TGService<OTPResponse, ServiceError>(() => OTPResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void getEnrollmentList({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.getEnrollmentList");
+    TGService<GetEnrollmentListResponse, ServiceError>(() => GetEnrollmentListResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void getOrgMasterList({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.getOrgMasterList");
+    TGService<GetOrgMasterListResponse, ServiceError>(() => GetOrgMasterListResponse(), () => ServiceError())
+        .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void getTermConition({required TGGetRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.getTermConition");
+    TGService<TermConitionResponse, ServiceError>(() => TermConitionResponse(), () => ServiceError())
+        .get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 }

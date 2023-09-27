@@ -1,6 +1,6 @@
 {
   "id": null,
-  "message": "Success",
+  "message": "Error in data",
   "data": null,
   "status": 400,
   "flag": true

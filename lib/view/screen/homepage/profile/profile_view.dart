@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: AppUtils.onWillPopToDashboard,
+      onWillPop: logic.onWillPop,
       child: AddHeaderFooter(
           appbarName: AppString.appBarWithNotification,
           title: "John Doe",
@@ -79,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Text(
                                 "Personal Info",
-                                style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                               )
                             ],
                           ),
@@ -128,7 +128,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "Share App",
-                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
@@ -176,7 +176,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "Privacy Policy",
-                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
@@ -224,14 +224,182 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "Terms & Conditions",
-                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
                       ],
                     ),
                   ),
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        ),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                              child: Container(
+                                  height: 32.r,
+                                  width: 32.r,
+                                  decoration: BoxDecoration(
+                                    color: ColorConfig.jsLightGreyColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: SizedBox(
+                                      height: 10.r,
+                                      width: 10.r,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                        ),
+                                        // padding: EdgeInsets.all(1.r),
+                                        child:
+                                            Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                      ),
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              "General FAQs",
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        ),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                              child: Container(
+                                height: 32.r,
+                                width: 32.r,
+                                decoration: BoxDecoration(
+                                  color: ColorConfig.jsLightGreyColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SizedBox(
+                                    height: 10.r,
+                                    width: 10.r,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                      ),
+                                      // padding: EdgeInsets.all(1.r),
+                                      child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              "PMJJBY FAQs",
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        ),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                              child: Container(
+                                height: 32.r,
+                                width: 32.r,
+                                decoration: BoxDecoration(
+                                  color: ColorConfig.jsLightGreyColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SizedBox(
+                                    height: 10.r,
+                                    width: 10.r,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                      ),
+                                      // padding: EdgeInsets.all(1.r),
+                                      child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              "PMSBY FAQs",
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           )),

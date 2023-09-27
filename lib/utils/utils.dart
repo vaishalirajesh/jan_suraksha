@@ -103,4 +103,12 @@ class AppUtils {
       return '-';
     }
   }
+
+  static String getAmountFromSchemeId(int id) {
+    if (id == 1) {
+      return ' ₹20';
+    } else {
+      return ' ₹436';
+    }
+  }
 }

@@ -15,7 +15,7 @@ class OTPResponse extends TGResponse {
     _consentOtpSendResponseMain = OTPResponseMain.fromJson(json);
   }
 
-  OTPResponseMain consentOtpSend() {
+  OTPResponseMain getOtpResponse() {
     return _consentOtpSendResponseMain;
   }
 }

@@ -174,5 +174,53 @@
     "httpStatus": 200,
     "successFile": "assets/mocks/coi_success.json",
     "errorFile": "assets/mocks/premium_deduction_error.json"
+  },
+  {
+    "uri": "insurance/v3/mobile/getEnrollmentList",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_enrollment_list_success.json",
+    "errorFile": "assets/mocks/premium_deduction_error.json"
+  },
+  {
+    "uri": "insurance/V3/insurer/getOrganisationMstListByUserTypeId/2",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_org_master_list_success.json",
+    "errorFile": "assets/mocks/premium_deduction_error.json"
+  },
+  {
+    "uri": "users/v3/signup/sendEmailOTP",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/conset_otp_send_success.json",
+    "errorFile": "assets/mocks/conset_otp_send_error.json"
+  },
+  {
+    "uri": "users/v3/signup/verifyOTP",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/conset_otp_send_success.json",
+    "errorFile": "assets/mocks/conset_otp_send_error.json"
+  },
+  {
+    "uri": "users/v3/signup/new",
+    "method": "POST",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/conset_otp_send_success.json",
+    "errorFile": "assets/mocks/conset_otp_send_error.json"
+  },
+  {
+    "uri": "insurance/v3/mobile/getConsentData/123124",
+    "method": "GET",
+    "applyMock": true,
+    "httpStatus": 200,
+    "successFile": "assets/mocks/get_term_condition_success.json",
+    "errorFile": "assets/mocks/conset_otp_send_error.json"
   }
 ]

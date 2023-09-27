@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
-import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_view.dart';
@@ -25,6 +25,8 @@ class AddressDetailsLogic extends GetxController {
   }
 
   void onPressContinue() {
-    Get.to(() => NomineeDetailsPage(), binding: NomineeDetailsBinding());
+    Get.to(() => NomineeDetailsPage(), binding: NomineeDetailsBinding(), arguments: {
+      AppArguments.screenName: "Address",
+    });
   }
 }

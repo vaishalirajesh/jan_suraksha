@@ -25,4 +25,5 @@ abstract class URIS {
   static const URI_ENROLLMENT_LIST = "insurance/v3/mobile/getEnrollmentList";
   static const URI_ORG_MASTER_LIST = "insurance/V3/insurer/getOrganisationMstListByUserTypeId";
   static const URI_GET_TERM_CONDITION = "insurance/v3/mobile/getConsentData";
+  static const URI_LOGIN_WITH_MOBILE = "users/v3/send/login/otp";
 }

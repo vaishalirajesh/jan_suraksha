@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/font_config.dart';
-import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
@@ -83,158 +82,165 @@ class LoginPage extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
-                  child: Column(
-                    children: [
-                      Obx(() {
-                        return AppTextField(
-                          hintText: AppString.enterMobileNumber,
-                          controller: loginLogic.mobileController,
-                          title: AppString.enterMobileNumber,
-                          isReadOnly: false,
-                          isMandatory: true,
-                          isAutoFocus: false,
-                          inputType: TextInputType.emailAddress,
-                          maxLength: 30,
-                          onChanged: loginLogic.onChangeMobile,
-                          errorText: loginLogic.errorMsg.value,
-                        );
-                      }),
-                      Obx(() {
-                        return !loginLogic.isMobilenumber.value
-                            ? Padding(
-                                padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${AppString.password}',
-                                        style: StyleConfig.mediumText16,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        AppString.forgot_password,
-                                        style: StyleConfig.regularExtraSmallBText.copyWith(
-                                          color: ColorConfig.jsBlueColor,
-                                          fontFamily: JSFonts.outfitRegular,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container();
-                      }),
-                      Obx(() {
-                        return !loginLogic.isMobilenumber.value
-                            ? AppTextField(
-                                isObscureText: true,
-                                hintText: "Enter Password",
-                                controller: loginLogic.passwordController,
-                                isReadOnly: false,
-                                isMandatory: false,
-                                isAutoFocus: false,
-                                inputType: TextInputType.text,
-                                maxLength: 10,
-                                onChanged: loginLogic.onChangeMobile,
-                                errorText: loginLogic.errorMsg.value,
-                              )
-                            : const SizedBox.shrink();
-                      }),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Obx(() {
-                        return loginLogic.captchaString.value.isNotEmpty
-                            ? Row(
-                                children: [
-                                  SizedBox(
-                                      width: 0.6.sw,
-                                      height: 40,
-                                      child:
-                                          Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Icon(
-                                    Icons.refresh,
-                                    size: 18,
-                                  )
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16
-                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
-                                  )
-                                ],
-                              );
-                      }),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      AppTextField(
-                        isObscureText: true,
-                        hintText: "Enter Captcha",
-                        controller: loginLogic.captchaController,
-                        isReadOnly: false,
-                        isMandatory: false,
-                        isAutoFocus: false,
-                        inputType: TextInputType.text,
-                        maxLength: 10,
-                        onChanged: loginLogic.onChangeCaptcha,
-                        errorText: loginLogic.errorMsg.value,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: Column(
-                          children: [
-                            AppButton(
-                              onPress: loginLogic.onPressSentOTP,
-                              title: "Get Verification code",
-                              isButtonEnable: true.obs,
-                              isDataLoading: false.obs,
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Don't have an account ? ",
-                                    style: StyleConfig.regularText16,
-                                  ),
-                                  TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
-                                      },
-                                    text: "Register",
-                                    style: StyleConfig.regularText16
-                                        .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                  child: Expanded(
+                    child: Column(
+                      children: [
+                        Obx(() {
+                          return AppTextField(
+                            hintText: AppString.enterMobileNumber,
+                            controller: loginLogic.mobileController,
+                            title: AppString.enterMobileNumber,
+                            isReadOnly: false,
+                            isMandatory: true,
+                            isAutoFocus: false,
+                            inputType: TextInputType.emailAddress,
+                            maxLength: 30,
+                            onChanged: loginLogic.onChangeMobile,
+                            errorText: loginLogic.mobileError.value,
+                          );
+                        }),
+                        // Obx(() {
+                        //   return !loginLogic.isMobilenumber.value
+                        //       ? Padding(
+                        //           padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
+                        //           child: Row(
+                        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //             children: [
+                        //               Align(
+                        //                 alignment: Alignment.centerLeft,
+                        //                 child: Text(
+                        //                   '${AppString.password}',
+                        //                   style: StyleConfig.mediumText16,
+                        //                 ),
+                        //               ),
+                        //               Align(
+                        //                 alignment: Alignment.centerLeft,
+                        //                 child: Text(
+                        //                   AppString.forgot_password,
+                        //                   style: StyleConfig.regularExtraSmallBText.copyWith(
+                        //                     color: ColorConfig.jsBlueColor,
+                        //                     fontFamily: JSFonts.outfitRegular,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         )
+                        //       : Container();
+                        // }),
+                        // Obx(() {
+                        //   return !loginLogic.isMobilenumber.value
+                        //       ? AppTextField(
+                        //           isObscureText: true,
+                        //           hintText: "Enter Password",
+                        //           controller: loginLogic.passwordController,
+                        //           isReadOnly: false,
+                        //           isMandatory: false,
+                        //           isAutoFocus: false,
+                        //           inputType: TextInputType.text,
+                        //           maxLength: 10,
+                        //           onChanged: loginLogic.onChangeMobile,
+                        //           errorText: loginLogic.passwordError.value,
+                        //         )
+                        //       : const SizedBox.shrink();
+                        // }),
+                        SizedBox(
+                          height: 20.h,
                         ),
-                      )
-                    ],
+                        Obx(() {
+                          return loginLogic.captchaString.value.isNotEmpty
+                              ? Row(
+                                  children: [
+                                    SizedBox(
+                                        width: 0.6.sw,
+                                        height: 40,
+                                        child: Image.memory(
+                                            const Base64Decoder().convert(loginLogic.captchaString.value))),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    const Icon(
+                                      Icons.refresh,
+                                      size: 18,
+                                    )
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "Loading Capthca, Please wait",
+                                      style: StyleConfig.regularText16
+                                          .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    )
+                                  ],
+                                );
+                        }),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Obx(() {
+                          return AppTextField(
+                            isObscureText: false,
+                            hintText: "Enter Captcha",
+                            controller: loginLogic.captchaController,
+                            isReadOnly: false,
+                            isMandatory: false,
+                            isAutoFocus: false,
+                            inputType: TextInputType.text,
+                            maxLength: 10,
+                            onChanged: loginLogic.onChangeCaptcha,
+                            errorText: loginLogic.captchError.value,
+                          );
+                        }),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40),
+                          child: Obx(() {
+                            return Column(
+                              children: [
+                                AppButton(
+                                  onPress: loginLogic.onPressSentOTP,
+                                  title: "Get Verification code",
+                                  isButtonEnable: true.obs,
+                                  isDataLoading: loginLogic.isLoading,
+                                ),
+                                if (loginLogic.isLoading.value) const SizedBox.shrink(),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: "Don't have an account ? ",
+                                        style: StyleConfig.regularText16,
+                                      ),
+                                      TextSpan(
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
+                                          },
+                                        text: "Register",
+                                        style: StyleConfig.regularText16
+                                            .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

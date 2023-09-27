@@ -24,6 +24,8 @@ import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet_auth.dart';
@@ -36,7 +38,6 @@ import '../../../../services/request/tg_post_request.dart';
 class RegistrationLogic extends GetxController {
   TextEditingController mobileController = TextEditingController(text: '');
   TextEditingController nameController = TextEditingController(text: '');
-
   RxString mobile = ''.obs;
   RxString errorMsg = ''.obs;
   RxBool isLoading = false.obs;
@@ -48,10 +49,16 @@ class RegistrationLogic extends GetxController {
   String? captchaTrueValue = "";
   var namecontroller = TextEditingController(text: "");
   RxString otp = ''.obs;
+  RxString nameError = ''.obs;
+  RxString mobileError = ''.obs;
+  RxString captchError = ''.obs;
+  RxString otpError = ''.obs;
+  final validCharacters = RegExp(r'^[0-9]+$');
+  num userId = 0;
 
   @override
   void onInit() {
-    Future.delayed(Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       getcaptcha();
     });
 
@@ -59,35 +66,40 @@ class RegistrationLogic extends GetxController {
   }
 
   void onChangeMobile(String? str) {
-    if (_isNumeric(str!)) {
-      isMobilenumber.value = true;
-      print(true);
-    } else {
-      print(false);
-      isMobilenumber.value = false;
-    }
-    errorMsg.value = '';
     mobile.value = mobileController.text;
-    update();
+    mobileError.value = '';
+    nameError.value = '';
   }
 
   Future<void> onPressSentOTP() async {
+    // getcaptcha();
+    // return;
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-    if (!isLoading.value) {
-      errorMsg.value = '';
+
+    if (nameController.text.isEmpty) {
+      nameError.value = 'Please enter valid name';
+      mobileError.value = '';
+      captchError.value = '';
+    } else if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
+      nameError.value = '';
+      mobileError.value = 'Please enter valid mobile number';
+      captchError.value = '';
+    } else if (captchaController.text.isEmpty) {
+      nameError.value = '';
+      mobileError.value = '';
+      captchError.value = 'Please enter captcha';
+    } else if (captchaController.text != captchaTrueValue) {
+      nameError.value = '';
+      mobileError.value = '';
+      captchError.value = 'Captcha not match';
+    } else {
+      nameError.value = '';
+      mobileError.value = '';
+      captchError.value = '';
       signUp();
       TGSharedPreferences.getInstance().set(PREF_USER_NAME, nameController.text);
-    } else {
-      errorMsg.value = 'Please enter valid mobile number';
     }
     TGLog.d('Errormsg--------${errorMsg.value}');
-  }
-
-  bool _isNumeric(String str) {
-    if (str == null) {
-      return false;
-    }
-    return double.tryParse(str) != null;
   }
 
   getcaptcha() {
@@ -112,10 +124,10 @@ class RegistrationLogic extends GetxController {
     SignUpOtpRequest signUpOtpRequest = SignUpOtpRequest(
       isTermsAccepted: true,
       userType: 1,
-      mobile: '9081994518',
-      captchaEnter: '123456',
-      captchaOriginal: '123456',
-      name: 'Vaishali',
+      mobile: mobileController.text,
+      captchaEnter: captchaController.text,
+      captchaOriginal: captchaTrueValue,
+      name: nameController.text,
       otpType: 1,
     );
     var jsonRequest = jsonEncode(signUpOtpRequest.toJson());
@@ -130,17 +142,23 @@ class RegistrationLogic extends GetxController {
   _onSuccessSignUp(OTPResponse response) async {
     TGLog.d("SignUpOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
+      userId = response.getOtpResponse().data ?? '';
+      await TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getOtpResponse().data ?? 0);
+
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         isEdit: false.obs,
         onChangeOTP: (s) {
           otp.value = s;
+          otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
         onSubmitOTP: (s) {
           otp.value = s;
+          otpError.value = '';
         },
         title: 'User Verification',
+        errorText: otpError,
         mobileNumber: mobileController.text ?? '',
         isEnable: true.obs,
         isLoading: isOTPVerifing,
@@ -165,11 +183,21 @@ class RegistrationLogic extends GetxController {
   }
 
   Future<void> verifyOtp() async {
-    if (await NetUtils.isInternetAvailable()) {
-      onVerifyOTP();
+    // var data =
+    //     'ajI5cGdLaHRNOHFvd2orSlk3dm0wN2RnbzZEK0lTMmlqRndhUUJGcExaS1g0cWlkN3Z3WXN0c0VHQ1Zsd2plSndXZ3VkbEZ3Z2dDWkV3STBudFBUYWc5akRNbnUvZnk5cjlXY2FDS1dYeUN5VlYvMmlzbzloL2ZiY2JoWHQ1OW1PajExZXVUVEozdmI0aFZtUlFqbE9KM2RDSnhkblo0Tm9HTGx4Ui9ZOjphZDg1OGE4MDhiZDQyMzA3';
+    // TGLog.d("Decrypet data----${AesGcmEncryptionUtils.decryptNew(data)}");
+    // return;
+    if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
+      otpError.value = 'Please enter valid Otp';
+      return;
     } else {
-      if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
+      otpError.value = '';
+      if (await NetUtils.isInternetAvailable()) {
+        onVerifyOTP();
+      } else {
+        if (Get.context!.mounted) {
+          showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
+        }
       }
     }
   }
@@ -177,10 +205,10 @@ class RegistrationLogic extends GetxController {
   Future<void> onVerifyOTP() async {
     isOTPVerifing.value = true;
     VerifySignupOtpRequest verifySignupOtpRequest =
-        VerifySignupOtpRequest(mobile: '1234567890', otpType: 1, userId: 9492, otp: '123456');
+        VerifySignupOtpRequest(mobile: mobileController.text, otpType: 1, userId: userId, otp: otp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP);
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
     ServiceManager.getInstance().otpRequest(
         request: tgPostRequest,
         onSuccess: (response) => _onSuccessVerifyOTP(response),
@@ -191,7 +219,7 @@ class RegistrationLogic extends GetxController {
     TGLog.d("VerifySignupOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
       TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, true);
-      loginRequest();
+      Get.offAll(() => const LoginPage(), binding: LoginBinding());
     } else {
       TGLog.d("Error in VerifySignupOtpRequest");
       isOTPVerifing.value = false;
@@ -201,17 +229,22 @@ class RegistrationLogic extends GetxController {
   }
 
   _onsuccsessCaptchGet(GenerateCaptchaResponse response) {
-    print(response);
     captchaString.value = response.verifyOTP().data?.bytes ?? "";
-    captchaTrueValue = response.verifyOTP().data?.captchaString;
+    captchaTrueValue = latin1.decode(base64.decode(response.verifyOTP().data?.captchaString ?? ''));
+    TGLog.d("Data1-------${latin1.decode(base64.decode(captchaTrueValue ?? ''))}");
   }
 
   _onErrorResponse(response) {}
 
   void onChangeCaptcha(String p1) {
+    captchError.value = '';
     if (p1 == captchaTrueValue) {
       isButtonEnabled.value = true;
     }
+  }
+
+  void showCaptchaImage(BuildContext context, String imageString) {
+    // Decode the Base64-encoded image string
   }
 
   Future<void> loginRequest() async {
@@ -227,7 +260,8 @@ class RegistrationLogic extends GetxController {
       deviceType: 'desktop',
       userAgent:
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-      userType: '2',
+      userType: 1,
+      otp: '',
     );
     var jsonRequest = jsonEncode(loginRequest.toJson());
     TGLog.d("Auto Login Request $jsonRequest");
@@ -250,7 +284,8 @@ class RegistrationLogic extends GetxController {
       TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
       TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
       TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
-      TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile);
+      TGSession.getInstance()
+          .set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile ?? mobileController.text);
       TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.getLoginResponseData().userOrgId);
       TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getLoginResponseData().userId);
       setAccessTokenInRequestHeader();

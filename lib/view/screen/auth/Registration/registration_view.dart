@@ -95,25 +95,27 @@ class RegistrationPage extends StatelessWidget {
                           inputType: TextInputType.emailAddress,
                           maxLength: 30,
                           onChanged: signUpLogic.onChangeMobile,
-                          errorText: signUpLogic.errorMsg.value,
+                          errorText: signUpLogic.nameError.value,
                         );
                       }),
                       SizedBox(
                         height: 15.h,
                       ),
-                      AppTextField(
-                        isObscureText: false,
-                        hintText: "Enter Mobile Number",
-                        title: "Enter Mobile Number",
-                        controller: signUpLogic.mobileController,
-                        isReadOnly: false,
-                        isMandatory: true,
-                        isAutoFocus: false,
-                        inputType: TextInputType.number,
-                        maxLength: 10,
-                        onChanged: signUpLogic.onChangeMobile,
-                        errorText: signUpLogic.errorMsg.value,
-                      ),
+                      Obx(() {
+                        return AppTextField(
+                          isObscureText: false,
+                          hintText: "Enter Mobile Number",
+                          title: "Enter Mobile Number",
+                          controller: signUpLogic.mobileController,
+                          isReadOnly: false,
+                          isMandatory: true,
+                          isAutoFocus: false,
+                          inputType: TextInputType.number,
+                          maxLength: 10,
+                          onChanged: signUpLogic.onChangeMobile,
+                          errorText: signUpLogic.mobileError.value,
+                        );
+                      }),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -155,18 +157,20 @@ class RegistrationPage extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      AppTextField(
-                        isObscureText: false,
-                        hintText: "Enter Captcha",
-                        controller: signUpLogic.captchaController,
-                        isReadOnly: false,
-                        isMandatory: false,
-                        isAutoFocus: false,
-                        inputType: TextInputType.text,
-                        maxLength: 10,
-                        onChanged: signUpLogic.onChangeCaptcha,
-                        errorText: signUpLogic.errorMsg.value,
-                      ),
+                      Obx(() {
+                        return AppTextField(
+                          isObscureText: false,
+                          hintText: "Enter Captcha",
+                          controller: signUpLogic.captchaController,
+                          isReadOnly: false,
+                          isMandatory: false,
+                          isAutoFocus: false,
+                          inputType: TextInputType.text,
+                          maxLength: 10,
+                          onChanged: signUpLogic.onChangeCaptcha,
+                          errorText: signUpLogic.captchError.value,
+                        );
+                      }),
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child: Column(

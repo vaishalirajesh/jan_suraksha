@@ -19,6 +19,7 @@ class OTPBottomSheetAuth {
     required String mobileNumber,
     required String title,
     required RxString subTitle,
+    RxString? errorText,
     bool isForBank = false,
     required BuildContext context,
     required RxBool isEnable,
@@ -88,6 +89,21 @@ class OTPBottomSheetAuth {
                 onSubmit: onSubmitOTP,
                 // end onSubmit
               ),
+              if (errorText != null && errorText.value.isNotEmpty)
+                SizedBox(
+                  height: 5.h,
+                ),
+              if (errorText != null && errorText.value.isNotEmpty)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      errorText.value ?? '',
+                      style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               SizedBox(
                 height: 20.h,
               ),

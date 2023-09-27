@@ -10,6 +10,7 @@ import 'package:jan_suraksha/model/response_model/GetStageDetailResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetTermConditionResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetUserDetailByIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/LoginResponse.dart';
+import 'package:jan_suraksha/model/response_model/LoginWithMobilResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
@@ -162,6 +163,12 @@ class ServiceManager {
   void getEnrollmentList({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
     TGLog.d("ServiceManager.getEnrollmentList");
     TGService<GetEnrollmentListResponse, ServiceError>(() => GetEnrollmentListResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void loginWithMobile({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.getLoginResponse");
+    TGService<LoginWithMobilResponse, ServiceError>(() => LoginWithMobilResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 

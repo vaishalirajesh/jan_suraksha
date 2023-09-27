@@ -1,13 +1,28 @@
 import 'dart:convert';
 
-LoginRequest loginRequestModelFromJson(String str) => LoginRequest.fromJson(json.decode(str));
-String loginRequestModelToJson(LoginRequest data) => json.encode(data.toJson());
+/// mobile : "9104661798"
+/// email : ""
+/// otp : "121227"
+/// password : ""
+/// userType : 1
+/// browserName : "Chrome"
+/// browserVersion : "116.0.0.0"
+/// device : "Unknown"
+/// deviceType : "desktop"
+/// deviceOs : "Windows"
+/// deviceOsVersion : "windows-10"
+/// userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+
+LoginRequest loginFromJson(String str) => LoginRequest.fromJson(json.decode(str));
+String loginToJson(LoginRequest data) => json.encode(data.toJson());
 
 class LoginRequest {
   LoginRequest({
+    String? mobile,
     String? email,
+    String? otp,
     String? password,
-    String? userType,
+    num? userType,
     String? browserName,
     String? browserVersion,
     String? device,
@@ -16,7 +31,9 @@ class LoginRequest {
     String? deviceOsVersion,
     String? userAgent,
   }) {
+    _mobile = mobile;
     _email = email;
+    _otp = otp;
     _password = password;
     _userType = userType;
     _browserName = browserName;
@@ -29,7 +46,9 @@ class LoginRequest {
   }
 
   LoginRequest.fromJson(dynamic json) {
+    _mobile = json['mobile'];
     _email = json['email'];
+    _otp = json['otp'];
     _password = json['password'];
     _userType = json['userType'];
     _browserName = json['browserName'];
@@ -40,9 +59,11 @@ class LoginRequest {
     _deviceOsVersion = json['deviceOsVersion'];
     _userAgent = json['userAgent'];
   }
+  String? _mobile;
   String? _email;
+  String? _otp;
   String? _password;
-  String? _userType;
+  num? _userType;
   String? _browserName;
   String? _browserVersion;
   String? _device;
@@ -51,9 +72,11 @@ class LoginRequest {
   String? _deviceOsVersion;
   String? _userAgent;
   LoginRequest copyWith({
+    String? mobile,
     String? email,
+    String? otp,
     String? password,
-    String? userType,
+    num? userType,
     String? browserName,
     String? browserVersion,
     String? device,
@@ -63,7 +86,9 @@ class LoginRequest {
     String? userAgent,
   }) =>
       LoginRequest(
+        mobile: mobile ?? _mobile,
         email: email ?? _email,
+        otp: otp ?? _otp,
         password: password ?? _password,
         userType: userType ?? _userType,
         browserName: browserName ?? _browserName,
@@ -74,9 +99,11 @@ class LoginRequest {
         deviceOsVersion: deviceOsVersion ?? _deviceOsVersion,
         userAgent: userAgent ?? _userAgent,
       );
+  String? get mobile => _mobile;
   String? get email => _email;
+  String? get otp => _otp;
   String? get password => _password;
-  String? get userType => _userType;
+  num? get userType => _userType;
   String? get browserName => _browserName;
   String? get browserVersion => _browserVersion;
   String? get device => _device;
@@ -87,7 +114,9 @@ class LoginRequest {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['mobile'] = _mobile;
     map['email'] = _email;
+    map['otp'] = _otp;
     map['password'] = _password;
     map['userType'] = _userType;
     map['browserName'] = _browserName;

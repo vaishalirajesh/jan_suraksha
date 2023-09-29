@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,14 +8,13 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/model/request_model/EmailOtpRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetEnrollmnetListrequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
-import 'package:jan_suraksha/model/request_model/GetUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyEmailOtpRequest.dart';
-import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -33,11 +31,8 @@ import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
+import 'package:jan_suraksha/view/widget/otp_bottom_sheet_auth.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
-
-import '../../../../model/request_model/SetPasswordRequest.dart';
-import '../../../../model/response_model/SkipEmailResponse.dart';
-import '../../../widget/custom_otp_field/custom_otp_field.dart';
 
 class DashboardLogic extends GetxController {
   var index = 0.obs;
@@ -55,9 +50,7 @@ class DashboardLogic extends GetxController {
   RxString dateErrorMsg = ''.obs;
   List<RxBool> isOptOut = [];
   RxString userName = ''.obs;
-
-  var passwordController = TextEditingController(text: '');
-  var repeatPasswordController = TextEditingController(text: "");
+  RxString mobilenumber = ''.obs;
 
   setIndex(int value) {
     index.value = value;
@@ -71,17 +64,8 @@ class DashboardLogic extends GetxController {
   @override
   Future<void> onInit() async {
     userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
-    bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
-    if (isfromreg) {
-      String userId = (await TGSharedPreferences.getInstance().get(PREF_USER_ID)).toString();
-      GetUserIDRequest request = GetUserIDRequest(userId: userId);
-      var jsonRequest = jsonEncode(request);
-      TGLog.d("DashboardLogic skip response $jsonRequest");
-      TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SKIP_EMAIL);
-      ServiceManager.getInstance().skipEmailDetails(request: tgPostRequest, onSuccess: (response) => _onsuccsessSkipEmailResponse(response), onError: (response) => _onErrorSkipEmailResponse(response));
-    } else {
-      getSchemaDeatil();
-    }
+    mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
+    getSchemaDeatil();
     super.onInit();
   }
 
@@ -111,8 +95,9 @@ class DashboardLogic extends GetxController {
 
   Future<void> getDetail() async {
     var encUserId = AesGcmEncryptionUtils.encryptNew('1');
-    GetSchemaByUserIdRequest getSchemaByUserIdRequest = GetSchemaByUserIdRequest(id: encUserId);
-    TGLog.d("GetSchemaByUserIdRequest Decrypt:--------${getSchemaByUserIdRequest.toString()}");
+    GetSchemaByUserIdRequest getSchemaByUserIdRequest =
+        GetSchemaByUserIdRequest(id: TGMockService.applyMock ? '1' : encUserId);
+    TGLog.d("GetSchemaByUserIdRequest Decrypt:--------$getSchemaByUserIdRequest");
     ServiceManager.getInstance().getSchemaByUserId(
       request: getSchemaByUserIdRequest,
       onSuccess: (response) => _onSuccessGetSchemaByUserId(response),
@@ -132,12 +117,13 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in GetSchemaByUserIdRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getSchemaByUserId().status ?? 0, response.getSchemaByUserId().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getSchemaByUserId().status ?? 0, response.getSchemaByUserId().message ?? "", null);
     }
   }
 
   _onErrorGetSchemaByUserId(TGResponse errorResponse) {
-    TGLog.d("GetSchemaByUserIdRequest : onError()--${errorResponse.body}");
+    TGLog.d("GetSchemaByUserIdRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }
@@ -153,7 +139,8 @@ class DashboardLogic extends GetxController {
   }
 
   Future<void> getSchemeList() async {
-    GetEnrollmnetListrequest getEnrollmentListRequest = GetEnrollmnetListrequest(type: 1, paginationFROM: 0, paginationTO: 10);
+    GetEnrollmnetListrequest getEnrollmentListRequest =
+        GetEnrollmnetListrequest(type: 1, paginationFROM: 0, paginationTO: 10);
     var jsonRequest = jsonEncode(getEnrollmentListRequest.toJson());
     TGLog.d("GetEnrollmentListRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);
@@ -184,7 +171,8 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
     }
   }
 
@@ -195,14 +183,15 @@ class DashboardLogic extends GetxController {
   }
 
   void onUpdate() {
-    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
     if (emailController.text.isEmpty || !(regex.hasMatch(emailController.text))) {
       emailErrorMsg.value = 'Please enter valid email';
     } else {
       emailErrorMsg.value = '';
       WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-      updateEmail();
+      onUpdateEmail();
     }
   }
 
@@ -272,13 +261,19 @@ class DashboardLogic extends GetxController {
     }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
+  Future<void> onUpdateEmail() async {
+    if (await NetUtils.isInternetAvailable()) {
+      updateEmail();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, updateEmail);
+      }
+    }
+  }
+
   Future<void> updateEmail() async {
     isEmailVerifying.value = true;
-    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
-    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
-    await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: emailController.text, otptype: 2);
+    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: 9492, email: emailController.text);
     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
     TGLog.d("EmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -296,7 +291,7 @@ class DashboardLogic extends GetxController {
       TGLog.d("Schema lenght--${schemeList.length}");
       Get.back();
       isEmailVerifying.value = false;
-      getBottomSheet(
+      OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         isEdit: true.obs,
         onChangeOTP: (s) {
@@ -314,15 +309,14 @@ class DashboardLogic extends GetxController {
         mobileNumber: emailController.text ?? '',
         isEnable: (otp.value.length == 6 ? true : false).obs,
         isLoading: isOTPVerifing,
-        onButtonPress: () async {
-          await VerifyEmailOtp();
-        },
+        onButtonPress: verifyOtp,
         subTitle: 'A Verification code is sent on your email id'.obs,
       );
     } else {
       TGLog.d("Error in EmailOtpRequest");
       isEmailVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -333,41 +327,40 @@ class DashboardLogic extends GetxController {
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 
-  Future<void> VerifyEmailOtp() async {
+  Future<void> verifyOtp() async {
+    if (await NetUtils.isInternetAvailable()) {
+      onVerifyOTP();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
+      }
+    }
+  }
+
+  Future<void> onVerifyOTP() async {
     isOTPVerifing.value = true;
-    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    VerifyEmailOtpRequest verifyEmailOtpRequest = VerifyEmailOtpRequest(email: emailController.text, otpType: 2, userId: userID, otp: otp.value);
+    VerifyEmailOtpRequest verifyEmailOtpRequest =
+        VerifyEmailOtpRequest(email: emailController.text, otpType: 2, userId: 9492, otp: '123456');
     var jsonRequest = jsonEncode(verifyEmailOtpRequest.toJson());
     TGLog.d("verifyEmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
-    ServiceManager.getInstance().otpRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessVerifyOTP(response), onError: (error) => _onErrorEmailOTP(error));
+    ServiceManager.getInstance().otpRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessVerifyOTP(response),
+        onError: (error) => _onErrorEmailOTP(error));
   }
 
   _onSuccessVerifyOTP(OTPResponse response) async {
     TGLog.d("verifyEmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
-      getUpdatePasswordBottomSheet(
-        onSubmitOTP: (String) {
-          Get.back();
-        },
-        onButtonPress: () async {
-          var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-          SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
-          var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-          TGLog.d("SignUpOtpRequest $jsonRequest");
-          TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-          ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
-        },
-        title: 'Update Password',
-        isEnable: true.obs,
-        isLoading: false.obs,
-      );
-
+      Get.back();
+      showSnackBar(Get.context!, 'Email updated successfully');
       isOTPVerifing.value = false;
     } else {
       TGLog.d("Error in verifyEmailOtpRequest");
       isOTPVerifing.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -474,7 +467,20 @@ class DashboardLogic extends GetxController {
   }
 
   String getmonth(int month) {
-    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
     return months[month - 1];
   }
 
@@ -542,265 +548,4 @@ class DashboardLogic extends GetxController {
       ),
     );
   }
-
-  _onsuccsessSkipEmailResponse(GetResponseForSkipEmailMain response) async {
-    await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
-    if (response.skippedresponse().status == RES_SUCCESS) {
-      AppUtils.setAccessToken(response.skippedresponse().data?.accessToken ?? "");
-      TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, response.skippedresponse().data?.refreshToken ?? "");
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_TOKEN, response.skippedresponse().data?.loginToken.toString() ?? '');
-      Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      String encoded = stringToBase64.encode(response.skippedresponse().data?.userName ?? '');
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.skippedresponse().data));
-      TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.skippedresponse().data?.userOrgId ?? "");
-      TGSharedPreferences.getInstance().set(PREF_USER_ID, response.skippedresponse().data?.userId ?? "");
-      getSchemaDeatil();
-    } else {
-      LoaderUtils.handleErrorResponse(Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
-    }
-  }
-
-  _onErrorSkipEmailResponse(response) {}
-
-  getBottomSheet({
-    required Function(String) onChangeOTP,
-    required Function(String) onSubmitOTP,
-    Function()? onEdit,
-    required Function() onButtonPress,
-    required String mobileNumber,
-    required String title,
-    required RxString subTitle,
-    RxString? errorText,
-    bool isForBank = false,
-    required BuildContext context,
-    required RxBool isEnable,
-    required RxBool isLoading,
-    required RxBool isEdit,
-  }) {
-    Get.bottomSheet(LayoutBuilder(builder: (context, _) {
-      return Obx(() {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
-            color: ColorConfig.jsCardBgColor,
-          ),
-          padding: EdgeInsets.all(20.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 2.h,
-              ),
-              Text(
-                title.isNotEmpty ? title : AppString.enterOTP,
-                style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                '${subTitle.value.isNotEmpty ? subTitle.value : AppString.registerMobileNumber}${AppUtils.getMaskedMobileNumber(mobileNumber: mobileNumber)}${isForBank ? AppString.byTheBank : AppString.emptyText}',
-                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
-                textAlign: TextAlign.center,
-              ),
-              if (isEdit.value)
-                SizedBox(
-                  height: 5.h,
-                ),
-              if (isEdit.value)
-                InkWell(
-                  onTap: onEdit,
-                  child: Padding(
-                    padding: EdgeInsets.all(5.h),
-                    child: Text(
-                      'Edit Email id',
-                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                    ),
-                  ),
-                ),
-              SizedBox(
-                height: 10.h,
-              ),
-              if (errorText != null && errorText.value.isNotEmpty)
-                SizedBox(
-                  height: 5.h,
-                ),
-              if (errorText != null && errorText.value.isNotEmpty)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      errorText.value ?? '',
-                      style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              SizedBox(
-                height: 20.h,
-              ),
-              OtpTextField(
-                numberOfFields: 6,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                borderColor: ColorConfig.jsLightGreyColor,
-                borderRadius: BorderRadius.circular(16.r),
-                borderWidth: 1,
-                textStyle: StyleConfig.semiBoldText20,
-                enabledBorderColor: ColorConfig.jsLightGreyColor,
-                focusedBorderColor: ColorConfig.jsLightGreyColor,
-                cursorColor: ColorConfig.jsLightBlackColor,
-                fieldWidth: 40.r,
-                fieldHeight: 40.r,
-                showFieldAsBox: true,
-                onCodeChanged: onChangeOTP,
-                onSubmit: onSubmitOTP,
-                // end onSubmit
-              ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Didn't Receive Verification Code Yet? \n",
-                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsTextDarkGreyColor),
-                    ),
-                    TextSpan(
-                      text: "Resend Verification Code",
-                      recognizer: TapGestureRecognizer()..onTap = () {},
-                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              AppButton(
-                onPress: onButtonPress,
-                title: AppString.continueText,
-                isButtonEnable: isEnable,
-                isDataLoading: isLoading,
-              )
-            ],
-          ),
-        );
-      });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
-  }
-
-  // getBottomSheet(
-  // onSubmitOTP: (String) {},
-  // onButtonPress: () async {
-  // var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-  // SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: passwordController.text, confirmPassword: repeatpasswordController.text, userId: userId);
-  // var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-  // TGLog.d("SignUpOtpRequest $jsonRequest");
-  // TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-  // ServiceManager.getInstance().setPassword(request: tgPostRequest,onSuccess: (respose)=>_onsuccsessSetPassword(respose),onError: (response)=>_onErrorSetPassword(response));
-  // },
-  // title: 'Update Password',
-  // isEnable: true.obs,
-  // isLoading: false.obs,
-  // );
-  //
-  //
-  getUpdatePasswordBottomSheet({
-    required Function(String) onSubmitOTP,
-    required Function() onButtonPress,
-    required String title,
-    RxString? errorText,
-    required RxBool isEnable,
-    required RxBool isLoading,
-  }) {
-    Get.bottomSheet(LayoutBuilder(builder: (context, _) {
-      return Obx(() {
-        return isEnable.value
-            ? Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
-                  color: ColorConfig.jsCardBgColor,
-                ),
-                padding: EdgeInsets.all(20.h),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Text(
-                      title.isNotEmpty ? title : AppString.enterOTP,
-                      style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    AppTextField(
-                      isMandatory: true,
-                      title: AppString.password,
-                      controller: passwordController,
-                      hintText: AppString.password,
-                      inputType: TextInputType.text,
-                      errorText: "",
-                    ),
-                    SizedBox(height: 20),
-                    AppTextField(
-                      isMandatory: true,
-                      title: AppString.reenterPassword,
-                      controller: repeatPasswordController,
-                      hintText: AppString.reenterPassword,
-                      inputType: TextInputType.text,
-                      errorText: "",
-                    ),
-                    if (errorText != null && errorText.value.isNotEmpty)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            errorText.value ?? '',
-                            style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    AppButton(
-                      onPress: onButtonPress,
-                      title: AppString.continueText,
-                      isButtonEnable: ((passwordController.text == repeatPasswordController.text) && passwordController.text.length > 8 && validateStructure(passwordController.text)).obs,
-                      isDataLoading: false.obs,
-                    )
-                  ],
-                ),
-              )
-            : Container();
-      });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
-  }
-
-  bool validateStructure(String value) {
-    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regExp = new RegExp(pattern);
-    return regExp.hasMatch(value);
-  }
-
-  _onsuccsessSetPassword(SetPasswordResponseMain respose) {
-    Get.back();
-    Get.back();
-    showSnackBar(Get.context!, "Password Updated Successfully");
-  }
-
-  _onErrorSetPassword(response) {}
 }

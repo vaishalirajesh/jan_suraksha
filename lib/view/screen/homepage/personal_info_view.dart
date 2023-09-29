@@ -13,16 +13,18 @@ import 'personal_info_logic.dart';
 class PersonalInfoPage extends StatelessWidget {
   PersonalInfoPage({Key? key}) : super(key: key);
 
-  final logic = Get.find<PersonalInfoLogic>();
+  final personallogic = Get.find<PersonalInfoLogic>();
 
   @override
   Widget build(BuildContext context) {
     return AddHeaderFooter(
       appbarName: AppString.appBarWithTitle,
       title: "Personal Info",
-      buttonTitle: "",
-      onButtonClick: () {},
-      onBackButtonCLick: AppUtils.onBackToDashboard,
+      buttonTitle: "Go Back",
+      onButtonClick: () {
+        AppUtils.onBackPress();
+      },
+      onBackButtonCLick: AppUtils.onBackPress,
       isDataLoading: false,
       isButtonEnable: true,
       isShowButton: true,
@@ -42,15 +44,16 @@ class PersonalInfoPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            AppTextField(
-              hintText: "",
-              isReadOnly: true,
-              isMandatory: true,
-              isAutoFocus: true,
-              inputType: TextInputType.emailAddress,
-              maxLength: 30,
-              controller: TextEditingController(text: "John Doe"),
-            ),
+            Obx(() => AppTextField(
+                  hintText: "",
+                  isReadOnly: true,
+                  isMandatory: true,
+                  isAutoFocus: true,
+                  inputType: TextInputType.emailAddress,
+                  maxLength: 30,
+                  controller:
+                      TextEditingController(text: personallogic.userName.value),
+                )),
             const SizedBox(
               height: 20,
             ),
@@ -64,7 +67,7 @@ class PersonalInfoPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            AppTextField(
+            Obx(() => AppTextField(
                 hintText: "",
                 isReadOnly: true,
                 isMandatory: true,
@@ -72,8 +75,8 @@ class PersonalInfoPage extends StatelessWidget {
                 inputType: TextInputType.emailAddress,
                 maxLength: 30,
                 controller: TextEditingController(
-                  text: "8888888888",
-                )),
+                  text: personallogic.mobilenumber.value,
+                ))),
             const SizedBox(
               height: 20,
             ),
@@ -87,7 +90,14 @@ class PersonalInfoPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            AppTextField(hintText: "", isReadOnly: false, isMandatory: true, isAutoFocus: true, inputType: TextInputType.emailAddress, maxLength: 30, controller: TextEditingController()),
+            AppTextField(
+                hintText: "",
+                isReadOnly: false,
+                isMandatory: true,
+                isAutoFocus: true,
+                inputType: TextInputType.emailAddress,
+                maxLength: 30,
+                controller: TextEditingController()),
             const SizedBox(
               height: 20,
             ),
@@ -101,7 +111,14 @@ class PersonalInfoPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            AppTextField(hintText: "", isReadOnly: false, isMandatory: true, isAutoFocus: true, inputType: TextInputType.emailAddress, maxLength: 30, controller: TextEditingController())
+            AppTextField(
+                hintText: "",
+                isReadOnly: false,
+                isMandatory: true,
+                isAutoFocus: true,
+                inputType: TextInputType.emailAddress,
+                maxLength: 30,
+                controller: TextEditingController())
           ],
         ),
       ),

@@ -21,6 +21,7 @@ class AppString {
   static const String submit = 'Submit';
   static const String notReceiveCode = "Didn't receive it? ";
   static const String resendCode = "Resend OTP";
+  static const String resendCode1 = "Resend Verification code";
   static const String startJourneyText = 'Start your journey with';
   static const String happy_to_have_you_onboard =
       "Happy to have you onboard! \nLet's start by finding out which insurance you need.";
@@ -70,7 +71,9 @@ class AppString {
   static const String fetchOTP = 'Please enter OTP sent to \n';
   static const String fetchOTPMobile = '+91 ';
   static const String enterOTP = 'Enter your OTP';
+  static const String enterverificationCode = 'Enter Verification Code';
   static const String registerMobileNumber = 'An OTP has been sent to your registered mobile number - ';
+  static const String registerMobileNumber1 = 'A Verification Code has been sent to your registered mobile number ';
   static const String byTheBank = ' by the bank.';
   static const String resendOTP = 'Resend OTP';
   static const String continueText = 'Continue';

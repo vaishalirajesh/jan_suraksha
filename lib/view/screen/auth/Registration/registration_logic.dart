@@ -53,6 +53,9 @@ class RegistrationLogic extends GetxController {
   RxString mobileError = ''.obs;
   RxString captchError = ''.obs;
   RxString otpError = ''.obs;
+
+  RxBool isCheckedFirst = false.obs;
+
   final validCharacters = RegExp(r'^[0-9]+$');
   num userId = 0;
 
@@ -74,6 +77,12 @@ class RegistrationLogic extends GetxController {
   Future<void> onPressSentOTP() async {
     // getcaptcha();
     // return;
+
+
+
+
+
+
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
 
     if (nameController.text.isEmpty) {
@@ -92,7 +101,10 @@ class RegistrationLogic extends GetxController {
       nameError.value = '';
       mobileError.value = '';
       captchError.value = 'Captcha not match';
-    } else {
+    }else if(isCheckedFirst == false){
+      LoaderUtils.handleErrorResponse(Get.context!,  0,  "Please Accept the Privacy Policy Terms & Conditions and Disclaimers", null);
+    }
+    else {
       nameError.value = '';
       mobileError.value = '';
       captchError.value = '';

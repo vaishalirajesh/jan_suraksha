@@ -76,6 +76,7 @@ class CustomerVerificationPage extends StatelessWidget {
                           title: 'Re-Enter Account Number',
                           controller: logic.reAccountTextController,
                           isReadOnly: false,
+
                           isMandatory: true,
                           errorText: logic.reAccountErrorMsg.value,
                           inputType: TextInputType.number,

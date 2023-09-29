@@ -152,8 +152,7 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in LoginWithMobileRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getLoginResponse().status ?? 0, response.getLoginResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getLoginResponse().status ?? 0, response.getLoginResponse().message ?? "", null);
     }
   }
 

@@ -50,6 +50,7 @@ class DashboardLogic extends GetxController {
   RxString dateErrorMsg = ''.obs;
   List<RxBool> isOptOut = [];
   RxString userName = ''.obs;
+  RxString mobilenumber = ''.obs;
 
   setIndex(int value) {
     index.value = value;
@@ -63,6 +64,7 @@ class DashboardLogic extends GetxController {
   @override
   Future<void> onInit() async {
     userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
+    mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     getSchemaDeatil();
     super.onInit();
   }

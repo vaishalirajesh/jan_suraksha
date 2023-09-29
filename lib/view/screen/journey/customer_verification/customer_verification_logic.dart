@@ -35,10 +35,13 @@ import '../../../../model/request_model/CreateApplicationRequest.dart';
 import '../../../../model/request_model/UpdateEnrollmentVerificationTypeRequest.dart';
 
 class CustomerVerificationLogic extends GetxController {
-  TextEditingController accountTextController = TextEditingController(text: '1234567890');
-  TextEditingController reAccountTextController = TextEditingController(text: '1234567890');
+  TextEditingController accountTextController =
+      TextEditingController(text: '1234567890');
+  TextEditingController reAccountTextController =
+      TextEditingController(text: '1234567890');
   TextEditingController dobTextController = TextEditingController();
-  CreateApplicationResponseMain createApplicationResponseMain = CreateApplicationResponseMain();
+  CreateApplicationResponseMain createApplicationResponseMain =
+      CreateApplicationResponseMain();
   RxString accountErrorMsg = ''.obs;
   RxString reAccountErrorMsg = ''.obs;
   RxString dobErrorMsg = ''.obs;
@@ -79,10 +82,12 @@ class CustomerVerificationLogic extends GetxController {
       reAccountErrorMsg.value = '';
       dobTextController.text = '${date.day}/${date.month}/${date.year}';
       String x = "2022-09-29T07:26:52.000Z";
-      var dateTime = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+      var dateTime = AppUtils.convertDateFormat(
+          '$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
       //DateFormat('yyyy-MM-ddThh:mm:ss.000Z').parse(date.toString());
       TGLog.d("Date----$dateTime");
-      dob = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+      dob = AppUtils.convertDateFormat(
+          '$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
     }
   }
 
@@ -118,17 +123,23 @@ class CustomerVerificationLogic extends GetxController {
 
   void onPressContinue() {
     if (!isLoading.value) {
-      final validCharacters = RegExp(r'^[0-9]+$');
+     // final validCharacters = RegExp(r'^[0-3]+$');
       if (accountTextController.text.isEmpty) {
         dobErrorMsg.value = '';
         reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter account number';
-      } else if (!validCharacters.hasMatch(accountTextController.text) || accountTextController.text.length < 9) {
+      } else if ( accountTextController.text.length < 3) {
         dobErrorMsg.value = '';
         reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter valid account number';
-      } else if (reAccountTextController.text.isEmpty || accountTextController.text != reAccountTextController.text) {
-        reAccountErrorMsg.value = 'Confirm number not match with account number';
+      } else if ( accountTextController.text.length > 17) {
+        dobErrorMsg.value = '';
+        reAccountErrorMsg.value = '';
+        accountErrorMsg.value = 'Please enter valid account number';
+      } else if (reAccountTextController.text.isEmpty ||
+          accountTextController.text != reAccountTextController.text) {
+        reAccountErrorMsg.value =
+            'Re-enter account number does not match';
         dobErrorMsg.value = '';
         accountErrorMsg.value = '';
       } else if (dobTextController.text.isEmpty) {
@@ -159,7 +170,8 @@ class CustomerVerificationLogic extends GetxController {
     var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID);
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     isLoading.value = true;
-    CreateApplicationRequest createApplicationRequest = CreateApplicationRequest(
+    CreateApplicationRequest createApplicationRequest =
+        CreateApplicationRequest(
       dob: dob,
       accountNo: accountTextController.text,
       applicationId: null,
@@ -169,7 +181,8 @@ class CustomerVerificationLogic extends GetxController {
     );
     var jsonRequest = jsonEncode(createApplicationRequest.toJson());
     TGLog.d("CreateApplicationRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CREATE_APPLICATION);
+    TGPostRequest tgPostRequest =
+        await getPayLoad(jsonRequest, URIS.URI_CREATE_APPLICATION);
     TGLog.d("CreateApplicationRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().createApplication(
       request: tgPostRequest,
@@ -183,14 +196,19 @@ class CustomerVerificationLogic extends GetxController {
     createApplicationResponseMain = response.createApplicationResponse();
     if (response.createApplicationResponse().status == RES_SUCCESS) {
       appId = response.createApplicationResponse().data?.id;
-      TGSharedPreferences.getInstance().set(PREF_APP_ID, response.createApplicationResponse().data?.id);
-      TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
+      TGSharedPreferences.getInstance()
+          .set(PREF_APP_ID, response.createApplicationResponse().data?.id);
+      TGSharedPreferences.getInstance().set(
+          PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
       updateStage();
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0,
-          response?.createApplicationResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!,
+          response?.createApplicationResponse().status ?? 0,
+          response?.createApplicationResponse()?.message ?? "",
+          null);
     }
   }
 
@@ -212,9 +230,11 @@ class CustomerVerificationLogic extends GetxController {
 
   Future<void> updateStageDeatil() async {
     isLoading.value = true;
-    UpdateStageRequest updateStageRequest = UpdateStageRequest(applicationId: appId, stageId: 2);
+    UpdateStageRequest updateStageRequest =
+        UpdateStageRequest(applicationId: appId, stageId: 2);
     var jsonRequest = jsonEncode(updateStageRequest.toJson());
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
+    TGPostRequest tgPostRequest =
+        await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
     TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
     ServiceManager.getInstance().updateApplicationStage(
       request: tgPostRequest,
@@ -230,8 +250,11 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
-          response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!,
+          response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "",
+          null);
     }
   }
 
@@ -246,7 +269,8 @@ class CustomerVerificationLogic extends GetxController {
       updateVerificationTypeRequest();
     } else {
       if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, updateVerificationTypeRequest);
+        showSnackBarForintenetConnection(
+            Get.context!, updateVerificationTypeRequest);
       }
     }
   }
@@ -255,17 +279,22 @@ class CustomerVerificationLogic extends GetxController {
     if (TGMockService.applyMock) {
       var encryptId = "1";
       var encryptType = "1";
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
-          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      UpdateEnrollmentVerificationTypeRequest
+          updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(
+              id: encryptId, type: encryptType);
       ServiceManager.getInstance().updateEnrollmentVerificationType(
           request: updateEnrollmentVerificationTypeRequest,
           onSuccess: (response) => _onSuccessVerificationType(response),
           onError: (error) => _onErrorVerificationType(error));
     } else {
-      var encryptId = AesGcmEncryptionUtils.encryptNew(createApplicationResponseMain.data?.id.toString() ?? '');
+      var encryptId = AesGcmEncryptionUtils.encryptNew(
+          createApplicationResponseMain.data?.id.toString() ?? '');
       var encryptType = AesGcmEncryptionUtils.encryptNew('1');
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
-          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      UpdateEnrollmentVerificationTypeRequest
+          updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(
+              id: encryptId, type: encryptType);
       ServiceManager.getInstance().updateEnrollmentVerificationType(
           request: updateEnrollmentVerificationTypeRequest,
           onSuccess: (response) => _onSuccessVerificationType(response),
@@ -273,11 +302,13 @@ class CustomerVerificationLogic extends GetxController {
     }
   }
 
-  _onSuccessVerificationType(UpdateEnrollmentVerificationTypeResponse response) async {
-    TGLog.d("UpdateEnrollmentVerificationTypeRequest : onSuccess()---$response");
+  _onSuccessVerificationType(
+      UpdateEnrollmentVerificationTypeResponse response) async {
+    TGLog.d(
+        "UpdateEnrollmentVerificationTypeRequest : onSuccess()---$response");
     if (response.updateEnrollmentVerificationType().status == RES_SUCCESS) {
       isLoading.value = false;
-      OTPBottomSheet.getBottomSheet(
+      OTPBottomSheet.getBottomSheet1(
         context: Get.context!,
         onChangeOTP: (s) {
           otp.value = s;
@@ -289,7 +320,7 @@ class CustomerVerificationLogic extends GetxController {
         },
         title: '',
         subTitle: '',
-        mobileNumber: createApplicationResponseMain.data?.mobileNo ?? '',
+        mobileNumber: response.updateEnrollmentVerificationType().data?.mobileNumber ?? '',
         isEnable: true.obs,
         isLoading: isOtpVerifying,
         onButtonPress: onVerifyOTP,
@@ -297,13 +328,17 @@ class CustomerVerificationLogic extends GetxController {
       );
     } else {
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0,
-          response?.updateEnrollmentVerificationType()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!,
+          response?.updateEnrollmentVerificationType().status ?? 0,
+          response?.updateEnrollmentVerificationType()?.message ?? "",
+          null);
     }
   }
 
   _onErrorVerificationType(TGResponse errorResponse) {
-    TGLog.d("UpdateEnrollmentVerificationTypeRequest : onError()--${errorResponse.error}");
+    TGLog.d(
+        "UpdateEnrollmentVerificationTypeRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }
@@ -333,7 +368,8 @@ class CustomerVerificationLogic extends GetxController {
     );
     var jsonRequest = jsonEncode(verifyOtpRequest.toJson());
     TGLog.d("VerifyOtpRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_VERIFY_OTP);
+    TGPostRequest tgPostRequest =
+        await getPayLoad(jsonRequest, URIS.URI_VERIFY_OTP);
     TGLog.d("VerifyOtpRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().verifyOTP(
       request: tgPostRequest,
@@ -345,7 +381,8 @@ class CustomerVerificationLogic extends GetxController {
   _onSuccessVerifyOTP(VerifyOTPResponse response) async {
     TGLog.d("VerifyOtpRequest : onSuccess()---$response");
     if (response.verifyOTP().status == RES_SUCCESS) {
-      TGSession.getInstance().set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
+      TGSession.getInstance()
+          .set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
       updateStageDeatilAfterOTPVerify();
     } else if (response.verifyOTP().status == RES_UNAUTHORISED) {
       otpError.value = "Error in verify otp, Please check OTP";
@@ -354,7 +391,10 @@ class CustomerVerificationLogic extends GetxController {
       TGLog.d("Error in updateVerificationType");
       isOtpVerifying.value = false;
       LoaderUtils.handleErrorResponse(
-          Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
+          Get.context!,
+          response?.verifyOTP().status ?? 0,
+          response?.verifyOTP()?.message ?? "",
+          null);
     }
   }
 
@@ -365,9 +405,11 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   Future<void> updateStageDeatilAfterOTPVerify() async {
-    UpdateStageRequest updateStageRequest = UpdateStageRequest(applicationId: appId, stageId: 3);
+    UpdateStageRequest updateStageRequest =
+        UpdateStageRequest(applicationId: appId, stageId: 3);
     var jsonRequest = jsonEncode(updateStageRequest.toJson());
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
+    TGPostRequest tgPostRequest =
+        await getPayLoad(jsonRequest, URIS.URI_UPDATE_STAGE);
     TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
     ServiceManager.getInstance().updateApplicationStage(
       request: tgPostRequest,
@@ -384,8 +426,11 @@ class CustomerVerificationLogic extends GetxController {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;
       isOtpVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
-          response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!,
+          response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "",
+          null);
     }
   }
 }

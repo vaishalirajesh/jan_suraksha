@@ -7,7 +7,6 @@ class GenerateCaptchaResponse extends TGResponse {
   GenerateCaptchaResponse();
 
   GenerateCaptchaResponse.fromJson(dynamic json) {
-    print(json);
     fromJson(json);
   }
 

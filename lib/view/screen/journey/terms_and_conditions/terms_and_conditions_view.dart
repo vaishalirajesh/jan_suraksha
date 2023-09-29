@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
-import 'package:jan_suraksha/config/font_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
@@ -62,13 +59,11 @@ class TermsAndConditionsPage extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: AppString.janText,
-                                  style: StyleConfig.semiBoldText24
-                                      .copyWith(color: ColorConfig.jsPrimaryColor, fontSize: 26),
+                                  style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsPrimaryColor, fontSize: 26),
                                 ),
                                 TextSpan(
                                   text: AppString.surakshaText,
-                                  style:
-                                      StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor, fontSize: 26),
+                                  style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor, fontSize: 26),
                                 ),
                               ],
                             ),
@@ -92,7 +87,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                           javascriptMode: JavascriptMode.unrestricted,
                           key: const ValueKey('webviewx'),
                           width: 1.sw,
-                          height: 1.sh,
+                          height: 3.sh,
                           onWebResourceError: (error) {
                             TGLog.d(error);
                           },

@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
+import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
+import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
@@ -27,12 +29,9 @@ import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_detai
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
-import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
-import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
 
 import '../../../../model/request_model/GetApplicationFormDetailsRequest.dart';
 import '../../../../services/encryption/encdec/aesGcmEncryption.dart';
-import '../../../../services/mock/mock_service.dart';
 
 class NomineeDetailsLogic extends GetxController {
   RxBool isChecked = true.obs;
@@ -103,8 +102,7 @@ class NomineeDetailsLogic extends GetxController {
     } else {
       TGLog.d("Error in GetMasterListRequest");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
     }
     getData();
   }
@@ -180,20 +178,7 @@ class NomineeDetailsLogic extends GetxController {
   }
 
   String getmonth(int month) {
-    List<String> months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
+    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return months[month - 1];
   }
 
@@ -407,8 +392,7 @@ class NomineeDetailsLogic extends GetxController {
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
     }
   }
 
@@ -433,8 +417,7 @@ class NomineeDetailsLogic extends GetxController {
     appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
     var mockAppId = "101212404";
-    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
-        GetApplicationFormDetailsRequest(appId: TGMockService.applyMock ? mockAppId : encAppId);
+    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest = GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(
       request: getApplicationFormDetailsRequest,
@@ -446,8 +429,7 @@ class NomineeDetailsLogic extends GetxController {
   _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
     TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
     if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
-      TGSession.getInstance().set(PREF_USER_FORM_DATA,
-          getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
+      TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
       getAppData = response.getApplicationFormDetailsResponse();
       nominee = getAppData.data?.nominee?.first ?? Nominee();
       firstNameController.text = nominee.firstName ?? '';
@@ -467,8 +449,7 @@ class NomineeDetailsLogic extends GetxController {
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0,
-          response?.getApplicationFormDetailsResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0, response?.getApplicationFormDetailsResponse()?.message ?? "", null);
     }
   }
 

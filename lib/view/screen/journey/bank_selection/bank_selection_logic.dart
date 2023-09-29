@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GetOrgMasterListRequest.dart';
+import 'package:jan_suraksha/model/response_main_model/GetOrgMasterListResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetOrgMasterListResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
-import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
@@ -11,7 +11,6 @@ import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
-import 'package:jan_suraksha/model/response_main_model/GetOrgMasterListResponseMain.dart';
 
 class BankSelectionLogic extends GetxController {
   RxBool isLoading = true.obs;
@@ -34,8 +33,7 @@ class BankSelectionLogic extends GetxController {
 
   Future<void> getDetail() async {
     var encUserId = AesGcmEncryptionUtils.encryptNew('2');
-    GetOrgMasterListRequest getOrgMasterListRequest =
-        GetOrgMasterListRequest(id: TGMockService.applyMock ? '2' : encUserId);
+    GetOrgMasterListRequest getOrgMasterListRequest = GetOrgMasterListRequest(id: encUserId);
     TGLog.d("GetOrgMasterListRequest Decrypt:--------$getOrgMasterListRequest");
     ServiceManager.getInstance().getOrgMasterList(
       request: getOrgMasterListRequest,
@@ -52,8 +50,7 @@ class BankSelectionLogic extends GetxController {
     } else {
       TGLog.d("Error in GetOrgMasterListRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getOrgMasterList().status ?? 0, response.getOrgMasterList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getOrgMasterList().status ?? 0, response.getOrgMasterList().message ?? "", null);
     }
   }
 

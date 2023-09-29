@@ -20,6 +20,7 @@ class LoginWithMobileRequest {
     String? domain,
     String? platform,
     String? termsAccepted,
+    String? password,
     String? captchaEnter,
     String? captchaOriginal,
   }) {
@@ -31,6 +32,7 @@ class LoginWithMobileRequest {
     _termsAccepted = termsAccepted;
     _captchaEnter = captchaEnter;
     _captchaOriginal = captchaOriginal;
+    _password = password;
   }
 
   LoginWithMobileRequest.fromJson(dynamic json) {
@@ -42,6 +44,7 @@ class LoginWithMobileRequest {
     _termsAccepted = json['termsAccepted'];
     _captchaEnter = json['captchaEnter'];
     _captchaOriginal = json['captchaOriginal'];
+    _password = json['password'];
   }
   String? _mobile;
   String? _email;
@@ -51,6 +54,7 @@ class LoginWithMobileRequest {
   String? _termsAccepted;
   String? _captchaEnter;
   String? _captchaOriginal;
+  String? _password;
   LoginWithMobileRequest copyWith({
     String? mobile,
     String? email,
@@ -60,6 +64,7 @@ class LoginWithMobileRequest {
     String? termsAccepted,
     String? captchaEnter,
     String? captchaOriginal,
+    String? password,
   }) =>
       LoginWithMobileRequest(
         mobile: mobile ?? _mobile,
@@ -70,6 +75,7 @@ class LoginWithMobileRequest {
         termsAccepted: termsAccepted ?? _termsAccepted,
         captchaEnter: captchaEnter ?? _captchaEnter,
         captchaOriginal: captchaOriginal ?? _captchaOriginal,
+        password: password ?? _password,
       );
   String? get mobile => _mobile;
   String? get email => _email;
@@ -79,6 +85,7 @@ class LoginWithMobileRequest {
   String? get termsAccepted => _termsAccepted;
   String? get captchaEnter => _captchaEnter;
   String? get captchaOriginal => _captchaOriginal;
+  String? get password => _password;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -90,6 +97,7 @@ class LoginWithMobileRequest {
     map['termsAccepted'] = _termsAccepted;
     map['captchaEnter'] = _captchaEnter;
     map['captchaOriginal'] = _captchaOriginal;
+    map['password'] = _password;
     return map;
   }
 }

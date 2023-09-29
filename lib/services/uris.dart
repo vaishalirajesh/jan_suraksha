@@ -28,4 +28,8 @@ abstract class URIS {
   static const URI_ORG_MASTER_LIST = "insurance/V3/insurer/getOrganisationMstListByUserTypeId";
   static const URI_GET_TERM_CONDITION = "insurance/v3/cust/getConsentData";
   static const URI_LOGIN_WITH_MOBILE = "users/v3/send/login/otp";
+  static const URI_SKIP_EMAIL = "users/v3/signup/skipEmailVerification";
+  static const URI_DOWNLOAD_AGREEMENT = "insurance/v3/enrollment/generateCOI";
+  static const URI_SET_PASSWORD = "users/v3/signup/setPass";
+  static const URI_LOG_OUT = "users/v3/logoutUser";
 }

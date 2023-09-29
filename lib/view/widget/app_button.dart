@@ -8,9 +8,7 @@ import 'jumpingdot_util.dart';
 
 // Common button widget
 class AppButton extends StatelessWidget {
-  AppButton(
-      {Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading})
-      : super(key: key);
+  AppButton({Key? key, required this.onPress, required this.title, required this.isButtonEnable, required this.isDataLoading}) : super(key: key);
   final VoidCallback onPress;
   final String title;
   RxBool isButtonEnable = true.obs;
@@ -47,9 +45,10 @@ class AppButton extends StatelessWidget {
 }
 
 class ListViewButtons extends StatelessWidget {
-  ListViewButtons({Key? key, required this.onPress, required this.title}) : super(key: key);
+  ListViewButtons({Key? key, required this.onPress, required this.title, this.width}) : super(key: key);
   final VoidCallback onPress;
   final String title;
+  final double? width;
   RxBool isButtonEnable = true.obs;
   RxBool isDataLoading = true.obs;
 
@@ -57,7 +56,7 @@ class ListViewButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 26.h,
-      width: 1.sw,
+      width: width ?? 0.8.sw,
       child: ElevatedButton(
         onPressed: isButtonEnable.value ? onPress : null,
         style: ElevatedButton.styleFrom(

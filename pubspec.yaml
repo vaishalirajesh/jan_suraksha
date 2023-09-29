@@ -37,11 +37,10 @@ dependencies:
   basic_utils: ^5.3.0
   url_launcher: ^6.1.14
   webviewx: ^0.2.2
-  path_provider: ^2.1.1
+  pdfx: ^2.4.0
   shared_preferences: ^2.2.1
-  uuid: 3.0.6
-  permission_guard: ^2.0.0
-
+  uuid: ^3.0.7
+  path_provider: ^2.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +57,7 @@ flutter:
     - assets/images/bankselection/
     - assets/images/responsepage/
     - assets/images/profile/
+    - assets/files/
     - js_logo.svg
     - splash.png
     - splash_text.svg

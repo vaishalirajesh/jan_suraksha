@@ -14,11 +14,13 @@ class VerifySignupOtpRequest {
     String? otp,
     num? userId,
     String? mobile,
+    String? email,
   }) {
     _otpType = otpType;
     _otp = otp;
     _userId = userId;
     _mobile = mobile;
+    _email = email;
   }
 
   VerifySignupOtpRequest.fromJson(dynamic json) {
@@ -26,34 +28,44 @@ class VerifySignupOtpRequest {
     _otp = json['otp'];
     _userId = json['userId'];
     _mobile = json['mobile'];
+    _email = json['email'];
   }
   num? _otpType;
   String? _otp;
   num? _userId;
   String? _mobile;
+  String? _email;
   VerifySignupOtpRequest copyWith({
     num? otpType,
     String? otp,
     num? userId,
     String? mobile,
+    String? email,
   }) =>
       VerifySignupOtpRequest(
         otpType: otpType ?? _otpType,
         otp: otp ?? _otp,
         userId: userId ?? _userId,
         mobile: mobile ?? _mobile,
+        email: email ?? _email,
       );
   num? get otpType => _otpType;
   String? get otp => _otp;
   num? get userId => _userId;
   String? get mobile => _mobile;
+  String? get email => _email;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['otpType'] = _otpType;
     map['otp'] = _otp;
     map['userId'] = _userId;
-    map['mobile'] = _mobile;
+    map['email'] = _email;
+    if (_email == null) {
+      map['mobile'] = _mobile;
+    } else {
+      map['email'] = _email;
+    }
     return map;
   }
 }

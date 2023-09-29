@@ -4,7 +4,6 @@ import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetails
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
-import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
@@ -49,8 +48,7 @@ class ApplicationFormLogic extends GetxController {
     appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
     var mockAppId = "101212404";
-    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
-        GetApplicationFormDetailsRequest(appId: TGMockService.applyMock ? mockAppId : encAppId);
+    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest = GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(
       request: getApplicationFormDetailsRequest,
@@ -62,15 +60,13 @@ class ApplicationFormLogic extends GetxController {
   _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
     TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
     if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
-      TGSession.getInstance().set(PREF_USER_FORM_DATA,
-          getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
+      TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
       getAppData = response.getApplicationFormDetailsResponse();
       isLoading.value = false;
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0,
-          response?.getApplicationFormDetailsResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0, response?.getApplicationFormDetailsResponse()?.message ?? "", null);
     }
   }
 

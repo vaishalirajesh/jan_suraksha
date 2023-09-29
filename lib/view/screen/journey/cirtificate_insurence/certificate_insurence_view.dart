@@ -48,11 +48,13 @@ class CertificateInsurencePage extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text(
-                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna : AppString.yojna2,
-                        style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsBlackColor),
-                        textAlign: TextAlign.center,
-                      ),
+                      Obx(() {
+                        return Text(
+                          certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna2 : AppString.yojna,
+                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsBlackColor),
+                          textAlign: TextAlign.center,
+                        );
+                      }),
                       Text(
                         AppString.COI,
                         style: StyleConfig.boldText16.copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
@@ -117,294 +119,608 @@ class CertificateInsurencePage extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       SizedBox(
                         height: 20.h,
                       ),
-                      Table(
-                        border: TableBorder.all(color: ColorConfig.jsGreyColor),
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                        children: [
-                          TableRow(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(10.r),
-                                child: Text(
-                                  certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna : AppString.yojna2,
-                                  style: StyleConfig.mediumExtraSmallBlackText,
-                                  textAlign: TextAlign.center,
+                      certificateInsurenceLogic.schemeId.value == 1
+                          ? Table(
+                              border: TableBorder.all(color: ColorConfig.jsGreyColor),
+                              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna2 : AppString.yojna,
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.nameOfInsurer ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10.r),
-                                child: Text(
-                                  certificateInsurenceLogic.generateCoiData.data?.nameOfInsurer ?? '-',
-                                  style: StyleConfig.regularExtraSmallBText,
-                                  textAlign: TextAlign.center,
+                                TableRow(children: [
+                                  Text(
+                                    AppString.nameMember,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfMember ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.address,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.address ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.aadharNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.bankNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.nomineeName,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfNominee ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppString.commencement,
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.amountPaid,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      'Rs. ${certificateInsurenceLogic.generateCoiData.data?.premAmtPaid}',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.sumAssured,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.sumAssured ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.policyNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.mstPolicyNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.urno,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.urnNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.mobileNumber,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.mobileNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.dateOfBirth,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.bank,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfBank ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.age,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      '${certificateInsurenceLogic.generateCoiData.data?.ageOfNominee} Years' ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.coverDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.coverEndDate ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.lienPeriod,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.renewalDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.annuRenDate ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.renewalDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.annuRenDate ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                              ],
+                            )
+                          : Table(
+                              border: TableBorder.all(color: ColorConfig.jsGreyColor),
+                              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna2 : AppString.yojna,
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.nameOfInsurer ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          TableRow(children: [
-                            Text(
-                              AppString.nameMember,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
+                                TableRow(children: [
+                                  Text(
+                                    AppString.nameMember,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfMember ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.address,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.address ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.aadharNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.bankNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.nomineeName,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfNominee ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppString.commencement,
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.amountPaid,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      'Rs. ${certificateInsurenceLogic.generateCoiData.data?.premAmtPaid}',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.sumAssured,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.sumAssured ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.policyNo,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.mstPolicyNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.urno,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.urnNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.mobileNumber,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.mobileNo ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.dateOfBirth,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.bank,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfBank ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.age,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      '${certificateInsurenceLogic.generateCoiData.data?.ageOfNominee} Years' ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.coverDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.coverEndDate ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.lienPeriod,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.renewalDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.annuRenDate ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Text(
+                                    AppString.renewalDate,
+                                    style: StyleConfig.mediumExtraSmallBlackText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.nameOfMember ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.address,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.address ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.aadharNo,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.bankNo,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.nomineeName,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.nameOfNominee ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                AppString.commencement,
-                                style: StyleConfig.mediumExtraSmallBlackText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.amountPaid,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                'Rs. ${certificateInsurenceLogic.generateCoiData.data?.premAmtPaid}',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.sumAssured,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.sumAssured ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.policyNo,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.mstPolicyNo ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.urno,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.urnNo ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.mobileNumber,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.mobileNo ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.dateOfBirth,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.bank,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.nameOfBank ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.age,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                '${certificateInsurenceLogic.generateCoiData.data?.ageOfNominee} Years' ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.coverDate,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.coverEndDate ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.lienPeriod,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Text(
-                              AppString.renewalDate,
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.r),
-                              child: Text(
-                                certificateInsurenceLogic.generateCoiData.data?.annuRenDate ?? '-',
-                                style: StyleConfig.regularExtraSmallBText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]),
-                        ],
-                      ),
                       SizedBox(
                         height: 25.h,
                       ),

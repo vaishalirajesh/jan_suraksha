@@ -30,7 +30,7 @@ class SelectSchemePage extends StatelessWidget {
             return Container(
               color: ColorConfig.jsCreamColor,
               padding: EdgeInsets.only(bottom: 20.h),
-              child: Image.asset(logic.isSelected.value == 1 ? Assets.schemePmsby : Assets.schemePmjjbyScheme),
+              child: Image.asset(logic.isSelected.value == 2 ? Assets.schemePmsby : Assets.schemePmjjbyScheme),
             );
           }),
           Align(
@@ -39,11 +39,7 @@ class SelectSchemePage extends StatelessWidget {
               child: Container(
                 width: 1.sw,
                 height: 50,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.white, HexColor("#00FFFFFF")])),
+                decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.white, HexColor("#00FFFFFF")])),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -124,17 +120,15 @@ class SelectSchemePage extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  logic.isSelected.value = 1;
+                                  logic.isSelected.value = 2;
+                                  TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
                                 },
                                 child: Container(
                                     height: 110.h,
                                     margin: EdgeInsets.only(top: 12.5.h),
                                     padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: logic.isSelected.value == 1
-                                              ? ThemeHelper.getInstance()!.colorScheme.primary
-                                              : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                      border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
                                       borderRadius: BorderRadius.circular(16.r),
                                     ),
                                     child: Stack(
@@ -144,10 +138,8 @@ class SelectSchemePage extends StatelessWidget {
                                           child: Align(
                                             alignment: Alignment.bottomRight,
                                             child: Icon(
-                                              logic.isSelected.value == 1 ? Icons.check_circle : Icons.circle_outlined,
-                                              color: logic.isSelected.value == 1
-                                                  ? ColorConfig.jsGreenColor
-                                                  : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                                              logic.isSelected.value == 2 ? Icons.check_circle : Icons.circle_outlined,
+                                              color: logic.isSelected.value == 2 ? ColorConfig.jsGreenColor : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
                                             ),
                                           ),
                                         ),
@@ -166,19 +158,14 @@ class SelectSchemePage extends StatelessWidget {
                                                     ),
                                                     Text(
                                                       "Pay Annually",
-                                                      style: StyleConfig.mediumText16.copyWith(
-                                                          fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
+                                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                                     ),
                                                     SizedBox(
                                                       height: 5.h,
                                                     ),
                                                     Text(
-                                                      dashboardLogic.schemeDetail != null &&
-                                                              dashboardLogic.schemeDetail[1]['premiumAmount'] != null
-                                                          ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}"
-                                                          : '0',
-                                                      style: StyleConfig.boldText20.copyWith(
-                                                          color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
+                                                      dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}" : '0',
+                                                      style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
                                                     )
                                                   ],
                                                 ),
@@ -194,21 +181,14 @@ class SelectSchemePage extends StatelessWidget {
                                 width: 1.sw,
                                 margin: EdgeInsets.symmetric(horizontal: 35.w),
                                 decoration: BoxDecoration(
-                                  color: logic.isSelected.value == 1
-                                      ? ThemeHelper.getInstance()!.colorScheme.primary
-                                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                                  color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
                                   borderRadius: BorderRadius.circular(13.r),
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  dashboardLogic.schemeDetail != null &&
-                                          dashboardLogic.schemeDetail[1]['shortName'] != null
-                                      ? "₹${dashboardLogic.schemeDetail[1]['shortName']}"
-                                      : '-',
+                                  dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['shortName'] != null ? "₹${dashboardLogic.schemeDetail[1]['shortName']}" : '-',
                                   style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                                    color: logic.isSelected.value == 1
-                                        ? ThemeHelper.getInstance()!.colorScheme.background
-                                        : ThemeHelper.getInstance()!.colorScheme.onSecondary,
+                                    color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.background : ThemeHelper.getInstance()!.colorScheme.onSecondary,
                                   ),
                                 ),
                               )
@@ -225,17 +205,15 @@ class SelectSchemePage extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  logic.isSelected.value = 2;
+                                  logic.isSelected.value = 1;
+                                  TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
                                 },
                                 child: Container(
                                     height: 110.h,
                                     margin: EdgeInsets.only(top: 12.5.h),
                                     padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: logic.isSelected.value == 2
-                                              ? ThemeHelper.getInstance()!.colorScheme.primary
-                                              : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                      border: Border.all(color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
                                       borderRadius: BorderRadius.circular(16.r),
                                     ),
                                     child: Stack(
@@ -245,10 +223,8 @@ class SelectSchemePage extends StatelessWidget {
                                           child: Align(
                                             alignment: Alignment.bottomRight,
                                             child: Icon(
-                                              logic.isSelected.value == 2 ? Icons.check_circle : Icons.circle_outlined,
-                                              color: logic.isSelected.value == 2
-                                                  ? ColorConfig.jsGreenColor
-                                                  : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                                              logic.isSelected.value == 1 ? Icons.check_circle : Icons.circle_outlined,
+                                              color: logic.isSelected.value == 1 ? ColorConfig.jsGreenColor : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
                                             ),
                                           ),
                                         ),
@@ -267,19 +243,14 @@ class SelectSchemePage extends StatelessWidget {
                                                     ),
                                                     Text(
                                                       "Pay Annually",
-                                                      style: StyleConfig.mediumText16.copyWith(
-                                                          fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
+                                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                                     ),
                                                     SizedBox(
                                                       height: 5.h,
                                                     ),
                                                     Text(
-                                                      dashboardLogic.schemeDetail != null &&
-                                                              dashboardLogic.schemeDetail[0]['premiumAmount'] != null
-                                                          ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}"
-                                                          : '0',
-                                                      style: StyleConfig.boldText20.copyWith(
-                                                          color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
+                                                      dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}" : '0',
+                                                      style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
                                                     )
                                                   ],
                                                 ),
@@ -295,21 +266,14 @@ class SelectSchemePage extends StatelessWidget {
                                 width: 1.sw,
                                 margin: EdgeInsets.symmetric(horizontal: 35.w),
                                 decoration: BoxDecoration(
-                                  color: logic.isSelected.value == 2
-                                      ? ThemeHelper.getInstance()!.colorScheme.primary
-                                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                                  color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
                                   borderRadius: BorderRadius.circular(13.r),
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  dashboardLogic.schemeDetail != null &&
-                                          dashboardLogic.schemeDetail[0]['shortName'] != null
-                                      ? "₹${dashboardLogic.schemeDetail[0]['shortName']}"
-                                      : '-',
+                                  dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['shortName'] != null ? "₹${dashboardLogic.schemeDetail[0]['shortName']}" : '-',
                                   style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                                    color: logic.isSelected.value == 2
-                                        ? ThemeHelper.getInstance()!.colorScheme.background
-                                        : ThemeHelper.getInstance()!.colorScheme.onSecondary,
+                                    color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.background : ThemeHelper.getInstance()!.colorScheme.onSecondary,
                                   ),
                                 ),
                               )
@@ -322,8 +286,7 @@ class SelectSchemePage extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("* for PMJJBY,refer terms & conditions for premium",
-                      style: StyleConfig.regularText16.copyWith(fontSize: 12.sp))
+                  Text("* for PMJJBY,refer terms & conditions for premium", style: StyleConfig.regularText16.copyWith(fontSize: 12.sp))
                 ],
               ),
             ),
@@ -339,7 +302,6 @@ class SelectSchemePage extends StatelessWidget {
               if (logic.isSelected.value == 0) {
                 showSnackBar(Get.context!, "Please select scheme");
               } else {
-                TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
                 Get.toNamed(BankSelectionPageRoute);
               }
             },

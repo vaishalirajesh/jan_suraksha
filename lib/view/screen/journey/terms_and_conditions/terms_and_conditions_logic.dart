@@ -14,7 +14,6 @@ import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart
 import 'package:jan_suraksha/model/response_model/UpdateStageResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
-import 'package:jan_suraksha/services/mock/mock_service.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -70,8 +69,7 @@ class TermsAndConditionsLogic extends GetxController {
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
 
     var encUserId = AesGcmEncryptionUtils.encryptNew(appId.toString());
-    TermConditionRequest termConditionRequest =
-        TermConditionRequest(id: TGMockService.applyMock ? '123124' : encUserId);
+    TermConditionRequest termConditionRequest = TermConditionRequest(id: encUserId);
     ServiceManager.getInstance().getTermConition(
       request: termConditionRequest,
       onSuccess: (response) => _onSuccessTermCondition(response),
@@ -83,13 +81,14 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("TermConditionRequest : onSuccess()---$response");
     if (response.getTermConition().status == RES_SUCCESS) {
       content = response.getTermConition().data ?? '';
+      TGLog.d(content);
+
       // await webViewXController.loadContent(response.getTermConition().data, SourceType.html);
       isDataLoaded.value = true;
     } else {
       TGLog.d("Error in TermConditionRequest");
       isDataLoaded.value = true;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getTermConition().status ?? 0, response.getTermConition().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getTermConition().status ?? 0, response.getTermConition().message ?? "", null);
     }
   }
 
@@ -100,17 +99,7 @@ class TermsAndConditionsLogic extends GetxController {
   }
 
   void onPressButton(BuildContext context) {
-    OTPBottomSheet.getBottomSheet(
-        context: context,
-        title: '',
-        subTitle: '',
-        onChangeOTP: onChangeOTP,
-        onSubmitOTP: onSubmitOTP,
-        mobileNumber: mobile,
-        isEnable: true.obs,
-        isLoading: isOTPVerifying,
-        onButtonPress: verifyOTP,
-        errorText: otpError);
+    OTPBottomSheet.getBottomSheet(context: context, title: '', subTitle: '', onChangeOTP: onChangeOTP, onSubmitOTP: onSubmitOTP, mobileNumber: mobile, isEnable: true.obs, isLoading: isOTPVerifying, onButtonPress: verifyOTP, errorText: otpError);
   }
 
   void onChangeOTP(String str) {
@@ -165,8 +154,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in ConsentOtpSendRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -174,8 +162,7 @@ class TermsAndConditionsLogic extends GetxController {
     isOTPVerifying.value = true;
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
-    VerifySignupOtpRequest verifySignupOtpRequest =
-        VerifySignupOtpRequest(mobile: mobile, otpType: 3, userId: userId, otp: otp.value);
+    VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(mobile: mobile, otpType: 3, userId: userId, otp: otp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
@@ -194,8 +181,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in ConsentOtpVerifyRequest");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -203,8 +189,7 @@ class TermsAndConditionsLogic extends GetxController {
     isOTPVerifying.value = true;
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
     var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '';
-    PremiumDeductionRequest premiumDeductionRequest =
-        PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
+    PremiumDeductionRequest premiumDeductionRequest = PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
     var jsonRequest = jsonEncode(premiumDeductionRequest.toJson());
     TGLog.d("PremiumDeductionRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_PREMIUM_DEDUCTION);
@@ -223,8 +208,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in PremiumDeductionResponse");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.PremiumDeduction().status ?? 0, response?.PremiumDeduction()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.PremiumDeduction().status ?? 0, response?.PremiumDeduction()?.message ?? "", null);
     }
   }
 
@@ -263,8 +247,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
-          response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
     }
   }
 
@@ -294,8 +277,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in updateStageDeatilAfterOTPVerify");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
-          response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
     }
   }
 }

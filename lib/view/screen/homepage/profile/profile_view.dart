@@ -4,11 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
+import 'package:jan_suraksha/model/request_model/LogoutRequest.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/utils.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
 
 import '../../../../config/style_config.dart';
 import '../../../../generated/assets.dart';
+import '../../../../services/services.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
 import '../../../widget/pdfviewfile.dart';
@@ -457,9 +463,78 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                InkWell(
+                  onTap: () async {
+                    await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
+                    LogOutRequest request = LogOutRequest(id: "", type: "");
+                    ServiceManager.getInstance().logOut(request: request, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                            bottomLeft: Radius.circular(10.0),
+                            bottomRight: Radius.circular(10.0),
+                          ),
+                          border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                child: Container(
+                                  height: 32.r,
+                                  width: 32.r,
+                                  decoration: BoxDecoration(
+                                    color: ColorConfig.jsLightGreyColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: SizedBox(
+                                      height: 10.r,
+                                      width: 10.r,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                        ),
+                                        // padding: EdgeInsets.all(1.r),
+                                        child: Icon(Icons.logout, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "Log Out",
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           )),
     );
   }
+
+  _onsuccsessSetPassword(respose) {
+    Get.offAll(() => LoginPage(), binding: LoginBinding());
+  }
+
+  _onErrorSetPassword(response) {}
 }

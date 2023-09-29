@@ -170,9 +170,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                           ),
                                           side: BorderSide(
                                             width: 1,
-                                            color: nomineeDetailsLogic.isChecked.value
-                                                ? ThemeHelper.getInstance()!.primaryColor
-                                                : ThemeHelper.getInstance()!.disabledColor,
+                                            color: nomineeDetailsLogic.isChecked.value ? ThemeHelper.getInstance()!.primaryColor : ThemeHelper.getInstance()!.disabledColor,
                                           ),
                                           value: nomineeDetailsLogic.isChecked.value,
                                           onChanged: (bool? value) {
@@ -188,11 +186,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                   Flexible(
                                     child: Text(
                                       AppString.applicantAdd,
-                                      style: StyleConfig.regularText16.copyWith(
-                                          color: nomineeDetailsLogic.isChecked.value
-                                              ? ColorConfig.jsBlueColor
-                                              : ThemeHelper.getInstance()!.disabledColor,
-                                          fontSize: 15.sp),
+                                      style: StyleConfig.regularText16.copyWith(color: nomineeDetailsLogic.isChecked.value ? ColorConfig.jsBlueColor : ThemeHelper.getInstance()!.disabledColor, fontSize: 15.sp),
                                     ),
                                   )
                                 ],

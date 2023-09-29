@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/profile/profile_binding.dart';
@@ -12,6 +14,7 @@ import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
 import 'package:jan_suraksha/view/screen/splash/splash_screen_binding.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -24,12 +27,21 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light));
-
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent, systemNavigationBarColor: Colors.transparent, systemNavigationBarIconBrightness: Brightness.light));
+    requestWriteStoragePermission();
     super.initState();
+  }
+
+  Future<void> requestWriteStoragePermission() async {
+    // Check if permission is already granted.
+    var status = await Permission.storage.status;
+    // Request permission.
+    status = await Permission.storage.request();
+    if (status.isGranted) {
+      TGSharedPreferences.getInstance().set(PREF_STORAGE_ENABLED, false);
+    } else {
+      TGSharedPreferences.getInstance().set(PREF_STORAGE_ENABLED, false);
+    }
   }
 
   @override

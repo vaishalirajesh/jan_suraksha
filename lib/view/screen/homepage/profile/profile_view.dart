@@ -43,8 +43,7 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -55,8 +54,7 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         InkWell(
@@ -66,8 +64,7 @@ class ProfilePage extends StatelessWidget {
                           child: Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, top: 10.h, bottom: 10.h),
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                                 child: Container(
                                     height: 32.r,
                                     width: 32.r,
@@ -80,8 +77,7 @@ class ProfilePage extends StatelessWidget {
                                       child: SizedBox(
                                         height: 12.r,
                                         width: 12.r,
-                                        child: SvgPicture.asset(
-                                            Assets.profileProfilePersonalInfo),
+                                        child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
                                       ),
                                     )),
                               ),
@@ -90,8 +86,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Text(
                                 "Personal Info",
-                                style: StyleConfig.semiBolText15.copyWith(
-                                    color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                               )
                             ],
                           ),
@@ -101,8 +96,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -113,15 +107,13 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
                                   height: 32.r,
                                   width: 32.r,
@@ -134,8 +126,7 @@ class ProfilePage extends StatelessWidget {
                                     child: SizedBox(
                                       height: 10.r,
                                       width: 10.r,
-                                      child:
-                                          SvgPicture.asset(Assets.profileShare),
+                                      child: SvgPicture.asset(Assets.profileShare),
                                     ),
                                   )),
                             ),
@@ -144,8 +135,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "Share App",
-                              style: StyleConfig.semiBolText15
-                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
@@ -154,8 +144,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -166,20 +155,17 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MyStatefulWidget("1")));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyStatefulWidget("1")));
                           },
                           child: Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, top: 10.h, bottom: 10.h),
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                                 child: Container(
                                     height: 32.r,
                                     width: 32.r,
@@ -192,8 +178,7 @@ class ProfilePage extends StatelessWidget {
                                       child: SizedBox(
                                         height: 10.r,
                                         width: 10.r,
-                                        child: SvgPicture.asset(
-                                            Assets.profileProfilePrivacyPolicy),
+                                        child: SvgPicture.asset(Assets.profileProfilePrivacyPolicy),
                                       ),
                                     )),
                               ),
@@ -202,8 +187,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Text(
                                 "Privacy Policy",
-                                style: StyleConfig.semiBolText15.copyWith(
-                                    color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                               )
                             ],
                           ),
@@ -213,8 +197,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -225,20 +208,17 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MyStatefulWidget("2")));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyStatefulWidget("2")));
                           },
                           child: Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, top: 10.h, bottom: 10.h),
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                                 child: Container(
                                     height: 32.r,
                                     width: 32.r,
@@ -251,8 +231,7 @@ class ProfilePage extends StatelessWidget {
                                       child: SizedBox(
                                         height: 10.r,
                                         width: 10.r,
-                                        child: SvgPicture.asset(Assets
-                                            .profileProfileTermsAndConditions),
+                                        child: SvgPicture.asset(Assets.profileProfileTermsAndConditions),
                                       ),
                                     )),
                               ),
@@ -261,8 +240,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Text(
                                 "Terms & Conditions",
-                                style: StyleConfig.semiBolText15.copyWith(
-                                    color: ColorConfig.jsTextGreyColor),
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                               )
                             ],
                           ),
@@ -272,8 +250,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -284,15 +261,13 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
                                   height: 32.r,
                                   width: 32.r,
@@ -308,15 +283,10 @@ class ProfilePage extends StatelessWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color:
-                                                  ColorConfig.jsSecondaryColor,
-                                              width: 0.5.w),
+                                          border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
                                         ),
                                         // padding: EdgeInsets.all(1.r),
-                                        child: Icon(Icons.question_mark,
-                                            color: ColorConfig.jsSecondaryColor,
-                                            size: 11.r),
+                                        child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                       ),
                                     ),
                                   )),
@@ -326,8 +296,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "General FAQs",
-                              style: StyleConfig.semiBolText15
-                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
@@ -336,8 +305,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -348,15 +316,13 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
                                 height: 32.r,
                                 width: 32.r,
@@ -372,14 +338,10 @@ class ProfilePage extends StatelessWidget {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: ColorConfig.jsSecondaryColor,
-                                            width: 0.5.w),
+                                        border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
                                       ),
                                       // padding: EdgeInsets.all(1.r),
-                                      child: Icon(Icons.question_mark,
-                                          color: ColorConfig.jsSecondaryColor,
-                                          size: 11.r),
+                                      child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                     ),
                                   ),
                                 ),
@@ -390,8 +352,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "PMJJBY FAQs",
-                              style: StyleConfig.semiBolText15
-                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),
@@ -400,8 +361,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -412,15 +372,13 @@ class ProfilePage extends StatelessWidget {
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
                         ),
-                        border: Border.all(
-                            color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                        border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
                               child: Container(
                                 height: 32.r,
                                 width: 32.r,
@@ -436,14 +394,10 @@ class ProfilePage extends StatelessWidget {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: ColorConfig.jsSecondaryColor,
-                                            width: 0.5.w),
+                                        border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
                                       ),
                                       // padding: EdgeInsets.all(1.r),
-                                      child: Icon(Icons.question_mark,
-                                          color: ColorConfig.jsSecondaryColor,
-                                          size: 11.r),
+                                      child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                     ),
                                   ),
                                 ),
@@ -454,8 +408,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               "PMSBY FAQs",
-                              style: StyleConfig.semiBolText15
-                                  .copyWith(color: ColorConfig.jsTextGreyColor),
+                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
                             )
                           ],
                         ),

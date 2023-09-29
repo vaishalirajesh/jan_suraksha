@@ -707,20 +707,6 @@ class CertificateInsurencePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20.h,
-                      ),
-                      RichText(
-                        textAlign: TextAlign.start,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: certificateInsurenceLogic.schemeId.value == 1 ? "Rs 1 Lakh is payable on total and irrecoverable loss of sight of one eye or loss of use of one hand or foot due to accident" : "",
-                              style: StyleConfig.mediumExtraSmallBlackText,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
                         height: 10,
                       ),
                       RichText(

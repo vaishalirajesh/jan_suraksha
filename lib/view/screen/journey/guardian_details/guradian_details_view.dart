@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_logic.dart';
@@ -74,6 +75,10 @@ class GuradianDetailsPage extends StatelessWidget {
                                             text: "Relationship with the Nominee",
                                             style: StyleConfig.mediumText16,
                                           ),
+                                          TextSpan(
+                                            text: "*",
+                                            style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                          )
                                         ],
                                       ),
                                     ),

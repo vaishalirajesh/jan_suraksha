@@ -89,8 +89,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: AppUtils.convertDateFormat(
-                                    previewApplicationFormLogic.getAppData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                initialvale: AppUtils.convertDateFormat(previewApplicationFormLogic.getAppData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
                                 title: AppString.dateOfBirth,
                                 isReadOnly: true,
                               ),
@@ -181,9 +180,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: previewApplicationFormLogic.getAppData.data?.address?.pincode != null
-                                    ? '${previewApplicationFormLogic.getAppData.data?.address?.pincode}'
-                                    : '',
+                                initialvale: previewApplicationFormLogic.getAppData.data?.address?.pincode != null ? '${previewApplicationFormLogic.getAppData.data?.address?.pincode}' : '',
                                 title: AppString.pincode,
                                 isReadOnly: true,
                               ),
@@ -202,8 +199,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.firstName ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.firstName ?? '',
                                 title: AppString.firstName,
                                 isReadOnly: true,
                               ),
@@ -212,8 +208,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: false,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.middleName ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.middleName ?? '',
                                 title: AppString.middleName,
                                 isReadOnly: true,
                               ),
@@ -231,10 +226,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: AppUtils.convertDateFormat(
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.dateOfBirth,
-                                    'yyyy-mm-dd',
-                                    'dd/mm/yyyy'),
+                                initialvale: AppUtils.convertDateFormat(previewApplicationFormLogic.getAppData.data!.nominee?.first.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy'),
                                 title: AppString.dateOfBirth,
                                 isReadOnly: true,
                               ),
@@ -243,8 +235,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: false,
-                                initialvale:
-                                    '+91 ${previewApplicationFormLogic.getAppData.data!.nominee?.first.mobileNumber ?? ''}',
+                                initialvale: '${previewApplicationFormLogic.getAppData.data!.nominee?.first.mobileNumber ?? ''}',
                                 title: AppString.mobileNumber,
                                 isReadOnly: true,
                               ),
@@ -253,9 +244,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: previewApplicationFormLogic
-                                        .getAppData.data!.nominee?.first.relationOfNomineeApplicantStr ??
-                                    '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.relationOfNomineeApplicantStr ?? '',
                                 title: AppString.relationWithApplicant,
                                 isReadOnly: true,
                               ),
@@ -264,8 +253,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: false,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.emailIdOfNominee ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.emailIdOfNominee ?? '',
                                 title: AppString.emailId,
                                 isReadOnly: true,
                               ),
@@ -284,9 +272,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.addressLine1 ??
-                                        '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.addressLine1 ?? '',
                                 title: AppString.addressLine1,
                                 isReadOnly: true,
                               ),
@@ -295,9 +281,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: false,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.addressLine2 ??
-                                        '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.addressLine2 ?? '',
                                 title: AppString.addressLine2,
                                 isReadOnly: true,
                               ),
@@ -306,8 +290,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.city ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.city ?? '',
                                 title: AppString.cityName,
                                 isReadOnly: true,
                               ),
@@ -316,8 +299,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.district ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.district ?? '',
                                 title: AppString.district,
                                 isReadOnly: true,
                               ),
@@ -326,8 +308,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale:
-                                    previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.state ?? '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.state ?? '',
                                 title: AppString.state,
                                 isReadOnly: true,
                               ),
@@ -336,11 +317,7 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: previewApplicationFormLogic
-                                            .getAppData.data!.nominee?.first.address?.pincode !=
-                                        null
-                                    ? '${previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.pincode}'
-                                    : '',
+                                initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.pincode != null ? '${previewApplicationFormLogic.getAppData.data!.nominee?.first.address?.pincode}' : '',
                                 title: AppString.pincode,
                                 isReadOnly: true,
                               ),
@@ -348,7 +325,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                 height: 40.h,
                               ),
                               Obx(() {
-                                return (previewApplicationFormLogic.isAdultUser.value)
+                                return !previewApplicationFormLogic.isAdultUser.value
                                     ? Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -368,9 +345,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                             title: AppString.name,
                                             hintText: AppString.enterYourName,
                                             inputType: TextInputType.text,
-                                            initialvale: previewApplicationFormLogic
-                                                    .getAppData.data!.nominee?.first.nameOfGuardian ??
-                                                '',
+                                            initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.nameOfGuardian ?? '',
                                           ),
                                           SizedBox(
                                             height: 15.h,
@@ -381,9 +356,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                             title: AppString.address,
                                             hintText: AppString.enterYourAddress,
                                             inputType: TextInputType.text,
-                                            initialvale: previewApplicationFormLogic
-                                                    .getAppData.data!.nominee?.first.addressOfGuardian ??
-                                                '',
+                                            initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.addressOfGuardian ?? '',
                                           ),
                                           SizedBox(
                                             height: 15.h,
@@ -394,9 +367,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                             title: AppString.relationNominee,
                                             hintText: AppString.selectRelation,
                                             inputType: TextInputType.text,
-                                            initialvale: previewApplicationFormLogic
-                                                    .getAppData.data!.nominee?.first.relationShipOfGuardianStr ??
-                                                '',
+                                            initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.relationShipOfGuardianStr ?? '',
                                           ),
                                           SizedBox(
                                             height: 15.h,
@@ -407,9 +378,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                             title: AppString.mobileNumber,
                                             hintText: AppString.enterMobile,
                                             inputType: TextInputType.phone,
-                                            initialvale: previewApplicationFormLogic
-                                                    .getAppData.data!.nominee?.first.mobileNumberOfGuardian ??
-                                                '',
+                                            initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.mobileNumberOfGuardian ?? '',
                                           ),
                                           SizedBox(
                                             height: 15.h,
@@ -420,9 +389,7 @@ class PreviewApplicationPage extends StatelessWidget {
                                             title: AppString.emailId,
                                             hintText: AppString.enterEmail,
                                             inputType: TextInputType.emailAddress,
-                                            initialvale: previewApplicationFormLogic
-                                                    .getAppData.data!.nominee?.first.emailIdOfGuardian ??
-                                                '',
+                                            initialvale: previewApplicationFormLogic.getAppData.data!.nominee?.first.emailIdOfGuardian ?? '',
                                           ),
                                         ],
                                       )

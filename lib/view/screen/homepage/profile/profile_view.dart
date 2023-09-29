@@ -11,12 +11,14 @@ import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
 import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
+import 'package:jan_suraksha/view/screen/homepage/profile/genral_faq_binding.dart';
 
 import '../../../../config/style_config.dart';
 import '../../../../generated/assets.dart';
 import '../../../../services/services.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
+import 'genral_faq_view.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -253,41 +255,46 @@ class ProfilePage extends StatelessWidget {
                         border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                              child: Container(
-                                  height: 32.r,
-                                  width: 32.r,
-                                  decoration: BoxDecoration(
-                                    color: ColorConfig.jsLightGreyColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: SizedBox(
-                                      height: 10.r,
-                                      width: 10.r,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
-                                        ),
-                                        // padding: EdgeInsets.all(1.r),
-                                        child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
-                                      ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => GenralFaqPage(), binding: GenralFaqBinding());
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                child: Container(
+                                    height: 32.r,
+                                    width: 32.r,
+                                    decoration: BoxDecoration(
+                                      color: ColorConfig.jsLightGreyColor,
+                                      shape: BoxShape.circle,
                                     ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              "General FAQs",
-                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                            )
-                          ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SizedBox(
+                                        height: 10.r,
+                                        width: 10.r,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                          ),
+                                          // padding: EdgeInsets.all(1.r),
+                                          child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                        ),
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "General FAQs",
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),

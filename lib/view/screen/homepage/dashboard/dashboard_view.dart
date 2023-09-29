@@ -604,16 +604,6 @@ class HomePage extends StatelessWidget {
                                           SizedBox(
                                             height: 5.w,
                                           ),
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(right: 30.w, top: 3.h),
-                                              child: Text(
-                                                " ${AppString.str_amount}${dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['scheme'] != null ? AppUtils.getAmountFromSchemeId(dashboardLogic.schemeList[index]['scheme']) : ''}",
-                                                style: StyleConfig.smallText.copyWith(fontSize: 12.sp),
-                                              ),
-                                            ),
-                                          ),
                                           SizedBox(
                                             height: 10.h,
                                           ),

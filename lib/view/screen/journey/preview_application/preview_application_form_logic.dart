@@ -11,13 +11,13 @@ import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
-import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/terms_and_conditions/terms_and_conditions_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
@@ -38,9 +38,9 @@ class PreviewApplicationFormLogic extends GetxController {
     Future.delayed(const Duration(seconds: 1), () async {
       String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA);
       getAppData = getApplicationFormDetailsResponseMainFromJson(data);
-      isAdultUser.value =
-          isAdult(AppUtils.convertDateFormat(getAppData.data?.nominee?.first.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy'));
+      isAdultUser.value = (await TGSharedPreferences.getInstance().get(PREF_IS_ADULT)) ?? false;
       isDataLoaded.value = true;
+      update();
     });
   }
 
@@ -139,8 +139,7 @@ class PreviewApplicationFormLogic extends GetxController {
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
     }
   }
 

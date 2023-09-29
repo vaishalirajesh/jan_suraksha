@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
@@ -98,7 +99,7 @@ class SelectSchemePage extends StatelessWidget {
                     style: StyleConfig.boldText16.copyWith(fontSize: 18.sp, color: ColorConfig.jsTextGreyColor),
                   ),
                   SizedBox(
-                    height: 20.h,
+                    height: 15.h,
                   ),
                   Text(
                     "Please note that PMJJBY & PMSBY",
@@ -109,184 +110,133 @@ class SelectSchemePage extends StatelessWidget {
                     style: StyleConfig.smallText.copyWith(fontSize: 14.sp, color: ColorConfig.jstextLightGreyColor),
                   ),
                   SizedBox(
-                    height: 20.h,
+                    height: 15.h,
                   ),
-                  Row(children: [
-                    Expanded(
-                      child: Obx(() {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  logic.isSelected.value = 2;
-                                  TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
-                                },
-                                child: Container(
-                                    height: 110.h,
-                                    margin: EdgeInsets.only(top: 12.5.h),
-                                    padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Icon(
-                                              logic.isSelected.value == 2 ? Icons.check_circle : Icons.circle_outlined,
-                                              color: logic.isSelected.value == 2 ? ColorConfig.jsGreenColor : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Center(
-                                                child: Column(
+                  Column(children: [
+                    Obx(() {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            logic.isSelected.value = 1;
+                          },
+                          child: Container(
+                            color: logic.isSelected.value == 1 ? HexColor("#FFF6E2") : Colors.white,
+                            child: Stack(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    logic.isSelected.value = 1;
+                                    TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
+                                  },
+                                  child: Container(
+                                      height: 70.h,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                        borderRadius: BorderRadius.circular(16.r),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
                                                     SizedBox(
-                                                      height: 20.h,
+                                                      width: 20,
                                                     ),
-                                                    Text(
-                                                      "Pay Annually",
-                                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
-                                                    ),
+                                                    SvgPicture.asset(Assets.dashboardSchemeLogo),
                                                     SizedBox(
-                                                      height: 5.h,
+                                                      width: 20,
                                                     ),
                                                     Text(
-                                                      dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}" : '0',
-                                                      style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
-                                                    )
+                                                      "Pradhan Mantri Jeevan\nJyoti Bima Yojana (PMJJBY)",
+                                                      style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                                                    ),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                height: 25.h,
-                                width: 1.sw,
-                                margin: EdgeInsets.symmetric(horizontal: 35.w),
-                                decoration: BoxDecoration(
-                                  color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                                  borderRadius: BorderRadius.circular(13.r),
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['shortName'] != null ? "₹${dashboardLogic.schemeDetail[1]['shortName']}" : '-',
-                                  style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                                    color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.background : ThemeHelper.getInstance()!.colorScheme.onSecondary,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                    Expanded(
-                      child: Obx(() {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  logic.isSelected.value = 1;
-                                  TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
-                                },
-                                child: Container(
-                                    height: 110.h,
-                                    margin: EdgeInsets.only(top: 12.5.h),
-                                    padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Icon(
-                                              logic.isSelected.value == 1 ? Icons.check_circle : Icons.circle_outlined,
-                                              color: logic.isSelected.value == 1 ? ColorConfig.jsGreenColor : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        Center(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Center(
-                                                child: Column(
+                                        ],
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                    Obx(() {
+                      return InkWell(
+                        onTap: () {
+                          logic.isSelected.value = 2;
+                          TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: logic.isSelected.value == 2 ? HexColor("#FFF6E2") : Colors.white,
+                            child: Stack(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    logic.isSelected.value = 2;
+                                    TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
+                                  },
+                                  child: Container(
+                                      height: 70.h,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                        borderRadius: BorderRadius.circular(16.r),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Stack(
+                                              children: [
+                                                Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     SizedBox(
-                                                      height: 20.h,
+                                                      width: 20,
                                                     ),
-                                                    Text(
-                                                      "Pay Annually",
-                                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
+                                                    Center(
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                                          SizedBox(
+                                                            width: 20,
+                                                          ),
+                                                          Text(
+                                                            "Pradhan Mantri Suraksha \nBima Yojana (PMSBY)",
+                                                            style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 5.h,
-                                                    ),
-                                                    Text(
-                                                      dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}" : '0',
-                                                      style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 25.sp),
-                                                    )
                                                   ],
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                height: 25.h,
-                                width: 1.sw,
-                                margin: EdgeInsets.symmetric(horizontal: 35.w),
-                                decoration: BoxDecoration(
-                                  color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                                  borderRadius: BorderRadius.circular(13.r),
+                                        ],
+                                      )),
                                 ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['shortName'] != null ? "₹${dashboardLogic.schemeDetail[0]['shortName']}" : '-',
-                                  style: StyleConfig.semiBoldExtraSmallText.copyWith(
-                                    color: logic.isSelected.value == 1 ? ThemeHelper.getInstance()!.colorScheme.background : ThemeHelper.getInstance()!.colorScheme.onSecondary,
-                                  ),
-                                ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                        );
-                      }),
-                    ),
+                        ),
+                      );
+                    }),
                   ]),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("* for PMJJBY,refer terms & conditions for premium", style: StyleConfig.regularText16.copyWith(fontSize: 12.sp))
                 ],
               ),
             ),

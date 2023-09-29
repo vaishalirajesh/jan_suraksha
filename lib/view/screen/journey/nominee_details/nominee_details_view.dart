@@ -48,8 +48,9 @@ class NomineeDetailsPage extends StatelessWidget {
                                 title: AppString.firstName,
                                 controller: nomineeDetailsLogic.firstNameController,
                                 hintText: AppString.enterFirstName,
-                                inputType: TextInputType.text,
+                                inputType: TextInputType.name,
                                 errorText: nomineeDetailsLogic.fNameErrorMsg.value,
+                                shouldInputNamesOnly: true,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -57,6 +58,7 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: false,
                                 title: AppString.middleName,
+                                shouldInputNamesOnly: true,
                                 controller: nomineeDetailsLogic.middleNameController,
                                 hintText: AppString.enterMiddleName,
                                 inputType: TextInputType.text,
@@ -70,6 +72,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.latsNameController,
                                 hintText: AppString.enterlastName,
                                 inputType: TextInputType.text,
+                                shouldInputNamesOnly: true,
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -89,6 +92,7 @@ class NomineeDetailsPage extends StatelessWidget {
                               ),
                               AppTextField(
                                 isMandatory: false,
+                                maxLength: 10,
                                 title: AppString.mobileNumber,
                                 controller: nomineeDetailsLogic.mobileController,
                                 hintText: AppString.enterMobile,
@@ -97,39 +101,96 @@ class NomineeDetailsPage extends StatelessWidget {
                               SizedBox(
                                 height: 15.h,
                               ),
-                              AppTextField(
-                                isMandatory: true,
-                                title: AppString.relation,
-                                controller: nomineeDetailsLogic.relationWithApplicantController,
-                                hintText: AppString.selectRelation,
-                                inputType: TextInputType.text,
-                                // suffix: DropdownButtonFormField(
-                                //   padding: EdgeInsets.zero,
-                                //   dropdownColor: ColorConfig.jsPrimaryColor,
-                                //   value: nomineeDetailsLogic.selectedValue.value,
-                                //   decoration: InputDecoration(
-                                //     contentPadding: EdgeInsets.zero,
-                                //     isDense: true,
-                                //     border: null,
-                                //   ),
-                                //   onChanged: (newValue) {
-                                //     nomineeDetailsLogic.selectedValue.value = newValue ?? '';
-                                //   },
-                                //   items: nomineeDetailsLogic.items.map<DropdownMenuItem<String>>((String value) {
-                                //     return DropdownMenuItem<String>(
-                                //       value: value,
-                                //       child: Text(
-                                //         value,
-                                //         overflow: TextOverflow.ellipsis,
-                                //       ),
-                                //     );
-                                //   }).toList(),
-                                // ),
+                              RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Relationship with the applicant",
+                                      style: StyleConfig.mediumText16,
+                                    ),
+                                    TextSpan(
+                                      text: "*",
+                                      style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(
                                 height: 15.h,
                               ),
+                              nomineeDetailsLogic.items.value.isEmpty
+                                  ? AppTextField(
+                                      isMandatory: true,
+                                      title: AppString.relation,
+                                      controller: nomineeDetailsLogic.relationWithApplicantController,
+                                      hintText: AppString.selectRelation,
+                                      inputType: TextInputType.text,
+                                      // suffix: DropdownButtonFormField(
+                                      //   padding: EdgeInsets.zero,
+                                      //   dropdownColor: ColorConfig.jsPrimaryColor,
+                                      //   value: nomineeDetailsLogic.selectedValue.value,
+                                      //   decoration: InputDecoration(
+                                      //     contentPadding: EdgeInsets.zero,
+                                      //     isDense: true,
+                                      //     border: null,
+                                      //   ),
+                                      //   onChanged: (newValue) {
+                                      //     nomineeDetailsLogic.selectedValue.value = newValue ?? '';
+                                      //   },
+                                      //   items: nomineeDetailsLogic.items.map<DropdownMenuItem<String>>((String value) {
+                                      //     return DropdownMenuItem<String>(
+                                      //       value: value,
+                                      //       child: Text(
+                                      //         value,
+                                      //         overflow: TextOverflow.ellipsis,
+                                      //       ),
+                                      //     );
+                                      //   }).toList(),
+                                      // ),
+                                    )
+                                  : Container(
+                                      width: 0.87.sw,
+                                      height: 60,
+                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
+                                      ),
+                                      child: SizedBox(
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton(
+                                            items: nomineeDetailsLogic.items.values
+                                                .map((value) => DropdownMenuItem(
+                                                      child: Container(
+                                                          width: 0.75.sw,
+                                                          child: Text(
+                                                            value,
+                                                            style: StyleConfig.mediumText16,
+                                                          )),
+                                                      value: value,
+                                                    ))
+                                                .toList(),
+                                            onChanged: (i) {
+                                              nomineeDetailsLogic.items.value.forEach((key, value) {
+                                                if (i.toString() == value) {
+                                                  nomineeDetailsLogic.relationshipid.value = int.parse(key);
+                                                }
+                                              });
+                                              nomineeDetailsLogic.nomineeRelationShip.value = i.toString();
+                                              print(i!);
+                                            },
+                                            isExpanded: false,
+                                            value: nomineeDetailsLogic.nomineeRelationShip.value,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
                               AppTextField(
+                                maxLength: 255,
                                 isMandatory: false,
                                 title: AppString.emailId,
                                 controller: nomineeDetailsLogic.emailController,

@@ -377,36 +377,6 @@ class CertificateInsurencePage extends StatelessWidget {
                                 ]),
                                 TableRow(children: [
                                   Text(
-                                    AppString.lienPeriod,
-                                    style: StyleConfig.mediumExtraSmallBlackText,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ]),
-                                TableRow(children: [
-                                  Text(
-                                    AppString.renewalDate,
-                                    style: StyleConfig.mediumExtraSmallBlackText,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.annuRenDate ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ]),
-                                TableRow(children: [
-                                  Text(
                                     AppString.renewalDate,
                                     style: StyleConfig.mediumExtraSmallBlackText,
                                     textAlign: TextAlign.center,
@@ -676,21 +646,6 @@ class CertificateInsurencePage extends StatelessWidget {
                                 ]),
                                 TableRow(children: [
                                   Text(
-                                    AppString.lienPeriod,
-                                    style: StyleConfig.mediumExtraSmallBlackText,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.lienPeriod ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ]),
-                                TableRow(children: [
-                                  Text(
                                     AppString.renewalDate,
                                     style: StyleConfig.mediumExtraSmallBlackText,
                                     textAlign: TextAlign.center,
@@ -706,7 +661,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                 ]),
                                 TableRow(children: [
                                   Text(
-                                    AppString.renewalDate,
+                                    AppString.lienPeriod,
                                     style: StyleConfig.mediumExtraSmallBlackText,
                                     textAlign: TextAlign.center,
                                   ),
@@ -725,14 +680,16 @@ class CertificateInsurencePage extends StatelessWidget {
                         height: 25.h,
                       ),
                       Text(
-                        AppString.insurance1,
+                        certificateInsurenceLogic.schemeId.value == 1 ? "* Rs. 2 Lakhs is payable on member's death due to accident." : "* Rs. 2 Lakhs is payable on member's death to any cause",
                         style: StyleConfig.mediumExtraSmallBlackText,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Text(
-                        AppString.insurance2,
+                        certificateInsurenceLogic.schemeId.value == 1
+                            ? "Rs. 2 lakhs is payable on total and irrecoverable loss of both eyes or loss of use of both hands or feet or loss of sight of one eye and loss of use of one hand or foot due to accident"
+                            : "** In case of death (other than due to accident) during lien period , no claim would be admissible.\n\n The terms and conditions of the scheme are available at https://jansuraksha.in",
                         style: StyleConfig.mediumExtraSmallBlackText,
                       ),
                       SizedBox(
@@ -743,17 +700,40 @@ class CertificateInsurencePage extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: AppString.insurance3,
+                              text: certificateInsurenceLogic.schemeId.value == 1 ? "Rs 1 Lakh is payable on total and irrecoverable loss of sight of one eye or loss of use of one hand or foot due to accident" : "",
                               style: StyleConfig.mediumExtraSmallBlackText,
-                            ),
-                            TextSpan(
-                              text: AppString.insurance4,
-                              style: StyleConfig.mediumExtraSmallBlackText.copyWith(
-                                color: ColorConfig.jsPrimaryColor,
-                              ),
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: certificateInsurenceLogic.schemeId.value == 1 ? "Rs 1 Lakh is payable on total and irrecoverable loss of sight of one eye or loss of use of one hand or foot due to accident" : "",
+                              style: StyleConfig.mediumExtraSmallBlackText,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text: certificateInsurenceLogic.schemeId.value == 1 ? "The terms and conditions of the scheme are available at " : "",
+                            style: StyleConfig.mediumExtraSmallBlackText,
+                          ),
+                          TextSpan(
+                            text: certificateInsurenceLogic.schemeId.value == 1 ? "https://jansuraksha.in/" : "",
+                            style: StyleConfig.boldExtraLargeText.copyWith(fontSize: 12.sp),
+                          ),
+                        ]),
                       ),
                       SizedBox(
                         height: 40.h,

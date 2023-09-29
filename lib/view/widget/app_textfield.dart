@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
@@ -6,27 +7,29 @@ import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/theme_helper.dart';
 
 class AppTextField extends StatelessWidget {
-  const AppTextField({
-    Key? key,
-    required this.hintText,
-    this.isShowSuffixIcon = false,
-    this.isObscureText = false,
-    this.isShowPassword = false,
-    this.maxLength = 40,
-    this.inputType = TextInputType.text,
-    required this.controller,
-    this.onChanged,
-    this.isReadOnly = false,
-    this.isDobField = false,
-    this.title = '',
-    this.isAutoFocus = false,
-    this.prefixText = '',
-    required this.isMandatory,
-    this.errorText = '',
-    this.suffix,
-    this.onTap,
-  }) : super(key: key);
+  const AppTextField(
+      {Key? key,
+      required this.hintText,
+      this.isShowSuffixIcon = false,
+      this.isObscureText = false,
+      this.isShowPassword = false,
+      this.maxLength = 40,
+      this.inputType = TextInputType.text,
+      required this.controller,
+      this.onChanged,
+      this.isReadOnly = false,
+      this.isDobField = false,
+      this.title = '',
+      this.isAutoFocus = false,
+      this.prefixText = '',
+      required this.isMandatory,
+      this.errorText = '',
+      this.suffix,
+      this.onTap,
+      this.shouldInputNamesOnly})
+      : super(key: key);
   final String hintText;
+  final bool? shouldInputNamesOnly;
   final String title;
   final bool isShowSuffixIcon;
   final bool isObscureText;
@@ -94,24 +97,16 @@ class AppTextField extends StatelessWidget {
                     style: StyleConfig.smallText,
                   )
                 : const SizedBox.shrink(),
-            fillColor: isReadOnly && !isDobField
-                ? ThemeHelper.getInstance()!.colorScheme.surface
-                : ThemeHelper.getInstance()!.colorScheme.background,
+            fillColor: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.background,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               borderSide: BorderSide(
                 width: 1,
-                color: isReadOnly && !isDobField
-                    ? ThemeHelper.getInstance()!.colorScheme.surface
-                    : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: isReadOnly && !isDobField
-                      ? ThemeHelper.getInstance()!.colorScheme.surface
-                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                  width: 1.0),
+              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             errorBorder: OutlineInputBorder(
@@ -119,16 +114,13 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: isReadOnly && !isDobField
-                      ? ThemeHelper.getInstance()!.colorScheme.surface
-                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
-                  width: 1.0),
+              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
           ),
           onChanged: onChanged,
+          inputFormatters: shouldInputNamesOnly != null ? [FilteringTextInputFormatter.allow(RegExp("(?!^ +\$)^[a-zA-Z ]+\$"), replacementString: "")] : [],
           autofocus: isAutoFocus,
           onTap: onTap,
         ),

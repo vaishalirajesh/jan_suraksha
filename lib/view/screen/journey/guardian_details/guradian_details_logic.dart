@@ -7,7 +7,11 @@ import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
 
+import '../nominee_details/nominee_details_logic.dart';
+
 class GuradianDetailsLogic extends GetxController {
+  final nomineeDetailsLogic = Get.find<NomineeDetailsLogic>();
+
   RxBool isLoading = false.obs;
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
   TextEditingController firstNameController = TextEditingController(text: '');
@@ -22,6 +26,7 @@ class GuradianDetailsLogic extends GetxController {
   @override
   void onInit() {
     getData();
+
     super.onInit();
   }
 
@@ -44,31 +49,31 @@ class GuradianDetailsLogic extends GetxController {
     getAppData.data?.nominee?.first.relationShipOfGuardian = 2;
     getAppData.data?.nominee?.first.mobileNumberOfGuardian = mobileController.text;
     getAppData.data?.nominee?.first.emailIdOfGuardian = emailController.text;
+    getAppData.data?.nominee?.first.relationShipOfGuardianStr = relationWithApplicantController.text;
     TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
     TGLog.d("First Name--${getAppData.data?.nominee!.first.firstName}");
   }
 
   void onPressContinue() {
-    if (isLoading.value) {
-      if (firstNameController.text.isEmpty) {
-        fNameErrorMsg.value = 'Please enter name';
-        relationErrorMsg.value = '';
-        addressErrorMsg.value = '';
-      } else if (addressController.text.isEmpty) {
-        fNameErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        addressErrorMsg.value = 'Please enter address';
-      } else if (relationWithApplicantController.text.isEmpty) {
-        fNameErrorMsg.value = '';
-        relationErrorMsg.value = 'Please select relation with nominee';
-        addressErrorMsg.value = '';
-      } else {
-        fNameErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        setData();
-        Get.to(() => PreviewApplicationPage(), binding: PreviewApplicationBinding());
-      }
+    print("onPressContinue");
+    if (firstNameController.text.isEmpty) {
+      fNameErrorMsg.value = 'Please enter name';
+      relationErrorMsg.value = '';
+      addressErrorMsg.value = '';
+    } else if (addressController.text.isEmpty) {
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = '';
+      addressErrorMsg.value = 'Please enter address';
+    } else if (relationWithApplicantController.text.isEmpty) {
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = 'Please select relation with nominee';
+      addressErrorMsg.value = '';
+    } else {
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = '';
+      addressErrorMsg.value = '';
+      setData();
+      Get.to(() => PreviewApplicationPage(), binding: PreviewApplicationBinding());
     }
   }
 }

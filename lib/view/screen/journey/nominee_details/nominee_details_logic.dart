@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
@@ -62,14 +61,22 @@ class NomineeDetailsLogic extends GetxController {
   RxString stateErrorMsg = ''.obs;
   RxString pinCodeErrorMsg = ''.obs;
   RxString selectedValue = 'hello'.obs;
-  List<String> items = ['hello', 'hi'];
+  RxMap<String, String> items = {"": ""}.obs;
   RxString screenName = ''.obs;
+
+  var nomineeRelationShip = "".obs;
+
+  var relationshipid = 0.obs;
+
+  var guardianid = 0.obs;
+
+  var guardianShipValue = "".obs;
 
   @override
   void onInit() {
     screenName.value = Get.arguments[AppArguments.screenName] ?? '';
     getData();
-    // getMasterList();
+    getMasterList();
     super.onInit();
   }
 
@@ -99,19 +106,23 @@ class NomineeDetailsLogic extends GetxController {
     TGLog.d("GetMasterListRequest : onSuccess()---$response");
     if (response.getMasterList().status == RES_SUCCESS) {
       isLoading.value = true;
+
+      response.getMasterList().data?.releationship?.forEach((element) {
+        items.value.addAll({element?.id?.toString() ?? "": element.value ?? ""});
+
+        update();
+      });
     } else {
       TGLog.d("Error in GetMasterListRequest");
       isLoading.value = true;
       LoaderUtils.handleErrorResponse(Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
     }
-    getData();
   }
 
   _onErrorGetMasterList(TGResponse errorResponse) {
     TGLog.d("GetMasterListRequest : onError()--${errorResponse.error}");
     isLoading.value = true;
     handleServiceFailError(Get.context!, errorResponse.error);
-    getData();
   }
 
   Future<void> getData() async {
@@ -133,6 +144,15 @@ class NomineeDetailsLogic extends GetxController {
         districtController.text = nominee.address?.district ?? '';
         stateController.text = nominee.address?.state ?? '';
         pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
+        print("nominee.relationOfNomineeApplicant" + nominee.relationOfNomineeApplicant.toString());
+        num id = nominee.relationOfNomineeApplicant!;
+        items.value.forEach((key, value) {
+          print(key + ": " + value);
+          if (nominee.relationOfNomineeApplicant.toString() == key) {
+            nomineeRelationShip.value = value;
+            print("Final value" + value);
+          }
+        });
         isLoading.value = true;
       } else {
         getUserData();
@@ -154,13 +174,7 @@ class NomineeDetailsLogic extends GetxController {
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: ColorConfig.jsPrimaryColor,
-              onPrimary: ColorConfig.jsWhiteColor,
-              surface: ColorConfig.jsPrimaryColor,
-              onSurface: ColorConfig.jsBlackColor,
-            ),
-            dialogBackgroundColor: ColorConfig.jsWhiteColor,
+            colorScheme: ColorScheme.dark(),
           ),
           child: child!,
         );
@@ -173,6 +187,7 @@ class NomineeDetailsLogic extends GetxController {
         month = month.substring(0, 3);
       }
       var stringDate = '${date.day}/${date.month}/${date.year}';
+
       dobController.text = AppUtils.convertDateFormat(stringDate, 'dd/mm/yyyy', 'dd/mm/yyyy');
     }
   }
@@ -201,8 +216,9 @@ class NomineeDetailsLogic extends GetxController {
     nominee.mobileNumber = mobileController.text;
     nominee.middleName = middleNameController.text;
     nominee.emailIdOfNominee = emailController.text;
-    nominee.relationOfNomineeApplicant = 1;
     // nominee.dateOfBirth = dob;
+    nominee.relationOfNomineeApplicantStr = (nomineeRelationShip.value);
+    nominee.relationOfNomineeApplicant = relationshipid.value;
     nominee.address?.addressLine1 = addressOneController.text;
     nominee.address?.addressLine2 = addressTwoController.text;
     nominee.address?.city = cityController.text;
@@ -216,6 +232,7 @@ class NomineeDetailsLogic extends GetxController {
 
   void onPressContinue() {
     TGLog.d("IsAduu---${isAdult(dobController.text)}");
+    TGSharedPreferences.getInstance().set(PREF_IS_ADULT, isAdult(dobController.text));
     if (isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (firstNameController.text.isEmpty) {
@@ -355,7 +372,7 @@ class NomineeDetailsLogic extends GetxController {
           emailIdOfGuardian: getAppData.data?.nominee?.first.emailIdOfGuardian,
           mobileNumberOfGuardian: getAppData.data?.nominee?.first.mobileNumberOfGuardian,
           nameOfGuardian: getAppData.data?.nominee?.first.nameOfGuardian,
-          relationShipOfGuardian: getAppData.data?.nominee?.first.relationShipOfGuardian,
+          relationShipOfGuardian: guardianid.value,
           address: request.RequestAddress(
             id: getAppData.data?.nominee?.first.address?.id,
             addressLine1: getAppData.data?.nominee?.first.address?.addressLine1,
@@ -369,7 +386,7 @@ class NomineeDetailsLogic extends GetxController {
           mobileNumber: getAppData.data?.nominee?.first.mobileNumber,
           dateOfBirth: getAppData.data?.nominee?.first.dateOfBirth,
           emailIdOfNominee: getAppData.data?.nominee?.first.emailIdOfNominee,
-          relationOfNomineeApplicant: getAppData.data?.nominee!.first.relationOfNomineeApplicant,
+          relationOfNomineeApplicant: relationshipid.value,
         ),
       ],
     );
@@ -446,6 +463,7 @@ class NomineeDetailsLogic extends GetxController {
       stateController.text = nominee.address?.state ?? '';
       pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
       isLoading.value = true;
+      getMasterList();
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");
       isLoading.value = true;

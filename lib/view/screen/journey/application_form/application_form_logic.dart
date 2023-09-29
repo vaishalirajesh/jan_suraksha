@@ -22,6 +22,12 @@ class ApplicationFormLogic extends GetxController {
   String dob = '';
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
 
+  var isdisabled = false.obs;
+
+  var disbletext = "No".obs;
+
+  var schemeId = 0.obs;
+
   @override
   void onInit() {
     getUserData();
@@ -33,6 +39,8 @@ class ApplicationFormLogic extends GetxController {
   }
 
   Future<void> getUserData() async {
+    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID);
+
     if (await NetUtils.isInternetAvailable()) {
       getData();
     } else {
@@ -47,7 +55,6 @@ class ApplicationFormLogic extends GetxController {
     String appId = '';
     appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
-    var mockAppId = "101212404";
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest = GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(

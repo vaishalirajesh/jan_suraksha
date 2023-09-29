@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/font_config.dart';
-import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
@@ -61,10 +60,7 @@ class RegistrationPage extends StatelessWidget {
               ),
               Text(
                 AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(
-                    color: ColorConfig.jsTextBlueGreyColor,
-                    fontFamily: JSFonts.outfitRegular,
-                    fontWeight: FontWeight.w300),
+                style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextBlueGreyColor, fontFamily: JSFonts.outfitRegular, fontWeight: FontWeight.w300),
               ),
               SizedBox(
                 height: 30.h,
@@ -81,7 +77,7 @@ class RegistrationPage extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+                  padding: EdgeInsets.only(left: 20.w, right: 20.h, top: 15.h, bottom: 25.h),
                   child: Column(
                     children: [
                       Obx(() {
@@ -123,10 +119,7 @@ class RegistrationPage extends StatelessWidget {
                         return signUpLogic.captchaString.value.isNotEmpty
                             ? Row(
                                 children: [
-                                  SizedBox(
-                                      width: 0.6.sw,
-                                      height: 40,
-                                      child: Image.memory(Base64Decoder().convert(signUpLogic.captchaString.value))),
+                                  SizedBox(width: 0.6.sw, height: 40, child: Image.memory(Base64Decoder().convert(signUpLogic.captchaString.value))),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -148,8 +141,7 @@ class RegistrationPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16
-                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
                                   )
                                 ],
                               );
@@ -198,8 +190,7 @@ class RegistrationPage extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       text: "Login",
-                                      style: StyleConfig.regularText16
-                                          .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
                                     ),
                                   ],
                                 ),

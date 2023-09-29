@@ -176,7 +176,7 @@ class AppString {
   static const String coverDate = 'Cover End Date';
   static const String lienPeriod = 'Lien Period**';
   static const String renewalDate = 'Annual Renewal Date';
-  static const String insurance1 = "* Rs.2 lakh is payable on member's death due to any cause.";
+  static const String insurance1 = "* Rs.2 lakh is payable on member's death due to accident.";
   static const String insurance2 = "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
   static const String insurance3 = 'The terms and conditions of the scheme are available at ';
   static const String insurance4 = ' https://jansuraksha.in/';

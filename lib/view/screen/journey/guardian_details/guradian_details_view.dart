@@ -50,6 +50,9 @@ class GuradianDetailsPage extends StatelessWidget {
                                   hintText: AppString.enterYourName,
                                   inputType: TextInputType.text,
                                   errorText: guradianDetailsLogic.fNameErrorMsg.value,
+                                  onChanged: (str) {
+                                    guradianDetailsLogic.fNameErrorMsg.value = '';
+                                  },
                                 ),
                                 SizedBox(
                                   height: 15.h,
@@ -61,6 +64,9 @@ class GuradianDetailsPage extends StatelessWidget {
                                   hintText: AppString.enterYourAddress,
                                   inputType: TextInputType.text,
                                   errorText: guradianDetailsLogic.addressErrorMsg.value,
+                                  onChanged: (str) {
+                                    guradianDetailsLogic.addressErrorMsg.value = '';
+                                  },
                                 ),
                                 SizedBox(
                                   height: 15.h,
@@ -152,11 +158,30 @@ class GuradianDetailsPage extends StatelessWidget {
                                               },
                                               isExpanded: false,
                                               value: nomineeDetailsLogic.guardianShipValue.value,
-                                              hint: Text(nomineeDetailsLogic.items.value.values.first, style: StyleConfig.mediumText16),
+                                              hint: Text(nomineeDetailsLogic.items.value.values.first,
+                                                  style: StyleConfig.mediumText16),
                                             ),
                                           ),
                                         ),
                                       ),
+                                Obx(() {
+                                  return guradianDetailsLogic.relationErrorMsg.value.isNotEmpty
+                                      ? Padding(
+                                          padding: EdgeInsets.only(top: 5.h),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                guradianDetailsLogic.relationErrorMsg.value,
+                                                style:
+                                                    StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : SizedBox.shrink();
+                                }),
                                 SizedBox(
                                   height: 15.h,
                                 ),
@@ -166,6 +191,11 @@ class GuradianDetailsPage extends StatelessWidget {
                                   controller: guradianDetailsLogic.mobileController,
                                   hintText: AppString.enterMobile,
                                   inputType: TextInputType.phone,
+                                  maxLength: 10,
+                                  errorText: guradianDetailsLogic.mobileErrorMsg.value,
+                                  onChanged: (str) {
+                                    guradianDetailsLogic.mobileErrorMsg.value = '';
+                                  },
                                 ),
                                 SizedBox(
                                   height: 15.h,
@@ -173,9 +203,14 @@ class GuradianDetailsPage extends StatelessWidget {
                                 AppTextField(
                                   isMandatory: false,
                                   title: AppString.emailId,
+                                  maxLength: 255,
                                   controller: guradianDetailsLogic.emailController,
                                   hintText: AppString.enterEmail,
                                   inputType: TextInputType.emailAddress,
+                                  errorText: guradianDetailsLogic.emailErrorMsg.value,
+                                  onChanged: (str) {
+                                    guradianDetailsLogic.emailErrorMsg.value = '';
+                                  },
                                 ),
                                 SizedBox(
                                   height: 15.h,

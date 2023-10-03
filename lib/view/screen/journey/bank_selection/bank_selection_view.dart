@@ -130,34 +130,37 @@ class BankSelectionPage extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: SizedBox(
-                              child: ListView.separated(
-                                itemCount: bankSelectionLogic.bankList.length,
-                                separatorBuilder: (BuildContext context, int index) => Divider(height: 1),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Get.toNamed(CustomerVerificationPageRoute);
-                                      TGSharedPreferences.getInstance()
-                                          .set(PREF_ORG_ID, bankSelectionLogic.bankList[index].id ?? 0);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: ListTile(
-                                        title: Text(
-                                          bankSelectionLogic.bankList.isNotEmpty &&
-                                                  bankSelectionLogic.bankList[index].value != null
-                                              ? bankSelectionLogic.bankList[index].value ?? ''
-                                              : '',
-                                          style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 80.h),
+                              child: SizedBox(
+                                child: ListView.separated(
+                                  itemCount: bankSelectionLogic.bankList.length,
+                                  separatorBuilder: (BuildContext context, int index) => Divider(height: 1),
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.toNamed(CustomerVerificationPageRoute);
+                                        TGSharedPreferences.getInstance()
+                                            .set(PREF_ORG_ID, bankSelectionLogic.bankList[index].id ?? 0);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: ListTile(
+                                          title: Text(
+                                            bankSelectionLogic.bankList.isNotEmpty &&
+                                                    bankSelectionLogic.bankList[index].value != null
+                                                ? bankSelectionLogic.bankList[index].value ?? ''
+                                                : '',
+                                            style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          )
+                          ),
                         ]))),
             if (bankSelectionLogic.isLoading.value) const AppLoader()
           ],

@@ -22,6 +22,19 @@ class GuradianDetailsLogic extends GetxController {
   RxString fNameErrorMsg = ''.obs;
   RxString relationErrorMsg = ''.obs;
   RxString addressErrorMsg = ''.obs;
+  RxString emailErrorMsg = ''.obs;
+  RxString mobileErrorMsg = ''.obs;
+  RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
+  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
+  RegExp mobileRegExp = RegExp(r'^[0-9]+$');
+  RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
+  RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+      "\\@" +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+      "(" +
+      "\\." +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+      ")+");
 
   @override
   void onInit() {
@@ -56,22 +69,47 @@ class GuradianDetailsLogic extends GetxController {
 
   void onPressContinue() {
     print("onPressContinue");
-    if (firstNameController.text.isEmpty) {
-      fNameErrorMsg.value = 'Please enter name';
+    if (firstNameController.text.isEmpty ||
+        !onlyCharRegExp.hasMatch(firstNameController.text) ||
+        firstNameController.text == ' ') {
+      fNameErrorMsg.value = 'Please enter valid name';
       relationErrorMsg.value = '';
       addressErrorMsg.value = '';
-    } else if (addressController.text.isEmpty) {
+      emailErrorMsg.value = '';
+      mobileErrorMsg.value = '';
+    } else if (addressController.text.isEmpty ||
+        addressController.text.length < 2 ||
+        specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';
-      addressErrorMsg.value = 'Please enter address';
-    } else if (relationWithApplicantController.text.isEmpty) {
+      addressErrorMsg.value = 'Please enter valid address';
+      emailErrorMsg.value = '';
+      mobileErrorMsg.value = '';
+      // !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0)) &&
+      //     ((!mobileRegExp.hasMatch(mobileController.text) || mobileController.text.length != 10))
+    } else if (emailController.text.isNotEmpty &&
+        ((emailController.text.length < 5) || !emailRegExp.hasMatch(emailController.text))) {
       fNameErrorMsg.value = '';
-      relationErrorMsg.value = 'Please select relation with nominee';
+      relationErrorMsg.value = '';
       addressErrorMsg.value = '';
+      emailErrorMsg.value = 'Please enter valid email Id';
+      mobileErrorMsg.value = '';
+    } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+            mobileController.text == ' ' ||
+            (mobileController.text.isNotEmpty &&
+                !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
+        (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
+      mobileErrorMsg.value = 'Please enter valid mobile number';
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = '';
+      addressErrorMsg.value = '';
+      emailErrorMsg.value = '';
     } else {
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';
       addressErrorMsg.value = '';
+      emailErrorMsg.value = '';
+      mobileErrorMsg.value = '';
       setData();
       Get.to(() => PreviewApplicationPage(), binding: PreviewApplicationBinding());
     }

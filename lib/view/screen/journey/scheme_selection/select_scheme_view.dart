@@ -27,20 +27,22 @@ class SelectSchemePage extends StatelessWidget {
       body: WillPopScope(
         onWillPop: AppUtils.onWillPopToDashboard,
         child: Stack(children: <Widget>[
-          Obx(() {
-            return Container(
-              color: ColorConfig.jsCreamColor,
-              padding: EdgeInsets.only(bottom: 20.h),
-              child: Image.asset(logic.isSelected.value == 2 ? Assets.schemePmsby : Assets.schemePmjjbyScheme),
-            );
-          }),
+          Container(
+            color: ColorConfig.jsCreamColor,
+            padding: EdgeInsets.only(bottom: 20.h),
+            child: Image.asset(Assets.schemePmsby),
+          ),
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
               child: Container(
                 width: 1.sw,
                 height: 50,
-                decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.white, HexColor("#00FFFFFF")])),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.white, HexColor("#00FFFFFF")])),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -117,18 +119,21 @@ class SelectSchemePage extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          color: logic.isSelected.value == 1 ? HexColor("#FFF6E2") : Colors.white,
+                          color: logic.isSelected.value == 2 ? HexColor("#FFF6E2") : Colors.white,
                           child: Stack(
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  logic.isSelected.value = 1;
+                                  logic.isSelected.value = 2;
                                   TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
                                 },
                                 child: Container(
                                     height: 70.h,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                      border: Border.all(
+                                          color: logic.isSelected.value == 2
+                                              ? ThemeHelper.getInstance()!.colorScheme.primary
+                                              : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
                                       borderRadius: BorderRadius.circular(16.r),
                                     ),
                                     child: Stack(
@@ -151,7 +156,8 @@ class SelectSchemePage extends StatelessWidget {
                                                   ),
                                                   Text(
                                                     "Pradhan Mantri Jeevan\nJyoti Bima Yojana (PMJJBY)",
-                                                    style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsTextGreyColor),
+                                                    style: StyleConfig.mediumText16
+                                                        .copyWith(color: ColorConfig.jsTextGreyColor),
                                                   ),
                                                 ],
                                               ),
@@ -167,66 +173,64 @@ class SelectSchemePage extends StatelessWidget {
                       );
                     }),
                     Obx(() {
-                      return InkWell(
-                        onTap: () {
-                          logic.isSelected.value = 1;
-                          TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            color: logic.isSelected.value == 2 ? HexColor("#FFF6E2") : Colors.white,
-                            child: Stack(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    logic.isSelected.value = 2;
-                                    TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
-                                  },
-                                  child: Container(
-                                      height: 70.h,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: logic.isSelected.value == 2 ? ThemeHelper.getInstance()!.colorScheme.primary : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
-                                        borderRadius: BorderRadius.circular(16.r),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: Stack(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 20,
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: logic.isSelected.value == 1 ? HexColor("#FFF6E2") : Colors.white,
+                          child: Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  logic.isSelected.value = 1;
+                                  TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, logic.isSelected.value);
+                                },
+                                child: Container(
+                                    height: 70.h,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: logic.isSelected.value == 1
+                                              ? ThemeHelper.getInstance()!.colorScheme.primary
+                                              : ThemeHelper.getInstance()!.colorScheme.secondaryContainer),
+                                      borderRadius: BorderRadius.circular(16.r),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: Stack(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Center(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                                        SizedBox(
+                                                          width: 20,
+                                                        ),
+                                                        Text(
+                                                          "Pradhan Mantri Suraksha \nBima Yojana (PMSBY)",
+                                                          style: StyleConfig.mediumText16
+                                                              .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                        )
+                                                      ],
                                                     ),
-                                                    Center(
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          SvgPicture.asset(Assets.dashboardSchemeLogo),
-                                                          SizedBox(
-                                                            width: 20,
-                                                          ),
-                                                          Text(
-                                                            "Pradhan Mantri Suraksha \nBima Yojana (PMSBY)",
-                                                            style: StyleConfig.mediumText16.copyWith(color: ColorConfig.jsTextGreyColor),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      )),
-                                ),
-                              ],
-                            ),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
                       );

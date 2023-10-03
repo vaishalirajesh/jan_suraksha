@@ -6,6 +6,7 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/utils/constant/image_constant.dart';
 
 import '../../../../config/color_config.dart';
+import 'consent_success_binding.dart';
 import 'consent_success_logic.dart';
 
 class ConsentSuccessPage extends StatelessWidget {
@@ -16,7 +17,8 @@ class ConsentSuccessPage extends StatelessWidget {
     final consentSuccessLogic = Get.find<ConsentSuccessLogic>();
     return WillPopScope(
       onWillPop: () async {
-        return false;
+        Get.to(() => const ConsentSuccessPage(), binding: ConsentSuccessBinding());
+        return true;
       },
       child: Scaffold(
         backgroundColor: ColorConfig.jsCreamColor,
@@ -42,12 +44,14 @@ class ConsentSuccessPage extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Text(
-                  "Your application for availing the policy under PMJJBY has been successful and the premium has been debited. You will be notified via SMS for the same.",
-                  style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
-                  textAlign: TextAlign.center,
-                  maxLines: 4,
-                ),
+                Obx(() {
+                  return Text(
+                    "Your application for availing the policy under ${consentSuccessLogic.schemeId.value.toString() == "2" ? "PMJJBY" : "PMSBY"} has been successful and the premium has been debited. You will be notified via SMS for the same.",
+                    style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextGreyColor),
+                    textAlign: TextAlign.center,
+                    maxLines: 4,
+                  );
+                }),
                 SizedBox(
                   height: 20.h,
                 ),

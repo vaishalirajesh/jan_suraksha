@@ -43,25 +43,35 @@ class NomineeDetailsPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppTextField(
-                                isMandatory: true,
-                                title: AppString.firstName,
-                                controller: nomineeDetailsLogic.firstNameController,
-                                hintText: AppString.enterFirstName,
-                                inputType: TextInputType.name,
-                                errorText: nomineeDetailsLogic.fNameErrorMsg.value,
-                                shouldInputNamesOnly: true,
-                              ),
+                              Obx(() {
+                                return AppTextField(
+                                  isMandatory: true,
+                                  title: AppString.firstName,
+                                  maxLength: 50,
+                                  controller: nomineeDetailsLogic.firstNameController,
+                                  hintText: AppString.enterFirstName,
+                                  inputType: TextInputType.name,
+                                  errorText: nomineeDetailsLogic.fNameErrorMsg.value,
+                                  onChanged: (str) {
+                                    nomineeDetailsLogic.fNameErrorMsg.value = '';
+                                  },
+                                );
+                              }),
                               SizedBox(
                                 height: 15.h,
                               ),
                               AppTextField(
                                 isMandatory: false,
                                 title: AppString.middleName,
+                                maxLength: 50,
                                 shouldInputNamesOnly: true,
                                 controller: nomineeDetailsLogic.middleNameController,
                                 hintText: AppString.enterMiddleName,
                                 inputType: TextInputType.text,
+                                errorText: nomineeDetailsLogic.mNameErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.mNameErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -69,10 +79,15 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: false,
                                 title: AppString.lastName,
+                                maxLength: 50,
                                 controller: nomineeDetailsLogic.latsNameController,
                                 hintText: AppString.enterlastName,
                                 inputType: TextInputType.text,
                                 shouldInputNamesOnly: true,
+                                errorText: nomineeDetailsLogic.lNameErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.lNameErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -97,6 +112,10 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.mobileController,
                                 hintText: AppString.enterMobile,
                                 inputType: TextInputType.phone,
+                                errorText: nomineeDetailsLogic.mobileErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.mobileErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -149,42 +168,67 @@ class NomineeDetailsPage extends StatelessWidget {
                                       //   }).toList(),
                                       // ),
                                     )
-                                  : Container(
-                                      width: 0.87.sw,
-                                      height: 60,
-                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                        border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
-                                      ),
-                                      child: SizedBox(
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton(
-                                            items: nomineeDetailsLogic.items.values
-                                                .map((value) => DropdownMenuItem(
-                                                      child: Container(
-                                                          width: 0.75.sw,
-                                                          child: Text(
-                                                            value,
-                                                            style: StyleConfig.mediumText16,
-                                                          )),
-                                                      value: value,
-                                                    ))
-                                                .toList(),
-                                            onChanged: (i) {
-                                              nomineeDetailsLogic.items.value.forEach((key, value) {
-                                                if (i.toString() == value) {
-                                                  nomineeDetailsLogic.relationshipid.value = int.parse(key);
-                                                }
-                                              });
-                                              nomineeDetailsLogic.nomineeRelationShip.value = i.toString();
-                                              print(i!);
-                                            },
-                                            isExpanded: false,
-                                            value: nomineeDetailsLogic.nomineeRelationShip.value,
+                                  : Column(
+                                      children: [
+                                        Container(
+                                          width: 0.87.sw,
+                                          height: 60,
+                                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            border:
+                                                Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
+                                          ),
+                                          child: SizedBox(
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton(
+                                                items: nomineeDetailsLogic.items.values
+                                                    .map((value) => DropdownMenuItem(
+                                                          child: Container(
+                                                              width: 0.75.sw,
+                                                              child: Text(
+                                                                value,
+                                                                style: StyleConfig.mediumText16,
+                                                              )),
+                                                          value: value,
+                                                        ))
+                                                    .toList(),
+                                                onChanged: (i) {
+                                                  nomineeDetailsLogic.relationErrorMsg.value = '';
+                                                  nomineeDetailsLogic.items.value.forEach((key, value) {
+                                                    if (i.toString() == value) {
+                                                      nomineeDetailsLogic.relationshipid.value =
+                                                          int.parse(key.toString());
+                                                    }
+                                                  });
+                                                  nomineeDetailsLogic.nomineeRelationShip.value = i.toString();
+                                                  print(i!);
+                                                },
+                                                isExpanded: false,
+                                                value: nomineeDetailsLogic.nomineeRelationShip.value,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                        Obx(() {
+                                          return nomineeDetailsLogic.relationErrorMsg.value.isNotEmpty
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(top: 5.h),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        nomineeDetailsLogic.relationErrorMsg.value,
+                                                        style: StyleConfig.smallTextLight
+                                                            .copyWith(color: ColorConfig.jsRedColor),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : SizedBox.shrink();
+                                        })
+                                      ],
                                     ),
                               SizedBox(
                                 height: 15.h,
@@ -196,6 +240,10 @@ class NomineeDetailsPage extends StatelessWidget {
                                 controller: nomineeDetailsLogic.emailController,
                                 hintText: AppString.enterEmail,
                                 inputType: TextInputType.emailAddress,
+                                errorText: nomineeDetailsLogic.emailErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.emailErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 30.h,
@@ -231,7 +279,9 @@ class NomineeDetailsPage extends StatelessWidget {
                                           ),
                                           side: BorderSide(
                                             width: 1,
-                                            color: nomineeDetailsLogic.isChecked.value ? ThemeHelper.getInstance()!.primaryColor : ThemeHelper.getInstance()!.disabledColor,
+                                            color: nomineeDetailsLogic.isChecked.value
+                                                ? ThemeHelper.getInstance()!.primaryColor
+                                                : ThemeHelper.getInstance()!.disabledColor,
                                           ),
                                           value: nomineeDetailsLogic.isChecked.value,
                                           onChanged: (bool? value) {
@@ -247,7 +297,11 @@ class NomineeDetailsPage extends StatelessWidget {
                                   Flexible(
                                     child: Text(
                                       AppString.applicantAdd,
-                                      style: StyleConfig.regularText16.copyWith(color: nomineeDetailsLogic.isChecked.value ? ColorConfig.jsBlueColor : ThemeHelper.getInstance()!.disabledColor, fontSize: 15.sp),
+                                      style: StyleConfig.regularText16.copyWith(
+                                          color: nomineeDetailsLogic.isChecked.value
+                                              ? ColorConfig.jsBlueColor
+                                              : ThemeHelper.getInstance()!.disabledColor,
+                                          fontSize: 15.sp),
                                     ),
                                   )
                                 ],
@@ -258,31 +312,44 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: true,
                                 title: AppString.addressLine1,
+                                maxLength: 200,
                                 controller: nomineeDetailsLogic.addressOneController,
                                 hintText: AppString.enterAddress,
                                 inputType: TextInputType.streetAddress,
                                 errorText: nomineeDetailsLogic.addressErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.addressErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
                               ),
                               AppTextField(
                                 isMandatory: false,
+                                maxLength: 200,
                                 title: AppString.addressLine2,
                                 controller: nomineeDetailsLogic.addressTwoController,
                                 hintText: AppString.enterAddress,
                                 inputType: TextInputType.streetAddress,
+                                errorText: nomineeDetailsLogic.address2ErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.address2ErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
                               ),
                               AppTextField(
                                 isMandatory: true,
+                                maxLength: 200,
                                 title: AppString.cityName,
                                 controller: nomineeDetailsLogic.cityController,
                                 hintText: AppString.enterCity,
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.cityErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.cityErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -290,10 +357,14 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: true,
                                 title: AppString.district,
+                                maxLength: 200,
                                 controller: nomineeDetailsLogic.districtController,
                                 hintText: AppString.enterDisctrict,
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.districtErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.districtErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -301,9 +372,13 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: true,
                                 title: AppString.state,
+                                maxLength: 200,
                                 controller: nomineeDetailsLogic.stateController,
                                 hintText: AppString.enterState,
                                 errorText: nomineeDetailsLogic.stateErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.stateErrorMsg.value = '';
+                                },
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -316,6 +391,9 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.number,
                                 maxLength: 6,
                                 errorText: nomineeDetailsLogic.pinCodeErrorMsg.value,
+                                onChanged: (str) {
+                                  nomineeDetailsLogic.pinCodeErrorMsg.value = '';
+                                },
                               ),
                             ],
                           ),

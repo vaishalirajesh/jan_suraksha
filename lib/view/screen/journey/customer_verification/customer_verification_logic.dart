@@ -76,16 +76,27 @@ class CustomerVerificationLogic extends GetxController {
       dobErrorMsg.value = '';
       reAccountErrorMsg.value = '';
       dobTextController.text = '${date.day}/${date.month}/${date.year}';
-      String x = "2022-09-29T07:26:52.000Z";
       var dateTime = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
-      //DateFormat('yyyy-MM-ddThh:mm:ss.000Z').parse(date.toString());
       TGLog.d("Date----$dateTime");
       dob = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
     }
   }
 
   String getMonth(int month) {
-    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
     return months[month - 1];
   }
 
@@ -173,12 +184,12 @@ class CustomerVerificationLogic extends GetxController {
     if (response.createApplicationResponse().status == RES_SUCCESS) {
       appId = response.createApplicationResponse().data?.id;
       TGSharedPreferences.getInstance().set(PREF_APP_ID, response.createApplicationResponse().data?.id);
-      TGSharedPreferences.getInstance().set(PREF_SCHEME_ID, response.createApplicationResponse().data?.schemeId);
       updateStage();
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0, response?.createApplicationResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.createApplicationResponse().status ?? 0,
+          response?.createApplicationResponse()?.message ?? "", null);
     }
   }
 
@@ -218,7 +229,8 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
     }
   }
 
@@ -242,13 +254,21 @@ class CustomerVerificationLogic extends GetxController {
     if (TGMockService.applyMock) {
       var encryptId = "1";
       var encryptType = "1";
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
-      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(
+          request: updateEnrollmentVerificationTypeRequest,
+          onSuccess: (response) => _onSuccessVerificationType(response),
+          onError: (error) => _onErrorVerificationType(error));
     } else {
       var encryptId = AesGcmEncryptionUtils.encryptNew(createApplicationResponseMain.data?.id.toString() ?? '');
       var encryptType = AesGcmEncryptionUtils.encryptNew('1');
-      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest = UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
-      ServiceManager.getInstance().updateEnrollmentVerificationType(request: updateEnrollmentVerificationTypeRequest, onSuccess: (response) => _onSuccessVerificationType(response), onError: (error) => _onErrorVerificationType(error));
+      UpdateEnrollmentVerificationTypeRequest updateEnrollmentVerificationTypeRequest =
+          UpdateEnrollmentVerificationTypeRequest(id: encryptId, type: encryptType);
+      ServiceManager.getInstance().updateEnrollmentVerificationType(
+          request: updateEnrollmentVerificationTypeRequest,
+          onSuccess: (response) => _onSuccessVerificationType(response),
+          onError: (error) => _onErrorVerificationType(error));
     }
   }
 
@@ -276,7 +296,8 @@ class CustomerVerificationLogic extends GetxController {
       );
     } else {
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0, response?.updateEnrollmentVerificationType()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0,
+          response?.updateEnrollmentVerificationType()?.message ?? "", null);
     }
   }
 
@@ -288,7 +309,7 @@ class CustomerVerificationLogic extends GetxController {
 
   Future<void> onVerifyOTP() async {
     if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
-      otpError.value = 'Please enter valid Otp';
+      otpError.value = 'Please enter valid verification code';
       return;
     } else {
       otpError.value = '';
@@ -331,7 +352,8 @@ class CustomerVerificationLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isOtpVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.verifyOTP().status ?? 0, response?.verifyOTP()?.message ?? "", null);
     }
   }
 
@@ -361,7 +383,8 @@ class CustomerVerificationLogic extends GetxController {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;
       isOtpVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
     }
   }
 }

@@ -32,7 +32,7 @@ class CertificateInsurencePage extends StatelessWidget {
               buttonTitle: AppString.download,
               onBackButtonCLick: AppUtils.onBackToDashboard,
               onButtonClick: () {},
-              isDataLoading: certificateInsurenceLogic.isLoading.value,
+              isDataLoading: certificateInsurenceLogic.isDownLoading.value,
               isButtonEnable: true,
               isShowButton: false,
               child: SingleChildScrollView(
@@ -57,7 +57,8 @@ class CertificateInsurencePage extends StatelessWidget {
                       }),
                       Text(
                         AppString.COI,
-                        style: StyleConfig.boldText16.copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
+                        style: StyleConfig.boldText16
+                            .copyWith(fontFamily: JSFonts.outfitRegular, color: ColorConfig.jsTextBlueGreyColor),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -68,9 +69,9 @@ class CertificateInsurencePage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl != null
+                              certificateInsurenceLogic.generateCoiData.data?.logoUrl != null
                                   ? Image.network(
-                                      certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl ?? '',
+                                      certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
                                       height: 30.r,
                                       // width: 30.r,
                                     )
@@ -78,9 +79,9 @@ class CertificateInsurencePage extends StatelessWidget {
                               SizedBox(
                                 width: 10.w,
                               ),
-                              certificateInsurenceLogic.generateCoiData.data?.logoUrl != null
+                              certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl != null
                                   ? Image.network(
-                                      certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
+                                      certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl ?? '',
                                       height: 30.r,
                                       // width: 30.r,
                                     )
@@ -132,7 +133,9 @@ class CertificateInsurencePage extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.all(10.r),
                                       child: Text(
-                                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna2 : AppString.yojna,
+                                        certificateInsurenceLogic.schemeId.value == 1
+                                            ? AppString.yojna2
+                                            : AppString.yojna,
                                         style: StyleConfig.mediumExtraSmallBlackText,
                                         textAlign: TextAlign.center,
                                       ),
@@ -179,14 +182,14 @@ class CertificateInsurencePage extends StatelessWidget {
                                 ]),
                                 TableRow(children: [
                                   Text(
-                                    AppString.aadharNo,
+                                    certificateInsurenceLogic.generateCoiData.data?.kycName ?? '',
                                     style: StyleConfig.mediumExtraSmallBlackText,
                                     textAlign: TextAlign.center,
                                   ),
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      certificateInsurenceLogic.generateCoiData.data?.kycValue ?? '-',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -201,7 +204,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      certificateInsurenceLogic.generateCoiData.data?.accountNo ?? '-',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -234,7 +237,10 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      AppUtils.convertDateFormat(
+                                          certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
+                                          'yyyy-MM-ddTHH:mm:ss',
+                                          'dd/MM/yyyy HH:mm:ss'),
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -324,7 +330,8 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob,
+                                          'yyyy-mm-dd', 'dd/mm/yyyy'),
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -401,7 +408,9 @@ class CertificateInsurencePage extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.all(10.r),
                                       child: Text(
-                                        certificateInsurenceLogic.schemeId.value == 1 ? AppString.yojna2 : AppString.yojna,
+                                        certificateInsurenceLogic.schemeId.value == 1
+                                            ? AppString.yojna2
+                                            : AppString.yojna,
                                         style: StyleConfig.mediumExtraSmallBlackText,
                                         textAlign: TextAlign.center,
                                       ),
@@ -448,14 +457,14 @@ class CertificateInsurencePage extends StatelessWidget {
                                 ]),
                                 TableRow(children: [
                                   Text(
-                                    AppString.aadharNo,
+                                    certificateInsurenceLogic.generateCoiData.data?.kycName ?? '',
                                     style: StyleConfig.mediumExtraSmallBlackText,
                                     textAlign: TextAlign.center,
                                   ),
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      certificateInsurenceLogic.generateCoiData.data?.kycValue ?? '-',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -470,7 +479,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.aadharNo ?? '-',
+                                      certificateInsurenceLogic.generateCoiData.data?.accountNo ?? '-',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -503,7 +512,10 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      AppUtils.convertDateFormat(
+                                          certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
+                                          'yyyy-MM-ddTHH:mm:ss',
+                                          'dd/MM/yyyy HH:mm:ss'),
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -593,7 +605,8 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                      AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dob,
+                                          'yyyy-mm-dd', 'dd/mm/yyyy'),
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -680,7 +693,9 @@ class CertificateInsurencePage extends StatelessWidget {
                         height: 25.h,
                       ),
                       Text(
-                        certificateInsurenceLogic.schemeId.value == 1 ? "* Rs. 2 Lakhs is payable on member's death due to accident." : "* Rs. 2 Lakhs is payable on member's death to any cause",
+                        certificateInsurenceLogic.schemeId.value == 1
+                            ? "* Rs. 2 lakh is payable on member's death due to accident."
+                            : "* Rs. 2 lakh is payable on member's death due to any cause",
                         style: StyleConfig.mediumExtraSmallBlackText,
                       ),
                       SizedBox(
@@ -695,35 +710,43 @@ class CertificateInsurencePage extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      RichText(
-                        textAlign: TextAlign.start,
-                        text: TextSpan(
-                          children: [
+                      if (certificateInsurenceLogic.schemeId.value == 1)
+                        RichText(
+                          textAlign: TextAlign.start,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: certificateInsurenceLogic.schemeId.value == 1
+                                    ? "Rs 1 Lakh is payable on total and irrecoverable loss of sight of one eye or loss of use of one hand or foot due to accident"
+                                    : "",
+                                style: StyleConfig.mediumExtraSmallBlackText,
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (certificateInsurenceLogic.schemeId.value == 1)
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      if (certificateInsurenceLogic.schemeId.value == 1)
+                        RichText(
+                          text: TextSpan(children: [
                             TextSpan(
-                              text: certificateInsurenceLogic.schemeId.value == 1 ? "Rs 1 Lakh is payable on total and irrecoverable loss of sight of one eye or loss of use of one hand or foot due to accident" : "",
+                              text: certificateInsurenceLogic.schemeId.value == 1
+                                  ? "The terms and conditions of the scheme are available at "
+                                  : "",
                               style: StyleConfig.mediumExtraSmallBlackText,
                             ),
-                          ],
+                            TextSpan(
+                              text: certificateInsurenceLogic.schemeId.value == 1 ? "https://jansuraksha.in/" : "",
+                              style: StyleConfig.boldExtraLargeText.copyWith(fontSize: 12.sp),
+                            ),
+                          ]),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                            text: certificateInsurenceLogic.schemeId.value == 1 ? "The terms and conditions of the scheme are available at " : "",
-                            style: StyleConfig.mediumExtraSmallBlackText,
-                          ),
-                          TextSpan(
-                            text: certificateInsurenceLogic.schemeId.value == 1 ? "https://jansuraksha.in/" : "",
-                            style: StyleConfig.boldExtraLargeText.copyWith(fontSize: 12.sp),
-                          ),
-                        ]),
-                      ),
-                      SizedBox(
-                        height: 40.h,
-                      ),
+                      if (certificateInsurenceLogic.schemeId.value == 1)
+                        SizedBox(
+                          height: 20.h,
+                        ),
                       Text(
                         AppString.insurance5,
                         style: StyleConfig.semiBoldSmallText,
@@ -731,7 +754,8 @@ class CertificateInsurencePage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          AppString.insurance6,
+                          AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
+                              'yyyy-MM-ddTHH:mm:ss', 'dd/MM/yyyy HH:mm:ss'),
                           style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsBlackColor),
                         ),
                       ),
@@ -742,7 +766,7 @@ class CertificateInsurencePage extends StatelessWidget {
                         onPress: certificateInsurenceLogic.onPressDownload,
                         title: "Download",
                         isButtonEnable: true.obs,
-                        isDataLoading: false.obs,
+                        isDataLoading: certificateInsurenceLogic.isDownLoading,
                       ),
                     ],
                   ),

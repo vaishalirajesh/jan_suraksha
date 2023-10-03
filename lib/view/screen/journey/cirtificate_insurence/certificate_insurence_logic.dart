@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GenerateCOIRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/GenerateCoiResponseMain.dart';
@@ -19,18 +20,25 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../config/color_config.dart';
 import '../../../../model/request_model/DownloadAgreementRequest.dart';
 import '../../../../model/response_model/DownloadAgreementResponse.dart';
+import 'certificate_insurence_binding.dart';
+import 'certificate_insurence_view.dart';
 
 class CertificateInsurenceLogic extends GetxController {
   RxBool isLoading = true.obs;
+  RxBool isDownLoading = false.obs;
+
   GenerateCoiResponseMain generateCoiData = GenerateCoiResponseMain();
   RxInt schemeId = 1.obs;
+  var dateTimeNow = DateTime.now();
 
   @override
   void onInit() {
@@ -40,18 +48,23 @@ class CertificateInsurenceLogic extends GetxController {
   }
 
   Future<void> getSchemeDetail() async {
-    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 1;
+    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 0;
   }
 
   Future<void> onPressDownload() async {
+    isDownLoading.value = true;
     String appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     String schemeId = (await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID)).toString() ?? '';
     String orgId = (await TGSharedPreferences.getInstance().get(PREF_ORG_ID)).toString() ?? '13';
-    DownloadAgreementRequest request = new DownloadAgreementRequest(applicationId: appId, schemeId: schemeId, orgId: orgId, isDownload: true);
+    DownloadAgreementRequest request =
+        DownloadAgreementRequest(applicationId: appId, schemeId: schemeId, orgId: orgId, isDownload: true);
     var jsonRequest = jsonEncode(request.toJson());
     TGLog.d("GenerateCoiRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_DOWNLOAD_AGREEMENT);
-    ServiceManager.getInstance().downloadCoi(request: tgPostRequest, onSuccess: (response) => _onSuccess(response), onError: (response) => _onFailure(response));
+    ServiceManager.getInstance().downloadCoi(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccess(response),
+        onError: (response) => _onFailure(response));
     // Get.offAll(() => DashboardPage(), binding: DashboardBinding());
   }
 
@@ -94,7 +107,8 @@ class CertificateInsurenceLogic extends GetxController {
     } else {
       TGLog.d("Error in PremiumDeductionResponse");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.generateCoi().status ?? 0, response?.generateCoi()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.generateCoi().status ?? 0, response?.generateCoi()?.message ?? "", null);
     }
   }
 
@@ -108,7 +122,10 @@ class CertificateInsurenceLogic extends GetxController {
     TGLog.d(response);
     final byteString = base64Decode(response.getLoginResponseData().data ?? "");
     final int8List = Uint8List.fromList(byteString);
-    saveFileToDownloads("JanSuraksha_COI.pdf", int8List);
+    var currentDate =
+        AppUtils.convertDateFormat(DateTime.now().toString(), 'yyyy-MM-dd hh:mm:ss.SSSSSS', 'dd_MM_yyyy_hh_mm_ss');
+    var date = currentDate.toString().replaceAll(' ', '_');
+    saveFileToDownloads("JanSuraksha_COI_${date}.pdf", int8List);
   }
 
   Future<void> saveFileToDownloads(String fileName, List<int> fileBytes) async {
@@ -117,8 +134,16 @@ class CertificateInsurenceLogic extends GetxController {
     await file.writeAsBytes(fileBytes);
     Get.defaultDialog(
       title: "File Download",
+      contentPadding: EdgeInsets.all(20.r),
+      titlePadding: EdgeInsets.only(top: 20.r),
       actions: [
         ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ColorConfig.jsPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.r),
+              ),
+            ),
             onPressed: () {
               Get.offAll(() => DashboardPage(), binding: DashboardBinding());
             },
@@ -129,6 +154,7 @@ class CertificateInsurenceLogic extends GetxController {
     // Check if the file was saved successfully
     if (await file.exists()) {
     } else {}
+    isDownLoading.value = false;
   }
 
   Future<String?> getDownloadPath() async {
@@ -146,5 +172,7 @@ class CertificateInsurenceLogic extends GetxController {
     return directory?.path;
   }
 
-  _onFailure(response) {}
+  _onFailure(response) {
+    isDownLoading.value = false;
+  }
 }

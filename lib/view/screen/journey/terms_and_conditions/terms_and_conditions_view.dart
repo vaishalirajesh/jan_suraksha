@@ -59,11 +59,13 @@ class TermsAndConditionsPage extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: AppString.janText,
-                                  style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsPrimaryColor, fontSize: 26),
+                                  style: StyleConfig.semiBoldText24
+                                      .copyWith(color: ColorConfig.jsPrimaryColor, fontSize: 26),
                                 ),
                                 TextSpan(
                                   text: AppString.surakshaText,
-                                  style: StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor, fontSize: 26),
+                                  style:
+                                      StyleConfig.semiBoldText24.copyWith(color: ColorConfig.jsBlueColor, fontSize: 26),
                                 ),
                               ],
                             ),

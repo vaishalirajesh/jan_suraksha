@@ -84,7 +84,7 @@ class AddressDetailsPage extends StatelessWidget {
                                 height: 15.h,
                               ),
                               DisableTextField(
-                                isMandatory: false,
+                                isMandatory: true,
                                 initialvale: addressDetailsLogic.getAppData.data?.address?.pincode != null
                                     ? '${addressDetailsLogic.getAppData.data?.address?.pincode}'
                                     : '',

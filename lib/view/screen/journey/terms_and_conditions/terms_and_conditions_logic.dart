@@ -67,7 +67,7 @@ class TermsAndConditionsLogic extends GetxController {
   Future<void> getData() async {
     isDataLoaded.value = false;
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
-
+    TGLog.d("ApplicationId-------$appId");
     var encUserId = AesGcmEncryptionUtils.encryptNew(appId.toString());
     TermConditionRequest termConditionRequest = TermConditionRequest(id: encUserId);
     ServiceManager.getInstance().getTermConition(
@@ -88,7 +88,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in TermConditionRequest");
       isDataLoaded.value = true;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getTermConition().status ?? 0, response.getTermConition().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getTermConition().status ?? 0, response.getTermConition().message ?? "", null);
     }
   }
 
@@ -99,7 +100,17 @@ class TermsAndConditionsLogic extends GetxController {
   }
 
   void onPressButton(BuildContext context) {
-    OTPBottomSheet.getBottomSheet(context: context, title: '', subTitle: '', onChangeOTP: onChangeOTP, onSubmitOTP: onSubmitOTP, mobileNumber: mobile, isEnable: true.obs, isLoading: isOTPVerifying, onButtonPress: verifyOTP, errorText: otpError);
+    OTPBottomSheet.getBottomSheet(
+        context: context,
+        title: '',
+        subTitle: '',
+        onChangeOTP: onChangeOTP,
+        onSubmitOTP: onSubmitOTP,
+        mobileNumber: mobile,
+        isEnable: true.obs,
+        isLoading: isOTPVerifying,
+        onButtonPress: verifyOTP,
+        errorText: otpError);
   }
 
   void onChangeOTP(String str) {
@@ -154,7 +165,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in ConsentOtpSendRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -162,7 +174,8 @@ class TermsAndConditionsLogic extends GetxController {
     isOTPVerifying.value = true;
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
-    VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(mobile: mobile, otpType: 3, userId: userId, otp: otp.value);
+    VerifySignupOtpRequest verifySignupOtpRequest =
+        VerifySignupOtpRequest(mobile: mobile, otpType: 3, userId: userId, otp: otp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
@@ -181,7 +194,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in ConsentOtpVerifyRequest");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -189,7 +203,8 @@ class TermsAndConditionsLogic extends GetxController {
     isOTPVerifying.value = true;
     var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
     var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '';
-    PremiumDeductionRequest premiumDeductionRequest = PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
+    PremiumDeductionRequest premiumDeductionRequest =
+        PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
     var jsonRequest = jsonEncode(premiumDeductionRequest.toJson());
     TGLog.d("PremiumDeductionRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_PREMIUM_DEDUCTION);
@@ -208,7 +223,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in PremiumDeductionResponse");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.PremiumDeduction().status ?? 0, response?.PremiumDeduction()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.PremiumDeduction().status ?? 0, response?.PremiumDeduction()?.message ?? "", null);
     }
   }
 
@@ -247,7 +263,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
     }
   }
 
@@ -277,7 +294,8 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in updateStageDeatilAfterOTPVerify");
       isOTPVerifying.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0, response.updateApplicationStage().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
+          response.updateApplicationStage().message ?? "", null);
     }
   }
 }

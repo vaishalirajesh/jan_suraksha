@@ -33,7 +33,7 @@ import '../../../../model/request_model/GetApplicationFormDetailsRequest.dart';
 import '../../../../services/encryption/encdec/aesGcmEncryption.dart';
 
 class NomineeDetailsLogic extends GetxController {
-  RxBool isChecked = true.obs;
+  RxBool isChecked = false.obs;
   RxBool isLoading = false.obs;
   RxBool isDataSaving = false.obs;
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
@@ -54,23 +54,36 @@ class NomineeDetailsLogic extends GetxController {
   String dob = '';
   DateTime date = DateTime.now();
   RxString fNameErrorMsg = ''.obs;
+  RxString mNameErrorMsg = ''.obs;
+  RxString lNameErrorMsg = ''.obs;
   RxString dobErrorMsg = ''.obs;
   RxString addressErrorMsg = ''.obs;
+  RxString address2ErrorMsg = ''.obs;
   RxString cityErrorMsg = ''.obs;
   RxString districtErrorMsg = ''.obs;
   RxString stateErrorMsg = ''.obs;
   RxString pinCodeErrorMsg = ''.obs;
-  RxString selectedValue = 'hello'.obs;
+  RxString relationErrorMsg = ''.obs;
+  RxString mobileErrorMsg = ''.obs;
+  RxString emailErrorMsg = ''.obs;
+  RxString selectedValue = ''.obs;
   RxMap<String, String> items = {"": ""}.obs;
   RxString screenName = ''.obs;
-
   var nomineeRelationShip = "".obs;
-
   var relationshipid = 0.obs;
-
   var guardianid = 0.obs;
-
   var guardianShipValue = "".obs;
+  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
+  RegExp mobileRegExp = RegExp(r'^[0-9]+$');
+  RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
+  RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
+  RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+      "\\@" +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+      "(" +
+      "\\." +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+      ")+");
 
   @override
   void onInit() {
@@ -106,16 +119,14 @@ class NomineeDetailsLogic extends GetxController {
     TGLog.d("GetMasterListRequest : onSuccess()---$response");
     if (response.getMasterList().status == RES_SUCCESS) {
       isLoading.value = true;
-
       response.getMasterList().data?.releationship?.forEach((element) {
         items.value.addAll({element?.id?.toString() ?? "": element.value ?? ""});
-
-        update();
       });
     } else {
       TGLog.d("Error in GetMasterListRequest");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getMasterList().status ?? 0, response.getMasterList().message ?? "", null);
     }
   }
 
@@ -171,14 +182,6 @@ class NomineeDetailsLogic extends GetxController {
       lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDatePickerMode: DatePickerMode.day,
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(),
-          ),
-          child: child!,
-        );
-      },
     );
     if (picked != null) {
       date = picked;
@@ -193,7 +196,20 @@ class NomineeDetailsLogic extends GetxController {
   }
 
   String getmonth(int month) {
-    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
     return months[month - 1];
   }
 
@@ -243,70 +259,228 @@ class NomineeDetailsLogic extends GetxController {
         stateErrorMsg.value = '';
         districtErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) || firstNameController.text == ' ') {
+        fNameErrorMsg.value = 'Please enter valid first name';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+      } else if ((middleNameController.text.isNotEmpty && !onlyCharRegExp.hasMatch(middleNameController.text)) ||
+          middleNameController.text == ' ') {
+        fNameErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+
+        mNameErrorMsg.value = 'Please enter valid middle name';
+      } else if ((latsNameController.text.isNotEmpty && !onlyCharRegExp.hasMatch(latsNameController.text)) ||
+          latsNameController.text == ' ') {
+        fNameErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+
+        emailErrorMsg.value = '';
+        lNameErrorMsg.value = 'Please enter valid last name';
+        mNameErrorMsg.value = '';
       } else if (dobController.text.isEmpty) {
         dobErrorMsg.value = 'Please select date of birth';
         fNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
         addressErrorMsg.value = '';
         cityErrorMsg.value = '';
         stateErrorMsg.value = '';
+        mNameErrorMsg.value = '';
         districtErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
-      } else if (addressOneController.text.isEmpty) {
-        addressErrorMsg.value = 'Please enter address';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+
+        lNameErrorMsg.value = '';
+      } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+              mobileController.text == ' ' ||
+              (mobileController.text.isNotEmpty &&
+                  !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
+          (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        addressErrorMsg.value = '';
         cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = 'Please enter valid mobile number';
+        lNameErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+      } else if (relationshipid.value == 0) {
+        pinCodeErrorMsg.value = '';
+        fNameErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        relationErrorMsg.value = 'Please select relationship with the applicant';
+        lNameErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+      } else if (emailController.text.isNotEmpty && (emailController.text.length < 5) ||
+          !emailRegExp.hasMatch(emailController.text)) {
+        dobErrorMsg.value = '';
+        fNameErrorMsg.value = '';
+        emailErrorMsg.value = 'Please enter valid email';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+
+        lNameErrorMsg.value = '';
+      } else if (addressOneController.text.isEmpty ||
+          addressOneController.text.length < 2 ||
+          specialCharExpStartChar.hasMatch(addressOneController.text.substring(0))) {
+        addressErrorMsg.value = 'Please enter valid address';
+        fNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        address2ErrorMsg.value = '';
         stateErrorMsg.value = '';
         districtErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
-      } else if (cityController.text.isEmpty) {
-        cityErrorMsg.value = 'Please enter city';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+      } else if (cityController.text.isEmpty ||
+          cityController.text.length < 2 ||
+          specialCharExpStartChar.hasMatch(cityController.text.substring(0))) {
+        cityErrorMsg.value = 'Please enter valid city';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        mNameErrorMsg.value = '';
         addressErrorMsg.value = '';
         stateErrorMsg.value = '';
         districtErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
-      } else if (stateController.text.isEmpty) {
-        stateErrorMsg.value = 'Please enter state';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+      } else if (stateController.text.isEmpty ||
+          stateController.text.length < 2 ||
+          specialCharExpStartChar.hasMatch(stateController.text.substring(0))) {
+        stateErrorMsg.value = 'Please enter valid state';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
         cityErrorMsg.value = '';
         districtErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
-      } else if (districtController.text.isEmpty) {
-        districtErrorMsg.value = 'Please enter district';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+      } else if (districtController.text.isEmpty ||
+          districtController.text.length < 2 ||
+          specialCharExpStartChar.hasMatch(districtController.text.substring(0))) {
+        districtErrorMsg.value = 'Please enter valid district';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
         cityErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        mNameErrorMsg.value = '';
         stateErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+        lNameErrorMsg.value = '';
       } else if (pinCodeController.text.isEmpty) {
         pinCodeErrorMsg.value = 'Please enter pincode';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
+        emailErrorMsg.value = '';
         cityErrorMsg.value = '';
         stateErrorMsg.value = '';
+        mNameErrorMsg.value = '';
         districtErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+        lNameErrorMsg.value = '';
       } else if (!validCharacters.hasMatch(pinCodeController.text)) {
         pinCodeErrorMsg.value = 'Please enter valid pincode';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
         cityErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        lNameErrorMsg.value = '';
         stateErrorMsg.value = '';
         districtErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+        relationErrorMsg.value = '';
       } else {
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
         cityErrorMsg.value = '';
         stateErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        address2ErrorMsg.value = '';
         districtErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        mobileErrorMsg.value = '';
         pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        lNameErrorMsg.value = '';
         setData();
         if (screenName.value == 'Service') {
           onSaveData();
@@ -409,7 +583,8 @@ class NomineeDetailsLogic extends GetxController {
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
     }
   }
 
@@ -434,7 +609,8 @@ class NomineeDetailsLogic extends GetxController {
     appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
     var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
     var mockAppId = "101212404";
-    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest = GetApplicationFormDetailsRequest(appId: encAppId);
+    GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
+        GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");
     ServiceManager.getInstance().getApplicationFormDetails(
       request: getApplicationFormDetailsRequest,
@@ -446,7 +622,8 @@ class NomineeDetailsLogic extends GetxController {
   _onSuccessVerifyOTP(GetApplicationFormDetailsResponse response) async {
     TGLog.d("GetApplicationFormDetailsRequest : onSuccess()---$response");
     if (response.getApplicationFormDetailsResponse().status == RES_SUCCESS) {
-      TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
+      TGSession.getInstance().set(PREF_USER_FORM_DATA,
+          getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
       getAppData = response.getApplicationFormDetailsResponse();
       nominee = getAppData.data?.nominee?.first ?? Nominee();
       firstNameController.text = nominee.firstName ?? '';
@@ -467,7 +644,8 @@ class NomineeDetailsLogic extends GetxController {
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");
       isLoading.value = true;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0, response?.getApplicationFormDetailsResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getApplicationFormDetailsResponse().status ?? 0,
+          response?.getApplicationFormDetailsResponse()?.message ?? "", null);
     }
   }
 

@@ -196,6 +196,8 @@ class AppString {
   static const String insurance6 = 'Date : ';
   static const String insurenceScheme = "Government's Social Security Insurance Schemes ";
   static const String subjectText = "* Subject to Terms and Condition applied";
+  static const String pmsbyText2 =
+      "The scheme is a one year cover Personal Accident Insurance Scheme, renewable from year to year, offering protection against death or disability due to accident.";
   static const String pmsbyText =
       'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
 

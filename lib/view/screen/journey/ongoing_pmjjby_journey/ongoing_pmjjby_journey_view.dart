@@ -23,7 +23,7 @@ class OngoingPmjjbyJourneyPage extends StatelessWidget {
       child: AddHeaderFooter(
           appbarName: AppString.appBarWithSubtitle,
           title: "PMJJBY",
-          subTitle: 'Pradhan Mantri Suraksha Bima Yojana',
+          subTitle: 'Pradhan Mantri Jeevan Jyoti Bima Yojana',
           buttonTitle: "Continue",
           onButtonClick: AppUtils.onBackPress,
           onBackButtonCLick: AppUtils.onBackPress,

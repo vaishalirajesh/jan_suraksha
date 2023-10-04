@@ -76,11 +76,6 @@ class RegistrationLogic extends GetxController {
     // getcaptcha();
     // return;
 
-
-
-
-
-
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
 
     if (nameController.text.isEmpty) {
@@ -99,10 +94,10 @@ class RegistrationLogic extends GetxController {
       nameError.value = '';
       mobileError.value = '';
       captchError.value = 'Captcha not match';
-    }else if(isCheckedFirst == false){
-      LoaderUtils.handleErrorResponse(Get.context!,  0,  "Please Accept the Privacy Policy Terms & Conditions and Disclaimers", null);
-    }
-    else {
+    } else if (isCheckedFirst == false) {
+      LoaderUtils.handleErrorResponse(
+          Get.context!, 0, "Please Accept the Privacy Policy Terms & Conditions and Disclaimers", null);
+    } else {
       nameError.value = '';
       mobileError.value = '';
       captchError.value = '';
@@ -113,7 +108,10 @@ class RegistrationLogic extends GetxController {
   }
 
   getcaptcha() {
-    ServiceManager.getInstance().getCaptcha(request: EmptyTgGetRequest(), onSuccess: (response) => _onsuccsessCaptchGet(response), onError: (response) => _onErrorResponse(response));
+    ServiceManager.getInstance().getCaptcha(
+        request: EmptyTgGetRequest(),
+        onSuccess: (response) => _onsuccsessCaptchGet(response),
+        onError: (response) => _onErrorResponse(response));
   }
 
   Future<void> signUp() async {
@@ -136,11 +134,15 @@ class RegistrationLogic extends GetxController {
       captchaOriginal: captchaTrueValue,
       name: nameController.text,
       otpType: 1,
+      notificationMasterId: 12,
     );
     var jsonRequest = jsonEncode(signUpOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP);
-    ServiceManager.getInstance().otpRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessSignUp(response), onError: (error) => _onErrorSignUp(error));
+    ServiceManager.getInstance().otpRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessSignUp(response),
+        onError: (error) => _onErrorSignUp(error));
   }
 
   _onSuccessSignUp(OTPResponse response) async {
@@ -173,7 +175,8 @@ class RegistrationLogic extends GetxController {
     } else {
       TGLog.d("Error in SignUpOtpRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -191,7 +194,7 @@ class RegistrationLogic extends GetxController {
     // TGLog.d("Decrypet data----${AesGcmEncryptionUtils.decryptNew(data)}");
     // return;
     if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
-      otpError.value = 'Please enter valid Otp';
+      otpError.value = 'Please enter valid verification code';
       return;
     } else {
       otpError.value = '';
@@ -207,11 +210,15 @@ class RegistrationLogic extends GetxController {
 
   Future<void> onVerifyOTP() async {
     isOTPVerifing.value = true;
-    VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(mobile: mobileController.text, otpType: 1, userId: userId, otp: otp.value);
+    VerifySignupOtpRequest verifySignupOtpRequest =
+        VerifySignupOtpRequest(mobile: mobileController.text, otpType: 1, userId: userId, otp: otp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
-    ServiceManager.getInstance().otpRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessVerifyOTP(response), onError: (error) => _onErrorSignUp(error));
+    ServiceManager.getInstance().otpRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessVerifyOTP(response),
+        onError: (error) => _onErrorSignUp(error));
   }
 
   _onSuccessVerifyOTP(OTPResponse response) async {
@@ -223,7 +230,8 @@ class RegistrationLogic extends GetxController {
     } else {
       TGLog.d("Error in VerifySignupOtpRequest");
       isOTPVerifing.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -257,14 +265,18 @@ class RegistrationLogic extends GetxController {
       deviceOs: 'windows',
       deviceOsVersion: 'windows-10',
       deviceType: 'desktop',
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+      userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
       userType: 1,
       otp: '',
     );
     var jsonRequest = jsonEncode(loginRequest.toJson());
     TGLog.d("Auto Login Request $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
-    ServiceManager.getInstance().loginRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessAutoLogin(response), onError: (error) => _onErrorAutoLogin(error));
+    ServiceManager.getInstance().loginRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessAutoLogin(response),
+        onError: (error) => _onErrorAutoLogin(error));
   }
 
   _onSuccessAutoLogin(LoginResponse response) async {
@@ -279,7 +291,8 @@ class RegistrationLogic extends GetxController {
       TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
       TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
       TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
-      TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile ?? mobileController.text);
+      TGSession.getInstance()
+          .set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile ?? mobileController.text);
       TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.getLoginResponseData().userOrgId);
       TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getLoginResponseData().userId);
       setAccessTokenInRequestHeader();
@@ -301,7 +314,8 @@ class RegistrationLogic extends GetxController {
     } else {
       TGLog.d("Error in login");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0, response?.getLoginResponseData()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0,
+          response?.getLoginResponseData()?.message ?? "", null);
     }
   }
 

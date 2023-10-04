@@ -68,6 +68,7 @@ class LoginLogic extends GetxController {
   RxString email = ''.obs;
   RxString setPassError = ''.obs;
   RxString resetPassError = ''.obs;
+  num masterId = 0;
 
   var passwordController = TextEditingController(text: "");
 
@@ -167,7 +168,10 @@ class LoginLogic extends GetxController {
             TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
             setAccessTokenInRequestHeader();
             EmailOtpRequest emailOtpRequest = EmailOtpRequest(
-                userId: loginResponse.getLoginResponseData().userId, email: mobileController.text, otptype: 2);
+                userId: loginResponse.getLoginResponseData().userId,
+                email: mobileController.text,
+                otpType: 2,
+                notificationMasterId: 13);
             var jsonRequest = jsonEncode(emailOtpRequest.toJson());
             TGLog.d("EmailOtpRequest $jsonRequest");
             TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -290,7 +294,7 @@ class LoginLogic extends GetxController {
   Future<void> onPressVerifyOtp() async {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
-      otpError.value = 'Please enter valid Otp';
+      otpError.value = 'Please enter valid verification code ';
       return;
     } else {
       otpError.value = '';
@@ -449,6 +453,7 @@ class LoginLogic extends GetxController {
     TGLog.d("ForgotPasswordRequest : onSuccess()---$response");
     if (response.forgotPassword().status == RES_SUCCESS) {
       isPasswordAPICall.value = false;
+      masterId = response.forgotPassword().data?.masterId ?? 0;
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
@@ -486,7 +491,8 @@ class LoginLogic extends GetxController {
   Future<void> emailVerifyOtp() async {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
     if (emailOtp.value.length != 6 || !validCharacters.hasMatch(emailOtp.value)) {
-      emailOtpError.value = 'Please enter valid Otp';
+      emailOtpError.value = 'Please enter valid verification code';
+
       return;
     } else {
       emailOtpError.value = '';
@@ -502,9 +508,9 @@ class LoginLogic extends GetxController {
 
   Future<void> onVerifyOTP() async {
     isEmailOTPVerifing.value = true;
-    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+
     VerifySignupOtpRequest verifySignupOtpRequest =
-        VerifySignupOtpRequest(email: forgotEmailController.text, otpType: 2, userId: userId, otp: emailOtp.value);
+        VerifySignupOtpRequest(email: forgotEmailController.text, otpType: 2, userId: masterId, otp: emailOtp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -665,10 +671,13 @@ class LoginLogic extends GetxController {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            errorText.value ?? '',
-                            style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                            textAlign: TextAlign.center,
+                          Expanded(
+                            child: Text(
+                              errorText.value ?? '',
+                              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.visible,
+                            ),
                           ),
                         ],
                       ),

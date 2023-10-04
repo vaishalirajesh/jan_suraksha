@@ -97,10 +97,13 @@ class OTPBottomSheetAuth {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      errorText.value ?? '',
-                      style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                      textAlign: TextAlign.center,
+                    Expanded(
+                      child: Text(
+                        errorText.value ?? '',
+                        style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.visible,
+                      ),
                     ),
                   ],
                 ),

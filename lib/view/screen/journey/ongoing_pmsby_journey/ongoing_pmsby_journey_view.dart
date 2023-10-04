@@ -89,7 +89,7 @@ class OngoingPmsbyJourneyPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 20.w, right: 20.h, bottom: 15.h, top: 30.h),
                   child: Text(
-                    AppString.pmsbyText,
+                    AppString.pmsbyText2,
                     style: StyleConfig.smallTextGrey,
                   ),
                 ),
@@ -111,7 +111,7 @@ class OngoingPmsbyJourneyPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Benifits",
+                          "Benefits",
                           style: StyleConfig.boldText16.copyWith(fontSize: 20.sp, color: ColorConfig.jsTextGreyColor),
                         ),
                         SizedBox(

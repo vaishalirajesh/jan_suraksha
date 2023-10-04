@@ -7,6 +7,7 @@ import 'dart:convert';
 /// captchaOriginal : "123123"
 /// captchaEnter : "123123"
 /// isTermsAccepted : true
+/// notificationMasterId : 1
 
 SignUpOtpRequest signUpOtpRequestFromJson(String str) => SignUpOtpRequest.fromJson(json.decode(str));
 String signUpOtpRequestToJson(SignUpOtpRequest data) => json.encode(data.toJson());
@@ -20,6 +21,7 @@ class SignUpOtpRequest {
     String? captchaOriginal,
     String? captchaEnter,
     bool? isTermsAccepted,
+    num? notificationMasterId,
   }) {
     _mobile = mobile;
     _name = name;
@@ -28,6 +30,7 @@ class SignUpOtpRequest {
     _captchaOriginal = captchaOriginal;
     _captchaEnter = captchaEnter;
     _isTermsAccepted = isTermsAccepted;
+    _notificationMasterId = notificationMasterId;
   }
 
   SignUpOtpRequest.fromJson(dynamic json) {
@@ -38,6 +41,7 @@ class SignUpOtpRequest {
     _captchaOriginal = json['captchaOriginal'];
     _captchaEnter = json['captchaEnter'];
     _isTermsAccepted = json['isTermsAccepted'];
+    _notificationMasterId = json['notificationMasterId'];
   }
   String? _mobile;
   String? _name;
@@ -46,6 +50,7 @@ class SignUpOtpRequest {
   String? _captchaOriginal;
   String? _captchaEnter;
   bool? _isTermsAccepted;
+  num? _notificationMasterId;
   SignUpOtpRequest copyWith({
     String? mobile,
     String? name,
@@ -54,6 +59,7 @@ class SignUpOtpRequest {
     String? captchaOriginal,
     String? captchaEnter,
     bool? isTermsAccepted,
+    num? notificationMasterId,
   }) =>
       SignUpOtpRequest(
         mobile: mobile ?? _mobile,
@@ -63,6 +69,7 @@ class SignUpOtpRequest {
         captchaOriginal: captchaOriginal ?? _captchaOriginal,
         captchaEnter: captchaEnter ?? _captchaEnter,
         isTermsAccepted: isTermsAccepted ?? _isTermsAccepted,
+        notificationMasterId: notificationMasterId ?? _notificationMasterId,
       );
   String? get mobile => _mobile;
   String? get name => _name;
@@ -71,6 +78,7 @@ class SignUpOtpRequest {
   String? get captchaOriginal => _captchaOriginal;
   String? get captchaEnter => _captchaEnter;
   bool? get isTermsAccepted => _isTermsAccepted;
+  num? get notificationMasterId => _notificationMasterId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -81,6 +89,7 @@ class SignUpOtpRequest {
     map['captchaOriginal'] = _captchaOriginal;
     map['captchaEnter'] = _captchaEnter;
     map['isTermsAccepted'] = _isTermsAccepted;
+    map['notificationMasterId'] = _notificationMasterId;
     return map;
   }
 }

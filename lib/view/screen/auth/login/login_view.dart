@@ -13,17 +13,19 @@ import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/auth/Registration/registration_binding.dart';
 import 'package:jan_suraksha/view/screen/auth/Registration/registration_view.dart';
+import 'package:jan_suraksha/view/screen/auth/login/forgot_password_view.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
 
 import 'login_logic.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+  final loginLogic = Get.find<LoginLogic>();
 
   @override
   Widget build(BuildContext context) {
-    final loginLogic = Get.find<LoginLogic>();
     return WillPopScope(
       onWillPop: AppUtils.onWillPopScopeAuth,
       child: Scaffold(
@@ -61,7 +63,10 @@ class LoginPage extends StatelessWidget {
               ),
               Text(
                 AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextBlueGreyColor, fontFamily: JSFonts.outfitRegular, fontWeight: FontWeight.w300),
+                style: StyleConfig.smallText.copyWith(
+                    color: ColorConfig.jsTextBlueGreyColor,
+                    fontFamily: JSFonts.outfitRegular,
+                    fontWeight: FontWeight.w300),
               ),
               SizedBox(
                 height: 30.h,
@@ -111,11 +116,16 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        AppString.forgot_password,
-                                        style: StyleConfig.regularExtraSmallBText.copyWith(
-                                          color: ColorConfig.jsBlueColor,
-                                          fontFamily: JSFonts.outfitRegular,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(() => ForgotPasswordPage(), binding: LoginBinding());
+                                        },
+                                        child: Text(
+                                          AppString.forgot_password,
+                                          style: StyleConfig.regularExtraSmallBText.copyWith(
+                                            color: ColorConfig.jsBlueColor,
+                                            fontFamily: JSFonts.outfitRegular,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -147,7 +157,11 @@ class LoginPage extends StatelessWidget {
                         return loginLogic.captchaString.value.isNotEmpty
                             ? Row(
                                 children: [
-                                  SizedBox(width: 0.6.sw, height: 40, child: Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
+                                  SizedBox(
+                                      width: 0.6.sw,
+                                      height: 40,
+                                      child:
+                                          Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -169,7 +183,8 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    style: StyleConfig.regularText16
+                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
                                   )
                                 ],
                               );
@@ -220,7 +235,8 @@ class LoginPage extends StatelessWidget {
                                           Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
                                         },
                                       text: "Register",
-                                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                      style: StyleConfig.regularText16
+                                          .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
                                     ),
                                   ],
                                 ),

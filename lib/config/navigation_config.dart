@@ -90,10 +90,16 @@ class NavigationConfig {
     return [
       GetPage(name: PersonalInfoPageRoute, page: () => PersonalInfoPage(), binding: PersonalInfoBinding()),
       GetPage(name: PolicyAvailedPageRoute, page: () => PolicyAvailedPagePage(), binding: PolicyAvailedPageBinding()),
-      GetPage(name: ExceededAgeCriteareaPageRoute, page: () => ExceededAgeCriteareaPagePage(), binding: ExceededAgeCriteareaPageBinding()),
-      GetPage(name: InSuffciantFundsPageRoute, page: () => InSuffciantFundsPagePage(), binding: InSuffciantFundsPageBinding()),
+      GetPage(
+          name: ExceededAgeCriteareaPageRoute,
+          page: () => ExceededAgeCriteareaPagePage(),
+          binding: ExceededAgeCriteareaPageBinding()),
+      GetPage(
+          name: InSuffciantFundsPageRoute,
+          page: () => InSuffciantFundsPagePage(),
+          binding: InSuffciantFundsPageBinding()),
       GetPage(name: SplashRoutes, page: () => SplashScreenPage(), binding: SplashScreenBinding()),
-      GetPage(name: LoginPageRoute, page: () => const LoginPage(), binding: LoginBinding()),
+      GetPage(name: LoginPageRoute, page: () => LoginPage(), binding: LoginBinding()),
       GetPage(name: DashboardPageRoute, page: () => DashboardPage(), binding: DashboardBinding()),
       GetPage(name: PolicyDetailsPageRoute, page: () => PolicyDetailsPage(), binding: PolicyDetailsBinding()),
       GetPage(name: ProfilePageRoute, page: () => ProfilePage(), binding: ProfileBinding()),
@@ -104,15 +110,30 @@ class NavigationConfig {
       GetPage(name: ApplicationFormPageRoute, page: () => ApplicationFormPage(), binding: ApplicationFormBinding()),
       GetPage(name: BankSelectionPageRoute, page: () => BankSelectionPage(), binding: BankSelectionBinding()),
       GetPage(name: RegistrationPageRoute, page: () => RegistrationPage(), binding: RegistrationBinding()),
-      GetPage(name: CertificateInsurencePageRoute, page: () => CertificateInsurencePage(), binding: CertificateInsurenceBinding()),
+      GetPage(
+          name: CertificateInsurencePageRoute,
+          page: () => CertificateInsurencePage(),
+          binding: CertificateInsurenceBinding()),
       GetPage(name: CongratulationsPageRoute, page: () => CongratulationsPage(), binding: CongratulationsBinding()),
-      GetPage(name: CustomerVerificationPageRoute, page: () => CustomerVerificationPage(), binding: CustomerVerificationBinding()),
+      GetPage(
+          name: CustomerVerificationPageRoute,
+          page: () => CustomerVerificationPage(),
+          binding: CustomerVerificationBinding()),
       GetPage(name: GuradianDetailsPageRoute, page: () => GuradianDetailsPage(), binding: GuradianDetailsBinding()),
       GetPage(name: NomineeDetailsPageRoute, page: () => NomineeDetailsPage(), binding: NomineeDetailsBinding()),
-      GetPage(name: PreviewApplicationPageRoute, page: () => PreviewApplicationPage(), binding: PreviewApplicationBinding()),
+      GetPage(
+          name: PreviewApplicationPageRoute,
+          page: () => PreviewApplicationPage(),
+          binding: PreviewApplicationBinding()),
       GetPage(name: SelectSchemePageRoute, page: () => SelectSchemePage(), binding: SelectSchemeBinding()),
-      GetPage(name: TermsAndConditionsPageRoute, page: () => TermsAndConditionsPage(), binding: TermsAndConditionsBinding()),
-      GetPage(name: TransactionsFailurePageRoute, page: () => TransactionsFailurePage(), binding: TransactionsFailureBinding()),
+      GetPage(
+          name: TermsAndConditionsPageRoute,
+          page: () => TermsAndConditionsPage(),
+          binding: TermsAndConditionsBinding()),
+      GetPage(
+          name: TransactionsFailurePageRoute,
+          page: () => TransactionsFailurePage(),
+          binding: TransactionsFailureBinding()),
     ];
   }
 }

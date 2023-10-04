@@ -63,7 +63,10 @@ class RegistrationPage extends StatelessWidget {
               ),
               Text(
                 AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextBlueGreyColor, fontFamily: JSFonts.outfitRegular, fontWeight: FontWeight.w300),
+                style: StyleConfig.smallText.copyWith(
+                    color: ColorConfig.jsTextBlueGreyColor,
+                    fontFamily: JSFonts.outfitRegular,
+                    fontWeight: FontWeight.w300),
               ),
               SizedBox(
                 height: 30.h,
@@ -122,7 +125,10 @@ class RegistrationPage extends StatelessWidget {
                         return signUpLogic.captchaString.value.isNotEmpty
                             ? Row(
                                 children: [
-                                  SizedBox(width: 0.6.sw, height: 40, child: Image.memory(Base64Decoder().convert(signUpLogic.captchaString.value))),
+                                  SizedBox(
+                                      width: 0.6.sw,
+                                      height: 40,
+                                      child: Image.memory(Base64Decoder().convert(signUpLogic.captchaString.value))),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -144,7 +150,8 @@ class RegistrationPage extends StatelessWidget {
                                   ),
                                   Text(
                                     "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    style: StyleConfig.regularText16
+                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
                                   )
                                 ],
                               );
@@ -194,7 +201,9 @@ class RegistrationPage extends StatelessWidget {
                                   ),
                                   side: BorderSide(
                                     width: 1,
-                                    color: signUpLogic.isCheckedFirst.value ? ThemeHelper.getInstance()!.primaryColor : ThemeHelper.getInstance()!.disabledColor,
+                                    color: signUpLogic.isCheckedFirst.value
+                                        ? ThemeHelper.getInstance()!.primaryColor
+                                        : ThemeHelper.getInstance()!.disabledColor,
                                   ),
                                 ),
                               ),
@@ -204,13 +213,17 @@ class RegistrationPage extends StatelessWidget {
                               flex: 1,
                               child: Padding(
                                 padding: EdgeInsets.only(left: 10.w),
-                                child: Text.rich(TextSpan(text: "I Accept the ", style: StyleConfig.smallText, children: <InlineSpan>[
-                                  TextSpan(
-                                      text: "Privacy Policy, ",
-                                      style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyStatefulWidget("1")));
+                                child: Text.rich(TextSpan(
+                                    text: "I Accept the ",
+                                    style: StyleConfig.smallText,
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: "Privacy Policy, ",
+                                          style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("1")));
 
 //                                               final pdfController = PdfController(
 //                                                 document: PdfDocument.openAsset('assets/files/jansuraksh_privacy_policy.pdf'),
@@ -220,26 +233,28 @@ class RegistrationPage extends StatelessWidget {
 //                                               PdfView(
 //                                                 controller: pdfController,
 //                                               );
-                                        }),
-                                  TextSpan(
-                                      text: "Terms & Conditions ",
-                                      style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyStatefulWidget("2")));
-                                        }),
-                                  TextSpan(
-                                    text: "and ",
-                                    style: StyleConfig.smallText,
-                                  ),
-                                  TextSpan(
-                                      text: "Disclaimers",
-                                      style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyStatefulWidget("3")));
-                                        }),
-                                ])),
+                                            }),
+                                      TextSpan(
+                                          text: "Terms & Conditions ",
+                                          style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("2")));
+                                            }),
+                                      TextSpan(
+                                        text: "and ",
+                                        style: StyleConfig.smallText,
+                                      ),
+                                      TextSpan(
+                                          text: "Disclaimers",
+                                          style: StyleConfig.smallText.copyWith(color: ColorConfig.jsBlueColor),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("3")));
+                                            }),
+                                    ])),
                               )),
                         ],
                       ),
@@ -258,7 +273,7 @@ class RegistrationPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.offAll(() => const LoginPage(), binding: LoginBinding());
+                                Get.offAll(() => LoginPage(), binding: LoginBinding());
                               },
                               child: RichText(
                                 textAlign: TextAlign.start,
@@ -270,7 +285,8 @@ class RegistrationPage extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       text: "Login",
-                                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                      style: StyleConfig.regularText16
+                                          .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
                                     ),
                                   ],
                                 ),

@@ -12,6 +12,7 @@ class AppString {
   static const String forgot_password = 'Forgot Password?';
   static const String password = 'Password';
   static const String enterMobileNumber = 'Mobile number / Email Address';
+  static const String enterEmailAddress = 'Email Address';
   static const String emptyText = '';
   static const String jsBankName = 'JanSuraksha';
   static const String mandatorySign = '*';

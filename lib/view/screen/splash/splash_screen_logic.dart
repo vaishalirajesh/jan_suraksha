@@ -9,7 +9,7 @@ class SplashScreenLogic extends GetxController {
   void onInit() {
     Startup.init();
     Future.delayed(const Duration(seconds: 5), () {
-      Get.offAll(() => const LoginPage(), binding: LoginBinding());
+      Get.offAll(() => LoginPage(), binding: LoginBinding());
     });
     super.onInit();
   }

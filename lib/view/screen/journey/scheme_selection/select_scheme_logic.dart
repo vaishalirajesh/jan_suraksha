@@ -1,8 +1,4 @@
 import 'package:get/get.dart';
-import 'package:jan_suraksha/services/services.dart';
-
-import '../../../../model/request_model/GetSchemaByUserIdRequest.dart';
-import '../../../../model/response_model/GetSchemaByUserIdResponse.dart';
 
 class SelectSchemeLogic extends GetxController {
   var isSchemeSelected = false.obs;
@@ -12,12 +8,4 @@ class SelectSchemeLogic extends GetxController {
   void onInit() {
     super.onInit();
   }
-
-  Future<void> getSchemees() async {
-    ServiceManager.getInstance().getSchemaByUserId(request: GetSchemaByUserIdRequest(id: '1'), onSuccess: (response) => _onsuccsessresponse(response), onError: (response) => _onErrorResponse(response));
-  }
-
-  _onsuccsessresponse(GetSchemaByUserIdResponse response) {}
-
-  _onErrorResponse(response) {}
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,6 @@ import '../../../widget/otp_bottom_sheet_auth.dart';
 class LoginLogic extends GetxController {
   TextEditingController mobileController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
-
   RxString mobile = ''.obs;
   RxString errorMsg = ''.obs;
   RxBool isLoading = false.obs;
@@ -68,28 +68,17 @@ class LoginLogic extends GetxController {
   RxString email = ''.obs;
   RxString setPassError = ''.obs;
   RxString resetPassError = ''.obs;
-
   var passwordController = TextEditingController(text: "");
-
   var isButtonEnabled = false.obs;
-
   var captchaController = TextEditingController(text: "");
-
   String? captchaTrueValue = "";
   final validCharacters = RegExp(r'^[0-9]+$');
-
   var repeatpasswordController = TextEditingController();
-  var forgotEmailController = TextEditingController(text: 'raj.kavadia@onlinepsbloans.com');
+  var forgotEmailController = TextEditingController(text: '');
   var setPasswordController = TextEditingController(text: '');
   var repeatSetPasswordController = TextEditingController(text: '');
   RxString forgotEmailError = ''.obs;
-  RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-      "\\@" +
-      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-      "(" +
-      "\\." +
-      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-      ")+");
+  RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+");
 
   @override
   void onInit() {
@@ -106,7 +95,7 @@ class LoginLogic extends GetxController {
     mobile.value = mobileController.text;
   }
 
-  Future<void> onPressSentOTP() async {
+  Future onPressSentOTP() async {
     if (isNumeric(mobileController.text)) {
       if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
         passwordError.value = '';
@@ -128,125 +117,63 @@ class LoginLogic extends GetxController {
         passwordError.value = '';
         mobileError.value = '';
         captchError.value = '';
-        loginWithMobile();
+        loginMobileRequest();
       }
     } else {
+      isLoading.value = true;
       LoginRequest loginRequest = LoginRequest(
-        email: mobileController.text,
-        password: passwordController.text,
-        browserName: 'chorme',
-        browserVersion: '123.00',
-        device: "smasung",
-        deviceOs: 'windows',
-        deviceOsVersion: 'windows-10',
-        deviceType: 'Mobile',
-        userAgent:
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-        userType: 1,
-      );
+          email: mobileController.text,
+          password: passwordController.text,
+          browserName: 'chorme',
+          browserVersion: '123.00',
+          device: "smasung",
+          deviceOs: 'windows',
+          deviceOsVersion: 'windows-10',
+          deviceType: 'Mobile',
+          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+          userType: 1,
+          notificationMasterId: 14);
       var jsonRequest = jsonEncode(loginRequest.toJson());
       TGLog.d("LoginRequest $jsonRequest");
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
       ServiceManager.getInstance().loginRequest(
           request: tgPostRequest,
           onSuccess: (response) async {
+            isLoading.value = false;
             LoginResponse loginResponse = response;
-            AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
-            TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
-            TGSharedPreferences.getInstance()
-                .set(PREF_LOGIN_TOKEN, loginResponse.getLoginResponseData().loginToken.toString());
-            Codec<String, String> stringToBase64 = utf8.fuse(base64);
-            String encoded = stringToBase64.encode(loginResponse.getLoginResponseData().userName ?? '');
-            TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
-            TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(loginResponse.getLoginResponseData()));
-            TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_ORG_ID, loginResponse.getLoginResponseData().userOrgId);
-            TGSharedPreferences.getInstance().set(PREF_USER_ID, loginResponse.getLoginResponseData().userId);
-            TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
+            saveLoginResponse(loginResponse);
             setAccessTokenInRequestHeader();
-            EmailOtpRequest emailOtpRequest = EmailOtpRequest(
-                userId: loginResponse.getLoginResponseData().userId, email: mobileController.text, otptype: 2);
-            var jsonRequest = jsonEncode(emailOtpRequest.toJson());
-            TGLog.d("EmailOtpRequest $jsonRequest");
-            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
-            TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
-            ServiceManager.getInstance().otpRequest(
-              request: tgPostRequest,
-              onSuccess: (response) async {
-                OTPResponse otpResponse = response;
-
-                OTPBottomSheetAuth.getBottomSheet(
-                  context: Get.context!,
-                  onChangeOTP: (s) {
-                    otp.value = s;
-                    otpError.value = '';
-                    TGLog.d("Otp---------${otp.value}");
-                  },
-                  onSubmitOTP: (s) async {
-                    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-                    var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
-                    VerifySignupOtpRequest verifySignupOtpRequest =
-                        VerifySignupOtpRequest(email: mobileController.text, otpType: 2, userId: userId, otp: s);
-                    var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-                    TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
-                    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
-                    TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
-                    ServiceManager.getInstance().otpRequest(
-                      request: tgPostRequest,
-                      onSuccess: (response) {
-                        Get.offAll(() => DashboardPage(), binding: DashboardBinding());
-                      },
-                      onError: (error) {},
-                    );
-                  },
-                  title: 'User Verification',
-                  mobileNumber: mobileController.text ?? '',
-                  isEnable: (otp.value.length == 6 ? true : false).obs,
-                  isLoading: isVerifyingOTP,
-                  onButtonPress: () {},
-                  isEdit: false.obs,
-                  errorText: otpError,
-                  subTitle: 'A Verification code is sent on Registered mobile number '.obs,
-                );
-              },
-              onError: (error) {},
-            );
+            GetEmailOtp(loginResponse.getLoginResponseData().userId, mobileController.text);
           },
           onError: (error) => _onErrorAutoLogin(error));
     }
   }
 
-  Future<void> loginWithMobile() async {
+  Future<void> loginMobileRequest() async {
     if (await NetUtils.isInternetAvailable()) {
-      login();
+      loginWithMobile();
     } else {
       if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, login);
+        showSnackBarForintenetConnection(Get.context!, loginWithMobile);
       }
     }
   }
 
-  Future<void> login() async {
+  Future<void> loginWithMobile() async {
     isLoading.value = true;
     LoginWithMobileRequest signUpOtpRequest = LoginWithMobileRequest(
-      userType: 1,
-      mobile: isMobilenumber.value ? mobileController.text : "",
-      captchaEnter: captchaController.text,
-      captchaOriginal: captchaTrueValue,
-      email: mobileController.text,
-      domain: 'https://uat-jns.instantmseloans.in',
-      platform: 'Mobile',
-      termsAccepted: "true",
-    );
+        userType: 1,
+        mobile: isMobilenumber.value ? mobileController.text : "",
+        captchaEnter: captchaController.text,
+        captchaOriginal: captchaTrueValue,
+        domain: 'https://uat-jns.instantmseloans.in',
+        platform: 'Mobile',
+        termsAccepted: "true",
+        notificationMasterId: 14);
     var jsonRequest = jsonEncode(signUpOtpRequest.toJson());
     TGLog.d("LoginWithMobileRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN_WITH_MOBILE);
-    ServiceManager.getInstance().loginWithMobile(
-        request: tgPostRequest,
-        onSuccess: (response) => _onSuccessLoginWithMobile(response),
-        onError: (error) => _onErrorLoginWithMobile(error));
+    ServiceManager.getInstance().loginWithMobile(request: tgPostRequest, onSuccess: (response) => _onSuccessLoginWithMobile(response), onError: (error) => _onErrorLoginWithMobile(error));
   }
 
   _onSuccessLoginWithMobile(LoginWithMobilResponse response) async {
@@ -276,8 +203,7 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in LoginWithMobileRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getLoginResponse().status ?? 0, response.getLoginResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getLoginResponse().status ?? 0, response.getLoginResponse().message ?? "", null);
     }
   }
 
@@ -323,8 +249,7 @@ class LoginLogic extends GetxController {
       deviceOs: 'windows',
       deviceOsVersion: 'windows-10',
       deviceType: 'Mobile',
-      userAgent:
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
       userType: 1,
       mobile: mobileController.text,
       otp: otp.value,
@@ -332,28 +257,14 @@ class LoginLogic extends GetxController {
     var jsonRequest = jsonEncode(loginRequest.toJson());
     TGLog.d("LoginRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
-    ServiceManager.getInstance().loginRequest(
-        request: tgPostRequest,
-        onSuccess: (response) => _onSuccessAutoLogin(response),
-        onError: (error) => _onErrorAutoLogin(error));
+    ServiceManager.getInstance().loginRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessAutoLogin(response), onError: (error) => _onErrorAutoLogin(error));
   }
 
   _onSuccessAutoLogin(LoginResponse response) async {
     TGLog.d("LoginRequest : onSuccess()---$response");
+
     if (response.getLoginResponseData().status == RES_SUCCESS) {
-      AppUtils.setAccessToken(response.getLoginResponseData().accessToken);
-      TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
-      TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, response.getLoginResponseData().refreshToken);
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_TOKEN, response.getLoginResponseData().loginToken.toString());
-      Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      String encoded = stringToBase64.encode(response.getLoginResponseData().userName ?? '');
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
-      TGSharedPreferences.getInstance().set(PREF_MOBILE, response.getLoginResponseData().mobile);
-      TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.getLoginResponseData()));
-      TGSession.getInstance().set(SESSION_MOBILENUMBER, response.getLoginResponseData().mobile);
-      TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.getLoginResponseData().userOrgId);
-      TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getLoginResponseData().userId);
-      TGSharedPreferences.getInstance().set(PREF_USERNAME, response.getLoginResponseData().userName);
+      saveLoginResponse(response);
       setAccessTokenInRequestHeader();
       isVerifyingOTP.value = false;
       Get.to(
@@ -366,8 +277,7 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in Login");
       isVerifyingOTP.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0,
-          response?.getLoginResponseData()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getLoginResponseData().status ?? 0, response?.getLoginResponseData()?.message ?? "", null);
     }
   }
 
@@ -401,8 +311,7 @@ class LoginLogic extends GetxController {
 
   void getForgotEmail() {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
-    if (forgotEmailController.text.isNotEmpty && (forgotEmailController.text.length < 5) ||
-        !emailRegExp.hasMatch(forgotEmailController.text)) {
+    if (forgotEmailController.text.isNotEmpty && (forgotEmailController.text.length < 5) || !emailRegExp.hasMatch(forgotEmailController.text)) {
       forgotEmailError.value = 'Please enter valid email';
     } else {
       forgotEmailError.value = '';
@@ -472,8 +381,7 @@ class LoginLogic extends GetxController {
     } else {
       TGLog.d("Error in ForgotPasswordRequest");
       isPasswordAPICall.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.forgotPassword().status ?? 0, response.forgotPassword().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.forgotPassword().status ?? 0, response.forgotPassword().message ?? "", null);
     }
   }
 
@@ -503,8 +411,7 @@ class LoginLogic extends GetxController {
   Future<void> onVerifyOTP() async {
     isEmailOTPVerifing.value = true;
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    VerifySignupOtpRequest verifySignupOtpRequest =
-        VerifySignupOtpRequest(email: forgotEmailController.text, otpType: 2, userId: userId, otp: emailOtp.value);
+    VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: forgotEmailController.text, otpType: 2, userId: userId, otp: emailOtp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -539,8 +446,7 @@ class LoginLogic extends GetxController {
       emailOtpError.value = response.getOtpResponse().message ?? '';
 
       isEmailOTPVerifing.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -549,8 +455,7 @@ class LoginLogic extends GetxController {
     if (setPasswordController.text.isEmpty) {
       setPassError.value = "Please enter password";
       resetPassError.value = '';
-    } else if (repeatSetPasswordController.text.isEmpty ||
-        setPasswordController.text != repeatSetPasswordController.text) {
+    } else if (repeatSetPasswordController.text.isEmpty || setPasswordController.text != repeatSetPasswordController.text) {
       resetPassError.value = "Password not match with confirm password";
       setPassError.value = '';
     } else if (repeatSetPasswordController.text.length < 8) {
@@ -564,15 +469,11 @@ class LoginLogic extends GetxController {
       resetPassError.value = '';
       isSetPasswordLoading.value = true;
       var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-      SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
-          password: setPasswordController.text, confirmPassword: repeatSetPasswordController.text, userId: userId);
+      SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: setPasswordController.text, confirmPassword: repeatSetPasswordController.text, userId: userId);
       var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
       TGLog.d("SignUpOtpRequest $jsonRequest");
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-      ServiceManager.getInstance().setPassword(
-          request: tgPostRequest,
-          onSuccess: (respose) => _onsuccsessSetPassword(respose),
-          onError: (response) => _onErrorSetPassword(response));
+      ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
     }
   }
 
@@ -586,8 +487,7 @@ class LoginLogic extends GetxController {
       TGLog.d("Error in VerifySignupOtpRequest");
       resetPassError.value = response.skippedresponse().message ?? '';
       isSetPasswordLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
     }
   }
 
@@ -696,5 +596,126 @@ class LoginLogic extends GetxController {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
+  }
+
+  Future<void> GetEmailOtp(num? userId, String email) async {
+    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userId, email: mobileController.text, otptype: 2, notificationMasterId: 14);
+    var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+    TGLog.d("EmailOtpRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+    TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().otpRequest(
+      request: tgPostRequest,
+      onSuccess: (response) async {
+        OTPResponse otpResponse = response;
+        OTPBottomSheetAuth.getBottomSheet(
+          context: Get.context!,
+          onChangeOTP: (s) {
+            otp.value = s;
+            otpError.value = '';
+            TGLog.d("Otp---------${otp.value}");
+          },
+          onSubmitOTP: (s) async {
+            var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+            VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: mobileController.text, otpType: 2, userId: userId, otp: s);
+            var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+            TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
+            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
+            TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
+            ServiceManager.getInstance().otpRequest(
+              request: tgPostRequest,
+              onSuccess: (response) {
+                Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+              },
+              onError: (response) => (TGResponse error) {
+                TGLog.d("Error Occured" + error.httpStatus.toString());
+              },
+            );
+          },
+          title: 'User Verification',
+          mobileNumber: mobileController.text ?? '',
+          isEnable: (otp.value.length == 6 ? true : false).obs,
+          isLoading: isVerifyingOTP,
+          onButtonPress: () {},
+          isEdit: false.obs,
+          errorText: otpError,
+          subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+        );
+      },
+      onError: (error) {},
+    );
+  }
+
+  void saveLoginResponse(LoginResponse loginResponse) {
+    AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
+    TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
+    TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
+    TGSharedPreferences.getInstance().set(PREF_LOGIN_TOKEN, loginResponse.getLoginResponseData().loginToken.toString());
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encoded = stringToBase64.encode(loginResponse.getLoginResponseData().userName ?? '');
+    TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
+    TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
+    TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(loginResponse.getLoginResponseData()));
+    TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile);
+    TGSharedPreferences.getInstance().set(PREF_ORG_ID, loginResponse.getLoginResponseData().userOrgId);
+    TGSharedPreferences.getInstance().set(PREF_USER_ID, loginResponse.getLoginResponseData().userId);
+    TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
+    TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, loginResponse.getLoginResponseData().email);
+  }
+
+  Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
+    return <String, dynamic>{
+      'version.securityPatch': build.version.securityPatch,
+      'version.sdkInt': build.version.sdkInt,
+      'version.release': build.version.release,
+      'version.previewSdkInt': build.version.previewSdkInt,
+      'version.incremental': build.version.incremental,
+      'version.codename': build.version.codename,
+      'version.baseOS': build.version.baseOS,
+      'board': build.board,
+      'bootloader': build.bootloader,
+      'brand': build.brand,
+      'device': build.device,
+      'display': build.display,
+      'fingerprint': build.fingerprint,
+      'hardware': build.hardware,
+      'host': build.host,
+      'id': build.id,
+      'manufacturer': build.manufacturer,
+      'model': build.model,
+      'product': build.product,
+      'supported32BitAbis': build.supported32BitAbis,
+      'supported64BitAbis': build.supported64BitAbis,
+      'supportedAbis': build.supportedAbis,
+      'tags': build.tags,
+      'type': build.type,
+      'isPhysicalDevice': build.isPhysicalDevice,
+      'systemFeatures': build.systemFeatures,
+      'displaySizeInches': ((build.displayMetrics.sizeInches * 10).roundToDouble() / 10),
+      'displayWidthPixels': build.displayMetrics.widthPx,
+      'displayWidthInches': build.displayMetrics.widthInches,
+      'displayHeightPixels': build.displayMetrics.heightPx,
+      'displayHeightInches': build.displayMetrics.heightInches,
+      'displayXDpi': build.displayMetrics.xDpi,
+      'displayYDpi': build.displayMetrics.yDpi,
+      'serialNumber': build.serialNumber,
+    };
+  }
+
+  Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
+    return <String, dynamic>{
+      'name': data.name,
+      'systemName': data.systemName,
+      'systemVersion': data.systemVersion,
+      'model': data.model,
+      'localizedModel': data.localizedModel,
+      'identifierForVendor': data.identifierForVendor,
+      'isPhysicalDevice': data.isPhysicalDevice,
+      'utsname.sysname:': data.utsname.sysname,
+      'utsname.nodename:': data.utsname.nodename,
+      'utsname.release:': data.utsname.release,
+      'utsname.version:': data.utsname.version,
+      'utsname.machine:': data.utsname.machine,
+    };
   }
 }

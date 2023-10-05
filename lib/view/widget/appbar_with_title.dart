@@ -53,12 +53,7 @@ class CommonAppBar {
       ),
       bottom: PreferredSize(
         preferredSize: Size(0, 3.h),
-        child: LinearProgressIndicator(
-            value: progress,
-            semanticsLabel: '',
-            minHeight: 2.h,
-            color: ColorConfig.jsPrimaryColor,
-            backgroundColor: Colors.transparent),
+        child: LinearProgressIndicator(value: progress, semanticsLabel: '', minHeight: 2.h, color: ColorConfig.jsPrimaryColor, backgroundColor: Colors.transparent),
       ),
     );
   }
@@ -82,8 +77,7 @@ class CommonAppBar {
     );
   }
 
-  static PreferredSizeWidget appbarWithSubTitle(
-      {required String title, required String subTitle, required VoidCallback backPress}) {
+  static PreferredSizeWidget appbarWithSubTitle({required String title, required String subTitle, required VoidCallback backPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,

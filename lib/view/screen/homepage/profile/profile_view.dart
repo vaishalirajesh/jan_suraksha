@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
       onWillPop: AppUtils.onWillPopToDashboard,
       child: AddHeaderFooter(
           appbarName: AppString.appBarWithNotification,
-          title: logic.userName.value,
+          title: "logic.userName.value",
           buttonTitle: "",
           onButtonClick: () {},
           onBackButtonCLick: AppUtils.onBackToDashboard,

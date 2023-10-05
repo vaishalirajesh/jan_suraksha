@@ -144,7 +144,9 @@ class NomineeDetailsLogic extends GetxController {
         firstNameController.text = nominee.firstName ?? '';
         latsNameController.text = nominee.lastName ?? '';
         middleNameController.text = nominee.middleName ?? '';
-        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        date = DateTime.parse(
+            AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'yyyy-MM-dd 00:00:00.000'));
         mobileController.text = nominee.mobileNumber ?? '';
         nomineeRelationShip.value = nominee.relationOfNomineeApplicantStr ?? '';
         relationshipid.value = nominee.relationOfNomineeApplicant ?? num.parse('0');
@@ -155,13 +157,13 @@ class NomineeDetailsLogic extends GetxController {
         districtController.text = nominee.address?.district ?? '';
         stateController.text = nominee.address?.state ?? '';
         pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
-        print("nominee.relationOfNomineeApplicant" + nominee.relationOfNomineeApplicant.toString());
+        print("nominee.relationOfNomineeApplicant${nominee.relationOfNomineeApplicant}");
         num id = nominee.relationOfNomineeApplicant!;
         items.value.forEach((key, value) {
-          print(key + ": " + value);
+          print("$key: $value");
           if (nominee.relationOfNomineeApplicant.toString() == key) {
             nomineeRelationShip.value = value;
-            print("Final value" + value);
+            print("Final value$value");
           }
         });
         getMasterList();

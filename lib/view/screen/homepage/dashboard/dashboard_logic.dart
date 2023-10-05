@@ -10,6 +10,7 @@ import 'package:jan_suraksha/model/request_model/EmailOtpRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetEnrollmnetListrequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetUserIdRequest.dart';
+import 'package:jan_suraksha/model/request_model/SaveOptoutRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyEmailOtpRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
@@ -42,10 +43,12 @@ import '../../../widget/custom_otp_field/custom_otp_field.dart';
 class DashboardLogic extends GetxController {
   var index = 0.obs;
   RxBool isLoading = true.obs;
+  RxBool isOptOutLoading = false.obs;
   var isExpandedScheme = true.obs;
   var isExpandedNominee = true.obs;
   var schemeDetail;
   List<dynamic> schemeList = [];
+  var selectedSchemaData = {};
   TextEditingController emailController = TextEditingController(text: '');
   RxString emailErrorMsg = ''.obs;
   RxString otp = ''.obs;
@@ -58,6 +61,7 @@ class DashboardLogic extends GetxController {
   RxString mobilenumber = ''.obs;
   var passwordController = TextEditingController(text: '');
   var repeatPasswordController = TextEditingController(text: "");
+  int optOutIndex = -1;
 
   setIndex(int value) {
     index.value = value;
@@ -399,7 +403,19 @@ class DashboardLogic extends GetxController {
     }
   }
 
+  void onPressContinue(int index) {
+    if (dateController.text.isEmpty) {
+      dateErrorMsg.value = 'Please select date';
+    } else {
+      dateErrorMsg.value = '';
+      openDialog(index: index);
+    }
+  }
+
   void openOPTOutBottomSheet({required int index}) {
+    dateErrorMsg.value = '';
+    dateController.text = '';
+
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
       return Obx(() {
         return Container(
@@ -440,13 +456,16 @@ class DashboardLogic extends GetxController {
                 isReadOnly: true,
                 onTap: selectDate,
                 errorText: dateErrorMsg.value,
+                onChanged: (str) {
+                  dateErrorMsg.value = '';
+                },
               ),
               SizedBox(
                 height: 30.h,
               ),
               AppButton(
                 onPress: () {
-                  openDialog(index: index);
+                  onPressContinue(index);
                 },
                 title: "Continue",
                 isButtonEnable: true.obs,
@@ -465,6 +484,7 @@ class DashboardLogic extends GetxController {
   DateTime date = DateTime.now();
 
   Future selectDate() async {
+    dateErrorMsg.value = '';
     FocusScope.of(Get.context!).requestFocus(FocusNode());
     DateTime currentDate = DateTime.now();
     int firstDateYear = currentDate.year - 18;
@@ -560,7 +580,7 @@ class DashboardLogic extends GetxController {
           InkWell(
             onTap: () {
               Get.back();
-              isOptOut[index].value = true;
+              onSaveDetail();
             },
             child: Container(
               height: 35.h,
@@ -849,4 +869,59 @@ class DashboardLogic extends GetxController {
   }
 
   _onErrorSetPassword(response) {}
+
+  Future<void> onSaveDetail() async {
+    if (await NetUtils.isInternetAvailable()) {
+      saveDetail();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, saveDetail);
+      }
+    }
+  }
+
+  Future<void> saveDetail() async {
+    isOptOutLoading.value = true;
+    // var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID) ?? '';
+    SaveOptoutRequest optOutRequest = SaveOptoutRequest(
+      name: selectedSchemaData['name'] ?? '',
+      applicationId: selectedSchemaData['id'] ?? '',
+      accountNumber: selectedSchemaData['accountNumber'] ?? '',
+      dateOfEffective: selectedSchemaData['enrollDate'] ?? '',
+      dateOfRequest: selectedSchemaData['dateOfRequest'] ?? '',
+      policyEffectiveDate: selectedSchemaData['modifiedDate'] ?? '',
+      schemeName: selectedSchemaData['schemeName'] ?? '',
+      urn: selectedSchemaData['urn'] ?? '',
+    );
+    var jsonRequest = jsonEncode(optOutRequest.toJson());
+    TGLog.d("SaveOptoutRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SAVE_OPT_OUT);
+    TGLog.d("SaveOptoutRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().optOut(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessSaveData(response),
+      onError: (error) => _onErrorSaveData(error),
+    );
+  }
+
+  _onSuccessSaveData(OTPResponse response) async {
+    TGLog.d("SaveOptoutRequest : onSuccess()---$response");
+    if (response.getOtpResponse().status == RES_SUCCESS) {
+      isOptOutLoading.value = false;
+      isOptOut[optOutIndex].value = true;
+    } else {
+      isOptOut[optOutIndex].value = false;
+      TGLog.d("Error in PremiumDeductionResponse");
+      isOptOutLoading.value = false;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getOtpResponse().status ?? 0, response?.getOtpResponse()?.message ?? "", null);
+    }
+  }
+
+  _onErrorSaveData(TGResponse errorResponse) {
+    isOptOut[optOutIndex].value = false;
+    TGLog.d("SaveOptoutRequest : onError()--${errorResponse.error}");
+    isOptOutLoading.value = false;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
 }

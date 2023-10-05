@@ -27,47 +27,48 @@ class GeneralFaqPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AddHeaderFooter(
-      appbarName: AppString.appBarWithTitle,
-      title: "FAQs",
-      buttonTitle: "",
-      onButtonClick: () {},
-      onBackButtonCLick: AppUtils.onBackToDashboard,
-      isDataLoading: false,
-      isButtonEnable: true,
-      isShowButton: true,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 30.h),
-            Obx(() {
-              return logic.isExpanded.value
-                  ? buildExpandedQuestionWidget(
-                      question: '1. What is Jansuraksha Portal ?',
-                      index: 0,
-                      onTap: () {
-                        logic.isExpanded.value = !logic.isExpanded.value;
-                      },
-                      answer:
-                          'Jansuraksha is a Digital platform envisaged by the Department of Financial Services, Ministry of Finance to provide access to Social Security Insurance Schemes at affordable rates, introduced by the Government of India. Banks and insurance companies have partnered on the Jansuraksha portal to provide a digital journey for the subscribers for enrollments, issuance of policy certificates and claims processing.',
-                    )
-                  : buildQuestionWidget(
-                      question: '1. What is Jansuraksha Portal ?',
-                      index: 0,
-                      onTap: () {
-                        logic.isExpanded.value = !logic.isExpanded.value;
-                      },
-                      answer:
-                          'Jansuraksha is a Digital platform envisaged by the Department of Financial Services, Ministry of Finance to provide access to Social Security Insurance Schemes at affordable rates, introduced by the Government of India. Banks and insurance companies have partnered on the Jansuraksha portal to provide a digital journey for the subscribers for enrollments, issuance of policy certificates and claims processing.',
-                    );
-            }),
-            buildQuestionWidget(question: '2. What are the schemes available?', onTap: () {}, answer: '', index: 2),
-            buildQuestionWidget(question: '3. How can I apply to the schemes?', onTap: () {}, answer: '', index: 2),
-            buildQuestionWidget(question: '4. What are the documents required?', onTap: () {}, answer: '', index: 2),
-            buildQuestionWidget(question: '5. Who can apply for the scheme?', onTap: () {}, answer: '', index: 2),
-            buildQuestionWidget(question: '6. How can a claim be filed?', onTap: () {}, answer: '', index: 2),
-            buildQuestionWidget(question: '7. Who will settle the claim?', onTap: () {}, answer: '', index: 2),
-          ],
+    return WillPopScope(
+      onWillPop: AppUtils.onWillPopScope,
+      child: AddHeaderFooter(
+        appbarName: AppString.appBarWithTitle,
+        title: "FAQs",
+        buttonTitle: "",
+        onButtonClick: () {},
+        onBackButtonCLick: AppUtils.onBackPress,
+        isDataLoading: false,
+        isButtonEnable: true,
+        isShowButton: false,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 30.h),
+              Obx(() {
+                return logic.isExpanded.value
+                    ? buildExpandedQuestionWidget(
+                        question: '1. What is Jansuraksha Portal ?',
+                        index: 0,
+                        onTap: () {
+                          logic.isExpanded.value = !logic.isExpanded.value;
+                        },
+                        answer:
+                            "Jansuraksha is a Digital platform envisaged by the Department of Financial Services, Ministry of Finance to provide access to Social Security Insurance Schemes at affordable rates, introduced by the Government of India. Banks and insurance companies have partnered on the Jansuraksha portal to provide a digital journey for the subscribers for enrollments, issuance of policy certificates and claims processing. \n\nThe portal has been jointly created and is being maintained by the General insurance Council, the Life Insurance Council and the Indian Banks Association.")
+                    : buildQuestionWidget(
+                        question: '1. What is Jansuraksha Portal ?',
+                        index: 0,
+                        onTap: () {
+                          logic.isExpanded.value = !logic.isExpanded.value;
+                        },
+                        answer: '',
+                      );
+              }),
+              buildQuestionWidget(question: '2. What are the schemes available?', onTap: () {}, answer: '', index: 2),
+              buildQuestionWidget(question: '3. How can I apply to the schemes?', onTap: () {}, answer: '', index: 2),
+              buildQuestionWidget(question: '4. What are the documents required?', onTap: () {}, answer: '', index: 2),
+              buildQuestionWidget(question: '5. Who can apply for the scheme?', onTap: () {}, answer: '', index: 2),
+              buildQuestionWidget(question: '6. How can a claim be filed?', onTap: () {}, answer: '', index: 2),
+              buildQuestionWidget(question: '7. Who will settle the claim?', onTap: () {}, answer: '', index: 2),
+            ],
+          ),
         ),
       ),
     );
@@ -122,8 +123,9 @@ class GeneralFaqPage extends StatelessWidget {
       {required String question, required String answer, required int index, required VoidCallback onTap}) {
     return Container(
       color: ColorConfig.jsCreamColor,
+      margin: EdgeInsets.only(bottom: 10.h),
       child: Padding(
-        padding: EdgeInsets.only(bottom: 30.h, left: 20.w, right: 20.w, top: 20.h),
+        padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w, top: 20.h),
         child: Column(
           children: [
             InkWell(

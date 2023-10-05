@@ -218,4 +218,10 @@ class ServiceManager {
     TGService<ForgotPasswordResponse, ServiceError>(() => ForgotPasswordResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
+
+  void optOut({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.optOut");
+    TGService<OTPResponse, ServiceError>(() => OTPResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
 }

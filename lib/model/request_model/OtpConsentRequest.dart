@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-/// mobile : "6454744948"
+/// mobile : "9864654654"
+/// userId : 9766
+/// notificationMasterId : 18
 /// userType : 1
-/// isTermsAccepted : true
-/// otpType : 3
-/// userId : 9492
+/// otpType : 1
 
 OtpConsentRequest otpConsentRequestFromJson(String str) => OtpConsentRequest.fromJson(json.decode(str));
 String otpConsentRequestToJson(OtpConsentRequest data) => json.encode(data.toJson());
@@ -12,57 +12,57 @@ String otpConsentRequestToJson(OtpConsentRequest data) => json.encode(data.toJso
 class OtpConsentRequest {
   OtpConsentRequest({
     String? mobile,
-    num? userType,
-    bool? isTermsAccepted,
-    num? otpType,
     num? userId,
+    num? notificationMasterId,
+    num? userType,
+    num? otpType,
   }) {
     _mobile = mobile;
-    _userType = userType;
-    _isTermsAccepted = isTermsAccepted;
-    _otpType = otpType;
     _userId = userId;
+    _notificationMasterId = notificationMasterId;
+    _userType = userType;
+    _otpType = otpType;
   }
 
   OtpConsentRequest.fromJson(dynamic json) {
     _mobile = json['mobile'];
-    _userType = json['userType'];
-    _isTermsAccepted = json['isTermsAccepted'];
-    _otpType = json['otpType'];
     _userId = json['userId'];
+    _notificationMasterId = json['notificationMasterId'];
+    _userType = json['userType'];
+    _otpType = json['otpType'];
   }
   String? _mobile;
-  num? _userType;
-  bool? _isTermsAccepted;
-  num? _otpType;
   num? _userId;
+  num? _notificationMasterId;
+  num? _userType;
+  num? _otpType;
   OtpConsentRequest copyWith({
     String? mobile,
-    num? userType,
-    bool? isTermsAccepted,
-    num? otpType,
     num? userId,
+    num? notificationMasterId,
+    num? userType,
+    num? otpType,
   }) =>
       OtpConsentRequest(
         mobile: mobile ?? _mobile,
-        userType: userType ?? _userType,
-        isTermsAccepted: isTermsAccepted ?? _isTermsAccepted,
-        otpType: otpType ?? _otpType,
         userId: userId ?? _userId,
+        notificationMasterId: notificationMasterId ?? _notificationMasterId,
+        userType: userType ?? _userType,
+        otpType: otpType ?? _otpType,
       );
   String? get mobile => _mobile;
-  num? get userType => _userType;
-  bool? get isTermsAccepted => _isTermsAccepted;
-  num? get otpType => _otpType;
   num? get userId => _userId;
+  num? get notificationMasterId => _notificationMasterId;
+  num? get userType => _userType;
+  num? get otpType => _otpType;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['mobile'] = _mobile;
-    map['userType'] = _userType;
-    map['isTermsAccepted'] = _isTermsAccepted;
-    map['otpType'] = _otpType;
     map['userId'] = _userId;
+    map['notificationMasterId'] = _notificationMasterId;
+    map['userType'] = _userType;
+    map['otpType'] = _otpType;
     return map;
   }
 }

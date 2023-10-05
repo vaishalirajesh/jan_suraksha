@@ -5,6 +5,7 @@ import 'package:jan_suraksha/services/common/keys.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
+import 'package:jan_suraksha/utils/flavor.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 
@@ -118,6 +119,16 @@ class AppUtils {
   static String getDecryptedString(String data) {
     TGLog.d('Decrypted data-from APp Utils---${AesGcmEncryptionUtils.decryptNew(data)}');
     return '';
+  }
+
+  static String getAppDomain() {
+    if (AppFlavor.name() == 'js_uat') {
+      return 'https://uat-jns.instantmseloans.in';
+    } else if (AppFlavor.name() == 'js_qa') {
+      return 'https://qa-jns.instantmseloans.in';
+    } else {
+      return 'https://uat-jns.instantmseloans.in';
+    }
   }
 
   static String data =

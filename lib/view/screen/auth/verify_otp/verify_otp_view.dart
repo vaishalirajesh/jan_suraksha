@@ -76,7 +76,7 @@ class VerifyOtpPage extends StatelessWidget {
                       Obx(() {
                         return !verifyOtpLogic.isValideOTP.value
                             ? Text(
-                                'Please enter valid otp',
+                                'Please enter verification code',
                                 style: StyleConfig.regularExtraSmallText.copyWith(color: Colors.red),
                               )
                             : const SizedBox.shrink();

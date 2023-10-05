@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/font_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
@@ -229,6 +230,24 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
+                                      'Name of Guardian/Appointee (In case of minor nominee)',
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
                                       AppString.commencement,
                                       style: StyleConfig.mediumExtraSmallBlackText,
                                       textAlign: TextAlign.center,
@@ -237,10 +256,12 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(
-                                          certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
-                                          'yyyy-MM-ddTHH:mm:ss',
-                                          'dd/MM/yyyy HH:mm:ss'),
+                                      certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover != null
+                                          ? DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.parse(
+                                                  certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover ??
+                                                      '')
+                                              .toLocal())
+                                          : '',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -362,6 +383,24 @@ class CertificateInsurencePage extends StatelessWidget {
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
                                       '${certificateInsurenceLogic.generateCoiData.data?.ageOfNominee} Years' ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -504,6 +543,24 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
+                                      'Name of Guardian/Appointee (In case of minor nominee)',
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
                                       AppString.commencement,
                                       style: StyleConfig.mediumExtraSmallBlackText,
                                       textAlign: TextAlign.center,
@@ -512,10 +569,12 @@ class CertificateInsurencePage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
                                     child: Text(
-                                      AppUtils.convertDateFormat(
-                                          certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
-                                          'yyyy-MM-ddTHH:mm:ss',
-                                          'dd/MM/yyyy HH:mm:ss'),
+                                      certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover != null
+                                          ? DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.parse(
+                                                  certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover ??
+                                                      '')
+                                              .toLocal())
+                                          : '',
                                       style: StyleConfig.regularExtraSmallBText,
                                       textAlign: TextAlign.center,
                                     ),
@@ -643,6 +702,24 @@ class CertificateInsurencePage extends StatelessWidget {
                                   ),
                                 ]),
                                 TableRow(children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                      style: StyleConfig.mediumExtraSmallBlackText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.r),
+                                    child: Text(
+                                      certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
+                                      style: StyleConfig.regularExtraSmallBText,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
                                   Text(
                                     AppString.coverDate,
                                     style: StyleConfig.mediumExtraSmallBlackText,
@@ -754,8 +831,13 @@ class CertificateInsurencePage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
-                              'yyyy-MM-ddTHH:mm:ss', 'dd/MM/yyyy HH:mm:ss'),
+                          certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover != null
+                              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(
+                                  DateTime.parse(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover ?? '')
+                                      .toLocal())
+                              : '',
+                          // AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
+                          //     'yyyy-MM-ddTHH:mm:ss.SSS+00:00', 'dd/MM/yyyy HH:mm:ss'),
                           style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsBlackColor),
                         ),
                       ),

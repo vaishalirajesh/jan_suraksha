@@ -143,8 +143,8 @@ class TermsAndConditionsLogic extends GetxController {
       mobile: mobile,
       otpType: 3,
       userType: 1,
-      isTermsAccepted: true,
       userId: userId,
+      notificationMasterId: 20,
     );
     var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());
     TGLog.d("ConsentOtpSendRequest $jsonRequest");

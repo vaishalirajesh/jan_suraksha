@@ -12,6 +12,8 @@ import 'package:jan_suraksha/view/screen/journey/application_form/application_fo
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
+import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_view.dart';
 import 'package:jan_suraksha/view/widget/app_loader.dart';
 
 import '../../../../config/navigation_config.dart';
@@ -390,8 +392,8 @@ class HomePage extends StatelessWidget {
                                 child: ListViewButtons(
                                   width: 0.3.sw,
                                   onPress: () {
-                                    Get.to(() => const OngoingPmjjbyJourneyPage(),
-                                        binding: OngoingPmjjbyJourneyBinding());
+                                    Get.to(() => const OngoingPmsbyJourneyPage(),
+                                        binding: OngoingPmsbyJourneyBinding());
                                   },
                                   title: AppString.str_view_details,
                                 ),

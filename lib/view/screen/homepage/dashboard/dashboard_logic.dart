@@ -279,7 +279,8 @@ class DashboardLogic extends GetxController {
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: emailController.text, otptype: 2);
+    EmailOtpRequest emailOtpRequest =
+        EmailOtpRequest(userId: userID, email: emailController.text, otpType: 2, notificationMasterId: 16);
     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
     TGLog.d("EmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);

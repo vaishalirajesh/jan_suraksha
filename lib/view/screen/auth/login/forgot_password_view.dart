@@ -23,93 +23,97 @@ class ForgotPasswordPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: AppUtils.onWillPopScope,
       child: Scaffold(
-        backgroundColor: ColorConfig.jsCreamColor,
+        backgroundColor: ColorConfig.jsWhiteColor,
         resizeToAvoidBottomInset: true,
         extendBody: true,
-        body: SizedBox(
-          height: 1.sh,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-                Text(
-                  "Forgot Password ?",
-                  style: StyleConfig.semiBoldText18,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(
-                  'Verification Code Will Be Sent To Registered ',
-                  style: StyleConfig.regularExtraSmallPinkText,
-                ),
-                SizedBox(
-                  height: 3.h,
-                ),
-                Text(
-                  'Mobile Number/Email Address',
-                  style: StyleConfig.regularExtraSmallPinkText,
-                ),
-                SizedBox(
-                  height: 50.h,
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                      bottomLeft: Radius.circular(10.0),
-                      bottomRight: Radius.circular(10.0),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: ColorConfig.jsCreamColor,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20.h,
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(() {
-                          return AppTextField(
-                            hintText: 'Enter Email Address',
-                            controller: forgotPasswordLogic.forgotEmailController,
-                            title: AppString.enterEmailAddress,
-                            isReadOnly: false,
-                            isMandatory: true,
-                            isAutoFocus: false,
-                            inputType: TextInputType.emailAddress,
-                            maxLength: 255,
-                            errorText: forgotPasswordLogic.forgotEmailError.value,
-                          );
-                        }),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: AppButton(
-                            onPress: forgotPasswordLogic.getForgotEmail,
-                            title: "Get Verification code",
-                            isButtonEnable: true.obs,
-                            isDataLoading: forgotPasswordLogic.isPasswordAPICall,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        buildRowWidget("Atleast 8 characters and atmost 20 characters "),
-                        buildRowWidget("Atleast 1 number (e.g., 1,2,3, etc.) "),
-                        buildRowWidget("Atleast 1 capital case alphabet (e.g., A, B, C, etc.) "),
-                        buildRowWidget("Atleast 1 small case alphabet (e.g., a, b, c, etc.) "),
-                        buildRowWidget("Atleast 1 special character (e.g., @, #, %, etc.)"),
-                      ],
+                    Text(
+                      "Forgot Password ?",
+                      style: StyleConfig.semiBoldText18,
                     ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'Verification Code will be sent to ',
+                      style: StyleConfig.regularExtraSmallPinkText,
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    Text(
+                      'registered Email Address',
+                      style: StyleConfig.regularExtraSmallPinkText,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
                   ),
                 ),
-              ],
-            ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(() {
+                        return AppTextField(
+                          hintText: 'Enter Email Address',
+                          controller: forgotPasswordLogic.forgotEmailController,
+                          title: AppString.enterEmailAddress,
+                          isReadOnly: false,
+                          isMandatory: true,
+                          isAutoFocus: false,
+                          inputType: TextInputType.emailAddress,
+                          maxLength: 255,
+                          errorText: forgotPasswordLogic.forgotEmailError.value,
+                        );
+                      }),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: AppButton(
+                          onPress: forgotPasswordLogic.getForgotEmail,
+                          title: "Get Verification code",
+                          isButtonEnable: true.obs,
+                          isDataLoading: forgotPasswordLogic.isPasswordAPICall,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      buildRowWidget("Atleast 8 characters and atmost 20 characters "),
+                      buildRowWidget("Atleast 1 number (e.g., 1,2,3, etc.) "),
+                      buildRowWidget("Atleast 1 capital case alphabet (e.g., A, B, C, etc.) "),
+                      buildRowWidget("Atleast 1 small case alphabet (e.g., a, b, c, etc.) "),
+                      buildRowWidget("Atleast 1 special character (e.g., @, #, %, etc.)"),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: SizedBox(

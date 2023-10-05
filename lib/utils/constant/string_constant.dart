@@ -27,7 +27,8 @@ class AppString {
   static const String resendCode = "Resend OTP";
   static const String resendCode1 = "Resend Verification code";
   static const String startJourneyText = 'Start your journey with';
-  static const String happy_to_have_you_onboard = "Happy to have you onboard! \nLet's start by finding out which insurance you need.";
+  static const String happy_to_have_you_onboard =
+      "Happy to have you onboard! \nLet's start by finding out which insurance you need.";
 
   static const String str_welcome = "Welcome";
 
@@ -139,14 +140,16 @@ class AppString {
   static const String tcText6 = '1234/588/01/57584';
   static const String tcText7 = 'I hereby authorize you to debit Rs. ';
   static const String tcText8 = '436/-';
-  static const String tcText9 = ' from my bank account towards premium of life insurance cover of Rs 2 lakhs under PMJJBY.';
+  static const String tcText9 =
+      ' from my bank account towards premium of life insurance cover of Rs 2 lakhs under PMJJBY.';
   static const String tcText10 =
       'I further authorize you to deduct in future after 25th May and not later than 1st of June every year until further instructions, an amount of Rs.436/- (Rupees four hundred thirty-six only), or any amount as decided from time to time, which may be intimated immediately if and when revised, towards renewal of coverage under the scheme. ';
   static const String tcText11 =
       'I have not authorized any other Bank / Post Office to debit premium in respect of this scheme. I am aware that in case of multiple enrolments for the scheme by me, my insurance cover will be restricted to Rs. two lakhs only and the premium paid by me for multiple enrolments shall be liable to be forfeited. ';
   static const String tcText12 =
       'I have read and understood the Scheme rules and I hereby give my consent to become a member of the Scheme. I am aware that the risk will not be covered during the first 30 days from the date of enrollment / re-joining into the scheme (lien period) and in case of death (other than due to accident) during lien period, no claim would be admissible. ';
-  static const String tcText13 = 'I authorize the Bank /Post Office to convey my personal details, given below, as required, regarding my admission into the group insurance scheme to ';
+  static const String tcText13 =
+      'I authorize the Bank /Post Office to convey my personal details, given below, as required, regarding my admission into the group insurance scheme to ';
   static const String tcText14 = 'SBI Life Insurance Company Limited';
   static const String tcText15 =
       'I hereby declare that the above statements are true in all respects and that I agree and declare that the above information shall form the basis of admission to the above scheme and that if any information be found untrue, my membership to the scheme shall be treated as cancelled.';
@@ -158,7 +161,8 @@ class AppString {
   static const String tcText21 = 'Rs. 114.00';
   static const String tcText22 = 'c. December, January & February – 2 quarters of premium @ ';
   static const String tcText23 = 'd. March, April & May – 1 Quarterly premium @ ';
-  static const String tcText24 = 'e. Risk cover will start from the date of auto-debit of premium from the account of the subscriber.';
+  static const String tcText24 =
+      'e. Risk cover will start from the date of auto-debit of premium from the account of the subscriber.';
   static const String tcText25 = 'Rs. 342/-';
   static const String tcText26 = 'Rs. 436/-';
   static const String tcText27 = 'Rs. 228/-';
@@ -184,17 +188,19 @@ class AppString {
   static const String lienPeriod = 'Lien Period**';
   static const String renewalDate = 'Annual Renewal Date';
   static const String insurance1 = "* Rs.2 lakh is payable on member's death due to accident.";
-  static const String insurance2 = "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
+  static const String insurance2 =
+      "** In case of death (other than due to accident) during lien period , no claim would be admissible.";
   static const String insurance3 = 'The terms and conditions of the scheme are available at ';
   static const String insurance4 = ' https://jansuraksha.in/';
   static const String insurance5 = 'This is a system generated document. No signature required.';
   static const String insurance6 = 'Date : ';
   static const String insurenceScheme = "Government's Social Security Insurance Schemes ";
   static const String subjectText = "* Subject to Terms and Condition applied";
-  static const String pmsbyText = 'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
+  static const String pmsbyText2 =
+      "The scheme is a one year cover Personal Accident Insurance Scheme, renewable from year to year, offering protection against death or disability due to accident.";
+  static const String pmsbyText =
+      'The scheme is a one-year cover term life insurance scheme, renewable from year to year, offering life insurance cover of Rs 2 Lakh for death due to any cause.';
 
   static var reenterPassword = "Re-enter Password ";
-
-  static const appbarwithTitleAndSubtitle = "AppBarWithTitleAndSubTitle";
 // static const String e = '';
 }

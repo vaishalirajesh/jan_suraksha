@@ -67,19 +67,13 @@ class DashboardPage extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              dashboardLogic.index.value == 0
-                                  ? SvgPicture.asset(Assets.dashboardHomeEnabled)
-                                  : SvgPicture.asset(Assets.dashboardHomeDisabled),
+                              dashboardLogic.index.value == 0 ? SvgPicture.asset(Assets.dashboardHomeEnabled) : SvgPicture.asset(Assets.dashboardHomeDisabled),
                               SizedBox(
                                 height: 2.h,
                               ),
                               Text(
                                 AppString.str_home,
-                                style: StyleConfig.regularText16.copyWith(
-                                    color: dashboardLogic.index.value == 0
-                                        ? ColorConfig.jsSecondaryColor
-                                        : ColorConfig.jsGreyColor,
-                                    fontSize: 10.sp),
+                                style: StyleConfig.regularText16.copyWith(color: dashboardLogic.index.value == 0 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -94,19 +88,13 @@ class DashboardPage extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              dashboardLogic.index.value == 1
-                                  ? SvgPicture.asset(Assets.dashboardServiceEnabled)
-                                  : SvgPicture.asset(Assets.dashboardServiceDisabled),
+                              dashboardLogic.index.value == 1 ? SvgPicture.asset(Assets.dashboardServiceEnabled) : SvgPicture.asset(Assets.dashboardServiceDisabled),
                               SizedBox(
                                 height: 2.h,
                               ),
                               Text(
                                 AppString.str_services,
-                                style: StyleConfig.regularText16.copyWith(
-                                    color: dashboardLogic.index.value == 1
-                                        ? ColorConfig.jsSecondaryColor
-                                        : ColorConfig.jsGreyColor,
-                                    fontSize: 10.sp),
+                                style: StyleConfig.regularText16.copyWith(color: dashboardLogic.index.value == 1 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -121,18 +109,14 @@ class DashboardPage extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              dashboardLogic.index.value == 2
-                                  ? SvgPicture.asset(Assets.dashboardSupportEnabled)
-                                  : SvgPicture.asset(Assets.dashboardSupportDisabled),
+                              dashboardLogic.index.value == 2 ? SvgPicture.asset(Assets.dashboardSupportEnabled) : SvgPicture.asset(Assets.dashboardSupportDisabled),
                               SizedBox(
                                 height: 2.h,
                               ),
                               Text(
                                 AppString.str_support,
                                 style: StyleConfig.regularText16.copyWith(
-                                  color: dashboardLogic.index.value == 2
-                                      ? ColorConfig.jsSecondaryColor
-                                      : ColorConfig.jsGreyColor,
+                                  color: dashboardLogic.index.value == 2 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor,
                                   fontSize: 9.sp,
                                 ),
                               )
@@ -149,19 +133,13 @@ class DashboardPage extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              dashboardLogic.index.value == 3
-                                  ? SvgPicture.asset(Assets.dashboardProfileEnabled)
-                                  : SvgPicture.asset(Assets.dashboardProfileDisabled),
+                              dashboardLogic.index.value == 3 ? SvgPicture.asset(Assets.dashboardProfileEnabled) : SvgPicture.asset(Assets.dashboardProfileDisabled),
                               SizedBox(
                                 height: 2.h,
                               ),
                               Text(
                                 AppString.str_porfile,
-                                style: StyleConfig.regularText16.copyWith(
-                                    color: dashboardLogic.index.value == 3
-                                        ? ColorConfig.jsSecondaryColor
-                                        : ColorConfig.jsGreyColor,
-                                    fontSize: 10.sp),
+                                style: StyleConfig.regularText16.copyWith(color: dashboardLogic.index.value == 3 ? ColorConfig.jsSecondaryColor : ColorConfig.jsGreyColor, fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -195,26 +173,31 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Obx(() {
-                      return Text(
-                        'Welcome, ${dashboardLogic.userName.value}',
-                        style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
-                      );
-                    }),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
-                      },
-                      child: Icon(
-                        Icons.notifications,
-                        size: 25.r,
-                        color: ColorConfig.jsSecondaryColor,
-                      ),
-                    )
-                  ],
+                child: SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(() {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            'Welcome, ${dashboardLogic.userName.value}',
+                            style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                          ),
+                        );
+                      }),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
+                        },
+                        child: Icon(
+                          Icons.notifications,
+                          size: 25.r,
+                          color: ColorConfig.jsSecondaryColor,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Row(
@@ -276,12 +259,8 @@ class HomePage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          dashboardLogic.schemeDetail != null &&
-                                                  dashboardLogic.schemeDetail[1]['shortName'] != null
-                                              ? "${dashboardLogic.schemeDetail[1]['shortName']}"
-                                              : '-',
-                                          style: StyleConfig.boldText16
-                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['shortName'] != null ? "${dashboardLogic.schemeDetail[1]['shortName']}" : '-',
+                                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                         ),
                                         SizedBox(
                                           height: 1.h,
@@ -310,8 +289,7 @@ class HomePage extends StatelessWidget {
                                 child: ListViewButtons(
                                   width: 0.3.sw,
                                   onPress: () {
-                                    Get.to(() => const OngoingPmjjbyJourneyPage(),
-                                        binding: OngoingPmjjbyJourneyBinding());
+                                    Get.to(() => const OngoingPmjjbyJourneyPage(), binding: OngoingPmjjbyJourneyBinding());
                                   },
                                   title: AppString.str_view_details,
                                 ),
@@ -358,12 +336,8 @@ class HomePage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          dashboardLogic.schemeDetail != null &&
-                                                  dashboardLogic.schemeDetail[0]['shortName'] != null
-                                              ? "${dashboardLogic.schemeDetail[0]['shortName']}"
-                                              : '-',
-                                          style: StyleConfig.boldText16
-                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                          dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['shortName'] != null ? "${dashboardLogic.schemeDetail[0]['shortName']}" : '-',
+                                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
                                         ),
                                         SizedBox(
                                           height: 1.h,
@@ -392,8 +366,7 @@ class HomePage extends StatelessWidget {
                                 child: ListViewButtons(
                                   width: 0.3.sw,
                                   onPress: () {
-                                    Get.to(() => const OngoingPmsbyJourneyPage(),
-                                        binding: OngoingPmsbyJourneyBinding());
+                                    Get.to(() => const OngoingPmsbyJourneyPage(), binding: OngoingPmsbyJourneyBinding());
                                   },
                                   title: AppString.str_view_details,
                                 ),
@@ -418,8 +391,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 30.h, left: 10.w),
-                      child:
-                          Text(AppString.str_my_policy, style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
+                      child: Text(AppString.str_my_policy, style: StyleConfig.mediumText16.copyWith(color: Colors.white)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
@@ -461,8 +433,7 @@ class HomePage extends StatelessWidget {
                                     ),
                                     Text(
                                       AppString.str_policy_for,
-                                      style: StyleConfig.mediumText16
-                                          .copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
+                                      style: StyleConfig.mediumText16.copyWith(fontSize: 12.sp, color: ColorConfig.jsTextGreyColor),
                                     )
                                   ],
                                 ),
@@ -510,15 +481,12 @@ class HomePage extends StatelessWidget {
                                                       children: [
                                                         Text(
                                                           AppString.str_name,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                                         ),
                                                         SizedBox(
                                                           width: 4.w,
                                                         ),
-                                                        Text('',
-                                                            style: StyleConfig.smallText
-                                                                .copyWith(color: ColorConfig.jsTextGreyColor))
+                                                        Text('', style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor))
                                                       ],
                                                     ),
                                                   ),
@@ -528,8 +496,7 @@ class HomePage extends StatelessWidget {
                                                       children: [
                                                         Text(
                                                           AppString.str_scheme,
-                                                          style: StyleConfig.boldText16.copyWith(
-                                                              fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                          style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                                         ),
                                                         SizedBox(
                                                           width: 4.w,
@@ -538,8 +505,7 @@ class HomePage extends StatelessWidget {
                                                           child: Text(
                                                             '',
                                                             overflow: TextOverflow.clip,
-                                                            style: StyleConfig.smallText
-                                                                .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                            style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor),
                                                           ),
                                                         )
                                                       ],
@@ -609,20 +575,14 @@ class HomePage extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       AppString.str_name,
-                                                      style: StyleConfig.boldText16.copyWith(
-                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                      style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                                     ),
                                                     SizedBox(
                                                       width: 4.w,
                                                     ),
                                                     Expanded(
-                                                      child: Text(
-                                                          dashboardLogic.schemeList.isNotEmpty &&
-                                                                  dashboardLogic.schemeList[index]['name'] != null
-                                                              ? dashboardLogic.schemeList[index]['name']
-                                                              : '',
-                                                          style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor)),
+                                                      child: Text(dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['name'] != null ? dashboardLogic.schemeList[index]['name'] : '',
+                                                          style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor)),
                                                     )
                                                   ],
                                                 ),
@@ -633,21 +593,16 @@ class HomePage extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       AppString.str_scheme,
-                                                      style: StyleConfig.boldText16.copyWith(
-                                                          fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
+                                                      style: StyleConfig.boldText16.copyWith(fontSize: 16.sp, color: ColorConfig.jsTextGreyColor),
                                                     ),
                                                     SizedBox(
                                                       width: 4.w,
                                                     ),
                                                     Expanded(
                                                       child: Text(
-                                                        dashboardLogic.schemeList.isNotEmpty &&
-                                                                dashboardLogic.schemeList[index]['schemeName'] != null
-                                                            ? dashboardLogic.schemeList[index]['schemeName']
-                                                            : '',
+                                                        dashboardLogic.schemeList.isNotEmpty && dashboardLogic.schemeList[index]['schemeName'] != null ? dashboardLogic.schemeList[index]['schemeName'] : '',
                                                         overflow: TextOverflow.clip,
-                                                        style: StyleConfig.smallText
-                                                            .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                        style: StyleConfig.smallText.copyWith(color: ColorConfig.jsTextGreyColor),
                                                       ),
                                                     )
                                                   ],
@@ -663,8 +618,7 @@ class HomePage extends StatelessWidget {
                                           ),
                                           ListViewButtons(
                                             onPress: () {
-                                              Get.offAll(() => ApplicationFormPage(),
-                                                  binding: ApplicationFormBinding());
+                                              Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
                                             },
                                             title: "Continue Journey",
                                           )
@@ -704,8 +658,7 @@ class ConstrainedFlexView extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),
+            constraints: BoxConstraints(maxHeight: isHz ? double.infinity : minSize, maxWidth: isHz ? minSize : double.infinity),
             child: child,
           ),
         );

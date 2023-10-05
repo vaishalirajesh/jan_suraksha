@@ -15,8 +15,10 @@ import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.d
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
+import 'package:jan_suraksha/model/response_model/fetch_profile_details_response_main.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/request/tg_get_request.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -72,7 +74,7 @@ class DashboardLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
+    userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
     bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     if (isfromreg) {
@@ -186,6 +188,7 @@ class DashboardLogic extends GetxController {
         updateEmailOtpBottomSheet();
         TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
       }
+      fetchProfileData();
       isLoading.value = false;
     } else {
       TGLog.d("Error in updateVerificationType");
@@ -275,7 +278,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   Future<void> updateEmail() async {
@@ -447,7 +450,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   DateTime date = DateTime.now();
@@ -706,7 +709,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   // getBottomSheet(
@@ -805,7 +808,7 @@ class DashboardLogic extends GetxController {
               )
             : Container();
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   bool validateStructure(String value) {
@@ -821,4 +824,32 @@ class DashboardLogic extends GetxController {
   }
 
   _onErrorSetPassword(response) {}
+
+  Future<void> fetchProfileData() async {
+    FetchProfile fetchProfile = FetchProfile();
+    ServiceManager.getInstance().fetchBasicDetails(
+        request: fetchProfile,
+        onSuccess: (response) {
+          FetchProfileInfoMain responseInfo = response;
+          if (responseInfo.getprofileinfo().status == RES_SUCCESS) {
+            TGSharedPreferences.getInstance().set(PREF_MOBILE, responseInfo.getprofileinfo().data?.mobile ?? "");
+            TGSharedPreferences.getInstance().set(PREF_USERNAME, responseInfo.getprofileinfo().data?.userName ?? "");
+            TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, responseInfo.getprofileinfo().data?.email ?? "");
+          }
+        },
+        onError: (response) {});
+  }
+}
+
+class FetchProfile extends TGGetRequest {
+  FetchProfile();
+  @override
+  String getUri() {
+    return URIS.URI_GET_PROFILE;
+  }
+
+  @override
+  Map<String, dynamic> params() {
+    return <String, dynamic>{};
+  }
 }

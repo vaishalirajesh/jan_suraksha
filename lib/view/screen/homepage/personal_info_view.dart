@@ -66,13 +66,6 @@ class PersonalInfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Name",
-                style: StyleConfig.boldText16.copyWith(
-                  color: ColorConfig.jsBlackColor,
-                  fontFamily: JSFonts.outfitRegular,
-                ),
-              ),
               const SizedBox(
                 height: 10,
               ),
@@ -146,7 +139,7 @@ class PersonalInfoPage extends StatelessWidget {
                     suffix: personallogic.shouldChangeAppearInEmailSuffix.value
                         ? InkWell(
                             onTap: () {
-                              updateEmail();
+                              updateEmail(context);
                             },
                             child: Text(
                               'Change',
@@ -213,7 +206,7 @@ class PersonalInfoPage extends StatelessWidget {
     );
   }
 
-  Future<void> updateEmail() async {
+  Future<void> updateEmail(BuildContext context) async {
     var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
@@ -225,21 +218,21 @@ class PersonalInfoPage extends StatelessWidget {
     TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
-      onSuccess: (response) => _onSuccessEmailOtp(response),
+      onSuccess: (response) => _onSuccessEmailOtp(response, context),
     );
   }
 
-  _onSuccessEmailOtp(OTPResponse response) async {
+  _onSuccessEmailOtp(OTPResponse response, BuildContext context) async {
     TGLog.d("EmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
-      getOtpBottomSheetForEmail();
+      getOtpBottomSheetForEmail(context);
     } else {
       TGLog.d("Error in EmailOtpRequest");
       LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
-  dynamic getOtpBottomSheetForEmail() {
+  dynamic getOtpBottomSheetForEmail(BuildContext context) {
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
       onChangeOTP: (s) {
@@ -258,14 +251,21 @@ class PersonalInfoPage extends StatelessWidget {
             OTPResponse otpResponse = response;
             if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
               TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
-              showSnackBar(Get.context!, "Email Updated Succsessfully");
+              showSnackBar(context, "Email Updated Succsessfully");
+              personallogic.shouldChangeAppearInEmailSuffix.value = false;
+              Get.back();
+            } else {
+              personallogic.subtitle.value = otpResponse.getOtpResponse().message.toString() + " sent to \n" ?? "";
+              showSnackBar(Get.context!, otpResponse.getOtpResponse().message!);
             }
           },
           onError: (response) => (TGResponse error) {
+            Get.back();
+            showSnackBar(Get.context!, "Email Updated Succsessfully");
+
             TGLog.d("Error Occured" + error.httpStatus.toString());
           },
         );
-        Get.back();
       },
       title: 'Email Verification',
       mobileNumber: personallogic.email.value,
@@ -273,7 +273,7 @@ class PersonalInfoPage extends StatelessWidget {
       isLoading: personallogic.isLoadingEmailOTP,
       onButtonPress: () {},
       isEdit: false.obs,
-      subTitle: 'A Verification code is sent on your Email ${personallogic.email.value} '.obs,
+      subTitle: personallogic.subtitle,
     );
   }
 
@@ -295,7 +295,6 @@ class PersonalInfoPage extends StatelessWidget {
           onSuccess: (response) {
             OTPResponse otpResponse = response;
             if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
-              Get.back();
               getUpdatePasswordBottomSheet(
                   onSubmitOTP: (s) {},
                   onButtonPress: () {
@@ -319,7 +318,7 @@ class PersonalInfoPage extends StatelessWidget {
       isLoading: personallogic.isLoadingEmailOTP,
       onButtonPress: () {},
       isEdit: false.obs,
-      subTitle: 'A Verification code is sent on your Email ${personallogic.email.value} '.obs,
+      subTitle: personallogic.subtitle,
     );
   }
 
@@ -368,70 +367,6 @@ class PersonalInfoPage extends StatelessWidget {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
-  }
-
-  void getEmailBottomSheet() {
-    Get.bottomSheet(LayoutBuilder(builder: (context, _) {
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
-          color: ColorConfig.jsCardBgColor,
-        ),
-        padding: EdgeInsets.all(20.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 2.h,
-            ),
-            Text(
-              'Update Email ID',
-              style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            AppTextField(
-              isMandatory: true,
-              title: AppString.emailAddress,
-              controller: emailController,
-              hintText: AppString.emailAddress,
-              inputType: TextInputType.emailAddress,
-              onChanged: (str) {},
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            AppButton(
-              onPress: () {
-                Get.back();
-                // getOtpBottomSheet();
-              },
-              title: "Update",
-              isButtonEnable: true.obs,
-              isDataLoading: false.obs,
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Padding(
-                padding: EdgeInsets.all(10.r),
-                child: Text(
-                  'Not Now',
-                  style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 }
 
@@ -686,7 +621,7 @@ getBottomSheet({
         ),
       );
     });
-  }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+  }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
 }
 
 getUpdatePasswordBottomSheet({
@@ -770,5 +705,5 @@ getUpdatePasswordBottomSheet({
             )
           : Container();
     });
-  }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+  }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
 }

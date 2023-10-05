@@ -24,9 +24,11 @@ class PersonalInfoLogic extends GetxController {
 
   var resetPassError = "".obs;
 
+  var subtitle = "A verification code has been sent to your Email \n".obs;
+
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
+    userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     emailController.text = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
     email.value = emailController.text;

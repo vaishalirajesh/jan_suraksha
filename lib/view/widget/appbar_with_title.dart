@@ -135,9 +135,15 @@ class CommonAppBar {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: StyleConfig.regularLargeText,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: 0.7.sw,
+                    child: Text(
+                      title,
+                      style: StyleConfig.regularLargeText,
+                    ),
+                  ),
                 ),
                 Icon(
                   Icons.notification_add,

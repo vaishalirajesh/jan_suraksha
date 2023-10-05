@@ -227,7 +227,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   ),
                                 ]),
                                 if (!certificateInsurenceLogic.isLoading.value &&
-                                    certificateInsurenceLogic.generateCoiData.data!.ageOfNominee != null &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
                                     int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
                                   TableRow(children: [
                                     Padding(
@@ -392,7 +392,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   ),
                                 ]),
                                 if (!certificateInsurenceLogic.isLoading.value &&
-                                    certificateInsurenceLogic.generateCoiData.data!.ageOfNominee != null &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
                                     int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
                                   TableRow(children: [
                                     Padding(
@@ -546,7 +546,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   ),
                                 ]),
                                 if (!certificateInsurenceLogic.isLoading.value &&
-                                    certificateInsurenceLogic.generateCoiData.data!.ageOfNominee != null &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
                                     int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
                                   TableRow(children: [
                                     Padding(
@@ -711,7 +711,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                   ),
                                 ]),
                                 if (!certificateInsurenceLogic.isLoading.value &&
-                                    certificateInsurenceLogic.generateCoiData.data!.ageOfNominee != null &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
                                     int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
                                   TableRow(children: [
                                     Padding(

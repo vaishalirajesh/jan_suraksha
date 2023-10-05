@@ -206,16 +206,16 @@ class HomePage extends StatelessWidget {
                         style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
                       );
                     }),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
-                      },
-                      child: Icon(
-                        Icons.notifications,
-                        size: 25.r,
-                        color: ColorConfig.jsSecondaryColor,
-                      ),
-                    )
+                    // InkWell(
+                    //   onTap: () {
+                    //     Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
+                    //   },
+                    //   child: Icon(
+                    //     Icons.notifications,
+                    //     size: 25.r,
+                    //     color: ColorConfig.jsSecondaryColor,
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -670,12 +670,26 @@ class HomePage extends StatelessWidget {
                                                   dashboardLogic.schemeList[index]['scheme'] != '' &&
                                                   dashboardLogic.schemeList[index]['id'] != null &&
                                                   dashboardLogic.schemeList[index]['id'] != '') {
-                                                Get.offAll(() => ApplicationFormPage(),
-                                                    binding: ApplicationFormBinding(),
-                                                    arguments: {
-                                                      AppArguments.schemaId: dashboardLogic.schemeList[index]['scheme'],
-                                                      AppArguments.appId: dashboardLogic.schemeList[index]['id'],
-                                                    });
+                                                if (dashboardLogic.schemeList.isNotEmpty &&
+                                                    dashboardLogic.schemeList[index]['stageId'] != null &&
+                                                    dashboardLogic.schemeList[index]['stageId'] != '' &&
+                                                    dashboardLogic.schemeList[index]['stageId'] == 4) {
+                                                  Get.offAll(() => ApplicationFormPage(),
+                                                      binding: ApplicationFormBinding(),
+                                                      arguments: {
+                                                        AppArguments.schemaId: dashboardLogic.schemeList[index]
+                                                            ['scheme'],
+                                                        AppArguments.appId: dashboardLogic.schemeList[index]['id'],
+                                                      });
+                                                } else {
+                                                  Get.offAll(() => CertificateInsurencePage(),
+                                                      binding: CertificateInsurenceBinding(),
+                                                      arguments: {
+                                                        AppArguments.schemaId: dashboardLogic.schemeList[index]
+                                                            ['scheme'],
+                                                        AppArguments.appId: dashboardLogic.schemeList[index]['id'],
+                                                      });
+                                                }
                                               } else {
                                                 showSnackBar(Get.context!, "Invalid Scheme");
                                               }

@@ -158,8 +158,7 @@ class DashboardLogic extends GetxController {
   }
 
   Future<void> getSchemeList() async {
-    GetEnrollmnetListrequest getEnrollmentListRequest =
-        GetEnrollmnetListrequest(type: 1, paginationFROM: 0, paginationTO: 10);
+    GetEnrollmnetListrequest getEnrollmentListRequest = GetEnrollmnetListrequest(paginationFROM: 0, paginationTO: 10);
     var jsonRequest = jsonEncode(getEnrollmentListRequest.toJson());
     TGLog.d("GetEnrollmentListRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);

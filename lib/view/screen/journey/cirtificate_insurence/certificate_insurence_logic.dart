@@ -15,6 +15,7 @@ import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
@@ -29,35 +30,40 @@ import 'package:path_provider/path_provider.dart';
 import '../../../../config/color_config.dart';
 import '../../../../model/request_model/DownloadAgreementRequest.dart';
 import '../../../../model/response_model/DownloadAgreementResponse.dart';
-import 'certificate_insurence_binding.dart';
-import 'certificate_insurence_view.dart';
 
 class CertificateInsurenceLogic extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isDownLoading = false.obs;
 
   GenerateCoiResponseMain generateCoiData = GenerateCoiResponseMain();
-  RxInt schemeId = 1.obs;
+  RxInt schemeId = 0.obs;
+  RxInt appId = 0.obs;
   var dateTimeNow = DateTime.now();
 
   @override
   void onInit() {
     getSchemeDetail();
-    getDetail();
+
     super.onInit();
   }
 
   Future<void> getSchemeDetail() async {
-    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 0;
+    schemeId.value = Get.arguments[AppArguments.schemaId] ?? 0;
+    appId.value = Get.arguments[AppArguments.appId] ?? 0;
+    if (schemeId.value == 0) {
+      schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 0;
+    }
+    if (appId.value == 0) {
+      appId.value = (await TGSharedPreferences.getInstance().get(PREF_APP_ID));
+    }
+    onGetDetail();
   }
 
   Future<void> onPressDownload() async {
     isDownLoading.value = true;
-    String appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
-    String schemeId = (await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID)).toString() ?? '';
     String orgId = (await TGSharedPreferences.getInstance().get(PREF_ORG_ID)).toString() ?? '13';
-    DownloadAgreementRequest request =
-        DownloadAgreementRequest(applicationId: appId, schemeId: schemeId, orgId: orgId, isDownload: true);
+    DownloadAgreementRequest request = DownloadAgreementRequest(
+        applicationId: appId.toString(), schemeId: schemeId.toString(), orgId: orgId, isDownload: true);
     var jsonRequest = jsonEncode(request.toJson());
     TGLog.d("GenerateCoiRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_DOWNLOAD_AGREEMENT);
@@ -79,10 +85,9 @@ class CertificateInsurenceLogic extends GetxController {
   }
 
   Future<void> getDetail() async {
-    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
-    var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID) ?? '13';
+    var orgId = await TGSharedPreferences.getInstance().get(PREF_ORG_ID) ?? '';
     GenerateCoiRequest generateCoiRequest = GenerateCoiRequest(
-      applicationId: appId.toString(),
+      applicationId: appId.value.toString(),
       schemeId: schemeId.value.toString(),
       orgId: orgId.toString(),
       isDownload: false,

@@ -148,16 +148,17 @@ class GuradianDetailsPage extends StatelessWidget {
                                               onChanged: (i) {
                                                 nomineeDetailsLogic.items.value.forEach((key, value) {
                                                   if (i.toString() == value) {
-                                                    nomineeDetailsLogic.guardianid.value = int.parse(key);
+                                                    guradianDetailsLogic.relationshipGuardianId.value = num.parse(key);
                                                   }
                                                 });
-                                                nomineeDetailsLogic.relationWithApplicantController.text = i!;
+                                                guradianDetailsLogic.guardianRelationShip.value = i!;
+                                                nomineeDetailsLogic.relationWithApplicantController.text = i;
                                                 nomineeDetailsLogic.guardianShipValue.value = i.toString();
                                                 guradianDetailsLogic.relationWithApplicantController.text = i;
-                                                print(i!);
+                                                print(i);
                                               },
                                               isExpanded: false,
-                                              value: nomineeDetailsLogic.guardianShipValue.value,
+                                              value: guradianDetailsLogic.guardianRelationShip.value,
                                               hint: Text(nomineeDetailsLogic.items.value.values.first,
                                                   style: StyleConfig.mediumText16),
                                             ),

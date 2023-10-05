@@ -70,7 +70,7 @@ class NomineeDetailsLogic extends GetxController {
   RxMap<String, String> items = {"": ""}.obs;
   RxString screenName = ''.obs;
   var nomineeRelationShip = "".obs;
-  var relationshipid = 0.obs;
+  Rx<num> relationshipid = num.parse('0').obs;
   var guardianid = 0.obs;
   var guardianShipValue = "".obs;
   RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
@@ -89,7 +89,6 @@ class NomineeDetailsLogic extends GetxController {
   void onInit() {
     screenName.value = Get.arguments[AppArguments.screenName] ?? '';
     getData();
-    getMasterList();
     super.onInit();
   }
 
@@ -118,10 +117,10 @@ class NomineeDetailsLogic extends GetxController {
   _onSuccessGetMasterList(GetMasterListResponse response) async {
     TGLog.d("GetMasterListRequest : onSuccess()---$response");
     if (response.getMasterList().status == RES_SUCCESS) {
-      isLoading.value = true;
       response.getMasterList().data?.releationship?.forEach((element) {
         items.value.addAll({element?.id?.toString() ?? "": element.value ?? ""});
       });
+      isLoading.value = true;
     } else {
       TGLog.d("Error in GetMasterListRequest");
       isLoading.value = true;
@@ -145,9 +144,12 @@ class NomineeDetailsLogic extends GetxController {
         firstNameController.text = nominee.firstName ?? '';
         latsNameController.text = nominee.lastName ?? '';
         middleNameController.text = nominee.middleName ?? '';
-        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        date = DateTime.parse(
+            AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'yyyy-MM-dd 00:00:00.000'));
         mobileController.text = nominee.mobileNumber ?? '';
-        relationWithApplicantController.text = nominee.relationOfNomineeApplicantStr ?? '';
+        nomineeRelationShip.value = nominee.relationOfNomineeApplicantStr ?? '';
+        relationshipid.value = nominee.relationOfNomineeApplicant ?? num.parse('0');
         emailController.text = nominee.emailIdOfNominee ?? '';
         addressOneController.text = nominee.address?.addressLine1 ?? '';
         addressTwoController.text = nominee.address?.addressLine2 ?? '';
@@ -155,20 +157,39 @@ class NomineeDetailsLogic extends GetxController {
         districtController.text = nominee.address?.district ?? '';
         stateController.text = nominee.address?.state ?? '';
         pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
-        print("nominee.relationOfNomineeApplicant" + nominee.relationOfNomineeApplicant.toString());
+        print("nominee.relationOfNomineeApplicant${nominee.relationOfNomineeApplicant}");
         num id = nominee.relationOfNomineeApplicant!;
         items.value.forEach((key, value) {
-          print(key + ": " + value);
+          print("$key: $value");
           if (nominee.relationOfNomineeApplicant.toString() == key) {
             nomineeRelationShip.value = value;
-            print("Final value" + value);
+            print("Final value$value");
           }
         });
-        isLoading.value = true;
+        getMasterList();
       } else {
         getUserData();
       }
     });
+  }
+
+  void onChangeCheckboxValue(bool value) {
+    isChecked.value = value;
+    if (isChecked.value) {
+      addressOneController.text = getAppData.data?.address?.addressLine1 ?? '';
+      addressTwoController.text = getAppData.data?.address?.addressLine2 ?? '';
+      cityController.text = getAppData.data?.address?.city ?? '';
+      districtController.text = getAppData.data?.address?.district ?? '';
+      stateController.text = getAppData.data?.address?.state ?? '';
+      pinCodeController.text = getAppData.data?.address?.pincode != null ? '${getAppData.data?.address?.pincode}' : '';
+    } else {
+      addressOneController.text = '';
+      addressTwoController.text = '';
+      cityController.text = '';
+      districtController.text = '';
+      stateController.text = '';
+      pinCodeController.text = '';
+    }
   }
 
   Future selectDate() async {
@@ -232,8 +253,8 @@ class NomineeDetailsLogic extends GetxController {
     nominee.mobileNumber = mobileController.text;
     nominee.middleName = middleNameController.text;
     nominee.emailIdOfNominee = emailController.text;
-    // nominee.dateOfBirth = dob;
-    nominee.relationOfNomineeApplicantStr = (nomineeRelationShip.value);
+    nominee.dateOfBirth = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+    nominee.relationOfNomineeApplicantStr = nomineeRelationShip.value;
     nominee.relationOfNomineeApplicant = relationshipid.value;
     nominee.address?.addressLine1 = addressOneController.text;
     nominee.address?.addressLine2 = addressTwoController.text;
@@ -242,6 +263,7 @@ class NomineeDetailsLogic extends GetxController {
     nominee.address?.state = stateController.text;
     nominee.address?.pincode = num.parse(pinCodeController.text);
     getAppData.data?.nominee = [nominee];
+    getAppData.data?.isSameApplicantAddress = isChecked.value;
     TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
     TGLog.d("First Name--${getAppData.data?.nominee!.first.firstName}");
   }
@@ -251,7 +273,7 @@ class NomineeDetailsLogic extends GetxController {
     TGSharedPreferences.getInstance().set(PREF_IS_ADULT, isAdult(dobController.text));
     if (isLoading.value) {
       final validCharacters = RegExp(r'^[0-9]+$');
-      if (firstNameController.text.isEmpty) {
+      if (firstNameController.text.trim().isEmpty) {
         fNameErrorMsg.value = 'Please enter first name';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
@@ -359,8 +381,8 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         emailErrorMsg.value = '';
         address2ErrorMsg.value = '';
-      } else if (emailController.text.isNotEmpty && (emailController.text.length < 5) ||
-          !emailRegExp.hasMatch(emailController.text)) {
+      } else if (emailController.text.trim().isNotEmpty &&
+          (emailController.text.length < 5 || !emailRegExp.hasMatch(emailController.text))) {
         dobErrorMsg.value = '';
         fNameErrorMsg.value = '';
         emailErrorMsg.value = 'Please enter valid email';
@@ -373,10 +395,9 @@ class NomineeDetailsLogic extends GetxController {
         relationErrorMsg.value = '';
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
-
         lNameErrorMsg.value = '';
-      } else if (addressOneController.text.isEmpty ||
-          addressOneController.text.length < 2 ||
+      } else if (addressOneController.text.trim().isEmpty ||
+          addressOneController.text.length < 5 ||
           specialCharExpStartChar.hasMatch(addressOneController.text.substring(0))) {
         addressErrorMsg.value = 'Please enter valid address';
         fNameErrorMsg.value = '';
@@ -391,7 +412,7 @@ class NomineeDetailsLogic extends GetxController {
         relationErrorMsg.value = '';
         mobileErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (cityController.text.isEmpty ||
+      } else if (cityController.text.trim().isEmpty ||
           cityController.text.length < 2 ||
           specialCharExpStartChar.hasMatch(cityController.text.substring(0))) {
         cityErrorMsg.value = 'Please enter valid city';
@@ -407,7 +428,7 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (stateController.text.isEmpty ||
+      } else if (stateController.text.trim().isEmpty ||
           stateController.text.length < 2 ||
           specialCharExpStartChar.hasMatch(stateController.text.substring(0))) {
         stateErrorMsg.value = 'Please enter valid state';
@@ -423,7 +444,7 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         lNameErrorMsg.value = '';
         address2ErrorMsg.value = '';
-      } else if (districtController.text.isEmpty ||
+      } else if (districtController.text.trim().isEmpty ||
           districtController.text.length < 2 ||
           specialCharExpStartChar.hasMatch(districtController.text.substring(0))) {
         districtErrorMsg.value = 'Please enter valid district';
@@ -439,7 +460,7 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (pinCodeController.text.isEmpty) {
+      } else if (pinCodeController.text.trim().isEmpty) {
         pinCodeErrorMsg.value = 'Please enter pincode';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
@@ -453,7 +474,7 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (!validCharacters.hasMatch(pinCodeController.text)) {
+      } else if (!validCharacters.hasMatch(pinCodeController.text) || pinCodeController.text.trim().length != 6) {
         pinCodeErrorMsg.value = 'Please enter valid pincode';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';

@@ -24,6 +24,8 @@ class GuradianDetailsLogic extends GetxController {
   RxString addressErrorMsg = ''.obs;
   RxString emailErrorMsg = ''.obs;
   RxString mobileErrorMsg = ''.obs;
+  var guardianRelationShip = "".obs;
+  Rx<num> relationshipGuardianId = num.parse('0').obs;
   RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
   RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
   RegExp mobileRegExp = RegExp(r'^[0-9]+$');
@@ -51,7 +53,8 @@ class GuradianDetailsLogic extends GetxController {
       mobileController.text = getAppData.data?.nominee?.first.mobileNumberOfGuardian ?? '';
       emailController.text = getAppData.data?.nominee?.first.emailIdOfGuardian ?? '';
       addressController.text = getAppData.data?.nominee?.first.addressOfGuardian ?? '';
-      relationWithApplicantController.text = getAppData.data?.nominee?.first.relationShipOfGuardianStr ?? '';
+      guardianRelationShip.value = getAppData.data?.nominee?.first.relationShipOfGuardianStr ?? '';
+      relationshipGuardianId.value = getAppData.data?.nominee?.first.relationShipOfGuardian ?? num.parse('0');
       isLoading.value = true;
     });
   }
@@ -59,17 +62,17 @@ class GuradianDetailsLogic extends GetxController {
   Future<void> setData() async {
     getAppData.data?.nominee?.first.nameOfGuardian = firstNameController.text;
     getAppData.data?.nominee?.first.addressOfGuardian = addressController.text;
-    getAppData.data?.nominee?.first.relationShipOfGuardian = 2;
+    getAppData.data?.nominee?.first.relationShipOfGuardian = relationshipGuardianId.value;
     getAppData.data?.nominee?.first.mobileNumberOfGuardian = mobileController.text;
     getAppData.data?.nominee?.first.emailIdOfGuardian = emailController.text;
-    getAppData.data?.nominee?.first.relationShipOfGuardianStr = relationWithApplicantController.text;
+    getAppData.data?.nominee?.first.relationShipOfGuardianStr = guardianRelationShip.value;
     TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
     TGLog.d("First Name--${getAppData.data?.nominee!.first.firstName}");
   }
 
   void onPressContinue() {
     print("onPressContinue");
-    if (firstNameController.text.isEmpty ||
+    if (firstNameController.text.trim().isEmpty ||
         !onlyCharRegExp.hasMatch(firstNameController.text) ||
         firstNameController.text == ' ') {
       fNameErrorMsg.value = 'Please enter valid name';
@@ -77,7 +80,7 @@ class GuradianDetailsLogic extends GetxController {
       addressErrorMsg.value = '';
       emailErrorMsg.value = '';
       mobileErrorMsg.value = '';
-    } else if (addressController.text.isEmpty ||
+    } else if (addressController.text.trim().isEmpty ||
         addressController.text.length < 2 ||
         specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
       fNameErrorMsg.value = '';
@@ -87,6 +90,12 @@ class GuradianDetailsLogic extends GetxController {
       mobileErrorMsg.value = '';
       // !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0)) &&
       //     ((!mobileRegExp.hasMatch(mobileController.text) || mobileController.text.length != 10))
+    } else if (relationshipGuardianId.value == 0) {
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = 'Please select relationship with the nominee';
+      addressErrorMsg.value = '';
+      emailErrorMsg.value = '';
+      mobileErrorMsg.value = '';
     } else if (emailController.text.isNotEmpty &&
         ((emailController.text.length < 5) || !emailRegExp.hasMatch(emailController.text))) {
       fNameErrorMsg.value = '';

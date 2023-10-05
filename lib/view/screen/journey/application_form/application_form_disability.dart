@@ -39,70 +39,71 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                   () => applicationFormLogic.isLoading.value
                       ? const SizedBox.shrink()
                       : Column(children: [
-                          Offstage(
-                            offstage: applicationFormLogic.schemeId.value == 2,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    RichText(
-                                      textAlign: TextAlign.start,
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: "Whether Suffering from any Disability ? *",
-                                            style: StyleConfig.mediumText16,
-                                          ),
-                                        ],
-                                      ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  RichText(
+                                    textAlign: TextAlign.start,
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Whether Suffering from any Disability ? *",
+                                          style: StyleConfig.mediumText16,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                  width: 0.87.sw,
-                                  height: 60,
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
                                   ),
-                                  child: SizedBox(
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton(
-                                        items: _dropdownValues
-                                            .map((value) => DropdownMenuItem(
-                                                  child: Container(width: 0.75.sw, child: Text(value)),
-                                                  value: value,
-                                                ))
-                                            .toList(),
-                                        onChanged: (i) {
-                                          applicationFormLogic.disbletext.value = i!;
-                                          print(i!);
-                                        },
-                                        isExpanded: false,
-                                        value: applicationFormLogic.disbletext.value,
-                                      ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Container(
+                                width: 0.87.sw,
+                                height: 60,
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
+                                ),
+                                child: SizedBox(
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      items: _dropdownValues
+                                          .map((value) => DropdownMenuItem(
+                                                value: value,
+                                                child: SizedBox(width: 0.75.sw, child: Text(value)),
+                                              ))
+                                          .toList(),
+                                      onChanged: (i) {
+                                        applicationFormLogic.disbletext.value = i!;
+                                        print(i!);
+                                      },
+                                      isExpanded: false,
+                                      value: applicationFormLogic.disbletext.value,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 20,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Offstage(
+                                offstage: applicationFormLogic.disbletext.value != "Yes",
+                                child: AppTextField(
+                                  isMandatory: true,
+                                  title: "If Yes, details thereof ",
+                                  controller: applicationFormLogic.disableController,
+                                  hintText: "Enter Details",
+                                  inputType: TextInputType.emailAddress,
+                                  errorText: applicationFormLogic.disableError.value,
+                                  onChanged: (str) {
+                                    applicationFormLogic.disableError.value = '';
+                                  },
                                 ),
-                                Offstage(
-                                  offstage: applicationFormLogic.disbletext.value == "No",
-                                  child: AppTextField(
-                                    isMandatory: true,
-                                    title: "If Yes, details thereof ",
-                                    controller: TextEditingController(),
-                                    hintText: "Enter Details",
-                                    inputType: TextInputType.emailAddress,
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ]),
                 ),
@@ -115,5 +116,5 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
     );
   }
 
-  final List<String> _dropdownValues = ["Yes", "No"];
+  var _dropdownValues = ["Yes", "No"];
 }

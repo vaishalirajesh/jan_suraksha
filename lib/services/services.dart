@@ -191,4 +191,10 @@ class ServiceManager {
     TGLog.d("ServiceManager.fetchBasicDetails");
     TGService<FetchProfileInfoMain, ServiceError>(() => FetchProfileInfoMain(), () => ServiceError()).get(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
+
+  void optOut({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.optOut");
+    TGService<OTPResponse, ServiceError>(() => OTPResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
 }

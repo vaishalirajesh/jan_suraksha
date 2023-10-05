@@ -15,6 +15,7 @@ import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
@@ -124,16 +125,20 @@ class AccountSelectionLogic extends GetxController {
     TGLog.d("UpdateStageRequest Decrypt:--------$tgPostRequest");
     ServiceManager.getInstance().updateApplicationStage(
       request: tgPostRequest,
-      onSuccess: (response) => _onSuccessUpdateStage(response),
+      onSuccess: (response) => _onSuccessUpdateStage(response, appId),
       onError: (error) => _onErrorUpdateStage(error),
     );
   }
 
-  _onSuccessUpdateStage(UpdateStageResponse response) async {
+  _onSuccessUpdateStage(UpdateStageResponse response, var appId) async {
     TGLog.d("UpdateStageRequest : onSuccess()---$response");
+    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 0;
     if (response.updateApplicationStage().status == RES_SUCCESS) {
       isLoading.value = false;
-      Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding());
+      Get.offAll(() => ApplicationFormPage(), binding: ApplicationFormBinding(), arguments: {
+        AppArguments.schemaId: schemeId,
+        AppArguments.appId: appId,
+      });
     } else {
       TGLog.d("Error in UpdateStageRequest");
       isLoading.value = false;

@@ -5,6 +5,6 @@ import 'profile_logic.dart';
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ProfileLogic());
+    Get.put<ProfileLogic>(ProfileLogic());
   }
 }

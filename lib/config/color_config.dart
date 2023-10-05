@@ -28,6 +28,7 @@ class ColorConfig {
   static final jsSearchTextGreyColor = HexColor("#777777");
   static final jsOptOutTextGreyColor = HexColor("#9A9A9A");
   static final jsLightGreenColor = HexColor("#34A853");
+  static final jsDividerGreyColor = HexColor("#B9C4CB");
 }
 
 class HexColor extends Color {

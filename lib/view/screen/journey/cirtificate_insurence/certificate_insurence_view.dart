@@ -226,24 +226,27 @@ class CertificateInsurencePage extends StatelessWidget {
                                     ),
                                   ),
                                 ]),
-                                TableRow(children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      'Name of Guardian/Appointee (In case of minor nominee)',
-                                      style: StyleConfig.mediumExtraSmallBlackText,
-                                      textAlign: TextAlign.center,
+                                if (!certificateInsurenceLogic.isLoading.value &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
+                                    int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
+                                  TableRow(children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        'Name of Guardian/Appointee (In case of minor nominee)',
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ]),
+                                  ]),
                                 TableRow(children: [
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
@@ -388,24 +391,27 @@ class CertificateInsurencePage extends StatelessWidget {
                                     ),
                                   ),
                                 ]),
-                                TableRow(children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
-                                      style: StyleConfig.mediumExtraSmallBlackText,
-                                      textAlign: TextAlign.center,
+                                if (!certificateInsurenceLogic.isLoading.value &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
+                                    int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
+                                  TableRow(children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ]),
+                                  ]),
                                 TableRow(children: [
                                   Text(
                                     AppString.coverDate,
@@ -539,24 +545,27 @@ class CertificateInsurencePage extends StatelessWidget {
                                     ),
                                   ),
                                 ]),
-                                TableRow(children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      'Name of Guardian/Appointee (In case of minor nominee)',
-                                      style: StyleConfig.mediumExtraSmallBlackText,
-                                      textAlign: TextAlign.center,
+                                if (!certificateInsurenceLogic.isLoading.value &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
+                                    int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
+                                  TableRow(children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        'Name of Guardian/Appointee (In case of minor nominee)',
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.nameOfGuardian ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ]),
+                                  ]),
                                 TableRow(children: [
                                   Padding(
                                     padding: EdgeInsets.all(10.r),
@@ -701,24 +710,27 @@ class CertificateInsurencePage extends StatelessWidget {
                                     ),
                                   ),
                                 ]),
-                                TableRow(children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
-                                      style: StyleConfig.mediumExtraSmallBlackText,
-                                      textAlign: TextAlign.center,
+                                if (!certificateInsurenceLogic.isLoading.value &&
+                                    certificateInsurenceLogic.generateCoiData.data?.ageOfNominee != null &&
+                                    int.parse(certificateInsurenceLogic.generateCoiData.data!.ageOfNominee!) < 18)
+                                  TableRow(children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                        style: StyleConfig.mediumExtraSmallBlackText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(
-                                      certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
-                                      style: StyleConfig.regularExtraSmallBText,
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: Text(
+                                        certificateInsurenceLogic.generateCoiData.data?.relationShipOfGuardian ?? '-',
+                                        style: StyleConfig.regularExtraSmallBText,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ]),
+                                  ]),
                                 TableRow(children: [
                                   Text(
                                     AppString.coverDate,

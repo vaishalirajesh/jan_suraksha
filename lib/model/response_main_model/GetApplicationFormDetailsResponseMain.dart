@@ -309,6 +309,10 @@ class Data {
     _consentForAutoDebit = consentForAutoDebit;
   }
 
+  set isSameApplicantAddress(dynamic value) {
+    _isSameApplicantAddress = value;
+  }
+
   Data.fromJson(dynamic json) {
     _id = json['id'];
     _createdDate = json['createdDate'];

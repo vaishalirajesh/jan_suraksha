@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GetApplicationFormDetailsRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
@@ -8,6 +9,7 @@ import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
@@ -24,15 +26,17 @@ class ApplicationFormLogic extends GetxController {
   RxBool isLoading = false.obs;
   String dob = '';
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
-
   var isdisabled = false.obs;
-
-  var disbletext = "No".obs;
-
+  Rx<String?> disbletext = (null as String?).obs;
+  RxString disableError = "".obs;
   var schemeId = 0.obs;
+  var appId = 0.obs;
+  TextEditingController disableController = TextEditingController(text: '');
 
   @override
   void onInit() {
+    schemeId.value = Get.arguments[AppArguments.schemaId] ?? 0;
+    appId.value = Get.arguments[AppArguments.appId] ?? 0;
     getUserData();
     super.onInit();
   }
@@ -46,11 +50,23 @@ class ApplicationFormLogic extends GetxController {
   }
 
   void onPressContinueFromDisability() {
-    Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+    if (disbletext?.value == 'Yes') {
+      if (disableController.text.trim().isEmpty) {
+        disableError.value = 'Please add disability detail';
+      } else {
+        disableError.value = '';
+        Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+      }
+    } else {
+      disableError.value = '';
+      Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+    }
   }
 
   Future<void> getUserData() async {
-    schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID);
+    if (schemeId.value == 0) {
+      schemeId.value = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID);
+    }
     if (await NetUtils.isInternetAvailable()) {
       getData();
     } else {
@@ -62,9 +78,10 @@ class ApplicationFormLogic extends GetxController {
 
   Future<void> getData() async {
     isLoading.value = true;
-    String appId = '';
-    appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
-    var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
+    if (appId.value == 0) {
+      appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? 0;
+    }
+    var encAppId = AesGcmEncryptionUtils.encryptNew(appId.toString());
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
         GetApplicationFormDetailsRequest(appId: encAppId);
     TGLog.d("GetApplicationFormDetailsRequest--------$getApplicationFormDetailsRequest");

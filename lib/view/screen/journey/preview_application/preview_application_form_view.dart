@@ -366,7 +366,6 @@ class PreviewApplicationPage extends StatelessWidget {
                                             isMandatory: true,
                                             isReadOnly: true,
                                             title: AppString.name,
-                                            hintText: AppString.enterYourName,
                                             inputType: TextInputType.text,
                                             initialvale: previewApplicationFormLogic
                                                     .getAppData.data!.nominee?.first.nameOfGuardian ??
@@ -379,7 +378,6 @@ class PreviewApplicationPage extends StatelessWidget {
                                             isMandatory: true,
                                             isReadOnly: true,
                                             title: AppString.address,
-                                            hintText: AppString.enterYourAddress,
                                             inputType: TextInputType.text,
                                             initialvale: previewApplicationFormLogic
                                                     .getAppData.data!.nominee?.first.addressOfGuardian ??
@@ -392,7 +390,6 @@ class PreviewApplicationPage extends StatelessWidget {
                                             isMandatory: true,
                                             isReadOnly: true,
                                             title: AppString.relationNominee,
-                                            hintText: AppString.selectRelation,
                                             inputType: TextInputType.text,
                                             initialvale: previewApplicationFormLogic
                                                     .getAppData.data!.nominee?.first.relationShipOfGuardianStr ??
@@ -405,7 +402,6 @@ class PreviewApplicationPage extends StatelessWidget {
                                             isMandatory: false,
                                             isReadOnly: true,
                                             title: AppString.mobileNumber,
-                                            hintText: AppString.enterMobile,
                                             inputType: TextInputType.phone,
                                             initialvale: previewApplicationFormLogic
                                                     .getAppData.data!.nominee?.first.mobileNumberOfGuardian ??
@@ -418,7 +414,6 @@ class PreviewApplicationPage extends StatelessWidget {
                                             isMandatory: false,
                                             isReadOnly: true,
                                             title: AppString.emailId,
-                                            hintText: AppString.enterEmail,
                                             inputType: TextInputType.emailAddress,
                                             initialvale: previewApplicationFormLogic
                                                     .getAppData.data!.nominee?.first.emailIdOfGuardian ??

@@ -285,7 +285,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                           ),
                                           value: nomineeDetailsLogic.isChecked.value,
                                           onChanged: (bool? value) {
-                                            nomineeDetailsLogic.isChecked(value);
+                                            nomineeDetailsLogic.onChangeCheckboxValue(value ?? false);
                                           },
                                         ),
                                       ),

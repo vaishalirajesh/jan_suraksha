@@ -72,7 +72,7 @@ class GuradianDetailsLogic extends GetxController {
 
   void onPressContinue() {
     print("onPressContinue");
-    if (firstNameController.text.isEmpty ||
+    if (firstNameController.text.trim().isEmpty ||
         !onlyCharRegExp.hasMatch(firstNameController.text) ||
         firstNameController.text == ' ') {
       fNameErrorMsg.value = 'Please enter valid name';
@@ -80,7 +80,7 @@ class GuradianDetailsLogic extends GetxController {
       addressErrorMsg.value = '';
       emailErrorMsg.value = '';
       mobileErrorMsg.value = '';
-    } else if (addressController.text.isEmpty ||
+    } else if (addressController.text.trim().isEmpty ||
         addressController.text.length < 2 ||
         specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
       fNameErrorMsg.value = '';
@@ -90,6 +90,12 @@ class GuradianDetailsLogic extends GetxController {
       mobileErrorMsg.value = '';
       // !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0)) &&
       //     ((!mobileRegExp.hasMatch(mobileController.text) || mobileController.text.length != 10))
+    } else if (relationshipGuardianId.value == 0) {
+      fNameErrorMsg.value = '';
+      relationErrorMsg.value = 'Please select relationship with the nominee';
+      addressErrorMsg.value = '';
+      emailErrorMsg.value = '';
+      mobileErrorMsg.value = '';
     } else if (emailController.text.isNotEmpty &&
         ((emailController.text.length < 5) || !emailRegExp.hasMatch(emailController.text))) {
       fNameErrorMsg.value = '';

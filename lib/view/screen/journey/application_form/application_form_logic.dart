@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GetApplicationFormDetailsRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
@@ -26,9 +27,11 @@ class ApplicationFormLogic extends GetxController {
   String dob = '';
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
   var isdisabled = false.obs;
-  var disbletext = "No".obs;
+  Rx<String?> disbletext = (null as String?).obs;
+  RxString disableError = "".obs;
   var schemeId = 0.obs;
   var appId = 0.obs;
+  TextEditingController disableController = TextEditingController(text: '');
 
   @override
   void onInit() {
@@ -47,7 +50,17 @@ class ApplicationFormLogic extends GetxController {
   }
 
   void onPressContinueFromDisability() {
-    Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+    if (disbletext?.value == 'Yes') {
+      if (disableController.text.trim().isEmpty) {
+        disableError.value = 'Please add disability detail';
+      } else {
+        disableError.value = '';
+        Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+      }
+    } else {
+      disableError.value = '';
+      Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+    }
   }
 
   Future<void> getUserData() async {

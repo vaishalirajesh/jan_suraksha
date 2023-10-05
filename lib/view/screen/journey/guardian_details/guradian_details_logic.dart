@@ -24,6 +24,8 @@ class GuradianDetailsLogic extends GetxController {
   RxString addressErrorMsg = ''.obs;
   RxString emailErrorMsg = ''.obs;
   RxString mobileErrorMsg = ''.obs;
+  var guardianRelationShip = "".obs;
+  Rx<num> relationshipGuardianId = num.parse('0').obs;
   RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
   RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
   RegExp mobileRegExp = RegExp(r'^[0-9]+$');
@@ -51,7 +53,8 @@ class GuradianDetailsLogic extends GetxController {
       mobileController.text = getAppData.data?.nominee?.first.mobileNumberOfGuardian ?? '';
       emailController.text = getAppData.data?.nominee?.first.emailIdOfGuardian ?? '';
       addressController.text = getAppData.data?.nominee?.first.addressOfGuardian ?? '';
-      relationWithApplicantController.text = getAppData.data?.nominee?.first.relationShipOfGuardianStr ?? '';
+      guardianRelationShip.value = getAppData.data?.nominee?.first.relationShipOfGuardianStr ?? '';
+      relationshipGuardianId.value = getAppData.data?.nominee?.first.relationShipOfGuardian ?? num.parse('0');
       isLoading.value = true;
     });
   }
@@ -59,10 +62,10 @@ class GuradianDetailsLogic extends GetxController {
   Future<void> setData() async {
     getAppData.data?.nominee?.first.nameOfGuardian = firstNameController.text;
     getAppData.data?.nominee?.first.addressOfGuardian = addressController.text;
-    getAppData.data?.nominee?.first.relationShipOfGuardian = 2;
+    getAppData.data?.nominee?.first.relationShipOfGuardian = relationshipGuardianId.value;
     getAppData.data?.nominee?.first.mobileNumberOfGuardian = mobileController.text;
     getAppData.data?.nominee?.first.emailIdOfGuardian = emailController.text;
-    getAppData.data?.nominee?.first.relationShipOfGuardianStr = relationWithApplicantController.text;
+    getAppData.data?.nominee?.first.relationShipOfGuardianStr = guardianRelationShip.value;
     TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
     TGLog.d("First Name--${getAppData.data?.nominee!.first.firstName}");
   }

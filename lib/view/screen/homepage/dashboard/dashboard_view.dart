@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/generated/assets.dart';
+import 'package:jan_suraksha/utils/constant/argument_constant.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/profile/profile_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
@@ -663,8 +665,20 @@ class HomePage extends StatelessWidget {
                                           ),
                                           ListViewButtons(
                                             onPress: () {
-                                              Get.offAll(() => ApplicationFormPage(),
-                                                  binding: ApplicationFormBinding());
+                                              if (dashboardLogic.schemeList.isNotEmpty &&
+                                                  dashboardLogic.schemeList[index]['scheme'] != null &&
+                                                  dashboardLogic.schemeList[index]['scheme'] != '' &&
+                                                  dashboardLogic.schemeList[index]['id'] != null &&
+                                                  dashboardLogic.schemeList[index]['id'] != '') {
+                                                Get.offAll(() => ApplicationFormPage(),
+                                                    binding: ApplicationFormBinding(),
+                                                    arguments: {
+                                                      AppArguments.schemaId: dashboardLogic.schemeList[index]['scheme'],
+                                                      AppArguments.appId: dashboardLogic.schemeList[index]['id'],
+                                                    });
+                                              } else {
+                                                showSnackBar(Get.context!, "Invalid Scheme");
+                                              }
                                             },
                                             title: "Continue Journey",
                                           )

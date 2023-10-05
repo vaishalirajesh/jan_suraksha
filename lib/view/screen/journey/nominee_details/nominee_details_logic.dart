@@ -70,7 +70,7 @@ class NomineeDetailsLogic extends GetxController {
   RxMap<String, String> items = {"": ""}.obs;
   RxString screenName = ''.obs;
   var nomineeRelationShip = "".obs;
-  var relationshipid = 0.obs;
+  Rx<num> relationshipid = num.parse('0').obs;
   var guardianid = 0.obs;
   var guardianShipValue = "".obs;
   RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
@@ -89,7 +89,6 @@ class NomineeDetailsLogic extends GetxController {
   void onInit() {
     screenName.value = Get.arguments[AppArguments.screenName] ?? '';
     getData();
-    getMasterList();
     super.onInit();
   }
 
@@ -118,10 +117,10 @@ class NomineeDetailsLogic extends GetxController {
   _onSuccessGetMasterList(GetMasterListResponse response) async {
     TGLog.d("GetMasterListRequest : onSuccess()---$response");
     if (response.getMasterList().status == RES_SUCCESS) {
-      isLoading.value = true;
       response.getMasterList().data?.releationship?.forEach((element) {
         items.value.addAll({element?.id?.toString() ?? "": element.value ?? ""});
       });
+      isLoading.value = true;
     } else {
       TGLog.d("Error in GetMasterListRequest");
       isLoading.value = true;
@@ -147,7 +146,8 @@ class NomineeDetailsLogic extends GetxController {
         middleNameController.text = nominee.middleName ?? '';
         dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth, 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
         mobileController.text = nominee.mobileNumber ?? '';
-        relationWithApplicantController.text = nominee.relationOfNomineeApplicantStr ?? '';
+        nomineeRelationShip.value = nominee.relationOfNomineeApplicantStr ?? '';
+        relationshipid.value = nominee.relationOfNomineeApplicant ?? num.parse('0');
         emailController.text = nominee.emailIdOfNominee ?? '';
         addressOneController.text = nominee.address?.addressLine1 ?? '';
         addressTwoController.text = nominee.address?.addressLine2 ?? '';
@@ -164,11 +164,30 @@ class NomineeDetailsLogic extends GetxController {
             print("Final value" + value);
           }
         });
-        isLoading.value = true;
+        getMasterList();
       } else {
         getUserData();
       }
     });
+  }
+
+  void onChangeCheckboxValue(bool value) {
+    isChecked.value = value;
+    if (isChecked.value) {
+      addressOneController.text = getAppData.data?.address?.addressLine1 ?? '';
+      addressTwoController.text = getAppData.data?.address?.addressLine2 ?? '';
+      cityController.text = getAppData.data?.address?.city ?? '';
+      districtController.text = getAppData.data?.address?.district ?? '';
+      stateController.text = getAppData.data?.address?.state ?? '';
+      pinCodeController.text = getAppData.data?.address?.pincode != null ? '${getAppData.data?.address?.pincode}' : '';
+    } else {
+      addressOneController.text = '';
+      addressTwoController.text = '';
+      cityController.text = '';
+      districtController.text = '';
+      stateController.text = '';
+      pinCodeController.text = '';
+    }
   }
 
   Future selectDate() async {
@@ -232,8 +251,8 @@ class NomineeDetailsLogic extends GetxController {
     nominee.mobileNumber = mobileController.text;
     nominee.middleName = middleNameController.text;
     nominee.emailIdOfNominee = emailController.text;
-    // nominee.dateOfBirth = dob;
-    nominee.relationOfNomineeApplicantStr = (nomineeRelationShip.value);
+    nominee.dateOfBirth = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+    nominee.relationOfNomineeApplicantStr = nomineeRelationShip.value;
     nominee.relationOfNomineeApplicant = relationshipid.value;
     nominee.address?.addressLine1 = addressOneController.text;
     nominee.address?.addressLine2 = addressTwoController.text;
@@ -242,6 +261,7 @@ class NomineeDetailsLogic extends GetxController {
     nominee.address?.state = stateController.text;
     nominee.address?.pincode = num.parse(pinCodeController.text);
     getAppData.data?.nominee = [nominee];
+    getAppData.data?.isSameApplicantAddress = isChecked.value;
     TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
     TGLog.d("First Name--${getAppData.data?.nominee!.first.firstName}");
   }

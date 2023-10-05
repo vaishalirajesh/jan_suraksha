@@ -34,4 +34,5 @@ abstract class URIS {
   static const URI_LOG_OUT = "users/v3/logoutUser";
   static const URI_FORGOT_PASSWORD = "users/v3/email/forgotpasswordEncrypt";
   static const URI_SAVE_OPT_OUT = "insurance/v3/application/saveOptOut";
+  static const URI_GET_PROFILE = "users/v3/getUserDetailsById";
 }

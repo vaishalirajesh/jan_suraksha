@@ -17,20 +17,20 @@ LoginRequest loginFromJson(String str) => LoginRequest.fromJson(json.decode(str)
 String loginToJson(LoginRequest data) => json.encode(data.toJson());
 
 class LoginRequest {
-  LoginRequest({
-    String? mobile,
-    String? email,
-    String? otp,
-    String? password,
-    num? userType,
-    String? browserName,
-    String? browserVersion,
-    String? device,
-    String? deviceType,
-    String? deviceOs,
-    String? deviceOsVersion,
-    String? userAgent,
-  }) {
+  LoginRequest(
+      {String? mobile,
+      String? email,
+      String? otp,
+      String? password,
+      num? userType,
+      String? browserName,
+      String? browserVersion,
+      String? device,
+      String? deviceType,
+      String? deviceOs,
+      String? deviceOsVersion,
+      String? userAgent,
+      num? notificationMasterId}) {
     _mobile = mobile;
     _email = email;
     _otp = otp;
@@ -43,6 +43,7 @@ class LoginRequest {
     _deviceOs = deviceOs;
     _deviceOsVersion = deviceOsVersion;
     _userAgent = userAgent;
+    _notificationMasterId = notificationMasterId;
   }
 
   LoginRequest.fromJson(dynamic json) {
@@ -58,6 +59,7 @@ class LoginRequest {
     _deviceOs = json['deviceOs'];
     _deviceOsVersion = json['deviceOsVersion'];
     _userAgent = json['userAgent'];
+    _notificationMasterId = json['notificationMasterId'];
   }
   String? _mobile;
   String? _email;
@@ -69,36 +71,37 @@ class LoginRequest {
   String? _device;
   String? _deviceType;
   String? _deviceOs;
+  num? _notificationMasterId;
   String? _deviceOsVersion;
   String? _userAgent;
-  LoginRequest copyWith({
-    String? mobile,
-    String? email,
-    String? otp,
-    String? password,
-    num? userType,
-    String? browserName,
-    String? browserVersion,
-    String? device,
-    String? deviceType,
-    String? deviceOs,
-    String? deviceOsVersion,
-    String? userAgent,
-  }) =>
+  LoginRequest copyWith(
+          {String? mobile,
+          String? email,
+          String? otp,
+          String? password,
+          num? userType,
+          String? browserName,
+          String? browserVersion,
+          String? device,
+          String? deviceType,
+          String? deviceOs,
+          String? deviceOsVersion,
+          String? userAgent,
+          num? notificationMasterId}) =>
       LoginRequest(
-        mobile: mobile ?? _mobile,
-        email: email ?? _email,
-        otp: otp ?? _otp,
-        password: password ?? _password,
-        userType: userType ?? _userType,
-        browserName: browserName ?? _browserName,
-        browserVersion: browserVersion ?? _browserVersion,
-        device: device ?? _device,
-        deviceType: deviceType ?? _deviceType,
-        deviceOs: deviceOs ?? _deviceOs,
-        deviceOsVersion: deviceOsVersion ?? _deviceOsVersion,
-        userAgent: userAgent ?? _userAgent,
-      );
+          mobile: mobile ?? _mobile,
+          email: email ?? _email,
+          otp: otp ?? _otp,
+          password: password ?? _password,
+          userType: userType ?? _userType,
+          browserName: browserName ?? _browserName,
+          browserVersion: browserVersion ?? _browserVersion,
+          device: device ?? _device,
+          deviceType: deviceType ?? _deviceType,
+          deviceOs: deviceOs ?? _deviceOs,
+          deviceOsVersion: deviceOsVersion ?? _deviceOsVersion,
+          userAgent: userAgent ?? _userAgent,
+          notificationMasterId: notificationMasterId ?? _notificationMasterId);
   String? get mobile => _mobile;
   String? get email => _email;
   String? get otp => _otp;
@@ -111,6 +114,7 @@ class LoginRequest {
   String? get deviceOs => _deviceOs;
   String? get deviceOsVersion => _deviceOsVersion;
   String? get userAgent => _userAgent;
+  num? get notificationMasterId => _notificationMasterId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -126,6 +130,7 @@ class LoginRequest {
     map['deviceOs'] = _deviceOs;
     map['deviceOsVersion'] = _deviceOsVersion;
     map['userAgent'] = _userAgent;
+    map['notificationMasterId'] = _notificationMasterId;
     return map;
   }
 }

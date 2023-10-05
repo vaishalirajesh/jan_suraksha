@@ -197,26 +197,31 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Obx(() {
-                      return Text(
-                        'Welcome, ${dashboardLogic.userName.value}',
-                        style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
-                      );
-                    }),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
-                    //   },
-                    //   child: Icon(
-                    //     Icons.notifications,
-                    //     size: 25.r,
-                    //     color: ColorConfig.jsSecondaryColor,
-                    //   ),
-                    // )
-                  ],
+                child: SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(() {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            'Welcome, ${dashboardLogic.userName.value}',
+                            style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                          ),
+                        );
+                      }),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
+                        },
+                        child: Icon(
+                          Icons.notifications,
+                          size: 25.r,
+                          color: ColorConfig.jsSecondaryColor,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Row(

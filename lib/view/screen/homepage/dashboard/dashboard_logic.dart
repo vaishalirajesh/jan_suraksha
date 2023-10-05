@@ -16,8 +16,10 @@ import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.d
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
+import 'package:jan_suraksha/model/response_model/fetch_profile_details_response_main.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
+import 'package:jan_suraksha/services/request/tg_get_request.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
@@ -39,6 +41,8 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 import '../../../../model/request_model/SetPasswordRequest.dart';
 import '../../../../model/response_model/SkipEmailResponse.dart';
 import '../../../widget/custom_otp_field/custom_otp_field.dart';
+import '../../auth/login/login_binding.dart';
+import '../../auth/login/login_view.dart';
 
 class DashboardLogic extends GetxController {
   var index = 0.obs;
@@ -74,7 +78,7 @@ class DashboardLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
+    userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
     bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     if (isfromreg) {
@@ -88,6 +92,11 @@ class DashboardLogic extends GetxController {
           onSuccess: (response) => _onsuccsessSkipEmailResponse(response),
           onError: (response) => _onErrorSkipEmailResponse(response));
     } else {
+      if ((await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN)) == null ||
+          (await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN)) == null &&
+              (await TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN)) == null) {
+        Get.offAll(() => LoginPage(), binding: LoginBinding());
+      }
       getSchemaDeatil();
     }
     super.onInit();
@@ -186,9 +195,10 @@ class DashboardLogic extends GetxController {
       TGLog.d("Schema lenght--${schemeList.length}");
       bool isFromReg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
       if (isFromReg) {
-        openBottomSheet();
+        updateEmailOtpBottomSheet();
         TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
       }
+      fetchProfileData();
       isLoading.value = false;
     } else {
       TGLog.d("Error in updateVerificationType");
@@ -217,7 +227,7 @@ class DashboardLogic extends GetxController {
     }
   }
 
-  void openBottomSheet() {
+  void updateEmailOtpBottomSheet() {
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
       return Obx(() {
         return Container(
@@ -280,7 +290,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   Future<void> updateEmail() async {
@@ -308,7 +318,7 @@ class DashboardLogic extends GetxController {
       TGLog.d("Schema lenght--${schemeList.length}");
       Get.back();
       isEmailVerifying.value = false;
-      getBottomSheet(
+      openEmailOtpBottomSheet(
         context: Get.context!,
         isEdit: true.obs,
         onChangeOTP: (s) {
@@ -320,7 +330,7 @@ class DashboardLogic extends GetxController {
         },
         onEdit: () {
           Get.back();
-          openBottomSheet();
+          updateEmailOtpBottomSheet();
         },
         title: 'Email Verification',
         mobileNumber: emailController.text ?? '',
@@ -478,7 +488,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   DateTime date = DateTime.now();
@@ -624,9 +634,11 @@ class DashboardLogic extends GetxController {
     }
   }
 
-  _onErrorSkipEmailResponse(response) {}
+  _onErrorSkipEmailResponse(TGResponse response) {
+    showSnackBar(Get.context!, "Error Occured with code${response.httpStatus}");
+  }
 
-  getBottomSheet({
+  openEmailOtpBottomSheet({
     required Function(String) onChangeOTP,
     required Function(String) onSubmitOTP,
     Function()? onEdit,
@@ -751,7 +763,7 @@ class DashboardLogic extends GetxController {
           ),
         );
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   // getBottomSheet(
@@ -853,7 +865,7 @@ class DashboardLogic extends GetxController {
               )
             : Container();
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   bool validateStructure(String value) {
@@ -923,5 +935,33 @@ class DashboardLogic extends GetxController {
     TGLog.d("SaveOptoutRequest : onError()--${errorResponse.error}");
     isOptOutLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> fetchProfileData() async {
+    FetchProfile fetchProfile = FetchProfile();
+    ServiceManager.getInstance().fetchBasicDetails(
+        request: fetchProfile,
+        onSuccess: (response) {
+          FetchProfileInfoMain responseInfo = response;
+          if (responseInfo.getprofileinfo().status == RES_SUCCESS) {
+            TGSharedPreferences.getInstance().set(PREF_MOBILE, responseInfo.getprofileinfo().data?.mobile ?? "");
+            TGSharedPreferences.getInstance().set(PREF_USERNAME, responseInfo.getprofileinfo().data?.userName ?? "");
+            TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, responseInfo.getprofileinfo().data?.email ?? "");
+          }
+        },
+        onError: (response) {});
+  }
+}
+
+class FetchProfile extends TGGetRequest {
+  FetchProfile();
+  @override
+  String getUri() {
+    return URIS.URI_GET_PROFILE;
+  }
+
+  @override
+  Map<String, dynamic> params() {
+    return <String, dynamic>{};
   }
 }

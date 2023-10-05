@@ -19,7 +19,6 @@ import '../../../../generated/assets.dart';
 import '../../../../services/services.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
-import '../../../widget/email_bottom_sheet.dart';
 import '../../../widget/pdfviewfile.dart';
 import 'genral_faq_view.dart';
 
@@ -443,7 +442,9 @@ class ProfilePage extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
+
                     LogOutRequest request = LogOutRequest(id: "", type: "");
+
                     ServiceManager.getInstance().logOut(
                         request: request,
                         onSuccess: (respose) => _onsuccsessSetPassword(respose),
@@ -513,6 +514,44 @@ class ProfilePage extends StatelessWidget {
   }
 
   _onsuccsessSetPassword(respose) {
+    TGSharedPreferences.getInstance().remove(PREF_GSTIN);
+    TGSharedPreferences.getInstance().remove(PREF_LOGIN_RES);
+    TGSharedPreferences.getInstance().remove(PREF_REFRESHTOKEN);
+    TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
+    TGSharedPreferences.getInstance().remove(PREF_LOGIN_USERNAME);
+    TGSharedPreferences.getInstance().remove(PREF_MOBILE);
+    TGSharedPreferences.getInstance().remove(PREF_PANNO);
+    TGSharedPreferences.getInstance().remove(PREF_BUSINESSNAME);
+    TGSharedPreferences.getInstance().remove(PREF_USERNAME);
+    TGSharedPreferences.getInstance().remove(PREF_USERSTATE);
+    TGSharedPreferences.getInstance().remove(PREF_AAID);
+    TGSharedPreferences.getInstance().remove(PREF_AACODE);
+    TGSharedPreferences.getInstance().remove(PREF_LOANAPPREFID);
+    TGSharedPreferences.getInstance().remove(PREF_LOANOFFER);
+    TGSharedPreferences.getInstance().remove(PREF_AAURL);
+    TGSharedPreferences.getInstance().remove(PREF_AACALLBACKURL);
+    TGSharedPreferences.getInstance().remove(PREF_CONSENTTYPE);
+    TGSharedPreferences.getInstance().remove(PREF_CONSENT_AAID);
+    TGSharedPreferences.getInstance().remove(PREF_OFFERID);
+    TGSharedPreferences.getInstance().remove(PREF_LOANAPPID);
+    TGSharedPreferences.getInstance().remove(PREF_REPAYMENTPLANID);
+    TGSharedPreferences.getInstance().remove(PREF_CURRENT_STAGE);
+    TGSharedPreferences.getInstance().remove(PREF_ISTC_DONE);
+    TGSharedPreferences.getInstance().remove(PREF_ISGST_CONSENT);
+    TGSharedPreferences.getInstance().remove(PREF_ISGSTDETAILDONE);
+    TGSharedPreferences.getInstance().remove(PREF_ISCIC_CONSENT);
+    TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
+    TGSharedPreferences.getInstance().remove(PREF_ENABLE_POPUP);
+    TGSharedPreferences.getInstance().remove(PREF_APP_ID);
+    TGSharedPreferences.getInstance().remove(PREF_ORG_ID);
+    TGSharedPreferences.getInstance().remove(PREF_SCHEME_ID);
+    TGSharedPreferences.getInstance().remove(PREF_USER_ID);
+    TGSharedPreferences.getInstance().remove(PREF_ACCOUNT_HOLDER_DATA);
+    TGSharedPreferences.getInstance().remove(PREF_USER_FORM_DATA);
+    TGSharedPreferences.getInstance().remove(PREF_IS_FROM_REG);
+    TGSharedPreferences.getInstance().remove(PREF_IS_ADULT);
+    TGSharedPreferences.getInstance().remove(PREF_USER_NAME);
+    TGSharedPreferences.getInstance().remove(PREF_USER_EMAIL);
     Get.offAll(() => LoginPage(), binding: LoginBinding());
   }
 

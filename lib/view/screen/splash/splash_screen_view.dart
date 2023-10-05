@@ -13,6 +13,7 @@ class SplashScreenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.checkStatus();
     return Scaffold(
       body: Container(
         width: 1.sw,

@@ -13,17 +13,7 @@ LoginWithMobileRequest loginWithMobileRequestFromJson(String str) => LoginWithMo
 String loginWithMobileRequestToJson(LoginWithMobileRequest data) => json.encode(data.toJson());
 
 class LoginWithMobileRequest {
-  LoginWithMobileRequest({
-    String? mobile,
-    String? email,
-    num? userType,
-    String? domain,
-    String? platform,
-    String? termsAccepted,
-    String? password,
-    String? captchaEnter,
-    String? captchaOriginal,
-  }) {
+  LoginWithMobileRequest({String? mobile, String? email, num? userType, String? domain, String? platform, String? termsAccepted, String? password, String? captchaEnter, String? captchaOriginal, num? notificationMasterId}) {
     _mobile = mobile;
     _email = email;
     _userType = userType;
@@ -33,6 +23,7 @@ class LoginWithMobileRequest {
     _captchaEnter = captchaEnter;
     _captchaOriginal = captchaOriginal;
     _password = password;
+    _notificationMasterId = notificationMasterId;
   }
 
   LoginWithMobileRequest.fromJson(dynamic json) {
@@ -45,6 +36,7 @@ class LoginWithMobileRequest {
     _captchaEnter = json['captchaEnter'];
     _captchaOriginal = json['captchaOriginal'];
     _password = json['password'];
+    _notificationMasterId = json['notificationMasterId'];
   }
   String? _mobile;
   String? _email;
@@ -55,17 +47,8 @@ class LoginWithMobileRequest {
   String? _captchaEnter;
   String? _captchaOriginal;
   String? _password;
-  LoginWithMobileRequest copyWith({
-    String? mobile,
-    String? email,
-    num? userType,
-    String? domain,
-    String? platform,
-    String? termsAccepted,
-    String? captchaEnter,
-    String? captchaOriginal,
-    String? password,
-  }) =>
+  num? _notificationMasterId;
+  LoginWithMobileRequest copyWith({String? mobile, String? email, num? userType, String? domain, String? platform, String? termsAccepted, String? captchaEnter, String? captchaOriginal, String? password, num? notificationMasterId}) =>
       LoginWithMobileRequest(
         mobile: mobile ?? _mobile,
         email: email ?? _email,
@@ -76,6 +59,7 @@ class LoginWithMobileRequest {
         captchaEnter: captchaEnter ?? _captchaEnter,
         captchaOriginal: captchaOriginal ?? _captchaOriginal,
         password: password ?? _password,
+        notificationMasterId: notificationMasterId ?? _notificationMasterId,
       );
   String? get mobile => _mobile;
   String? get email => _email;
@@ -86,6 +70,7 @@ class LoginWithMobileRequest {
   String? get captchaEnter => _captchaEnter;
   String? get captchaOriginal => _captchaOriginal;
   String? get password => _password;
+  num? get notificationMasterId => _notificationMasterId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -98,6 +83,7 @@ class LoginWithMobileRequest {
     map['captchaEnter'] = _captchaEnter;
     map['captchaOriginal'] = _captchaOriginal;
     map['password'] = _password;
+    map['notificationMasterId'] = _notificationMasterId;
     return map;
   }
 }

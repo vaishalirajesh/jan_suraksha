@@ -116,17 +116,8 @@ class OTPBottomSheet {
           ],
         ),
       );
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
-
-
-
-
-
-
-
-
-
 
   static getBottomSheet1({
     required Function(String) onChangeOTP,
@@ -191,15 +182,15 @@ class OTPBottomSheet {
             Obx(() {
               return errorText != null && errorText.value.isNotEmpty
                   ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    errorText.value ?? '',
-                    style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              )
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          errorText.value ?? '',
+                          style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
                   : SizedBox();
             }),
             SizedBox(
@@ -233,17 +224,6 @@ class OTPBottomSheet {
           ],
         ),
       );
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
-
-
-
-
-
-
-
-
-
-
-
 }

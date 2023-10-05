@@ -51,8 +51,19 @@ class RegistrationLogic extends GetxController {
   RxString mobileError = ''.obs;
   RxString captchError = ''.obs;
   RxString otpError = ''.obs;
-
   RxBool isCheckedFirst = false.obs;
+  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
+  RegExp mobileRegExp = RegExp(r'^[0-9]+$');
+  RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
+  RegExp nameRegExpStartChar = RegExp(r'^[@]+$');
+  RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
+  RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+      "\\@" +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+      "(" +
+      "\\." +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+      ")+");
 
   final validCharacters = RegExp(r'^[0-9]+$');
   num userId = 0;
@@ -73,16 +84,19 @@ class RegistrationLogic extends GetxController {
   }
 
   Future<void> onPressSentOTP() async {
-    // getcaptcha();
-    // return;
-
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-
-    if (nameController.text.isEmpty) {
+    if (nameController.text.isEmpty ||
+        !onlyCharRegExp.hasMatch(nameController.text) ||
+        nameController.text == ' ' ||
+        nameController.text.trim().length < 2) {
       nameError.value = 'Please enter valid name';
       mobileError.value = '';
       captchError.value = '';
-    } else if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
+    } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+            mobileController.text == ' ' ||
+            (mobileController.text.isNotEmpty &&
+                !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
+        (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
       nameError.value = '';
       mobileError.value = 'Please enter valid mobile number';
       captchError.value = '';
@@ -134,7 +148,7 @@ class RegistrationLogic extends GetxController {
       captchaOriginal: captchaTrueValue,
       name: nameController.text,
       otpType: 1,
-      notificationMasterId: 12,
+      notificationMasterId: 18,
     );
     var jsonRequest = jsonEncode(signUpOtpRequest.toJson());
     TGLog.d("SignUpOtpRequest $jsonRequest");
@@ -150,7 +164,6 @@ class RegistrationLogic extends GetxController {
     if (response.getOtpResponse().status == RES_SUCCESS) {
       userId = response.getOtpResponse().data ?? '';
       await TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getOtpResponse().data ?? 0);
-
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         isEdit: false.obs,

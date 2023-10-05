@@ -104,121 +104,158 @@ class LoginLogic extends GetxController {
   void onChangeMobile(String? str) {
     errorMsg.value = '';
     mobileError.value = '';
-    mobile.value = mobileController.text;
+    captchError.value = '';
   }
 
   Future<void> onPressSentOTP() async {
-    if (isNumeric(mobileController.text)) {
-      if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
-        passwordError.value = '';
-        mobileError.value = 'Please enter valid mobile number or email address';
-        captchError.value = '';
-        // } else if (passwordController.text.isEmpty) {
-        //   passwordError.value = 'Please enter valid password';
-        //   mobileError.value = '';
-        //   captchError.value = '';
-      } else if (captchaController.text.isEmpty) {
-        passwordError.value = '';
-        mobileError.value = '';
-        captchError.value = 'Please enter captcha';
-      } else if (captchaController.text != captchaTrueValue) {
-        passwordError.value = '';
-        mobileError.value = '';
-        captchError.value = 'Captcha not match';
-      } else {
-        passwordError.value = '';
-        mobileError.value = '';
-        captchError.value = '';
-        loginWithMobile();
-      }
+    if (mobileController.text.isEmpty) {
+      mobileError.value = 'Please enter valid mobile number or email address';
+      passwordError.value = '';
     } else {
-      LoginRequest loginRequest = LoginRequest(
-        email: mobileController.text,
-        password: passwordController.text,
-        browserName: 'chorme',
-        browserVersion: '123.00',
-        device: "smasung",
-        deviceOs: 'windows',
-        deviceOsVersion: 'windows-10',
-        deviceType: 'Mobile',
-        userAgent:
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-        userType: 1,
-      );
-      var jsonRequest = jsonEncode(loginRequest.toJson());
-      TGLog.d("LoginRequest $jsonRequest");
-      TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
-      ServiceManager.getInstance().loginRequest(
-          request: tgPostRequest,
-          onSuccess: (response) async {
-            LoginResponse loginResponse = response;
-            AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
-            TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
-            TGSharedPreferences.getInstance()
-                .set(PREF_LOGIN_TOKEN, loginResponse.getLoginResponseData().loginToken.toString());
-            Codec<String, String> stringToBase64 = utf8.fuse(base64);
-            String encoded = stringToBase64.encode(loginResponse.getLoginResponseData().userName ?? '');
-            TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
-            TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(loginResponse.getLoginResponseData()));
-            TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile);
-            TGSharedPreferences.getInstance().set(PREF_ORG_ID, loginResponse.getLoginResponseData().userOrgId);
-            TGSharedPreferences.getInstance().set(PREF_USER_ID, loginResponse.getLoginResponseData().userId);
-            TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
-            setAccessTokenInRequestHeader();
-            EmailOtpRequest emailOtpRequest = EmailOtpRequest(
-                userId: loginResponse.getLoginResponseData().userId,
-                email: mobileController.text,
-                otpType: 2,
-                notificationMasterId: 13);
-            var jsonRequest = jsonEncode(emailOtpRequest.toJson());
-            TGLog.d("EmailOtpRequest $jsonRequest");
-            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
-            TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
-            ServiceManager.getInstance().otpRequest(
-              request: tgPostRequest,
-              onSuccess: (response) async {
-                OTPResponse otpResponse = response;
-
-                OTPBottomSheetAuth.getBottomSheet(
-                  context: Get.context!,
-                  onChangeOTP: (s) {
-                    otp.value = s;
-                    otpError.value = '';
-                    TGLog.d("Otp---------${otp.value}");
-                  },
-                  onSubmitOTP: (s) async {
-                    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-                    var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
-                    VerifySignupOtpRequest verifySignupOtpRequest =
-                        VerifySignupOtpRequest(email: mobileController.text, otpType: 2, userId: userId, otp: s);
-                    var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-                    TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
-                    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
-                    TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
-                    ServiceManager.getInstance().otpRequest(
-                      request: tgPostRequest,
-                      onSuccess: (response) {
-                        Get.offAll(() => DashboardPage(), binding: DashboardBinding());
-                      },
-                      onError: (error) {},
-                    );
-                  },
-                  title: 'User Verification',
-                  mobileNumber: mobileController.text ?? '',
-                  isEnable: (otp.value.length == 6 ? true : false).obs,
-                  isLoading: isVerifyingOTP,
-                  onButtonPress: () {},
-                  isEdit: false.obs,
-                  errorText: otpError,
-                  subTitle: 'A Verification code is sent on Registered mobile number '.obs,
-                );
-              },
-              onError: (error) {},
+      if (isNumeric(mobileController.text)) {
+        if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
+          passwordError.value = '';
+          mobileError.value = 'Please enter valid mobile number or email address';
+          captchError.value = '';
+        } else if (passwordController.text.isEmpty) {
+          passwordError.value = 'Please enter valid password';
+          mobileError.value = '';
+          captchError.value = '';
+        } else if (captchaController.text.isEmpty) {
+          passwordError.value = '';
+          mobileError.value = '';
+          captchError.value = 'Please enter captcha';
+        } else if (captchaController.text != captchaTrueValue) {
+          passwordError.value = '';
+          mobileError.value = '';
+          captchError.value = 'Captcha not match';
+        } else {
+          passwordError.value = '';
+          mobileError.value = '';
+          captchError.value = '';
+          loginWithMobile();
+        }
+      } else {
+        if (!isNumeric(mobileController.text)) {
+          if (mobileController.text.isNotEmpty && (mobileController.text.length < 5) ||
+              !emailRegExp.hasMatch(mobileController.text)) {
+            mobileError.value = 'Please enter valid email';
+            passwordError.value = '';
+            captchError.value = '';
+          } else if (passwordController.text.isEmpty) {
+            passwordError.value = 'Please enter password';
+            mobileError.value = '';
+            captchError.value = '';
+          } else if (!validateStructure(passwordController.text)) {
+            passwordError.value = 'Invalid password pattern';
+            mobileError.value = '';
+            captchError.value = '';
+          } else if (captchaController.text.isEmpty) {
+            passwordError.value = '';
+            mobileError.value = '';
+            captchError.value = 'Please enter captcha';
+          } else if (captchaController.text != captchaTrueValue) {
+            passwordError.value = '';
+            mobileError.value = '';
+            captchError.value = 'Captcha not match';
+          } else {
+            passwordError.value = '';
+            mobileError.value = '';
+            captchError.value = '';
+            LoginRequest loginRequest = LoginRequest(
+              email: mobileController.text,
+              password: passwordController.text,
+              browserName: 'chorme',
+              browserVersion: '123.00',
+              device: "smasung",
+              deviceOs: 'windows',
+              deviceOsVersion: 'windows-10',
+              deviceType: 'Mobile',
+              userAgent:
+                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+              userType: 1,
             );
-          },
-          onError: (error) => _onErrorAutoLogin(error));
+            var jsonRequest = jsonEncode(loginRequest.toJson());
+            TGLog.d("LoginRequest $jsonRequest");
+            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_LOGIN);
+            ServiceManager.getInstance().loginRequest(
+                request: tgPostRequest,
+                onSuccess: (response) async {
+                  LoginResponse loginResponse = response;
+                  AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
+                  TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
+                  TGSharedPreferences.getInstance()
+                      .set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
+                  TGSharedPreferences.getInstance()
+                      .set(PREF_LOGIN_TOKEN, loginResponse.getLoginResponseData().loginToken.toString());
+                  Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                  String encoded = stringToBase64.encode(loginResponse.getLoginResponseData().userName ?? '');
+                  TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
+                  TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
+                  TGSharedPreferences.getInstance()
+                      .set(PREF_LOGIN_RES, json.encode(loginResponse.getLoginResponseData()));
+                  TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile);
+                  TGSharedPreferences.getInstance().set(PREF_ORG_ID, loginResponse.getLoginResponseData().userOrgId);
+                  TGSharedPreferences.getInstance().set(PREF_USER_ID, loginResponse.getLoginResponseData().userId);
+                  TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
+                  setAccessTokenInRequestHeader();
+                  EmailOtpRequest emailOtpRequest = EmailOtpRequest(
+                      userId: loginResponse.getLoginResponseData().userId,
+                      email: mobileController.text,
+                      otpType: 2,
+                      notificationMasterId: 13);
+                  var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+                  TGLog.d("EmailOtpRequest $jsonRequest");
+                  TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+                  TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+                  ServiceManager.getInstance().otpRequest(
+                    request: tgPostRequest,
+                    onSuccess: (response) async {
+                      Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+                    },
+                    //   OTPResponse otpResponse = response;
+                    //
+                    //   OTPBottomSheetAuth.getBottomSheet(
+                    //     context: Get.context!,
+                    //     onChangeOTP: (s) {
+                    //       otp.value = s;
+                    //       otpError.value = '';
+                    //       TGLog.d("Otp---------${otp.value}");
+                    //     },
+                    //     onSubmitOTP: (s) async {
+                    //       var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+                    //       var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
+                    //       VerifySignupOtpRequest verifySignupOtpRequest =
+                    //           VerifySignupOtpRequest(email: mobileController.text, otpType: 2, userId: userId, otp: s);
+                    //       var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+                    //       TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
+                    //       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
+                    //       TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
+                    //       ServiceManager.getInstance().otpRequest(
+                    //         request: tgPostRequest,
+                    //         onSuccess: (response) {
+                    //           Get.offAll(() => DashboardPage(), binding: DashboardBinding());
+                    //         },
+                    //         onError: (error) {},
+                    //       );
+                    //     },
+                    //     title: 'User Verification',
+                    //     mobileNumber: mobileController.text ?? '',
+                    //     isEnable: (otp.value.length == 6 ? true : false).obs,
+                    //     isLoading: isVerifyingOTP,
+                    //     onButtonPress: () {},
+                    //     isEdit: false.obs,
+                    //     errorText: otpError,
+                    //     subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+                    //   );
+                    // },
+                    onError: (error) {},
+                  );
+                },
+                onError: (error) => _onErrorAutoLogin(error));
+          }
+        }
+      }
     }
   }
 
@@ -391,6 +428,9 @@ class LoginLogic extends GetxController {
   _onErrorResponse(response) {}
 
   void onChangeCaptcha(String p1) {
+    errorMsg.value = '';
+    mobileError.value = '';
+    captchError.value = '';
     if (p1 == captchaTrueValue) {
       isButtonEnabled.value = true;
     }
@@ -434,7 +474,7 @@ class LoginLogic extends GetxController {
     emailOtpError.value = '';
     ForgotPasswordRequest forgotPasswordRequest = ForgotPasswordRequest(
       userType: '1',
-      domain: 'https://qa-jns.instantmseloans.in',
+      domain: AppUtils.getAppDomain(),
       email: forgotEmailController.text,
       notificationMasterId: 14,
     );

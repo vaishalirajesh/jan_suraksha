@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
                           isMandatory: true,
                           isAutoFocus: false,
                           inputType: TextInputType.emailAddress,
-                          maxLength: isNumeric(loginLogic.mobile.value, loginLogic) ? 10 : 30,
+                          maxLength: isNumeric(loginLogic.mobile.value, loginLogic) ? 10 : 255,
                           onChanged: loginLogic.onChangeMobile,
                           errorText: loginLogic.mobileError.value,
                         );

@@ -17,6 +17,7 @@ import '../../../../generated/assets.dart';
 import '../../../../services/services.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
+import '../../../widget/email_bottom_sheet.dart';
 import '../../../widget/pdfviewfile.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -110,34 +111,48 @@ class ProfilePage extends StatelessWidget {
                         border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                              child: Container(
-                                  height: 32.r,
-                                  width: 32.r,
-                                  decoration: BoxDecoration(
-                                    color: ColorConfig.jsLightGreyColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: SizedBox(
-                                      height: 10.r,
-                                      width: 10.r,
-                                      child: SvgPicture.asset(Assets.profileShare),
+                        InkWell(
+                          onTap: () {
+                            // OTPBottomSheetEmail.getBottomSheet(
+                            //   context: Get.context!,
+                            //   onChangeOTP: (s) {},
+                            //   onSubmitOTP: (s) {},
+                            //   title: 'Update Email ID',
+                            //   isEnable: true.obs,
+                            //   isLoading: false.obs,
+                            //   onButtonPress: () {},
+                            //   notNow: () {},
+                            // );
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                child: Container(
+                                    height: 32.r,
+                                    width: 32.r,
+                                    decoration: BoxDecoration(
+                                      color: ColorConfig.jsLightGreyColor,
+                                      shape: BoxShape.circle,
                                     ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              "Share App",
-                              style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                            )
-                          ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SizedBox(
+                                        height: 10.r,
+                                        width: 10.r,
+                                        child: SvgPicture.asset(Assets.profileShare),
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "Share App",
+                                style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -286,7 +301,8 @@ class ProfilePage extends StatelessWidget {
                                           border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
                                         ),
                                         // padding: EdgeInsets.all(1.r),
-                                        child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                        child:
+                                            Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                       ),
                                     ),
                                   )),
@@ -420,7 +436,10 @@ class ProfilePage extends StatelessWidget {
                   onTap: () async {
                     await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
                     LogOutRequest request = LogOutRequest(id: "", type: "");
-                    ServiceManager.getInstance().logOut(request: request, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
+                    ServiceManager.getInstance().logOut(
+                        request: request,
+                        onSuccess: (respose) => _onsuccsessSetPassword(respose),
+                        onError: (response) => _onErrorSetPassword(response));
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),

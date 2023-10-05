@@ -18,11 +18,19 @@ class PersonalInfoLogic extends GetxController {
 
   var shouldChangeAppearInEmailSuffix = true.obs;
 
+  var emailController = TextEditingController();
+
+  var setPassError = "".obs;
+
+  var resetPassError = "".obs;
+
   @override
   Future<void> onInit() async {
     userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
-    email.value = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+    emailController.text = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+    email.value = emailController.text;
+    shouldChangeAppearInEmailSuffix.value = false;
     super.onInit();
   }
 

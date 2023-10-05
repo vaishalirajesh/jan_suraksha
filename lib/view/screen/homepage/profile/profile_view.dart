@@ -17,7 +17,6 @@ import '../../../../generated/assets.dart';
 import '../../../../services/services.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_common_screen.dart';
-import '../../../widget/email_bottom_sheet.dart';
 import '../../../widget/pdfviewfile.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -301,8 +300,7 @@ class ProfilePage extends StatelessWidget {
                                           border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
                                         ),
                                         // padding: EdgeInsets.all(1.r),
-                                        child:
-                                            Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                        child: Icon(Icons.question_mark, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                       ),
                                     ),
                                   )),
@@ -436,10 +434,7 @@ class ProfilePage extends StatelessWidget {
                   onTap: () async {
                     await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
                     LogOutRequest request = LogOutRequest(id: "", type: "");
-                    ServiceManager.getInstance().logOut(
-                        request: request,
-                        onSuccess: (respose) => _onsuccsessSetPassword(respose),
-                        onError: (response) => _onErrorSetPassword(response));
+                    ServiceManager.getInstance().logOut(request: request, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),

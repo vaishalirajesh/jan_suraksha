@@ -11,9 +11,11 @@ import 'package:jan_suraksha/view/widget/app_common_screen.dart';
 import '../../../config/color_config.dart';
 import '../../../config/font_config.dart';
 import '../../../config/style_config.dart';
+import '../../../model/request_model/EmailOtpRequest.dart';
 import '../../../model/request_model/SetPasswordRequest.dart';
 import '../../../model/request_model/VerifySignupOtpRequest.dart';
 import '../../../model/response_main_model/SetPasswordResponseMain.dart';
+import '../../../model/response_model/OTPResponse.dart';
 import '../../../services/common/tg_log.dart';
 import '../../../services/request/tg_post_request.dart';
 import '../../../services/requtilization.dart';
@@ -22,6 +24,7 @@ import '../../../services/services.dart';
 import '../../../services/singleton/shared_preferences.dart';
 import '../../../services/uris.dart';
 import '../../../utils/constant/prefrenceconstants.dart';
+import '../../../utils/constant/statusconstants.dart';
 import '../../../utils/constant/string_constant.dart';
 import '../../../utils/showcustomesnackbar.dart';
 import '../../../utils/theme_helper.dart';
@@ -29,6 +32,7 @@ import '../../../utils/utils.dart';
 import '../../widget/app_button.dart';
 import '../../widget/custom_otp_field/custom_otp_field.dart';
 import '../../widget/otp_bottom_sheet_auth.dart';
+import '../../widget/progressloader.dart';
 import 'personal_info_logic.dart';
 
 class PersonalInfoPage extends StatelessWidget {
@@ -39,6 +43,7 @@ class PersonalInfoPage extends StatelessWidget {
   final personallogic = Get.find<PersonalInfoLogic>();
 
   RxString otp = ''.obs;
+
   @override
   Widget build(BuildContext context) {
     return AddHeaderFooter(
@@ -76,6 +81,7 @@ class PersonalInfoPage extends StatelessWidget {
                     isReadOnly: true,
                     isMandatory: true,
                     isAutoFocus: true,
+                    title: "Name",
                     inputType: TextInputType.emailAddress,
                     maxLength: 30,
                     controller: TextEditingController(text: personallogic.userName.value),
@@ -117,37 +123,39 @@ class PersonalInfoPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              AppTextField(
-                hintText: "",
-                isReadOnly: false,
-                isMandatory: true,
-                isAutoFocus: true,
-                onChanged: (s) {
-                  final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
+              Obx(() {
+                return AppTextField(
+                    hintText: "",
+                    isReadOnly: false,
+                    isMandatory: true,
+                    isAutoFocus: true,
+                    onChanged: (s) {
+                      final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
 
-                  if (s != personallogic.email.value && emailValid) {
-                    TGLog.d("debug");
-                    personallogic.shouldChangeAppearInEmailSuffix.value = true;
-                  } else {
-                    personallogic.shouldChangeAppearInEmailSuffix.value = false;
-                  }
-                },
-                inputType: TextInputType.emailAddress,
-                maxLength: 30,
-                controller: TextEditingController(text: personallogic.email.value),
-                suffix: Obx(() => personallogic.shouldChangeAppearInEmailSuffix.value
-                    ? InkWell(
-                        onTap: () {
-                          getOtpBottomSheet(() {});
-                        },
-                        child: Text(
-                          'Change',
-                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                        ),
-                      )
-                    : SizedBox.shrink()),
-              ),
-              const SizedBox(
+                      if (s != personallogic.email.value && emailValid) {
+                        TGLog.d("debug");
+                        personallogic.email.value = s;
+                        personallogic.shouldChangeAppearInEmailSuffix.value = true;
+                      } else {
+                        personallogic.shouldChangeAppearInEmailSuffix.value = false;
+                      }
+                    },
+                    inputType: TextInputType.emailAddress,
+                    maxLength: 30,
+                    controller: personallogic.emailController,
+                    suffix: personallogic.shouldChangeAppearInEmailSuffix.value
+                        ? InkWell(
+                            onTap: () {
+                              updateEmail();
+                            },
+                            child: Text(
+                              'Change',
+                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                            ),
+                          )
+                        : SizedBox.shrink());
+              }),
+              SizedBox(
                 height: 20,
               ),
               Text(
@@ -168,24 +176,28 @@ class PersonalInfoPage extends StatelessWidget {
                 maxLength: 30,
                 controller: TextEditingController(text: "***********"),
                 suffix: InkWell(
-                  onTap: () {
-                    getOtpBottomSheet(getUpdatePasswordBottomSheet(
-                      onSubmitOTP: (String) {
-                        Get.back();
+                  onTap: () async {
+                    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+                    await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
+                    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
+                    await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
+                    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+                    var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+                    TGLog.d("EmailOtpRequest $jsonRequest");
+                    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+                    TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+                    ServiceManager.getInstance().otpRequest(
+                      request: tgPostRequest,
+                      onSuccess: (response) {
+                        TGLog.d("EmailOtpRequest : onSuccess()---$response");
+                        if (response.getOtpResponse().status == RES_SUCCESS) {
+                          getOtpBottomSheetForPassWord();
+                        } else {
+                          TGLog.d("Error in EmailOtpRequest");
+                          LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+                        }
                       },
-                      onButtonPress: () async {
-                        var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-                        SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: personallogic.passwordController.text, confirmPassword: personallogic.repeatPasswordController.text, userId: userId);
-                        var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-                        TGLog.d("SignUpOtpRequest $jsonRequest");
-                        TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-                        ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
-                      },
-                      title: 'Update Password',
-                      isEnable: true.obs,
-                      isLoading: false.obs,
-                      logic: personallogic,
-                    ));
+                    );
                   },
                   child: Text(
                     'Change',
@@ -201,14 +213,33 @@ class PersonalInfoPage extends StatelessWidget {
     );
   }
 
-  _onsuccsessSetPassword(SetPasswordResponseMain respose) {
-    Get.back();
-    showSnackBar(Get.context!, "Password Updated Successfully");
+  Future<void> updateEmail() async {
+    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+    await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
+    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
+    await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
+    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+    var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+    TGLog.d("EmailOtpRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+    TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().otpRequest(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessEmailOtp(response),
+    );
   }
 
-  _onErrorSetPassword(response) {}
+  _onSuccessEmailOtp(OTPResponse response) async {
+    TGLog.d("EmailOtpRequest : onSuccess()---$response");
+    if (response.getOtpResponse().status == RES_SUCCESS) {
+      getOtpBottomSheetForEmail();
+    } else {
+      TGLog.d("Error in EmailOtpRequest");
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+    }
+  }
 
-  dynamic getOtpBottomSheet(dynamic onotpsuccsessresponse) {
+  dynamic getOtpBottomSheetForEmail() {
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
       onChangeOTP: (s) {
@@ -219,12 +250,16 @@ class PersonalInfoPage extends StatelessWidget {
         VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
         var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
         TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
-        TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_VERIFY_OTP);
+        TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
         TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
         ServiceManager.getInstance().otpRequest(
           request: tgPostRequest,
           onSuccess: (response) {
-            onotpsuccsessresponse();
+            OTPResponse otpResponse = response;
+            if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
+              TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
+              showSnackBar(Get.context!, "Email Updated Succsessfully");
+            }
           },
           onError: (response) => (TGResponse error) {
             TGLog.d("Error Occured" + error.httpStatus.toString());
@@ -240,6 +275,99 @@ class PersonalInfoPage extends StatelessWidget {
       isEdit: false.obs,
       subTitle: 'A Verification code is sent on your Email ${personallogic.email.value} '.obs,
     );
+  }
+
+  dynamic getOtpBottomSheetForPassWord() {
+    OTPBottomSheetAuth.getBottomSheet(
+      context: Get.context!,
+      onChangeOTP: (s) {
+        // TGLog.d("Otp---------${otp.value}");
+      },
+      onSubmitOTP: (s) async {
+        var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+        VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
+        var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+        TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
+        TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
+        TGLog.d("ConsentOtpVerifyRequest Decrypt:--------${tgPostRequest.body()}");
+        ServiceManager.getInstance().otpRequest(
+          request: tgPostRequest,
+          onSuccess: (response) {
+            OTPResponse otpResponse = response;
+            if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
+              Get.back();
+              getUpdatePasswordBottomSheet(
+                  onSubmitOTP: (s) {},
+                  onButtonPress: () {
+                    onPressSetPassword();
+                  },
+                  title: "Set Password",
+                  logic: personallogic,
+                  isEnable: (personallogic.passwordController.value == personallogic.repeatPasswordController.value).obs,
+                  isLoading: false.obs);
+            }
+          },
+          onError: (response) => (TGResponse error) {
+            TGLog.d("Error Occured" + error.httpStatus.toString());
+          },
+        );
+        Get.back();
+      },
+      title: 'Email Verification',
+      mobileNumber: personallogic.email.value,
+      isEnable: (otp.value.length == 6 ? true : false).obs,
+      isLoading: personallogic.isLoadingEmailOTP,
+      onButtonPress: () {},
+      isEdit: false.obs,
+      subTitle: 'A Verification code is sent on your Email ${personallogic.email.value} '.obs,
+    );
+  }
+
+  Future<void> onPressSetPassword() async {
+    FocusScope.of(Get.context!).requestFocus(FocusNode());
+    if (personallogic.passwordController.text.isEmpty) {
+      personallogic.setPassError.value = "Please enter password";
+      personallogic.resetPassError.value = '';
+    } else if (personallogic.repeatPasswordController.text.isEmpty || personallogic.passwordController.text != personallogic.repeatPasswordController.text) {
+      personallogic.resetPassError.value = "Password not match with confirm password";
+      personallogic.setPassError.value = '';
+    } else if (personallogic.repeatPasswordController.text.length < 8) {
+      personallogic.resetPassError.value = "Invalid password pattern";
+      personallogic.setPassError.value = '';
+    } else if (!validateStructure(personallogic.repeatPasswordController.text)) {
+      personallogic.resetPassError.value = "Invalid password pattern";
+      personallogic.setPassError.value = '';
+    } else {
+      personallogic.setPassError.value = '';
+      personallogic.resetPassError.value = '';
+      var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+      SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: personallogic.passwordController.text, confirmPassword: personallogic.repeatPasswordController.text, userId: userId);
+      var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+      TGLog.d("SignUpOtpRequest $jsonRequest");
+      TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
+      ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
+    }
+  }
+
+  _onsuccsessSetPassword(SetPasswordResponseMain response) {
+    if (response.skippedresponse().status == RES_SUCCESS) {
+      Get.back();
+      showSnackBar(Get.context!, "Password Updated Successfully");
+    } else {
+      TGLog.d("Error in VerifySignupOtpRequest");
+      LoaderUtils.handleErrorResponse(Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
+    }
+  }
+
+  _onErrorSetPassword(TGResponse response) {
+    showSnackBar(Get.context!, "Error Occured with error code " + response.httpStatus.toString());
+    Get.back();
+  }
+
+  bool validateStructure(String value) {
+    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 
   void getEmailBottomSheet() {

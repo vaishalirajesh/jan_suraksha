@@ -38,6 +38,8 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 import '../../../../model/request_model/SetPasswordRequest.dart';
 import '../../../../model/response_model/SkipEmailResponse.dart';
 import '../../../widget/custom_otp_field/custom_otp_field.dart';
+import '../../auth/login/login_binding.dart';
+import '../../auth/login/login_view.dart';
 
 class DashboardLogic extends GetxController {
   var index = 0.obs;
@@ -81,6 +83,9 @@ class DashboardLogic extends GetxController {
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SKIP_EMAIL);
       ServiceManager.getInstance().skipEmailDetails(request: tgPostRequest, onSuccess: (response) => _onsuccsessSkipEmailResponse(response), onError: (response) => _onErrorSkipEmailResponse(response));
     } else {
+      if ((await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN)) == null || (await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN)) == null && (await TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN)) == null) {
+        Get.offAll(() => LoginPage(), binding: LoginBinding());
+      }
       getSchemaDeatil();
     }
     super.onInit();
@@ -279,8 +284,7 @@ class DashboardLogic extends GetxController {
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest =
-        EmailOtpRequest(userId: userID, email: emailController.text, otpType: 2, notificationMasterId: 16);
+    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: emailController.text, otpType: 2, notificationMasterId: 16);
     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
     TGLog.d("EmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);

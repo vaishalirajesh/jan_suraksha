@@ -261,7 +261,6 @@ class LoginPage extends StatelessWidget {
       logic.isMobilenumber.value = false;
       return false;
     }
-    logic.isMobilenumber.value = true;
     return double.tryParse(s) != null;
   }
 }

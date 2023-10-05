@@ -251,7 +251,6 @@ class RegistrationLogic extends GetxController {
   _onsuccsessCaptchGet(GenerateCaptchaResponse response) {
     captchaString.value = response.verifyOTP().data?.bytes ?? "";
     captchaTrueValue = latin1.decode(base64.decode(response.verifyOTP().data?.captchaString ?? ''));
-    TGLog.d("Data1-------${latin1.decode(base64.decode(captchaTrueValue ?? ''))}");
   }
 
   _onErrorResponse(response) {}

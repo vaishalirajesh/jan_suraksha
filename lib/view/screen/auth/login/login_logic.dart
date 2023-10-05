@@ -104,22 +104,25 @@ class LoginLogic extends GetxController {
   void onChangeMobile(String? str) {
     errorMsg.value = '';
     mobileError.value = '';
+    passwordError.value = '';
     captchError.value = '';
+    mobile.value = mobileController.text;
   }
+
+  RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
 
   Future<void> onPressSentOTP() async {
     if (mobileController.text.isEmpty) {
       mobileError.value = 'Please enter valid mobile number or email address';
       passwordError.value = '';
+      captchError.value = '';
     } else {
       if (isNumeric(mobileController.text)) {
-        if (!validCharacters.hasMatch(mobileController.text) || mobileController.text.length != 10) {
+        if (!validCharacters.hasMatch(mobileController.text) ||
+            mobileController.text.length != 10 ||
+            !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1))) {
           passwordError.value = '';
           mobileError.value = 'Please enter valid mobile number or email address';
-          captchError.value = '';
-        } else if (passwordController.text.isEmpty) {
-          passwordError.value = 'Please enter valid password';
-          mobileError.value = '';
           captchError.value = '';
         } else if (captchaController.text.isEmpty) {
           passwordError.value = '';
@@ -194,7 +197,7 @@ class LoginLogic extends GetxController {
                   TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
                   TGSharedPreferences.getInstance()
                       .set(PREF_LOGIN_RES, json.encode(loginResponse.getLoginResponseData()));
-                  TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile);
+                  TGSession.getInstance().set(SESSION_MOBILENUMBER, loginResponse.getLoginResponseData().mobile ?? '');
                   TGSharedPreferences.getInstance().set(PREF_ORG_ID, loginResponse.getLoginResponseData().userOrgId);
                   TGSharedPreferences.getInstance().set(PREF_USER_ID, loginResponse.getLoginResponseData().userId);
                   TGSharedPreferences.getInstance().set(PREF_USERNAME, loginResponse.getLoginResponseData().userName);
@@ -273,11 +276,11 @@ class LoginLogic extends GetxController {
     isLoading.value = true;
     LoginWithMobileRequest signUpOtpRequest = LoginWithMobileRequest(
       userType: 1,
-      mobile: isMobilenumber.value ? mobileController.text : "",
+      mobile: mobileController.text,
       captchaEnter: captchaController.text,
       captchaOriginal: captchaTrueValue,
       email: mobileController.text,
-      domain: 'https://uat-jns.instantmseloans.in',
+      domain: AppUtils.getAppDomain(),
       platform: 'Mobile',
       termsAccepted: "true",
     );

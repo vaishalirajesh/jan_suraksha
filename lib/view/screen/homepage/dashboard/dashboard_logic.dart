@@ -834,6 +834,7 @@ class DashboardLogic extends GetxController {
           if (responseInfo.getprofileinfo().status == RES_SUCCESS) {
             TGSharedPreferences.getInstance().set(PREF_MOBILE, responseInfo.getprofileinfo().data?.mobile ?? "");
             TGSharedPreferences.getInstance().set(PREF_USERNAME, responseInfo.getprofileinfo().data?.userName ?? "");
+            userName.value = responseInfo.getprofileinfo().data?.userName ?? "";
             TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, responseInfo.getprofileinfo().data?.email ?? "");
           }
         },

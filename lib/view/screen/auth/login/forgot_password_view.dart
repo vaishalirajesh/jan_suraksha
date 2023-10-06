@@ -33,6 +33,7 @@ class ForgotPasswordPage extends StatelessWidget {
             children: [
               Container(
                 color: ColorConfig.jsCreamColor,
+                width: 1.sw,
                 child: Column(
                   children: [
                     SizedBox(

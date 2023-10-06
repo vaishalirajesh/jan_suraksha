@@ -133,7 +133,7 @@ class ServicesPage extends StatelessWidget {
                                           Offstage(
                                             offstage: dashboardLogic.isExpandedScheme.value,
                                             child: ListView.builder(
-                                                itemCount: dashboardLogic.schemeList.length,
+                                                itemCount: 2,
                                                 shrinkWrap: true,
                                                 physics: const BouncingScrollPhysics(),
                                                 itemBuilder: (context, int index) {
@@ -215,76 +215,76 @@ class ServicesPage extends StatelessWidget {
                                                             SizedBox(
                                                               height: 10.h,
                                                             ),
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    children: [
-                                                                      Text(
-                                                                        AppString.urn,
-                                                                        style: StyleConfig.regularText16.copyWith(
-                                                                            fontSize: 10.sp,
-                                                                            color: ColorConfig.jsTextGreyColor),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width: 4.w,
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: Text(
-                                                                            dashboardLogic.schemeList.isNotEmpty &&
-                                                                                    dashboardLogic.schemeList[index]
-                                                                                            ['urn'] !=
-                                                                                        null
-                                                                                ? dashboardLogic.schemeList[index]
-                                                                                    ['urn']
-                                                                                : '-',
-                                                                            style: StyleConfig.smallText.copyWith(
-                                                                                fontSize: 10.sp,
-                                                                                color: ColorConfig.jsTextGreyColor)),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 4.w,
-                                                                ),
-                                                                Expanded(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        AppString.renual_date,
-                                                                        style: StyleConfig.regularText16.copyWith(
-                                                                            fontSize: 12.sp,
-                                                                            color: ColorConfig.jsTextGreyColor),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width: 4.w,
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: Text(
-                                                                            dashboardLogic.schemeList.isNotEmpty &&
-                                                                                    dashboardLogic.schemeList[index]
-                                                                                            ['enrollDate'] !=
-                                                                                        null
-                                                                                ? AppUtils.convertDateFormat(
-                                                                                    dashboardLogic.schemeList[index]
-                                                                                        ['enrollDate'],
-                                                                                    'yyyy-mm-dd',
-                                                                                    'dd/mm/yyyy')
-                                                                                : '-',
-                                                                            style: StyleConfig.smallText.copyWith(
-                                                                                fontSize: 12.sp,
-                                                                                color: ColorConfig.jsTextGreyColor)),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox()
-                                                              ],
-                                                            ),
+                                                            // Row(
+                                                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            //   children: [
+                                                            //     Expanded(
+                                                            //       child: Row(
+                                                            //         mainAxisAlignment: MainAxisAlignment.start,
+                                                            //         crossAxisAlignment: CrossAxisAlignment.start,
+                                                            //         children: [
+                                                            //           Text(
+                                                            //             AppString.urn,
+                                                            //             style: StyleConfig.regularText16.copyWith(
+                                                            //                 fontSize: 10.sp,
+                                                            //                 color: ColorConfig.jsTextGreyColor),
+                                                            //           ),
+                                                            //           SizedBox(
+                                                            //             width: 4.w,
+                                                            //           ),
+                                                            //           Expanded(
+                                                            //             child: Text(
+                                                            //                 dashboardLogic.schemeList.isNotEmpty &&
+                                                            //                         dashboardLogic.schemeList[index]
+                                                            //                                 ['urn'] !=
+                                                            //                             null
+                                                            //                     ? dashboardLogic.schemeList[index]
+                                                            //                         ['urn']
+                                                            //                     : '-',
+                                                            //                 style: StyleConfig.smallText.copyWith(
+                                                            //                     fontSize: 10.sp,
+                                                            //                     color: ColorConfig.jsTextGreyColor)),
+                                                            //           ),
+                                                            //         ],
+                                                            //       ),
+                                                            //     ),
+                                                            //     SizedBox(
+                                                            //       width: 4.w,
+                                                            //     ),
+                                                            //     Expanded(
+                                                            //       child: Row(
+                                                            //         children: [
+                                                            //           Text(
+                                                            //             AppString.renual_date,
+                                                            //             style: StyleConfig.regularText16.copyWith(
+                                                            //                 fontSize: 12.sp,
+                                                            //                 color: ColorConfig.jsTextGreyColor),
+                                                            //           ),
+                                                            //           SizedBox(
+                                                            //             width: 4.w,
+                                                            //           ),
+                                                            //           Expanded(
+                                                            //             child: Text(
+                                                            //                 dashboardLogic.schemeList.isNotEmpty &&
+                                                            //                         dashboardLogic.schemeList[index]
+                                                            //                                 ['enrollDate'] !=
+                                                            //                             null
+                                                            //                     ? AppUtils.convertDateFormat(
+                                                            //                         dashboardLogic.schemeList[index]
+                                                            //                             ['enrollDate'],
+                                                            //                         'yyyy-mm-dd',
+                                                            //                         'dd/mm/yyyy')
+                                                            //                     : '-',
+                                                            //                 style: StyleConfig.smallText.copyWith(
+                                                            //                     fontSize: 12.sp,
+                                                            //                     color: ColorConfig.jsTextGreyColor)),
+                                                            //           )
+                                                            //         ],
+                                                            //       ),
+                                                            //     ),
+                                                            //     SizedBox()
+                                                            //   ],
+                                                            // ),
                                                             SizedBox(
                                                               width: 60.w,
                                                             ),
@@ -418,7 +418,7 @@ class ServicesPage extends StatelessWidget {
                                         Offstage(
                                           offstage: dashboardLogic.isExpandedNominee.value,
                                           child: ListView.builder(
-                                              itemCount: dashboardLogic.schemeList.length,
+                                              itemCount: 2,
                                               shrinkWrap: true,
                                               physics: const BouncingScrollPhysics(),
                                               itemBuilder: (context, int index) {
@@ -498,77 +498,77 @@ class ServicesPage extends StatelessWidget {
                                                           SizedBox(
                                                             height: 10.h,
                                                           ),
-                                                          Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Text(
-                                                                      AppString.urn,
-                                                                      style: StyleConfig.regularText16.copyWith(
-                                                                          fontSize: 10.sp,
-                                                                          color: ColorConfig.jsTextGreyColor),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 4.w,
-                                                                    ),
-                                                                    Expanded(
-                                                                      child: Text(
-                                                                          dashboardLogic.schemeList.isNotEmpty &&
-                                                                                  dashboardLogic.schemeList[index]
-                                                                                          ['urn'] !=
-                                                                                      null
-                                                                              ? dashboardLogic.schemeList[index]['urn']
-                                                                              : '-',
-                                                                          style: StyleConfig.smallText.copyWith(
-                                                                              fontSize: 10.sp,
-                                                                              color: ColorConfig.jsTextGreyColor)),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 4.w,
-                                                              ),
-                                                              Expanded(
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Text(
-                                                                      AppString.renual_date,
-                                                                      style: StyleConfig.regularText16.copyWith(
-                                                                          fontSize: 12.sp,
-                                                                          color: ColorConfig.jsTextGreyColor),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 4.w,
-                                                                    ),
-                                                                    Expanded(
-                                                                      child: Text(
-                                                                          dashboardLogic.schemeList.isNotEmpty &&
-                                                                                  dashboardLogic.schemeList[index]
-                                                                                          ['enrollDate'] !=
-                                                                                      null
-                                                                              ? AppUtils.convertDateFormat(
-                                                                                  dashboardLogic.schemeList[index]
-                                                                                      ['enrollDate'],
-                                                                                  'yyyy-mm-dd',
-                                                                                  'dd/mm/yyyy')
-                                                                              : '-',
-                                                                          style: StyleConfig.smallText.copyWith(
-                                                                              fontSize: 12.sp,
-                                                                              color: ColorConfig.jsTextGreyColor)),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              SizedBox()
-                                                            ],
-                                                          ),
+                                                          // Row(
+                                                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //   children: [
+                                                          //     Expanded(
+                                                          //       child: Row(
+                                                          //         mainAxisAlignment: MainAxisAlignment.start,
+                                                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                                                          //         children: [
+                                                          //           Text(
+                                                          //             AppString.urn,
+                                                          //             style: StyleConfig.regularText16.copyWith(
+                                                          //                 fontSize: 10.sp,
+                                                          //                 color: ColorConfig.jsTextGreyColor),
+                                                          //           ),
+                                                          //           SizedBox(
+                                                          //             width: 4.w,
+                                                          //           ),
+                                                          //           Expanded(
+                                                          //             child: Text(
+                                                          //                 dashboardLogic.schemeList.isNotEmpty &&
+                                                          //                         dashboardLogic.schemeList[index]
+                                                          //                                 ['urn'] !=
+                                                          //                             null
+                                                          //                     ? dashboardLogic.schemeList[index]['urn']
+                                                          //                     : '-',
+                                                          //                 style: StyleConfig.smallText.copyWith(
+                                                          //                     fontSize: 10.sp,
+                                                          //                     color: ColorConfig.jsTextGreyColor)),
+                                                          //           ),
+                                                          //         ],
+                                                          //       ),
+                                                          //     ),
+                                                          //     SizedBox(
+                                                          //       width: 4.w,
+                                                          //     ),
+                                                          //     Expanded(
+                                                          //       child: Row(
+                                                          //         mainAxisAlignment: MainAxisAlignment.start,
+                                                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                                                          //         children: [
+                                                          //           Text(
+                                                          //             AppString.renual_date,
+                                                          //             style: StyleConfig.regularText16.copyWith(
+                                                          //                 fontSize: 12.sp,
+                                                          //                 color: ColorConfig.jsTextGreyColor),
+                                                          //           ),
+                                                          //           SizedBox(
+                                                          //             width: 4.w,
+                                                          //           ),
+                                                          //           Expanded(
+                                                          //             child: Text(
+                                                          //                 dashboardLogic.schemeList.isNotEmpty &&
+                                                          //                         dashboardLogic.schemeList[index]
+                                                          //                                 ['enrollDate'] !=
+                                                          //                             null
+                                                          //                     ? AppUtils.convertDateFormat(
+                                                          //                         dashboardLogic.schemeList[index]
+                                                          //                             ['enrollDate'],
+                                                          //                         'yyyy-mm-dd',
+                                                          //                         'dd/mm/yyyy')
+                                                          //                     : '-',
+                                                          //                 style: StyleConfig.smallText.copyWith(
+                                                          //                     fontSize: 12.sp,
+                                                          //                     color: ColorConfig.jsTextGreyColor)),
+                                                          //           )
+                                                          //         ],
+                                                          //       ),
+                                                          //     ),
+                                                          //     SizedBox()
+                                                          //   ],
+                                                          // ),
                                                           SizedBox(
                                                             width: 60.w,
                                                           ),

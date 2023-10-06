@@ -22,6 +22,7 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_view.dart';
@@ -601,6 +602,7 @@ class NomineeDetailsLogic extends GetxController {
     if (response.saveFormDetail().status == RES_SUCCESS) {
       isLoading.value = true;
       Get.back();
+      showSnackBar(Get.context!, "Nominee detail update successfully");
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;

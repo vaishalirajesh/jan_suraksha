@@ -18,6 +18,7 @@ class ColorConfig {
   static final jsGreyColor = HexColor('#C5C5C5');
   static final jsLightCremeColor = HexColor('#FFF2DF');
   static final jsBlueColor = HexColor('#23699E');
+  static final jsHyperlinkBlueColor = HexColor('#0000FF');
   static final jsTextGreyColor = HexColor("#454F5E");
   static final jsTextDarkGreyColor = HexColor("#939393");
   static final jsTextMediumGreyColor = HexColor("#666E7A");

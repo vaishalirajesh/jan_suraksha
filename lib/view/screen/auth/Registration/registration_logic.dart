@@ -197,7 +197,6 @@ class RegistrationLogic extends GetxController {
     TGLog.d("SignUpOtpRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     isOTPVerifing.value = false;
-
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 

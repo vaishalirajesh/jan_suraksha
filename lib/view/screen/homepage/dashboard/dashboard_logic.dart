@@ -947,7 +947,7 @@ class DashboardLogic extends GetxController {
             TGSharedPreferences.getInstance().set(PREF_MOBILE, responseInfo.getprofileinfo().data?.mobile ?? "");
             TGSharedPreferences.getInstance().set(PREF_USERNAME, responseInfo.getprofileinfo().data?.userName ?? "");
             TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, responseInfo.getprofileinfo().data?.email ?? "");
-          }
+          } else {}
         },
         onError: (response) {});
   }
@@ -955,6 +955,7 @@ class DashboardLogic extends GetxController {
 
 class FetchProfile extends TGGetRequest {
   FetchProfile();
+
   @override
   String getUri() {
     return URIS.URI_GET_PROFILE;

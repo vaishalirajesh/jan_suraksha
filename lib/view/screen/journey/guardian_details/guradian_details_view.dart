@@ -137,11 +137,10 @@ class GuradianDetailsPage extends StatelessWidget {
                                               items: nomineeDetailsLogic.items.values
                                                   .map((value) => DropdownMenuItem(
                                                         child: Container(
-                                                            width: 0.75.sw,
                                                             child: Text(
-                                                              value,
-                                                              style: StyleConfig.mediumText16,
-                                                            )),
+                                                          value,
+                                                          style: StyleConfig.mediumText16,
+                                                        )),
                                                         value: value,
                                                       ))
                                                   .toList(),

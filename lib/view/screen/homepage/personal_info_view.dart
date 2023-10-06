@@ -60,7 +60,7 @@ class PersonalInfoPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ConstrainedFlexView(
-          0.75.sh,
+          0.8.sh,
           axis: Axis.vertical,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -123,7 +123,8 @@ class PersonalInfoPage extends StatelessWidget {
                     isMandatory: true,
                     isAutoFocus: true,
                     onChanged: (s) {
-                      final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
+                      final bool emailValid =
+                          RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
 
                       if (s != personallogic.email.value && emailValid) {
                         TGLog.d("debug");
@@ -174,7 +175,8 @@ class PersonalInfoPage extends StatelessWidget {
                     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
                     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
                     await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-                    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+                    EmailOtpRequest emailOtpRequest = EmailOtpRequest(
+                        userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
                     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
                     TGLog.d("EmailOtpRequest $jsonRequest");
                     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -187,7 +189,8 @@ class PersonalInfoPage extends StatelessWidget {
                           getOtpBottomSheetForPassWord();
                         } else {
                           TGLog.d("Error in EmailOtpRequest");
-                          LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+                          LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0,
+                              response.getOtpResponse().message ?? "", null);
                         }
                       },
                     );
@@ -211,7 +214,8 @@ class PersonalInfoPage extends StatelessWidget {
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+    EmailOtpRequest emailOtpRequest =
+        EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
     TGLog.d("EmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -228,7 +232,8 @@ class PersonalInfoPage extends StatelessWidget {
       getOtpBottomSheetForEmail(context);
     } else {
       TGLog.d("Error in EmailOtpRequest");
-      LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -240,7 +245,8 @@ class PersonalInfoPage extends StatelessWidget {
       },
       onSubmitOTP: (s) async {
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-        VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
+        VerifySignupOtpRequest verifySignupOtpRequest =
+            VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
         var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
         TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
         TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -285,7 +291,8 @@ class PersonalInfoPage extends StatelessWidget {
       },
       onSubmitOTP: (s) async {
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-        VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
+        VerifySignupOtpRequest verifySignupOtpRequest =
+            VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
         var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
         TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
         TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -302,7 +309,8 @@ class PersonalInfoPage extends StatelessWidget {
                   },
                   title: "Set Password",
                   logic: personallogic,
-                  isEnable: (personallogic.passwordController.value == personallogic.repeatPasswordController.value).obs,
+                  isEnable:
+                      (personallogic.passwordController.value == personallogic.repeatPasswordController.value).obs,
                   isLoading: false.obs);
             }
           },
@@ -327,7 +335,8 @@ class PersonalInfoPage extends StatelessWidget {
     if (personallogic.passwordController.text.isEmpty) {
       personallogic.setPassError.value = "Please enter password";
       personallogic.resetPassError.value = '';
-    } else if (personallogic.repeatPasswordController.text.isEmpty || personallogic.passwordController.text != personallogic.repeatPasswordController.text) {
+    } else if (personallogic.repeatPasswordController.text.isEmpty ||
+        personallogic.passwordController.text != personallogic.repeatPasswordController.text) {
       personallogic.resetPassError.value = "Password not match with confirm password";
       personallogic.setPassError.value = '';
     } else if (personallogic.repeatPasswordController.text.length < 8) {
@@ -340,11 +349,17 @@ class PersonalInfoPage extends StatelessWidget {
       personallogic.setPassError.value = '';
       personallogic.resetPassError.value = '';
       var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-      SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: personallogic.passwordController.text, confirmPassword: personallogic.repeatPasswordController.text, userId: userId);
+      SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
+          password: personallogic.passwordController.text,
+          confirmPassword: personallogic.repeatPasswordController.text,
+          userId: userId);
       var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
       TGLog.d("SignUpOtpRequest $jsonRequest");
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-      ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
+      ServiceManager.getInstance().setPassword(
+          request: tgPostRequest,
+          onSuccess: (respose) => _onsuccsessSetPassword(respose),
+          onError: (response) => _onErrorSetPassword(response));
     }
   }
 
@@ -354,7 +369,8 @@ class PersonalInfoPage extends StatelessWidget {
       showSnackBar(Get.context!, "Password Updated Successfully");
     } else {
       TGLog.d("Error in VerifySignupOtpRequest");
-      LoaderUtils.handleErrorResponse(Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
     }
   }
 
@@ -463,16 +479,24 @@ class AppTextField extends StatelessWidget {
                     style: StyleConfig.smallText,
                   )
                 : const SizedBox.shrink(),
-            fillColor: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.background,
+            fillColor: isReadOnly && !isDobField
+                ? ThemeHelper.getInstance()!.colorScheme.surface
+                : ThemeHelper.getInstance()!.colorScheme.background,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               borderSide: BorderSide(
                 width: 1,
-                color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                color: isReadOnly && !isDobField
+                    ? ThemeHelper.getInstance()!.colorScheme.surface
+                    : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
+              borderSide: BorderSide(
+                  color: isReadOnly && !isDobField
+                      ? ThemeHelper.getInstance()!.colorScheme.surface
+                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             errorBorder: OutlineInputBorder(
@@ -480,7 +504,11 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: isReadOnly && !isDobField ? ThemeHelper.getInstance()!.colorScheme.surface : ThemeHelper.getInstance()!.colorScheme.secondaryContainer, width: 1.0),
+              borderSide: BorderSide(
+                  color: isReadOnly && !isDobField
+                      ? ThemeHelper.getInstance()!.colorScheme.surface
+                      : ThemeHelper.getInstance()!.colorScheme.secondaryContainer,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(16.0.r),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
@@ -697,7 +725,10 @@ getUpdatePasswordBottomSheet({
                   AppButton(
                     onPress: onButtonPress,
                     title: AppString.continueText,
-                    isButtonEnable: ((logic.passwordController.text == logic.repeatPasswordController.text) && logic.passwordController.text.length > 8 && logic.validateStructure(logic.passwordController.text)).obs,
+                    isButtonEnable: ((logic.passwordController.text == logic.repeatPasswordController.text) &&
+                            logic.passwordController.text.length > 8 &&
+                            logic.validateStructure(logic.passwordController.text))
+                        .obs,
                     isDataLoading: false.obs,
                   )
                 ],

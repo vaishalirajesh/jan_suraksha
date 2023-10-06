@@ -78,8 +78,7 @@ class ApplicationFormPage extends StatelessWidget {
                           ),
                           DisableTextField(
                             isMandatory: true,
-                            initialvale: AppUtils.convertDateFormat(
-                                applicationFormLogic.getAppData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                            initialvale: "30/05/1990",
                             title: AppString.dateOfBirth,
                             isReadOnly: true,
                           ),

@@ -73,7 +73,7 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                                       items: _dropdownValues
                                           .map((value) => DropdownMenuItem(
                                                 value: value,
-                                                child: SizedBox(width: 0.75.sw, child: Text(value)),
+                                                child: SizedBox(child: Text(value)),
                                               ))
                                           .toList(),
                                       onChanged: (i) {

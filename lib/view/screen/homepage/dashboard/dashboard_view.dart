@@ -201,15 +201,13 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Obx(() {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text(
-                            'Welcome, ${dashboardLogic.userName.value}',
-                            style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
-                          ),
-                        );
-                      }),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          'Welcome',
+                          style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                        ),
+                      ),
                       InkWell(
                         onTap: () {
                           Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
@@ -582,7 +580,7 @@ class HomePage extends StatelessWidget {
                                   })
                               : const SizedBox.shrink()
                           : ListView.builder(
-                              itemCount: dashboardLogic.schemeList.length,
+                              itemCount: 0,
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, int index) {

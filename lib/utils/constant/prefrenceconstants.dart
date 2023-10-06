@@ -1,6 +1,3 @@
-var accesstoken = "";
-var refreshtoken = "";
-
 String? sessionkey = "";
 
 const PREF_GSTIN = "gstin";

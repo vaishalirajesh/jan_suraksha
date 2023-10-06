@@ -60,7 +60,7 @@ class PersonalInfoPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ConstrainedFlexView(
-          0.75.sh,
+          0.9.sh,
           axis: Axis.vertical,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

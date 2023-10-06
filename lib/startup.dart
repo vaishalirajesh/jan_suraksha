@@ -3,8 +3,11 @@ import 'package:jan_suraksha/services/common/app_init.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/utils/flavor.dart';
 
-abstract class Startup {
+class Startup {
+  static bool initialized = false;
+
   static void init() async {
+    initialized = true;
     await _initFlavor();
     await _init();
   }
@@ -12,6 +15,7 @@ abstract class Startup {
   static Future<void> _init() async {
     TGLog.d("Initialize init");
     await initService();
+
     TGLog.d("Initialize init end");
   }
 

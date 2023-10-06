@@ -17,6 +17,7 @@ import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
 import 'package:jan_suraksha/model/response_model/fetch_profile_details_response_main.dart';
+import 'package:jan_suraksha/services/common/app_functions.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
 import 'package:jan_suraksha/services/request/tg_get_request.dart';
@@ -78,8 +79,9 @@ class DashboardLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
-    bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
+    await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
+    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
+    bool isfromreg = (await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG)) ?? false;
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     if (isfromreg) {
       String userId = (await TGSharedPreferences.getInstance().get(PREF_USER_ID)).toString();
@@ -87,17 +89,17 @@ class DashboardLogic extends GetxController {
       var jsonRequest = jsonEncode(request);
       TGLog.d("DashboardLogic skip response $jsonRequest");
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SKIP_EMAIL);
-      ServiceManager.getInstance().skipEmailDetails(
-          request: tgPostRequest,
-          onSuccess: (response) => _onsuccsessSkipEmailResponse(response),
-          onError: (response) => _onErrorSkipEmailResponse(response));
+      ServiceManager.getInstance().skipEmailDetails(request: tgPostRequest, onSuccess: (response) => _onsuccsessSkipEmailResponse(response), onError: (response) => _onErrorSkipEmailResponse(response));
     } else {
-      if ((await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN)) == null ||
-          (await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN)) == null &&
-              (await TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN)) == null) {
+      String ref_token = await (TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN)) ?? "";
+      String log_token = await (TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN)) ?? "";
+      if (ref_token.isEmpty || log_token.isEmpty) {
+        showSnackBar(Get.context!, "Your session has expired");
         Get.offAll(() => LoginPage(), binding: LoginBinding());
+      } else {
+        setAccessTokenInRequestHeader();
+        getSchemaDeatil();
       }
-      getSchemaDeatil();
     }
     super.onInit();
   }
@@ -149,8 +151,7 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in GetSchemaByUserIdRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getSchemaByUserId().status ?? 0, response.getSchemaByUserId().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getSchemaByUserId().status ?? 0, response.getSchemaByUserId().message ?? "", null);
     }
   }
 
@@ -193,7 +194,8 @@ class DashboardLogic extends GetxController {
         });
       }
       TGLog.d("Schema lenght--${schemeList.length}");
-      bool isFromReg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
+      bool isFromReg = (await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG)) ?? false;
+      print(isFromReg.toString());
       if (isFromReg) {
         updateEmailOtpBottomSheet();
         TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
@@ -203,8 +205,7 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in updateVerificationType");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
     }
   }
 
@@ -215,8 +216,7 @@ class DashboardLogic extends GetxController {
   }
 
   void onUpdate() {
-    String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
     if (emailController.text.isEmpty || !(regex.hasMatch(emailController.text))) {
       emailErrorMsg.value = 'Please enter valid email';
@@ -299,8 +299,7 @@ class DashboardLogic extends GetxController {
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
     await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest =
-        EmailOtpRequest(userId: userID, email: emailController.text, otpType: 2, notificationMasterId: 16);
+    EmailOtpRequest emailOtpRequest = EmailOtpRequest(userId: userID, email: emailController.text, otpType: 2, notificationMasterId: 16);
     var jsonRequest = jsonEncode(emailOtpRequest.toJson());
     TGLog.d("EmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -344,8 +343,7 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in EmailOtpRequest");
       isEmailVerifying.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -369,15 +367,11 @@ class DashboardLogic extends GetxController {
   Future<void> onVerifyOTP() async {
     isOTPVerifing.value = true;
     var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    VerifyEmailOtpRequest verifyEmailOtpRequest =
-        VerifyEmailOtpRequest(email: emailController.text, otpType: 2, userId: userID, otp: otp.value);
+    VerifyEmailOtpRequest verifyEmailOtpRequest = VerifyEmailOtpRequest(email: emailController.text, otpType: 2, userId: userID, otp: otp.value);
     var jsonRequest = jsonEncode(verifyEmailOtpRequest.toJson());
     TGLog.d("verifyEmailOtpRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
-    ServiceManager.getInstance().otpRequest(
-        request: tgPostRequest,
-        onSuccess: (response) => _onSuccessVerifyOTP(response),
-        onError: (error) => _onErrorEmailOTP(error));
+    ServiceManager.getInstance().otpRequest(request: tgPostRequest, onSuccess: (response) => _onSuccessVerifyOTP(response), onError: (error) => _onErrorEmailOTP(error));
   }
 
   _onSuccessVerifyOTP(OTPResponse response) async {
@@ -389,15 +383,11 @@ class DashboardLogic extends GetxController {
         },
         onButtonPress: () async {
           var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-          SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
-              password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
+          SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
           var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
           TGLog.d("SignUpOtpRequest $jsonRequest");
           TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-          ServiceManager.getInstance().setPassword(
-              request: tgPostRequest,
-              onSuccess: (respose) => _onsuccsessSetPassword(respose),
-              onError: (response) => _onErrorSetPassword(response));
+          ServiceManager.getInstance().setPassword(request: tgPostRequest, onSuccess: (respose) => _onsuccsessSetPassword(respose), onError: (response) => _onErrorSetPassword(response));
         },
         title: 'Update Password',
         isEnable: true.obs,
@@ -408,8 +398,7 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in verifyEmailOtpRequest");
       isOTPVerifing.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
@@ -532,20 +521,7 @@ class DashboardLogic extends GetxController {
   }
 
   String getmonth(int month) {
-    List<String> months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
+    List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return months[month - 1];
   }
 
@@ -615,22 +591,21 @@ class DashboardLogic extends GetxController {
   }
 
   _onsuccsessSkipEmailResponse(GetResponseForSkipEmailMain response) async {
-    await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
     if (response.skippedresponse().status == RES_SUCCESS) {
       AppUtils.setAccessToken(response.skippedresponse().data?.accessToken ?? "");
       TGSharedPreferences.getInstance().set(PREF_REFRESHTOKEN, response.skippedresponse().data?.refreshToken ?? "");
-      TGSharedPreferences.getInstance()
-          .set(PREF_LOGIN_TOKEN, response.skippedresponse().data?.loginToken.toString() ?? '');
+      TGSharedPreferences.getInstance().set(PREF_LOGIN_TOKEN, response.skippedresponse().data?.loginToken.toString() ?? '');
+      TGSharedPreferences.getInstance().set(PREF_ACCESS_TOKEN, response.skippedresponse().data?.accessToken ?? "");
       Codec<String, String> stringToBase64 = utf8.fuse(base64);
       String encoded = stringToBase64.encode(response.skippedresponse().data?.userName ?? '');
       TGSharedPreferences.getInstance().set(PREF_LOGIN_USERNAME, encoded);
       TGSharedPreferences.getInstance().set(PREF_LOGIN_RES, json.encode(response.skippedresponse().data));
       TGSharedPreferences.getInstance().set(PREF_ORG_ID, response.skippedresponse().data?.userOrgId ?? "");
       TGSharedPreferences.getInstance().set(PREF_USER_ID, response.skippedresponse().data?.userId ?? "");
+      setAccessTokenInRequestHeader();
       getSchemaDeatil();
     } else {
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
     }
   }
 
@@ -854,10 +829,7 @@ class DashboardLogic extends GetxController {
                     AppButton(
                       onPress: onButtonPress,
                       title: AppString.continueText,
-                      isButtonEnable: ((passwordController.text == repeatPasswordController.text) &&
-                              passwordController.text.length > 8 &&
-                              validateStructure(passwordController.text))
-                          .obs,
+                      isButtonEnable: ((passwordController.text == repeatPasswordController.text) && passwordController.text.length > 8 && validateStructure(passwordController.text)).obs,
                       isDataLoading: false.obs,
                     )
                   ],
@@ -925,8 +897,7 @@ class DashboardLogic extends GetxController {
       isOptOut[optOutIndex].value = false;
       TGLog.d("Error in PremiumDeductionResponse");
       isOptOutLoading.value = false;
-      LoaderUtils.handleErrorResponse(
-          Get.context!, response?.getOtpResponse().status ?? 0, response?.getOtpResponse()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0, response?.getOtpResponse()?.message ?? "", null);
     }
   }
 
@@ -946,6 +917,7 @@ class DashboardLogic extends GetxController {
           if (responseInfo.getprofileinfo().status == RES_SUCCESS) {
             TGSharedPreferences.getInstance().set(PREF_MOBILE, responseInfo.getprofileinfo().data?.mobile ?? "");
             TGSharedPreferences.getInstance().set(PREF_USERNAME, responseInfo.getprofileinfo().data?.userName ?? "");
+            userName.value = responseInfo.getprofileinfo().data?.userName ?? "";
             TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, responseInfo.getprofileinfo().data?.email ?? "");
           } else {}
         },

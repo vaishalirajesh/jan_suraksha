@@ -204,7 +204,7 @@ class HomePage extends StatelessWidget {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          'Welcome',
+                          'Welcome, ${dashboardLogic.userName.value}',
                           style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
                         ),
                       ),
@@ -580,7 +580,7 @@ class HomePage extends StatelessWidget {
                                   })
                               : const SizedBox.shrink()
                           : ListView.builder(
-                              itemCount: 0,
+                              itemCount: dashboardLogic.schemeList.length,
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, int index) {

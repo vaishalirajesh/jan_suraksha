@@ -49,6 +49,7 @@ class DashboardLogic extends GetxController {
   var index = 0.obs;
   RxBool isLoading = true.obs;
   RxBool isOptOutLoading = false.obs;
+  RxBool isLogoutAPICalling = false.obs;
   var isExpandedScheme = true.obs;
   var isExpandedNominee = true.obs;
   var schemeDetail;
@@ -79,7 +80,6 @@ class DashboardLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    userName.value = await TGSharedPreferences.getInstance().get(PREF_USER_NAME) ?? '';
     bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
     if (isfromreg) {

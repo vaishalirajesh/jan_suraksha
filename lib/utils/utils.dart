@@ -116,6 +116,14 @@ class AppUtils {
     }
   }
 
+  static String getSchemeName(int id) {
+    if (id == 1) {
+      return 'PMSBY';
+    } else {
+      return 'PMJJBY';
+    }
+  }
+
   static String getDecryptedString(String data) {
     TGLog.d('Decrypted data-from APp Utils---${AesGcmEncryptionUtils.decryptNew(data)}');
     return '';

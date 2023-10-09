@@ -112,6 +112,8 @@ class LoginLogic extends GetxController {
   RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
 
   Future<void> onPressSentOTP() async {
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    otp.value = '';
     otpError.value = '';
     if (mobileController.text.isEmpty) {
       mobileError.value = 'Please enter valid mobile number or email address';
@@ -317,15 +319,16 @@ class LoginLogic extends GetxController {
   _onSuccessLoginWithMobile(LoginWithMobilResponse response) async {
     TGLog.d("LoginWithMobileRequest : onSuccess()---$response");
     if (response.getLoginResponse().status == RES_SUCCESS) {
+      otp.value = '';
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
         onSubmitOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
         },
         title: 'User Verification',
@@ -354,17 +357,12 @@ class LoginLogic extends GetxController {
 
   Future<void> onPressVerifyOtp() async {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-    if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
-      otpError.value = 'Please enter valid verification code ';
-      return;
+    otpError.value = '';
+    if (await NetUtils.isInternetAvailable()) {
+      loginRequest();
     } else {
-      otpError.value = '';
-      if (await NetUtils.isInternetAvailable()) {
-        loginRequest();
-      } else {
-        if (Get.context!.mounted) {
-          showSnackBarForintenetConnection(Get.context!, loginRequest);
-        }
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, loginRequest);
       }
     }
   }
@@ -426,7 +424,11 @@ class LoginLogic extends GetxController {
         binding: DashboardBinding(),
       );
     } else if (response.getLoginResponseData().status == RES_UNAUTHORISED) {
-      otpError.value = "Error in verify otp, Please check OTP";
+      if (response.getLoginResponseData().message == 'You have reached maximum login attempts, please try next day.') {
+        otpError.value = "You have reached maximum login attempts, please try next day.";
+      } else {
+        otpError.value = "Error in verify otp, Please check OTP";
+      }
       isVerifyingOTP.value = false;
     } else {
       TGLog.d("Error in Login");
@@ -518,15 +520,17 @@ class LoginLogic extends GetxController {
     if (response.forgotPassword().status == RES_SUCCESS) {
       isPasswordAPICall.value = false;
       masterId = response.forgotPassword().data?.masterId ?? 0;
+      emailOtp.value = '';
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
-          emailOtp.value = s;
+          emailOtp.value = emailOtp.value + s;
           emailOtpError.value = '';
           TGLog.d("Otp---------${emailOtp.value}");
         },
         onSubmitOTP: (s) {
-          emailOtp.value = s;
+          emailOtp.value = emailOtp.value + s;
+
           emailOtpError.value = '';
         },
         title: 'User Verification',

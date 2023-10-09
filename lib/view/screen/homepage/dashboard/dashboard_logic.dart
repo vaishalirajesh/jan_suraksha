@@ -424,16 +424,16 @@ class DashboardLogic extends GetxController {
     }
   }
 
-  void onPressContinue(int index) {
+  void onPressContinue(int index, int schemeId) {
     if (dateController.text.isEmpty) {
       dateErrorMsg.value = 'Please select date';
     } else {
       dateErrorMsg.value = '';
-      openDialog(index: index);
+      openDialog(index: index, schemeId: schemeId);
     }
   }
 
-  void openOPTOutBottomSheet({required int index}) {
+  void openOPTOutBottomSheet({required int index, required int schemeId}) {
     dateErrorMsg.value = '';
     dateController.text = '';
 
@@ -458,14 +458,6 @@ class DashboardLogic extends GetxController {
                 style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
               ),
               SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Are you sure you want to Opt-out of the PMJJBY Scheme? Doing so, will lead to withdrawal of benefit from effective date.",
-                style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsOptOutTextGreyColor),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
                 height: 30.h,
               ),
               AppTextField(
@@ -486,7 +478,7 @@ class DashboardLogic extends GetxController {
               ),
               AppButton(
                 onPress: () {
-                  onPressContinue(index);
+                  onPressContinue(index, schemeId);
                 },
                 title: "Continue",
                 isButtonEnable: true.obs,
@@ -560,7 +552,7 @@ class DashboardLogic extends GetxController {
     return months[month - 1];
   }
 
-  void openDialog({required int index}) {
+  void openDialog({required int index, required int schemeId}) {
     Get.back();
     Get.dialog(
       AlertDialog(
@@ -571,7 +563,7 @@ class DashboardLogic extends GetxController {
         ),
         backgroundColor: ColorConfig.jsCreamColor,
         content: Text(
-          'Are you sure you want to Opt-out of the PMJJBY Scheme? \n\n Doing so , will lead to withdrawal of benefit from effective date.',
+          'Are you sure you want to Opt-out of the ${AppUtils.getSchemeName(schemeId)} Scheme? \n\n Doing so , will lead to withdrawal of benefit from effective date.',
           style: StyleConfig.regularText16,
         ),
         actionsAlignment: MainAxisAlignment.spaceAround,

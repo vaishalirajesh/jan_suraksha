@@ -164,16 +164,18 @@ class RegistrationLogic extends GetxController {
     if (response.getOtpResponse().status == RES_SUCCESS) {
       userId = response.getOtpResponse().data ?? '';
       await TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getOtpResponse().data ?? 0);
+      otp.value = '';
+      otpError.value = '';
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         isEdit: false.obs,
         onChangeOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
         onSubmitOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
         },
         title: 'User Verification',
@@ -205,17 +207,25 @@ class RegistrationLogic extends GetxController {
     //     'ajI5cGdLaHRNOHFvd2orSlk3dm0wN2RnbzZEK0lTMmlqRndhUUJGcExaS1g0cWlkN3Z3WXN0c0VHQ1Zsd2plSndXZ3VkbEZ3Z2dDWkV3STBudFBUYWc5akRNbnUvZnk5cjlXY2FDS1dYeUN5VlYvMmlzbzloL2ZiY2JoWHQ1OW1PajExZXVUVEozdmI0aFZtUlFqbE9KM2RDSnhkblo0Tm9HTGx4Ui9ZOjphZDg1OGE4MDhiZDQyMzA3';
     // TGLog.d("Decrypet data----${AesGcmEncryptionUtils.decryptNew(data)}");
     // return;
-    if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
-      otpError.value = 'Please enter valid verification code';
-      return;
+    // if (otp.value.length != 6 || !validCharacters.hasMatch(otp.value)) {
+    //   otpError.value = 'Please enter valid verification code';
+    //   return;
+    // } else {
+    //   otpError.value = '';
+    //   if (await NetUtils.isInternetAvailable()) {
+    //     onVerifyOTP();
+    //   } else {
+    //     if (Get.context!.mounted) {
+    //       showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
+    //     }
+    //   }
+    // }
+    otpError.value = '';
+    if (await NetUtils.isInternetAvailable()) {
+      onVerifyOTP();
     } else {
-      otpError.value = '';
-      if (await NetUtils.isInternetAvailable()) {
-        onVerifyOTP();
-      } else {
-        if (Get.context!.mounted) {
-          showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
-        }
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, onVerifyOTP);
       }
     }
   }
@@ -242,6 +252,7 @@ class RegistrationLogic extends GetxController {
     } else {
       TGLog.d("Error in VerifySignupOtpRequest");
       isOTPVerifing.value = false;
+      otpError.value = response.getOtpResponse().message ?? '';
       LoaderUtils.handleErrorResponse(
           Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }

@@ -201,23 +201,23 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
+                      Expanded(
                         child: Text(
                           'Welcome, ${dashboardLogic.userName.value}',
                           style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
-                        },
-                        child: Icon(
-                          Icons.notifications,
-                          size: 25.r,
-                          color: ColorConfig.jsSecondaryColor,
-                        ),
-                      )
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
+                      //   },
+                      //   child: Icon(
+                      //     Icons.notifications,
+                      //     size: 25.r,
+                      //     color: ColorConfig.jsSecondaryColor,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

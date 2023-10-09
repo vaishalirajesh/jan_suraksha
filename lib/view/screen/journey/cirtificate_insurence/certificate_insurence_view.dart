@@ -867,7 +867,7 @@ class CertificateInsurencePage extends StatelessWidget {
                 ),
               ),
             ),
-            if (certificateInsurenceLogic.isLoading.value) const AppLoader(),
+            if (certificateInsurenceLogic.isLoading.value) AppLoader(),
           ],
         );
       }),

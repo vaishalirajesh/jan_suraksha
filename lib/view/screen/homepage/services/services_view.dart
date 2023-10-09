@@ -636,7 +636,7 @@ class ServicesPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (dashboardLogic.isOptOutLoading.value) const AppLoader(),
+            if (dashboardLogic.isOptOutLoading.value) AppLoader(),
           ],
         );
       }),

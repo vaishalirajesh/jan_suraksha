@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/font_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
@@ -89,8 +90,8 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: AppUtils.convertDateFormat(
-                                    previewApplicationFormLogic.getAppData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                                initialvale: DateFormat('dd/MM/yyyy').format(
+                                    DateTime.parse(previewApplicationFormLogic.getAppData.data?.dob ?? '').toLocal()),
                                 title: AppString.dateOfBirth,
                                 isReadOnly: true,
                               ),
@@ -429,7 +430,7 @@ class PreviewApplicationPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (!previewApplicationFormLogic.isDataLoaded.value) const AppLoader()
+            if (!previewApplicationFormLogic.isDataLoaded.value) AppLoader()
           ],
         );
       }),

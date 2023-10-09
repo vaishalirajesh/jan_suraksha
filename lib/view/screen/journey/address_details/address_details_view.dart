@@ -97,7 +97,7 @@ class AddressDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (!addressDetailsLogic.isLoading.value) const AppLoader()
+            if (!addressDetailsLogic.isLoading.value) AppLoader()
           ],
         );
       }),

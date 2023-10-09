@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
+import 'package:jan_suraksha/model/request_model/DownloadAgreementRequest.dart';
 import 'package:jan_suraksha/model/request_model/EmailOtpRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetEnrollmnetListrequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
@@ -13,6 +16,7 @@ import 'package:jan_suraksha/model/request_model/GetUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/SaveOptoutRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyEmailOtpRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.dart';
+import 'package:jan_suraksha/model/response_model/DownloadAgreementResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
@@ -38,6 +42,7 @@ import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../model/request_model/SetPasswordRequest.dart';
 import '../../../../model/response_model/SkipEmailResponse.dart';
@@ -50,6 +55,7 @@ class DashboardLogic extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isOptOutLoading = false.obs;
   RxBool isLogoutAPICalling = false.obs;
+  RxBool isDownLoading = false.obs;
   var isExpandedScheme = true.obs;
   var isExpandedNominee = true.obs;
   var schemeDetail;
@@ -957,6 +963,60 @@ class DashboardLogic extends GetxController {
           } else {}
         },
         onError: (response) {});
+  }
+
+  Future<void> onPressDownload({dynamic schemeId, dynamic appId}) async {
+    isDownLoading.value = true;
+    int orgId = (await TGSharedPreferences.getInstance().get(PREF_ORG_ID)) ?? 0;
+    DownloadAgreementRequest request = DownloadAgreementRequest(
+        applicationId: appId.toString(), schemeId: schemeId.toString(), orgId: orgId.toString(), isDownload: true);
+    var jsonRequest = jsonEncode(request.toJson());
+    TGLog.d("GenerateCoiRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_DOWNLOAD_AGREEMENT);
+    ServiceManager.getInstance().downloadCoi(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccess(response),
+        onError: (response) => _onFailure(response));
+  }
+
+  _onSuccess(GetCoiAgreementResponseMain response) async {
+    TGLog.d(response);
+    final byteString = base64Decode(response.getLoginResponseData().data ?? "");
+    final int8List = Uint8List.fromList(byteString);
+    var currentDate =
+        AppUtils.convertDateFormat(DateTime.now().toString(), 'yyyy-MM-dd hh:mm:ss.SSSSSS', 'dd_MM_yyyy_hh_mm_ss');
+    var date = currentDate.toString().replaceAll(' ', '_');
+    saveFileToDownloads("JanSuraksha_COI_${date}.pdf", int8List);
+  }
+
+  _onFailure(response) {
+    isDownLoading.value = false;
+  }
+
+  Future<void> saveFileToDownloads(String fileName, List<int> fileBytes) async {
+    String? filePath = await getDownloadPath();
+    File file = File(filePath! + "/" + fileName);
+    await file.writeAsBytes(fileBytes);
+    showSnackBar(Get.context!, "COI downloaded successfully");
+    // Check if the file was saved successfully
+    if (await file.exists()) {
+    } else {}
+    isDownLoading.value = false;
+  }
+
+  Future<String?> getDownloadPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists()) directory = await getExternalStorageDirectory();
+      }
+    } catch (err, stack) {}
+    return directory?.path;
   }
 }
 

@@ -400,7 +400,7 @@ class NomineeDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (!nomineeDetailsLogic.isLoading.value) const AppLoader()
+            if (!nomineeDetailsLogic.isLoading.value) AppLoader()
           ],
         );
       }),

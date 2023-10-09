@@ -109,7 +109,7 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (applicationFormLogic.isLoading.value) const AppLoader()
+            if (applicationFormLogic.isLoading.value) AppLoader()
           ],
         );
       }),

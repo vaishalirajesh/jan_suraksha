@@ -173,7 +173,7 @@ class DashboardPage extends StatelessWidget {
                   ),
                 )),
           ),
-          if (dashboardLogic.isLoading.value) const AppLoader(),
+          if (dashboardLogic.isLoading.value || dashboardLogic.isDownLoading.value) AppLoader(),
         ],
       );
     });
@@ -685,19 +685,21 @@ class HomePage extends StatelessWidget {
                                                         AppArguments.appId: dashboardLogic.schemeList[index]['id'],
                                                       });
                                                 } else {
-                                                  Get.offAll(() => CertificateInsurencePage(),
-                                                      binding: CertificateInsurenceBinding(),
-                                                      arguments: {
-                                                        AppArguments.schemaId: dashboardLogic.schemeList[index]
-                                                            ['scheme'],
-                                                        AppArguments.appId: dashboardLogic.schemeList[index]['id'],
-                                                      });
+                                                  dashboardLogic.isDownLoading.value = true;
+                                                  dashboardLogic.onPressDownload(
+                                                      schemeId: dashboardLogic.schemeList[index]['scheme'],
+                                                      appId: dashboardLogic.schemeList[index]['id']);
                                                 }
                                               } else {
                                                 showSnackBar(Get.context!, "Invalid Scheme");
                                               }
                                             },
-                                            title: "Continue Journey",
+                                            title: dashboardLogic.schemeList.isNotEmpty &&
+                                                    dashboardLogic.schemeList[index]['stageId'] != null &&
+                                                    dashboardLogic.schemeList[index]['stageId'] != '' &&
+                                                    dashboardLogic.schemeList[index]['stageId'] == 4
+                                                ? "Continue Journey"
+                                                : "Download COI",
                                           )
                                         ],
                                       ),

@@ -162,7 +162,7 @@ class BankSelectionPage extends StatelessWidget {
                             ),
                           ),
                         ]))),
-            if (bankSelectionLogic.isLoading.value) const AppLoader()
+            if (bankSelectionLogic.isLoading.value) AppLoader()
           ],
         );
       }),

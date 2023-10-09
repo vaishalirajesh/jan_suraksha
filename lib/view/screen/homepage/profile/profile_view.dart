@@ -524,7 +524,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 )),
-            if (logic.isLogoutAPICalling.value) const AppLoader(),
+            if (logic.isLogoutAPICalling.value) AppLoader(),
           ],
         );
       }),

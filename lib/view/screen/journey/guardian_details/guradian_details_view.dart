@@ -222,7 +222,7 @@ class GuradianDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (!guradianDetailsLogic.isLoading.value) const AppLoader()
+            if (!guradianDetailsLogic.isLoading.value) AppLoader()
           ],
         );
       }),

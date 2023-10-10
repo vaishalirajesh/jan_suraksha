@@ -100,25 +100,30 @@ class TermsAndConditionsLogic extends GetxController {
   }
 
   void onPressButton(BuildContext context) {
+    otp.value = '';
+    otpError.value = '';
     OTPBottomSheet.getBottomSheet(
-        context: context,
-        title: '',
-        subTitle: '',
-        onChangeOTP: onChangeOTP,
-        onSubmitOTP: onSubmitOTP,
-        mobileNumber: mobile,
-        isEnable: true.obs,
-        isLoading: isOTPVerifying,
-        onButtonPress: verifyOTP,
-        errorText: otpError);
+      context: context,
+      title: '',
+      subTitle: '',
+      onChangeOTP: onChangeOTP,
+      onSubmitOTP: onSubmitOTP,
+      mobileNumber: mobile,
+      isEnable: true.obs,
+      isLoading: isOTPVerifying,
+      onButtonPress: verifyOTP,
+      errorText: otpError,
+    );
   }
 
   void onChangeOTP(String str) {
-    otp.value = str;
+    otp.value = otp.value + str;
+    otpError.value = '';
   }
 
   void onSubmitOTP(String str) {
-    otp.value = str;
+    otp.value = otp.value + str;
+    otpError.value = '';
   }
 
   void onPressContinue() {
@@ -194,6 +199,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in ConsentOtpVerifyRequest");
       isOTPVerifying.value = false;
+      otpError.value = response.getOtpResponse().message ?? "";
       LoaderUtils.handleErrorResponse(
           Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }

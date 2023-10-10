@@ -74,7 +74,7 @@ class AppString {
   static String renual_date = "Renewal Date :";
   static const String fetchOTP = 'Please enter verification code sent to \n';
   static const String fetchOTPMobile = '+91 ';
-  static const String enterOTP = 'Enter your OTP';
+  static const String enterOTP = 'Verification Code';
   static const String enterverificationCode = 'Enter Verification Code';
   static const String registerMobileNumber = 'An verification code has been sent to your registered mobile number - ';
   static const String registerMobileNumber1 = 'A Verification Code has been sent to your registered mobile number ';

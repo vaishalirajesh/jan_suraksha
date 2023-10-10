@@ -35,4 +35,5 @@ abstract class URIS {
   static const URI_FORGOT_PASSWORD = "users/v3/email/forgotpasswordEncrypt";
   static const URI_SAVE_OPT_OUT = "insurance/v3/application/saveOptOut";
   static const URI_GET_PROFILE = "users/v3/getUserDetailsById";
+  static const URI_OPT_OUT_HISTORY = "report/miscellaneous/fetchOptOutApplication";
 }

@@ -11,6 +11,8 @@ import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/model/request_model/DownloadAgreementRequest.dart';
 import 'package:jan_suraksha/model/request_model/EmailOtpRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetEnrollmnetListrequest.dart';
+import 'package:jan_suraksha/model/request_model/GetNomineeRequest.dart';
+import 'package:jan_suraksha/model/request_model/GetOptOutListRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/SaveOptoutRequest.dart';
@@ -20,6 +22,7 @@ import 'package:jan_suraksha/model/response_model/DownloadAgreementResponse.dart
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
+import 'package:jan_suraksha/model/response_model/OptOutHistoryResponse.dart';
 import 'package:jan_suraksha/model/response_model/fetch_profile_details_response_main.dart';
 import 'package:jan_suraksha/services/common/app_functions.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
@@ -54,12 +57,16 @@ class DashboardLogic extends GetxController {
   var index = 0.obs;
   RxBool isLoading = true.obs;
   RxBool isOptOutLoading = false.obs;
+  RxBool isNomineeLoading = false.obs;
   RxBool isLogoutAPICalling = false.obs;
   RxBool isDownLoading = false.obs;
   var isExpandedScheme = true.obs;
   var isExpandedNominee = true.obs;
   var schemeDetail;
   List<dynamic> schemeList = [];
+  List<dynamic> optOutNomineeList = [];
+  List<dynamic> nomineeList = [];
+  List<dynamic> OptOutHistoryNomineeList = [];
   var selectedSchemaData = {};
   TextEditingController emailController = TextEditingController(text: '');
   RxString emailErrorMsg = ''.obs;
@@ -88,6 +95,7 @@ class DashboardLogic extends GetxController {
   Future<void> onInit() async {
     bool isfromreg = await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG) ?? false;
     mobilenumber.value = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
+    TGLog.d("On dashbaord------$isfromreg");
     if (isfromreg) {
       String userId = (await TGSharedPreferences.getInstance().get(PREF_USER_ID)).toString();
       GetUserIDRequest request = GetUserIDRequest(userId: userId);
@@ -101,12 +109,16 @@ class DashboardLogic extends GetxController {
     } else {
       String ref_token = await (TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN)) ?? "";
       String log_token = await (TGSharedPreferences.getInstance().get(PREF_LOGIN_TOKEN)) ?? "";
+      TGLog.d("ref_token Token---$ref_token");
+      TGLog.d("log_token Token---$log_token");
       if (ref_token.isEmpty || log_token.isEmpty) {
         showSnackBar(Get.context!, "Your session has expired");
         Get.offAll(() => LoginPage(), binding: LoginBinding());
       } else {
         setAccessTokenInRequestHeader();
         getSchemaDeatil();
+        getOptOutList();
+        onGetNomineeList();
       }
     }
     super.onInit();
@@ -198,9 +210,6 @@ class DashboardLogic extends GetxController {
     if (response.getEnrollmentList().status == RES_SUCCESS) {
       if (response.getEnrollmentList().data != null) {
         schemeList = json.decode(response.getEnrollmentList().data ?? '');
-        schemeList.forEach((element) {
-          isOptOut.add(false.obs);
-        });
       }
       TGLog.d("Schema lenght--${schemeList.length}");
       bool isFromReg = (await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG)) ?? false;
@@ -354,6 +363,7 @@ class DashboardLogic extends GetxController {
       );
     } else {
       TGLog.d("Error in EmailOtpRequest");
+      Get.back();
       isEmailVerifying.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
@@ -418,6 +428,7 @@ class DashboardLogic extends GetxController {
       isOTPVerifing.value = false;
     } else {
       TGLog.d("Error in verifyEmailOtpRequest");
+      Get.back();
       isOTPVerifing.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
@@ -632,6 +643,8 @@ class DashboardLogic extends GetxController {
       TGSharedPreferences.getInstance().set(PREF_USER_ID, response.skippedresponse().data?.userId ?? "");
       setAccessTokenInRequestHeader();
       getSchemaDeatil();
+      getOptOutList();
+      onGetNomineeList();
     } else {
       LoaderUtils.handleErrorResponse(
           Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
@@ -923,10 +936,10 @@ class DashboardLogic extends GetxController {
   _onSuccessSaveData(OTPResponse response) async {
     TGLog.d("SaveOptoutRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
-      isOptOutLoading.value = false;
-      isOptOut[optOutIndex].value = true;
+      getOptOutList();
+
+      // isOptOut[optOutIndex].value = true;
     } else {
-      isOptOut[optOutIndex].value = false;
       TGLog.d("Error in PremiumDeductionResponse");
       isOptOutLoading.value = false;
       LoaderUtils.handleErrorResponse(
@@ -935,7 +948,6 @@ class DashboardLogic extends GetxController {
   }
 
   _onErrorSaveData(TGResponse errorResponse) {
-    isOptOut[optOutIndex].value = false;
     TGLog.d("SaveOptoutRequest : onError()--${errorResponse.error}");
     isOptOutLoading.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
@@ -1009,6 +1021,145 @@ class DashboardLogic extends GetxController {
       }
     } catch (err, stack) {}
     return directory?.path;
+  }
+
+  Future<void> getOptOutList() async {
+    if (await NetUtils.isInternetAvailable()) {
+      optOutList();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, optOutList);
+      }
+    }
+  }
+
+  Future<void> optOutList() async {
+    isOptOutLoading.value = true;
+    GetOptOutListRequest getOptOutListRequest = GetOptOutListRequest(paginationFROM: 0, paginationTO: 10, type: 1);
+    var jsonRequest = jsonEncode(getOptOutListRequest.toJson());
+    TGLog.d("GetOptOutListRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);
+    TGLog.d("GetOptOutListRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().getEnrollmentList(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessOptOutList(response),
+      onError: (error) => _onErrorOptOutList(error),
+    );
+  }
+
+  _onSuccessOptOutList(GetEnrollmentListResponse response) async {
+    TGLog.d("GetOptOutListRequest : onSuccess()---$response");
+    if (response.getEnrollmentList().status == RES_SUCCESS) {
+      if (response.getEnrollmentList().data != null) {
+        optOutNomineeList = json.decode(response.getEnrollmentList().data ?? '');
+        optOutNomineeList.forEach((element) {
+          isOptOut.add(false.obs);
+        });
+      }
+      TGLog.d("optOutNomineeList lenght--${optOutNomineeList.length}");
+      getOptOutHistoryList();
+    } else {
+      TGLog.d("Error in GetOptOutListRequest");
+      isOptOutLoading.value = false;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
+    }
+  }
+
+  _onErrorOptOutList(TGResponse errorResponse) {
+    TGLog.d("GetEnrollmentListRequest : onError()--${errorResponse.error}");
+    isOptOutLoading.value = false;
+    isNomineeLoading.value = false;
+
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> getOptOutHistoryList() async {
+    if (await NetUtils.isInternetAvailable()) {
+      OptOutHistoryList();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, OptOutHistoryList);
+      }
+    }
+  }
+
+  Future<void> OptOutHistoryList() async {
+    GetOptOutListRequest getOptOutHistoryListRequest =
+        GetOptOutListRequest(paginationFROM: 0, paginationTO: 10, type: 1);
+    var jsonRequest = jsonEncode(getOptOutHistoryListRequest.toJson());
+    TGLog.d("GetOptOutHistoryListRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_OPT_OUT_HISTORY);
+    TGLog.d("GetOptOutHistoryListRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().optOutHistory(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessOptOutHistoryList(response),
+      onError: (error) => _onErrorOptOutHistoryList(error),
+    );
+  }
+
+  _onSuccessOptOutHistoryList(OptOutHistoryResponse response) async {
+    TGLog.d("GetOptOutHistoryListRequest : onSuccess()---$response");
+    if (response.getOptOutHistory().status == RES_SUCCESS) {
+      if (response.getOptOutHistory().data != null) {
+        OptOutHistoryNomineeList = json.decode(response.getOptOutHistory().data ?? '');
+        optOutNomineeList.addAll(OptOutHistoryNomineeList);
+      }
+      TGLog.d("OptOutHistoryNomineeList lenght--${OptOutHistoryNomineeList.length}---${optOutNomineeList.length}");
+      isOptOutLoading.value = false;
+    } else {
+      TGLog.d("Error in GetOptOutHistoryListRequest");
+      isOptOutLoading.value = false;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOptOutHistory().status ?? 0, response.getOptOutHistory().message ?? "", null);
+    }
+  }
+
+  _onErrorOptOutHistoryList(TGResponse errorResponse) {
+    TGLog.d("GetEnrollmentListRequest : onError()--${errorResponse.error}");
+    isOptOutLoading.value = false;
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  Future<void> onGetNomineeList() async {
+    if (await NetUtils.isInternetAvailable()) {
+      getNomineeList();
+    } else {
+      if (Get.context!.mounted) {
+        showSnackBarForintenetConnection(Get.context!, getNomineeList);
+      }
+    }
+  }
+
+  Future<void> getNomineeList() async {
+    isNomineeLoading.value = true;
+    GetNomineeListRequest getOptOutListRequest =
+        GetNomineeListRequest(paginationFROM: 0, paginationTO: 10, schemeId: null, type: 2);
+    var jsonRequest = jsonEncode(getOptOutListRequest.toJson());
+    TGLog.d("GetOptOutListRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);
+    TGLog.d("GetOptOutListRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().getEnrollmentList(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessNomineeList(response),
+      onError: (error) => _onErrorOptOutList(error),
+    );
+  }
+
+  _onSuccessNomineeList(GetEnrollmentListResponse response) async {
+    TGLog.d("GetOptOutListRequest : onSuccess()---$response");
+    if (response.getEnrollmentList().status == RES_SUCCESS) {
+      if (response.getEnrollmentList().data != null) {
+        nomineeList = json.decode(response.getEnrollmentList().data ?? '');
+      }
+      isNomineeLoading.value = false;
+      TGLog.d("optOutNomineeList lenght--${nomineeList.length}");
+    } else {
+      TGLog.d("Error in GetOptOutListRequest");
+      isNomineeLoading.value = false;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
+    }
   }
 }
 

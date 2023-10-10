@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
@@ -28,9 +29,11 @@ class AddressDetailsLogic extends GetxController {
     });
   }
 
-  void onPressContinue() {
+  Future<void> onPressContinue() async {
+    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? 0;
     Get.to(() => NomineeDetailsPage(), binding: NomineeDetailsBinding(), arguments: {
       AppArguments.screenName: "Address",
+      AppArguments.appId: appId,
     });
   }
 }

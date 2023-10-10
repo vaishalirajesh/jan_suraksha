@@ -12,10 +12,6 @@ class PersonalInfoLogic extends GetxController {
 
   var isLoadingEmailOTP = false.obs;
 
-  var passwordController = TextEditingController();
-
-  var repeatPasswordController = TextEditingController();
-
   var shouldChangeAppearInEmailSuffix = true.obs;
 
   var emailController = TextEditingController();
@@ -25,6 +21,15 @@ class PersonalInfoLogic extends GetxController {
   var resetPassError = "".obs;
 
   var subtitle = "A verification code has been sent to your Email \n".obs;
+  RxBool isEmailChanging = false.obs;
+  RxBool isPasswordChanging = false.obs;
+  RxString otp = ''.obs;
+  RxString passwordOtp = ''.obs;
+  RxString otpEmailError = ''.obs;
+  RxString otpPasswordError = ''.obs;
+  var setPasswordController = TextEditingController(text: '');
+  var repeatSetPasswordController = TextEditingController(text: '');
+  RxBool isSetPasswordLoading = false.obs;
 
   @override
   Future<void> onInit() async {

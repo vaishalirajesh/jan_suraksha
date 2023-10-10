@@ -115,6 +115,7 @@ class RegistrationLogic extends GetxController {
       nameError.value = '';
       mobileError.value = '';
       captchError.value = '';
+      otp.value = '';
       signUp();
       TGSharedPreferences.getInstance().set(PREF_USER_NAME, nameController.text);
     }

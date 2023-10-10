@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
+import 'package:jan_suraksha/view/widget/app_loader.dart';
 
 import '../../../config/color_config.dart';
 import '../../../config/font_config.dart';
@@ -36,217 +37,252 @@ import '../../widget/progressloader.dart';
 import 'personal_info_logic.dart';
 
 class PersonalInfoPage extends StatelessWidget {
-  var emailController = TextEditingController();
-
   PersonalInfoPage({Key? key}) : super(key: key);
 
   final personallogic = Get.find<PersonalInfoLogic>();
 
-  RxString otp = ''.obs;
-
   @override
   Widget build(BuildContext context) {
-    return AddHeaderFooter(
-      appbarName: AppString.appBarWithTitle,
-      title: "Personal Info",
-      buttonTitle: "Go Back",
-      onButtonClick: () {
-        AppUtils.onBackPress();
-      },
-      onBackButtonCLick: AppUtils.onBackPress,
-      isDataLoading: false,
-      isButtonEnable: true,
-      isShowButton: true,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: ConstrainedFlexView(
-          0.9.sh,
-          axis: Axis.vertical,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Obx(() => AppTextField(
-                    hintText: "",
-                    isReadOnly: true,
-                    isMandatory: true,
-                    isAutoFocus: true,
-                    title: "Name",
-                    inputType: TextInputType.emailAddress,
-                    maxLength: 30,
-                    controller: TextEditingController(text: personallogic.userName.value),
-                  )),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Mobile Number",
-                style: StyleConfig.boldText16.copyWith(
-                  color: ColorConfig.jsBlackColor,
-                  fontFamily: JSFonts.outfitRegular,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Obx(() => AppTextField(
-                    hintText: "",
-                    isReadOnly: true,
-                    isMandatory: true,
-                    isAutoFocus: true,
-                    inputType: TextInputType.emailAddress,
-                    maxLength: 30,
-                    controller: TextEditingController(
-                      text: personallogic.mobilenumber.value,
+    return Obx(() {
+      return Stack(
+        children: [
+          AddHeaderFooter(
+            appbarName: AppString.appBarWithTitle,
+            title: "Personal Info",
+            buttonTitle: "Go Back",
+            onButtonClick: () {
+              AppUtils.onBackPress();
+            },
+            onBackButtonCLick: AppUtils.onBackPress,
+            isDataLoading: false,
+            isButtonEnable: true,
+            isShowButton: true,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ConstrainedFlexView(
+                0.9.sh,
+                axis: Axis.vertical,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
-                  )),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Email ID",
-                style: StyleConfig.boldText16.copyWith(
-                  color: ColorConfig.jsBlackColor,
-                  fontFamily: JSFonts.outfitRegular,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Obx(() {
-                return AppTextField(
-                    hintText: "",
-                    isReadOnly: false,
-                    isMandatory: true,
-                    isAutoFocus: true,
-                    onChanged: (s) {
-                      final bool emailValid =
-                          RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
+                    Obx(() => AppTextField(
+                          hintText: "",
+                          isReadOnly: true,
+                          isMandatory: true,
+                          isAutoFocus: true,
+                          title: "Name",
+                          inputType: TextInputType.emailAddress,
+                          maxLength: 30,
+                          controller: TextEditingController(text: personallogic.userName.value),
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Mobile Number",
+                      style: StyleConfig.boldText16.copyWith(
+                        color: ColorConfig.jsBlackColor,
+                        fontFamily: JSFonts.outfitRegular,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Obx(() => AppTextField(
+                          hintText: "",
+                          isReadOnly: true,
+                          isMandatory: true,
+                          isAutoFocus: true,
+                          inputType: TextInputType.emailAddress,
+                          maxLength: 30,
+                          controller: TextEditingController(
+                            text: personallogic.mobilenumber.value,
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Email ID",
+                      style: StyleConfig.boldText16.copyWith(
+                        color: ColorConfig.jsBlackColor,
+                        fontFamily: JSFonts.outfitRegular,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Obx(() {
+                      return AppTextField(
+                          hintText: "",
+                          isReadOnly: false,
+                          isMandatory: true,
+                          isAutoFocus: true,
+                          onChanged: (s) {
+                            final bool emailValid =
+                                RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(s);
 
-                      if (s != personallogic.email.value && emailValid) {
-                        TGLog.d("debug");
-                        personallogic.email.value = s;
-                        personallogic.shouldChangeAppearInEmailSuffix.value = true;
-                      } else {
-                        personallogic.shouldChangeAppearInEmailSuffix.value = false;
-                      }
-                    },
-                    inputType: TextInputType.emailAddress,
-                    maxLength: 30,
-                    controller: personallogic.emailController,
-                    suffix: personallogic.shouldChangeAppearInEmailSuffix.value
-                        ? InkWell(
-                            onTap: () {
-                              updateEmail(context);
-                            },
-                            child: Text(
-                              'Change',
-                              style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                            ),
-                          )
-                        : SizedBox.shrink());
-              }),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Password",
-                style: StyleConfig.boldText16.copyWith(
-                  color: ColorConfig.jsBlackColor,
-                  fontFamily: JSFonts.outfitRegular,
+                            if (s != personallogic.email.value && emailValid) {
+                              TGLog.d("debug");
+                              personallogic.email.value = s;
+                              personallogic.shouldChangeAppearInEmailSuffix.value = true;
+                            } else {
+                              personallogic.shouldChangeAppearInEmailSuffix.value = false;
+                            }
+                          },
+                          inputType: TextInputType.emailAddress,
+                          maxLength: 255,
+                          controller: personallogic.emailController,
+                          suffix: personallogic.shouldChangeAppearInEmailSuffix.value
+                              ? InkWell(
+                                  onTap: () {
+                                    FocusScope.of(Get.context!).requestFocus(FocusNode());
+                                    updateEmail(context);
+                                  },
+                                  child: Text(
+                                    'Change',
+                                    style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                  ),
+                                )
+                              : SizedBox.shrink());
+                    }),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Password",
+                      style: StyleConfig.boldText16.copyWith(
+                        color: ColorConfig.jsBlackColor,
+                        fontFamily: JSFonts.outfitRegular,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AppTextField(
+                      isReadOnly: true,
+                      isMandatory: true,
+                      isAutoFocus: true,
+                      inputType: TextInputType.emailAddress,
+                      maxLength: 30,
+                      controller: TextEditingController(text: "***********"),
+                      suffix: InkWell(
+                        onTap: () async {
+                          if (!personallogic.isPasswordChanging.value) {
+                            personallogic.isPasswordChanging.value = true;
+                            var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+                            await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
+                            await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
+                            await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
+                            EmailOtpRequest emailOtpRequest = EmailOtpRequest(
+                                userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+                            var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+                            TGLog.d("EmailOtpRequest $jsonRequest");
+                            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+                            TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+                            ServiceManager.getInstance().otpRequest(
+                              request: tgPostRequest,
+                              onSuccess: (response) {
+                                TGLog.d("EmailOtpRequest : onSuccess()---$response");
+                                if (response.getOtpResponse().status == RES_SUCCESS) {
+                                  personallogic.isPasswordChanging.value = false;
+                                  getOtpBottomSheetForPassWord();
+                                } else {
+                                  TGLog.d("Error in EmailOtpRequest");
+                                  personallogic.isPasswordChanging.value = false;
+                                  LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0,
+                                      response.getOtpResponse().message ?? "", null);
+                                }
+                              },
+                              onError: (response) => (TGResponse error) {
+                                personallogic.isPasswordChanging.value = false;
+                                showSnackBar(Get.context!, "Error in password update");
+                              },
+                            );
+                          }
+                        },
+                        child: Text(
+                          'Change',
+                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                        ),
+                      ),
+                      hintText: '',
+                    )
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              AppTextField(
-                isReadOnly: true,
-                isMandatory: true,
-                isAutoFocus: true,
-                inputType: TextInputType.emailAddress,
-                maxLength: 30,
-                controller: TextEditingController(text: "***********"),
-                suffix: InkWell(
-                  onTap: () async {
-                    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-                    await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
-                    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
-                    await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-                    EmailOtpRequest emailOtpRequest = EmailOtpRequest(
-                        userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
-                    var jsonRequest = jsonEncode(emailOtpRequest.toJson());
-                    TGLog.d("EmailOtpRequest $jsonRequest");
-                    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
-                    TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
-                    ServiceManager.getInstance().otpRequest(
-                      request: tgPostRequest,
-                      onSuccess: (response) {
-                        TGLog.d("EmailOtpRequest : onSuccess()---$response");
-                        if (response.getOtpResponse().status == RES_SUCCESS) {
-                          getOtpBottomSheetForPassWord();
-                        } else {
-                          TGLog.d("Error in EmailOtpRequest");
-                          LoaderUtils.handleErrorResponse(Get.context!, response?.getOtpResponse().status ?? 0,
-                              response.getOtpResponse().message ?? "", null);
-                        }
-                      },
-                    );
-                  },
-                  child: Text(
-                    'Change',
-                    style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                  ),
-                ),
-                hintText: '',
-              )
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+          if (personallogic.isEmailChanging.value || personallogic.isPasswordChanging.value) const AppLoader()
+        ],
+      );
+    });
   }
 
   Future<void> updateEmail(BuildContext context) async {
-    var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
-    await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
-    await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
-    EmailOtpRequest emailOtpRequest =
-        EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
-    var jsonRequest = jsonEncode(emailOtpRequest.toJson());
-    TGLog.d("EmailOtpRequest $jsonRequest");
-    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
-    TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
-    ServiceManager.getInstance().otpRequest(
-      request: tgPostRequest,
-      onSuccess: (response) => _onSuccessEmailOtp(response, context),
-    );
+    if (!personallogic.isEmailChanging.value) {
+      personallogic.isEmailChanging.value = true;
+      var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+      await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
+      await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
+      await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
+      EmailOtpRequest emailOtpRequest =
+          EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+      var jsonRequest = jsonEncode(emailOtpRequest.toJson());
+      TGLog.d("EmailOtpRequest $jsonRequest");
+      TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
+      TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
+      ServiceManager.getInstance().otpRequest(
+        request: tgPostRequest,
+        onSuccess: (response) => _onSuccessEmailOtp(response, context),
+        onError: (response) => (TGResponse error) {
+          personallogic.isEmailChanging.value = false;
+          showSnackBar(Get.context!, "Error in email update");
+        },
+      );
+    }
   }
 
   _onSuccessEmailOtp(OTPResponse response, BuildContext context) async {
     TGLog.d("EmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
       getOtpBottomSheetForEmail(context);
+      personallogic.isEmailChanging.value = false;
     } else {
       TGLog.d("Error in EmailOtpRequest");
+      personallogic.isEmailChanging.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 
   dynamic getOtpBottomSheetForEmail(BuildContext context) {
+    personallogic.otp.value = '';
+    personallogic.otpEmailError.value = '';
+
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
       onChangeOTP: (s) {
-        // TGLog.d("Otp---------${otp.value}");
+        personallogic.otp.value = personallogic.otp.value + s;
+        personallogic.otpEmailError.value = '';
       },
-      onSubmitOTP: (s) async {
+      onSubmitOTP: (s) {
+        personallogic.otp.value = personallogic.otp.value + s;
+        personallogic.otpEmailError.value = '';
+      },
+      title: 'Email Verification',
+      mobileNumber: personallogic.email.value,
+      isEnable: true.obs,
+      isLoading: personallogic.isLoadingEmailOTP,
+      onButtonPress: () async {
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-        VerifySignupOtpRequest verifySignupOtpRequest =
-            VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
+        VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(
+            email: personallogic.email.value, otpType: 2, userId: userId, otp: personallogic.otp.value);
         var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
         TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
         TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -261,38 +297,37 @@ class PersonalInfoPage extends StatelessWidget {
               personallogic.shouldChangeAppearInEmailSuffix.value = false;
               Get.back();
             } else {
-              personallogic.subtitle.value = otpResponse.getOtpResponse().message.toString() + " sent to \n" ?? "";
+              personallogic.otpEmailError.value = otpResponse.getOtpResponse().message ?? '';
               showSnackBar(Get.context!, otpResponse.getOtpResponse().message!);
             }
           },
           onError: (response) => (TGResponse error) {
             Get.back();
             showSnackBar(Get.context!, "Email Updated Succsessfully");
-
             TGLog.d("Error Occured" + error.httpStatus.toString());
           },
         );
       },
-      title: 'Email Verification',
-      mobileNumber: personallogic.email.value,
-      isEnable: (otp.value.length == 6 ? true : false).obs,
-      isLoading: personallogic.isLoadingEmailOTP,
-      onButtonPress: () {},
       isEdit: false.obs,
       subTitle: personallogic.subtitle,
+      errorText: personallogic.otpEmailError,
     );
   }
 
   dynamic getOtpBottomSheetForPassWord() {
+    personallogic.otpPasswordError.value = '';
+    personallogic.passwordOtp.value = '';
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
-      onChangeOTP: (s) {
-        // TGLog.d("Otp---------${otp.value}");
-      },
-      onSubmitOTP: (s) async {
+      title: 'Email Verification',
+      mobileNumber: personallogic.email.value,
+      isEnable: true.obs,
+      isLoading: personallogic.isLoadingEmailOTP,
+      errorText: personallogic.otpPasswordError,
+      onButtonPress: () async {
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-        VerifySignupOtpRequest verifySignupOtpRequest =
-            VerifySignupOtpRequest(email: personallogic.email.value, otpType: 2, userId: userId, otp: s);
+        VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(
+            email: personallogic.email.value, otpType: 2, userId: userId, otp: personallogic.passwordOtp.value);
         var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
         TGLog.d("ConsentOtpVerifyRequest $jsonRequest");
         TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
@@ -302,56 +337,162 @@ class PersonalInfoPage extends StatelessWidget {
           onSuccess: (response) {
             OTPResponse otpResponse = response;
             if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
+              Get.back();
+              personallogic.setPassError.value = '';
+              personallogic.resetPassError.value = '';
+              personallogic.setPasswordController.text = '';
+              personallogic.repeatSetPasswordController.text = '';
               getUpdatePasswordBottomSheet(
-                  onSubmitOTP: (s) {},
-                  onButtonPress: () {
-                    onPressSetPassword();
-                  },
-                  title: "Set Password",
-                  logic: personallogic,
-                  isEnable:
-                      (personallogic.passwordController.value == personallogic.repeatPasswordController.value).obs,
-                  isLoading: false.obs);
+                onSubmitOTP: (String) {},
+                onButtonPress: onPressSetPassword,
+                title: 'Set Password',
+                isEnable: true.obs,
+                isLoading: personallogic.isSetPasswordLoading,
+              );
+            } else {
+              personallogic.otpPasswordError.value = otpResponse.getOtpResponse().message ?? '';
             }
           },
           onError: (response) => (TGResponse error) {
+            personallogic.otpPasswordError.value = "Error in update password";
             TGLog.d("Error Occured" + error.httpStatus.toString());
           },
         );
-        Get.back();
       },
-      title: 'Email Verification',
-      mobileNumber: personallogic.email.value,
-      isEnable: (otp.value.length == 6 ? true : false).obs,
-      isLoading: personallogic.isLoadingEmailOTP,
-      onButtonPress: () {},
+      onChangeOTP: (s) {
+        personallogic.passwordOtp.value = personallogic.passwordOtp.value + s;
+        personallogic.otpPasswordError.value = '';
+      },
+      onSubmitOTP: (s) {
+        personallogic.passwordOtp.value = personallogic.passwordOtp.value + s;
+        personallogic.otpPasswordError.value = '';
+      },
       isEdit: false.obs,
       subTitle: personallogic.subtitle,
     );
   }
 
+  getUpdatePasswordBottomSheet({
+    required Function(String) onSubmitOTP,
+    required Function() onButtonPress,
+    required String title,
+    RxString? errorText,
+    required RxBool isEnable,
+    required RxBool isLoading,
+  }) {
+    Get.bottomSheet(LayoutBuilder(builder: (context, _) {
+      return Obx(() {
+        return isEnable.value
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
+                  color: ColorConfig.jsCardBgColor,
+                ),
+                padding: EdgeInsets.all(20.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text(
+                      title.isNotEmpty ? title : AppString.enterOTP,
+                      style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Obx(() {
+                      return AppTextField(
+                        isMandatory: true,
+                        title: AppString.password,
+                        controller: personallogic.setPasswordController,
+                        hintText: AppString.password,
+                        inputType: TextInputType.text,
+                        errorText: personallogic.setPassError.value,
+                        onChanged: (str) {
+                          personallogic.setPassError.value = '';
+                        },
+                        maxLength: 20,
+                      );
+                    }),
+                    SizedBox(height: 20),
+                    Obx(() {
+                      return AppTextField(
+                        isMandatory: true,
+                        title: AppString.reenterPassword,
+                        controller: personallogic.repeatSetPasswordController,
+                        hintText: AppString.reenterPassword,
+                        inputType: TextInputType.text,
+                        errorText: personallogic.resetPassError.value,
+                        onChanged: (str) {
+                          personallogic.resetPassError.value = '';
+                        },
+                        maxLength: 20,
+                      );
+                    }),
+                    if (errorText != null && errorText.value.isNotEmpty)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              errorText.value ?? '',
+                              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                        ],
+                      ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    AppButton(
+                      onPress: onButtonPress,
+                      title: AppString.continueText,
+                      isButtonEnable: true.obs,
+                      isDataLoading: personallogic.isSetPasswordLoading,
+                    )
+                  ],
+                ),
+              )
+            : Container();
+      });
+    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+  }
+
   Future<void> onPressSetPassword() async {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
-    if (personallogic.passwordController.text.isEmpty) {
+    if (personallogic.setPasswordController.text.isEmpty) {
       personallogic.setPassError.value = "Please enter password";
       personallogic.resetPassError.value = '';
-    } else if (personallogic.repeatPasswordController.text.isEmpty ||
-        personallogic.passwordController.text != personallogic.repeatPasswordController.text) {
+    } else if (personallogic.repeatSetPasswordController.text.trim().isEmpty ||
+        personallogic.setPasswordController.text != personallogic.repeatSetPasswordController.text) {
       personallogic.resetPassError.value = "Password not match with confirm password";
       personallogic.setPassError.value = '';
-    } else if (personallogic.repeatPasswordController.text.length < 8) {
+    } else if (personallogic.repeatSetPasswordController.text.length < 8) {
       personallogic.resetPassError.value = "Invalid password pattern";
       personallogic.setPassError.value = '';
-    } else if (!validateStructure(personallogic.repeatPasswordController.text)) {
+    } else if (!validateStructure(personallogic.repeatSetPasswordController.text)) {
       personallogic.resetPassError.value = "Invalid password pattern";
       personallogic.setPassError.value = '';
     } else {
       personallogic.setPassError.value = '';
       personallogic.resetPassError.value = '';
+      personallogic.isSetPasswordLoading.value = true;
       var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
       SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
-          password: personallogic.passwordController.text,
-          confirmPassword: personallogic.repeatPasswordController.text,
+          password: personallogic.setPasswordController.text,
+          confirmPassword: personallogic.repeatSetPasswordController.text,
           userId: userId);
       var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
       TGLog.d("SignUpOtpRequest $jsonRequest");
@@ -367,8 +508,11 @@ class PersonalInfoPage extends StatelessWidget {
     if (response.skippedresponse().status == RES_SUCCESS) {
       Get.back();
       showSnackBar(Get.context!, "Password Updated Successfully");
+      personallogic.isSetPasswordLoading.value = false;
     } else {
       TGLog.d("Error in VerifySignupOtpRequest");
+      personallogic.isSetPasswordLoading.value = false;
+
       LoaderUtils.handleErrorResponse(
           Get.context!, response.skippedresponse().status ?? 0, response.skippedresponse().message ?? "", null);
     }
@@ -377,6 +521,7 @@ class PersonalInfoPage extends StatelessWidget {
   _onErrorSetPassword(TGResponse response) {
     showSnackBar(Get.context!, "Error Occured with error code " + response.httpStatus.toString());
     Get.back();
+    personallogic.isSetPasswordLoading.value = false;
   }
 
   bool validateStructure(String value) {
@@ -691,7 +836,7 @@ getUpdatePasswordBottomSheet({
                   AppTextField(
                     isMandatory: true,
                     title: AppString.password,
-                    controller: logic.passwordController,
+                    controller: logic.setPasswordController,
                     hintText: AppString.password,
                     inputType: TextInputType.text,
                     errorText: "",
@@ -700,7 +845,7 @@ getUpdatePasswordBottomSheet({
                   AppTextField(
                     isMandatory: true,
                     title: AppString.reenterPassword,
-                    controller: logic.repeatPasswordController,
+                    controller: logic.repeatSetPasswordController,
                     hintText: AppString.reenterPassword,
                     inputType: TextInputType.text,
                     errorText: "",
@@ -725,9 +870,9 @@ getUpdatePasswordBottomSheet({
                   AppButton(
                     onPress: onButtonPress,
                     title: AppString.continueText,
-                    isButtonEnable: ((logic.passwordController.text == logic.repeatPasswordController.text) &&
-                            logic.passwordController.text.length > 8 &&
-                            logic.validateStructure(logic.passwordController.text))
+                    isButtonEnable: ((logic.setPasswordController.text == logic.repeatSetPasswordController.text) &&
+                            logic.setPasswordController.text.length > 8 &&
+                            logic.validateStructure(logic.setPasswordController.text))
                         .obs,
                     isDataLoading: false.obs,
                   )

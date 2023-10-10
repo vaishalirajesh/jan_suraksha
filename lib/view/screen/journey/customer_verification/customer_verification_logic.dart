@@ -276,14 +276,16 @@ class CustomerVerificationLogic extends GetxController {
     TGLog.d("UpdateEnrollmentVerificationTypeRequest : onSuccess()---$response");
     if (response.updateEnrollmentVerificationType().status == RES_SUCCESS) {
       isLoading.value = false;
+      otp.value = '';
+      otpError.value = '';
       OTPBottomSheet.getBottomSheet1(
         context: Get.context!,
         onChangeOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
         },
         onSubmitOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
           otpError.value = '';
         },
         title: '',

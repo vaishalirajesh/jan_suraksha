@@ -53,6 +53,7 @@ class NomineeDetailsLogic extends GetxController {
   TextEditingController dobController = TextEditingController(text: '');
   TextEditingController relationWithApplicantController = TextEditingController(text: '');
   String dob = '';
+  int appId = 0;
   DateTime date = DateTime.now();
   RxString fNameErrorMsg = ''.obs;
   RxString mNameErrorMsg = ''.obs;
@@ -89,6 +90,7 @@ class NomineeDetailsLogic extends GetxController {
   @override
   void onInit() {
     screenName.value = Get.arguments[AppArguments.screenName] ?? '';
+    appId = Get.arguments[AppArguments.appId] ?? 0;
     getData();
     super.onInit();
   }
@@ -429,22 +431,6 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (stateController.text.trim().isEmpty ||
-          stateController.text.length < 2 ||
-          specialCharExpStartChar.hasMatch(stateController.text.substring(0))) {
-        stateErrorMsg.value = 'Please enter valid state';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        address2ErrorMsg.value = '';
       } else if (districtController.text.trim().isEmpty ||
           districtController.text.length < 2 ||
           specialCharExpStartChar.hasMatch(districtController.text.substring(0))) {
@@ -461,6 +447,22 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
+      } else if (stateController.text.trim().isEmpty ||
+          stateController.text.length < 2 ||
+          specialCharExpStartChar.hasMatch(stateController.text.substring(0))) {
+        stateErrorMsg.value = 'Please enter valid state';
+        fNameErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        lNameErrorMsg.value = '';
+        address2ErrorMsg.value = '';
       } else if (pinCodeController.text.trim().isEmpty) {
         pinCodeErrorMsg.value = 'Please enter pincode';
         fNameErrorMsg.value = '';
@@ -548,7 +550,7 @@ class NomineeDetailsLogic extends GetxController {
       firstName: getAppData.data?.firstName,
       insuranceName: getAppData.data?.insuranceName,
       isNomineeDeatilsSameEnroll: getAppData.data?.isNomineeDeatilsSameEnroll,
-      isNomineeUpdate: false,
+      isNomineeUpdate: true,
       isSameApplicantAddress: getAppData.data?.isSameApplicantAddress,
       kycId1: getAppData.data?.kycId1,
       kycId1number: getAppData.data?.kycId1number,
@@ -602,7 +604,6 @@ class NomineeDetailsLogic extends GetxController {
     if (response.saveFormDetail().status == RES_SUCCESS) {
       isLoading.value = true;
       Get.back();
-      showSnackBar(Get.context!, "Nominee detail update successfully");
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;
@@ -628,9 +629,10 @@ class NomineeDetailsLogic extends GetxController {
   }
 
   Future<void> getNomineeData() async {
-    String appId = '';
-    appId = (await TGSharedPreferences.getInstance().get(PREF_APP_ID)).toString();
-    var encAppId = AesGcmEncryptionUtils.encryptNew(appId);
+    if (appId == 0) {
+      appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? 0;
+    }
+    var encAppId = AesGcmEncryptionUtils.encryptNew(appId.toString());
     var mockAppId = "101212404";
     GetApplicationFormDetailsRequest getApplicationFormDetailsRequest =
         GetApplicationFormDetailsRequest(appId: encAppId);

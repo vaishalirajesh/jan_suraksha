@@ -12,6 +12,8 @@ import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
+import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_binding.dart';
+import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_binding.dart';
@@ -22,8 +24,6 @@ import '../../../../config/navigation_config.dart';
 import '../../../../config/style_config.dart';
 import '../../../../utils/constant/string_constant.dart';
 import '../../../widget/app_button.dart';
-import '../../journey/cirtificate_insurence/certificate_insurence_binding.dart';
-import '../../journey/cirtificate_insurence/certificate_insurence_view.dart';
 import 'dashboard_logic.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -676,7 +676,12 @@ class HomePage extends StatelessWidget {
                                                 if (dashboardLogic.schemeList.isNotEmpty &&
                                                     dashboardLogic.schemeList[index]['stageId'] != null &&
                                                     dashboardLogic.schemeList[index]['stageId'] != '' &&
-                                                    dashboardLogic.schemeList[index]['stageId'] == 4) {
+                                                    dashboardLogic.schemeList[index]['stageId'] == 6) {
+                                                  dashboardLogic.isDownLoading.value = true;
+                                                  dashboardLogic.onPressDownload(
+                                                      schemeId: dashboardLogic.schemeList[index]['scheme'],
+                                                      appId: dashboardLogic.schemeList[index]['id']);
+                                                } else {
                                                   Get.offAll(() => ApplicationFormPage(),
                                                       binding: ApplicationFormBinding(),
                                                       arguments: {
@@ -684,11 +689,6 @@ class HomePage extends StatelessWidget {
                                                             ['scheme'],
                                                         AppArguments.appId: dashboardLogic.schemeList[index]['id'],
                                                       });
-                                                } else {
-                                                  dashboardLogic.isDownLoading.value = true;
-                                                  dashboardLogic.onPressDownload(
-                                                      schemeId: dashboardLogic.schemeList[index]['scheme'],
-                                                      appId: dashboardLogic.schemeList[index]['id']);
                                                 }
                                               } else {
                                                 showSnackBar(Get.context!, "Invalid Scheme");
@@ -697,9 +697,9 @@ class HomePage extends StatelessWidget {
                                             title: dashboardLogic.schemeList.isNotEmpty &&
                                                     dashboardLogic.schemeList[index]['stageId'] != null &&
                                                     dashboardLogic.schemeList[index]['stageId'] != '' &&
-                                                    dashboardLogic.schemeList[index]['stageId'] == 4
-                                                ? "Continue Journey"
-                                                : "Download COI",
+                                                    dashboardLogic.schemeList[index]['stageId'] == 6
+                                                ? "Download COI"
+                                                : "Continue Journey",
                                           )
                                         ],
                                       ),

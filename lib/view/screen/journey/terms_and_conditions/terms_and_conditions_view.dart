@@ -346,7 +346,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (!termsAndConditionsLogic.isDataLoaded.value) AppLoader()
+            if (!termsAndConditionsLogic.isDataLoaded.value || !termsAndConditionsLogic.isDataLoaded.value) AppLoader()
           ],
         );
       }),

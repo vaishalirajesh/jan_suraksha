@@ -71,6 +71,7 @@ class LoginLogic extends GetxController {
   num masterId = 0;
 
   var passwordController = TextEditingController(text: "");
+  RxBool isHidePassword = true.obs;
 
   var isButtonEnabled = false.obs;
 
@@ -97,7 +98,6 @@ class LoginLogic extends GetxController {
     Future.delayed(const Duration(seconds: 4)).then((value) {
       getcaptcha();
     });
-
     super.onInit();
   }
 
@@ -530,7 +530,6 @@ class LoginLogic extends GetxController {
         },
         onSubmitOTP: (s) {
           emailOtp.value = emailOtp.value + s;
-
           emailOtpError.value = '';
         },
         title: 'User Verification',

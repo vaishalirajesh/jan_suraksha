@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_logic.dart';
 import 'package:jan_suraksha/view/screen/journey/nominee_details/nominee_details_binding.dart';
@@ -17,7 +18,6 @@ import '../../../widget/app_button.dart';
 
 class ServicesPage extends StatelessWidget {
   ServicesPage({Key? key}) : super(key: key);
-
   final dashboardLogic = Get.find<DashboardLogic>();
 
   @override
@@ -133,7 +133,7 @@ class ServicesPage extends StatelessWidget {
                                           Offstage(
                                             offstage: dashboardLogic.isExpandedScheme.value,
                                             child: ListView.builder(
-                                                itemCount: dashboardLogic.schemeList.length,
+                                                itemCount: dashboardLogic.optOutNomineeList.length,
                                                 shrinkWrap: true,
                                                 physics: const BouncingScrollPhysics(),
                                                 itemBuilder: (context, int index) {
@@ -164,11 +164,13 @@ class ServicesPage extends StatelessWidget {
                                                                       ),
                                                                       Expanded(
                                                                         child: Text(
-                                                                          dashboardLogic.schemeList.isNotEmpty &&
-                                                                                  dashboardLogic.schemeList[index]
+                                                                          dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                                  dashboardLogic
+                                                                                              .optOutNomineeList[index]
                                                                                           ['name'] !=
                                                                                       null
-                                                                              ? dashboardLogic.schemeList[index]['name']
+                                                                              ? dashboardLogic.optOutNomineeList[index]
+                                                                                  ['name']
                                                                               : '',
                                                                           style: StyleConfig.smallText.copyWith(
                                                                               color: ColorConfig.jsTextGreyColor),
@@ -195,11 +197,12 @@ class ServicesPage extends StatelessWidget {
                                                                       ),
                                                                       Expanded(
                                                                         child: Text(
-                                                                          dashboardLogic.schemeList.isNotEmpty &&
-                                                                                  dashboardLogic.schemeList[index]
+                                                                          dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                                  dashboardLogic
+                                                                                              .optOutNomineeList[index]
                                                                                           ['schemeName'] !=
                                                                                       null
-                                                                              ? dashboardLogic.schemeList[index]
+                                                                              ? dashboardLogic.optOutNomineeList[index]
                                                                                   ['schemeName']
                                                                               : '',
                                                                           style: StyleConfig.smallText.copyWith(
@@ -215,91 +218,106 @@ class ServicesPage extends StatelessWidget {
                                                             SizedBox(
                                                               height: 10.h,
                                                             ),
-                                                            // Row(
-                                                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            //   children: [
-                                                            //     Expanded(
-                                                            //       child: Row(
-                                                            //         children: [
-                                                            //           Text(
-                                                            //             'Effective Date : ',
-                                                            //             style: StyleConfig.regularText16.copyWith(
-                                                            //                 fontSize: 12.sp,
-                                                            //                 color: ColorConfig.jsTextGreyColor),
-                                                            //           ),
-                                                            //           SizedBox(
-                                                            //             width: 4.w,
-                                                            //           ),
-                                                            //           Expanded(
-                                                            //             child: Text(
-                                                            //                 dashboardLogic.schemeList.isNotEmpty &&
-                                                            //                         dashboardLogic.schemeList[index]
-                                                            //                                 ['modifiedDate'] !=
-                                                            //                             null
-                                                            //                     ? AppUtils.convertDateFormat(
-                                                            //                         dashboardLogic.schemeList[index]
-                                                            //                             ['modifiedDate'],
-                                                            //                         'yyyy-mm-dd',
-                                                            //                         'dd/mm/yyyy')
-                                                            //                     : '-',
-                                                            //                 style: StyleConfig.smallText.copyWith(
-                                                            //                     fontSize: 12.sp,
-                                                            //                     color: ColorConfig.jsTextGreyColor)),
-                                                            //           )
-                                                            //         ],
-                                                            //       ),
-                                                            //     ),
-                                                            //     SizedBox()
-                                                            //   ],
-                                                            // ),
+                                                            if (dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                dashboardLogic.optOutNomineeList[index]
+                                                                        ['dateOfEffective'] !=
+                                                                    null)
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          'Effective Date : ',
+                                                                          style: StyleConfig.regularText16.copyWith(
+                                                                              fontSize: 12.sp,
+                                                                              color: ColorConfig.jsTextGreyColor),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: 4.w,
+                                                                        ),
+                                                                        Expanded(
+                                                                          child: Text(
+                                                                              dashboardLogic.optOutNomineeList
+                                                                                          .isNotEmpty &&
+                                                                                      dashboardLogic.optOutNomineeList[
+                                                                                                  index]
+                                                                                              ['dateOfEffective'] !=
+                                                                                          null
+                                                                                  ? AppUtils.convertDateFormat(
+                                                                                      dashboardLogic
+                                                                                              .optOutNomineeList[index]
+                                                                                          ['dateOfEffective'],
+                                                                                      'yyyy-mm-dd',
+                                                                                      'dd/mm/yyyy')
+                                                                                  : '-',
+                                                                              style: StyleConfig.smallText.copyWith(
+                                                                                  fontSize: 12.sp,
+                                                                                  color: ColorConfig.jsTextGreyColor)),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             SizedBox(
                                                               height: 15.h,
                                                             ),
-                                                            Obx(() {
-                                                              return SizedBox(
-                                                                height: 26.h,
-                                                                width: 1.sw,
-                                                                child: ElevatedButton(
-                                                                  onPressed: () {
-                                                                    dashboardLogic.selectedSchemaData =
-                                                                        dashboardLogic.schemeList[index];
-                                                                    dashboardLogic.optOutIndex = index;
-                                                                    dashboardLogic.isOptOut[index].value
-                                                                        ? null
-                                                                        : dashboardLogic.openOPTOutBottomSheet(
-                                                                            index: index,
-                                                                            schemeId:
-                                                                                dashboardLogic.schemeList.isNotEmpty &&
-                                                                                        dashboardLogic.schemeList[index]
-                                                                                                ['scheme'] !=
-                                                                                            null &&
-                                                                                        dashboardLogic.schemeList[index]
-                                                                                                ['scheme'] !=
-                                                                                            ''
-                                                                                    ? dashboardLogic.schemeList[index]
-                                                                                        ['scheme']
-                                                                                    : 0);
-                                                                  },
-                                                                  style: ElevatedButton.styleFrom(
-                                                                    backgroundColor:
-                                                                        dashboardLogic.isOptOut[index].value
-                                                                            ? ColorConfig.jsGreyDisableColor
-                                                                            : ColorConfig.jsPrimaryColor,
-                                                                    disabledBackgroundColor:
-                                                                        ColorConfig.jsPrimaryDisableColor,
-                                                                    shape: RoundedRectangleBorder(
-                                                                      borderRadius: BorderRadius.circular(40.r),
-                                                                    ),
+                                                            SizedBox(
+                                                              height: 26.h,
+                                                              width: 1.sw,
+                                                              child: ElevatedButton(
+                                                                onPressed: () {
+                                                                  dashboardLogic.selectedSchemaData =
+                                                                      dashboardLogic.optOutNomineeList[index];
+                                                                  dashboardLogic.optOutIndex = index;
+                                                                  dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                          dashboardLogic.optOutNomineeList[index]
+                                                                                  ['dateOfEffective'] !=
+                                                                              null
+                                                                      ? null
+                                                                      : dashboardLogic.openOPTOutBottomSheet(
+                                                                          index: index,
+                                                                          schemeId: dashboardLogic
+                                                                                      .optOutNomineeList.isNotEmpty &&
+                                                                                  dashboardLogic
+                                                                                              .optOutNomineeList[index]
+                                                                                          ['scheme'] !=
+                                                                                      null &&
+                                                                                  dashboardLogic
+                                                                                              .optOutNomineeList[index]
+                                                                                          ['scheme'] !=
+                                                                                      ''
+                                                                              ? dashboardLogic.optOutNomineeList[index]
+                                                                                  ['scheme']
+                                                                              : 0);
+                                                                },
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor:
+                                                                      dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                              dashboardLogic.optOutNomineeList[index]
+                                                                                      ['dateOfEffective'] !=
+                                                                                  null
+                                                                          ? ColorConfig.jsGreyDisableColor
+                                                                          : ColorConfig.jsPrimaryColor,
+                                                                  disabledBackgroundColor:
+                                                                      ColorConfig.jsPrimaryDisableColor,
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(40.r),
                                                                   ),
-                                                                  child: Text(
-                                                                      dashboardLogic.isOptOut[index].value
-                                                                          ? 'Opt-out Request Submitted successfully'
-                                                                          : "Opt-Out",
-                                                                      style: StyleConfig.regularWhiteText16
-                                                                          .copyWith(fontSize: 12.sp)),
                                                                 ),
-                                                              );
-                                                            })
+                                                                child: Text(
+                                                                    dashboardLogic.optOutNomineeList.isNotEmpty &&
+                                                                            dashboardLogic.optOutNomineeList[index]
+                                                                                    ['dateOfEffective'] !=
+                                                                                null
+                                                                        ? 'Opt-out Request Submitted successfully'
+                                                                        : "Opt-Out",
+                                                                    style: StyleConfig.regularWhiteText16
+                                                                        .copyWith(fontSize: 12.sp)),
+                                                              ),
+                                                            )
                                                           ],
                                                         ),
                                                       ),
@@ -363,7 +381,7 @@ class ServicesPage extends StatelessWidget {
                                         Offstage(
                                           offstage: dashboardLogic.isExpandedNominee.value,
                                           child: ListView.builder(
-                                              itemCount: dashboardLogic.schemeList.length,
+                                              itemCount: dashboardLogic.nomineeList.length,
                                               shrinkWrap: true,
                                               physics: const BouncingScrollPhysics(),
                                               itemBuilder: (context, int index) {
@@ -394,11 +412,11 @@ class ServicesPage extends StatelessWidget {
                                                                     ),
                                                                     Expanded(
                                                                       child: Text(
-                                                                        dashboardLogic.schemeList.isNotEmpty &&
-                                                                                dashboardLogic.schemeList[index]
+                                                                        dashboardLogic.nomineeList.isNotEmpty &&
+                                                                                dashboardLogic.nomineeList[index]
                                                                                         ['name'] !=
                                                                                     null
-                                                                            ? dashboardLogic.schemeList[index]['name']
+                                                                            ? dashboardLogic.nomineeList[index]['name']
                                                                             : '',
                                                                         style: StyleConfig.smallText.copyWith(
                                                                             color: ColorConfig.jsTextGreyColor),
@@ -424,11 +442,11 @@ class ServicesPage extends StatelessWidget {
                                                                       width: 4.w,
                                                                     ),
                                                                     Text(
-                                                                      dashboardLogic.schemeList.isNotEmpty &&
-                                                                              dashboardLogic.schemeList[index]
+                                                                      dashboardLogic.nomineeList.isNotEmpty &&
+                                                                              dashboardLogic.nomineeList[index]
                                                                                       ['schemeName'] !=
                                                                                   null
-                                                                          ? dashboardLogic.schemeList[index]
+                                                                          ? dashboardLogic.nomineeList[index]
                                                                               ['schemeName']
                                                                           : '',
                                                                       style: StyleConfig.smallText
@@ -440,51 +458,103 @@ class ServicesPage extends StatelessWidget {
                                                               SizedBox()
                                                             ],
                                                           ),
-                                                          SizedBox(
-                                                            height: 10.h,
-                                                          ),
-                                                          if (dashboardLogic.dateController.text != '')
-                                                            // Row(
-                                                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            //   children: [
-                                                            //     Expanded(
-                                                            //       child: Row(
-                                                            //         mainAxisAlignment: MainAxisAlignment.start,
-                                                            //         crossAxisAlignment: CrossAxisAlignment.start,
-                                                            //         children: [
-                                                            //           Text(
-                                                            //             "Date of nominee updation :",
-                                                            //             style: StyleConfig.regularText16.copyWith(
-                                                            //                 fontSize: 12.sp,
-                                                            //                 color: ColorConfig.jsTextGreyColor),
-                                                            //           ),
-                                                            //           SizedBox(
-                                                            //             width: 4.w,
-                                                            //           ),
-                                                            //           Expanded(
-                                                            //             child: Text(dashboardLogic.dateController.text,
-                                                            //                 style: StyleConfig.smallText.copyWith(
-                                                            //                     fontSize: 12.sp,
-                                                            //                     color: ColorConfig.jsTextGreyColor)),
-                                                            //           )
-                                                            //         ],
-                                                            //       ),
-                                                            //     ),
-                                                            //     SizedBox()
-                                                            //   ],
-                                                            // ),
+                                                          if (dashboardLogic.nomineeList.isNotEmpty &&
+                                                              dashboardLogic.nomineeList[index]
+                                                                      ['dateOfNomineeUpdation'] ==
+                                                                  null)
                                                             SizedBox(
-                                                              height: 20.h,
+                                                              height: 15.h,
                                                             ),
+                                                          if (dashboardLogic.nomineeList.isNotEmpty &&
+                                                              dashboardLogic.nomineeList[index]
+                                                                      ['dateOfNomineeUpdation'] !=
+                                                                  null)
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Date of nominee updation :",
+                                                                        style: StyleConfig.regularText16.copyWith(
+                                                                            fontSize: 12.sp,
+                                                                            color: ColorConfig.jsTextGreyColor),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width: 4.w,
+                                                                      ),
+                                                                      Expanded(
+                                                                        child: Text(
+                                                                            dashboardLogic.nomineeList.isNotEmpty &&
+                                                                                    dashboardLogic.nomineeList[index]
+                                                                                            ['dateOfNomineeUpdation'] !=
+                                                                                        null
+                                                                                ? AppUtils.convertDateFormat(
+                                                                                    dashboardLogic.nomineeList[index]
+                                                                                        ['dateOfNomineeUpdation'],
+                                                                                    'yyyy-mm-dd',
+                                                                                    'dd/mm/yyyy')
+                                                                                : '-',
+                                                                            style: StyleConfig.smallText.copyWith(
+                                                                                fontSize: 12.sp,
+                                                                                color: ColorConfig.jsTextGreyColor)),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                                                  child: IconButton(
+                                                                    onPressed: () {
+                                                                      dashboardLogic.nomineeList.isNotEmpty &&
+                                                                              dashboardLogic.nomineeList[index]
+                                                                                      ['scheme'] !=
+                                                                                  null &&
+                                                                              dashboardLogic.nomineeList[index]['id'] !=
+                                                                                  null
+                                                                          ? dashboardLogic.onPressDownload(
+                                                                              schemeId: dashboardLogic
+                                                                                  .nomineeList[index]['scheme'],
+                                                                              appId: dashboardLogic.nomineeList[index]
+                                                                                  ['id'])
+                                                                          : showSnackBar(context, "Download error");
+                                                                    },
+                                                                    icon: const Icon(Icons.download_rounded),
+                                                                    color: ColorConfig.jsGreenColor,
+                                                                    iconSize: 25.r,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          // SizedBox(
+                                                          //   height: 20.h,
+                                                          // ),
                                                           ListViewButtons(
                                                               onPress: () {
-                                                                Get.to(() => NomineeDetailsPage(),
-                                                                    binding: NomineeDetailsBinding(),
-                                                                    arguments: {
-                                                                      AppArguments.screenName: "Service",
-                                                                    });
+                                                                dashboardLogic.nomineeList[index]
+                                                                            ['dateOfNomineeUpdation'] !=
+                                                                        null
+                                                                    ? null
+                                                                    : Get.to(() => NomineeDetailsPage(),
+                                                                        binding: NomineeDetailsBinding(),
+                                                                        arguments: {
+                                                                            AppArguments.screenName: "Service",
+                                                                            AppArguments.appId:
+                                                                                dashboardLogic.nomineeList[index]['id'],
+                                                                          })?.then((value) {
+                                                                        dashboardLogic.onGetNomineeList();
+                                                                        dashboardLogic.isNomineeLoading.value = true;
+                                                                      });
                                                               },
-                                                              title: "Nominee Update")
+                                                              title: dashboardLogic.nomineeList.isNotEmpty &&
+                                                                      dashboardLogic.nomineeList[index]
+                                                                              ['dateOfNomineeUpdation'] !=
+                                                                          null
+                                                                  ? "Nominee Updated"
+                                                                  : "Nominee Update")
                                                         ],
                                                       ),
                                                     ),
@@ -507,7 +577,7 @@ class ServicesPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (dashboardLogic.isOptOutLoading.value) AppLoader(),
+            if (dashboardLogic.isOptOutLoading.value || dashboardLogic.isNomineeLoading.value) const AppLoader(),
           ],
         );
       }),

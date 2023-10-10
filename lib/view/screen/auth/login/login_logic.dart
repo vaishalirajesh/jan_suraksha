@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,7 +27,6 @@ import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
-import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 import '../../../../config/style_config.dart';
@@ -44,9 +43,10 @@ import '../../../../utils/showcustomesnackbar.dart';
 import '../../../widget/app_button.dart';
 import '../../../widget/app_textfield.dart';
 import '../../../widget/otp_bottom_sheet_auth.dart';
+import '../../homepage/dashboard/dashboard_view.dart';
 
 class LoginLogic extends GetxController {
-  TextEditingController mobileController = TextEditingController(text: '');
+  TextEditingController mobileController = TextEditingController(text: '7069168116');
   TextEditingController emailController = TextEditingController(text: '');
 
   RxString mobile = ''.obs;
@@ -68,6 +68,7 @@ class LoginLogic extends GetxController {
   RxString email = ''.obs;
   RxString setPassError = ''.obs;
   RxString resetPassError = ''.obs;
+  RxString timerText = ''.obs;
   num masterId = 0;
 
   var passwordController = TextEditingController(text: "");
@@ -327,6 +328,7 @@ class LoginLogic extends GetxController {
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
+        timerText: timerText,
         onSubmitOTP: (s) {
           otp.value = otp.value + s;
           otpError.value = '';
@@ -448,7 +450,7 @@ class LoginLogic extends GetxController {
   _onsuccsessCaptchGet(GenerateCaptchaResponse response) {
     captchaString.value = response.verifyOTP().data?.bytes ?? "";
     captchaTrueValue = latin1.decode(base64.decode(response.verifyOTP().data?.captchaString ?? ''));
-    // captchaController.text = captchaTrueValue ?? '';
+    captchaController.text = captchaTrueValue ?? '';
   }
 
   _onErrorResponse(response) {}
@@ -523,6 +525,7 @@ class LoginLogic extends GetxController {
       emailOtp.value = '';
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
+        timerText: ''.obs,
         onChangeOTP: (s) {
           emailOtp.value = emailOtp.value + s;
           emailOtpError.value = '';
@@ -672,6 +675,11 @@ class LoginLogic extends GetxController {
     showSnackBar(Get.context!, "Error in reset Password");
   }
 
+  void onTap(GlobalKey key) {
+    final dynamic tooltip = key.currentState;
+    tooltip?.ensureTooltipVisible();
+  }
+
   getUpdatePasswordBottomSheet({
     required Function(String) onSubmitOTP,
     required Function() onButtonPress,
@@ -681,6 +689,7 @@ class LoginLogic extends GetxController {
     required RxBool isLoading,
   }) {
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
+      final key = GlobalKey<State<Tooltip>>();
       return Obx(() {
         return isEnable.value
             ? Container(
@@ -697,9 +706,46 @@ class LoginLogic extends GetxController {
                     SizedBox(
                       height: 2.h,
                     ),
-                    Text(
-                      title.isNotEmpty ? title : AppString.enterOTP,
-                      style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 25.w),
+                            child: Text(
+                              title.isNotEmpty ? title : AppString.enterOTP,
+                              style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Tooltip(
+                          key: key,
+                          showDuration: const Duration(seconds: 1),
+                          waitDuration: const Duration(seconds: 2),
+                          message:
+                              "Password must contain at least one number, one uppercase, lowercase and special character, and at least 8 or more characters",
+                          textAlign: TextAlign.center,
+                          padding: EdgeInsets.all(10.r),
+                          margin: EdgeInsets.all(10.r),
+                          decoration: ShapeDecoration(
+                            color: ColorConfig.jsDarkCreamColor,
+                            shape: const ToolTipCustomShape(),
+                          ),
+                          textStyle: StyleConfig.regularExtraSmallText,
+                          child: GestureDetector(
+                            onTap: () {
+                              onTap(key);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.h, right: 5.h, top: 2.h),
+                              child: Icon(
+                                Icons.info_outline_rounded,
+                                size: 20.r,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 5.h,
@@ -775,4 +821,33 @@ class LoginLogic extends GetxController {
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
   }
+}
+
+class ToolTipCustomShape extends ShapeBorder {
+  final bool usePadding;
+
+  const ToolTipCustomShape({this.usePadding = true});
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.only(bottom: usePadding ? 20 : 0);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    rect = Rect.fromPoints(rect.topLeft, rect.bottomRight - const Offset(0, 20));
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(5.r)))
+      ..moveTo(rect.topCenter.dx + 140, rect.topCenter.dy)
+      ..relativeLineTo(10, -10)
+      ..relativeLineTo(10, 10)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
+
+  @override
+  ToolTipCustomShape scale(double t) => this;
 }

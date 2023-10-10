@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
+import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 
@@ -19,6 +22,7 @@ class OTPBottomSheetAuth {
     required String mobileNumber,
     required String title,
     required RxString subTitle,
+    required RxString timerText,
     RxString? errorText,
     bool isForBank = false,
     required BuildContext context,

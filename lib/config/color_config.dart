@@ -9,6 +9,7 @@ class ColorConfig {
   static final jsLightBlackColor = HexColor('#212121');
   static final jsBlackColor = HexColor('#000000');
   static final jsCreamColor = HexColor('#FFF7F1');
+  static final jsDarkCreamColor = HexColor('#f8ede2');
   static final jsDarkPinkColor = HexColor('#8C6B6B');
   static final jsLightGreyColor = HexColor('#D9DEEA');
   static final jsRedColor = HexColor('#E65039');

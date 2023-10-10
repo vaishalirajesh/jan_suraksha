@@ -22,6 +22,6 @@ class Startup {
   static Future<void> _initFlavor() async {
     TGLog.d("Initialize flavor");
     AppFlavor.init(CONFIG_FLAVORS_FILE);
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
   }
 }

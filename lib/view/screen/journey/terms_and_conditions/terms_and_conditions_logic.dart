@@ -229,12 +229,14 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in PremiumDeductionResponse");
       isOTPVerifying.value = false;
+      Get.back();
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.PremiumDeduction().status ?? 0, response?.PremiumDeduction()?.message ?? "", null);
     }
   }
 
   _onErrorSaveData(TGResponse errorResponse) {
+    Get.back();
     TGLog.d("PremiumDeductionRequest : onError()--${errorResponse.error}");
     isOTPVerifying.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
@@ -268,6 +270,7 @@ class TermsAndConditionsLogic extends GetxController {
       updateStageDeatilAfterOTPVerify();
     } else {
       TGLog.d("Error in UpdateStageRequest");
+      Get.back();
       isOTPVerifying.value = false;
       LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
           response.updateApplicationStage().message ?? "", null);
@@ -276,6 +279,7 @@ class TermsAndConditionsLogic extends GetxController {
 
   _onErrorUpdateStage(TGResponse errorResponse) {
     TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
+    Get.back();
     isOTPVerifying.value = false;
     handleServiceFailError(Get.context!, errorResponse.error);
   }
@@ -300,6 +304,7 @@ class TermsAndConditionsLogic extends GetxController {
     } else {
       TGLog.d("Error in updateStageDeatilAfterOTPVerify");
       isOTPVerifying.value = false;
+      Get.back();
       LoaderUtils.handleErrorResponse(Get.context!, response.updateApplicationStage().status ?? 0,
           response.updateApplicationStage().message ?? "", null);
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 import '../../../services/singleton/shared_preferences.dart';
 import '../../../utils/constant/prefrenceconstants.dart';
@@ -30,7 +32,7 @@ class PersonalInfoLogic extends GetxController {
   var setPasswordController = TextEditingController(text: '');
   var repeatSetPasswordController = TextEditingController(text: '');
   RxBool isSetPasswordLoading = false.obs;
-
+  final key = GlobalKey<State<Tooltip>>();
   @override
   Future<void> onInit() async {
     userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
@@ -38,12 +40,45 @@ class PersonalInfoLogic extends GetxController {
     emailController.text = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
     email.value = emailController.text;
     shouldChangeAppearInEmailSuffix.value = false;
+    // tooltipController.addListener(() {
+    //   // Prints the enum value of [TooltipStatus.isShowing] or [TooltipStatus.isHiding]
+    //   print('controller: ${tooltipController.value}');
+    // });
     super.onInit();
+  }
+
+  void onTap(GlobalKey key) {
+    final dynamic tooltip = key.currentState;
+    tooltip?.ensureTooltipVisible();
+  }
+
+  void _onTapDown(GlobalKey<TooltipState> tooltipkey) {
+    tooltipkey.currentState?.ensureTooltipVisible();
+  }
+
+  void _onTapUpAndCancel(GlobalKey<TooltipState> tooltipkey) {
+    tooltipkey.currentState?.deactivate();
   }
 
   bool validateStructure(String value) {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
+  }
+
+  Widget getData(BuildContext context) {
+    final tooltipkey = GlobalKey<TooltipState>();
+    return Tooltip(
+      key: tooltipkey,
+      message: "Show tootltip",
+      triggerMode: TooltipTriggerMode.manual, // make it manual
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => _onTapDown(tooltipkey), // add this
+        onTapUp: (_) => _onTapUpAndCancel(tooltipkey), // add this
+        onTapCancel: () => _onTapUpAndCancel(tooltipkey), // add this
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }

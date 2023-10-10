@@ -175,6 +175,7 @@ class RegistrationLogic extends GetxController {
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
+        timerText: ''.obs,
         onSubmitOTP: (s) {
           otp.value = otp.value + s;
           otpError.value = '';

@@ -214,7 +214,8 @@ class LoginPage extends StatelessWidget {
                             children: [
                               AppButton(
                                 onPress: loginLogic.onPressSentOTP,
-                                title: "Get Verification code",
+                                title:
+                                    isNumeric(loginLogic.mobile.value, loginLogic) ? "Get Verification code" : 'Login',
                                 isButtonEnable: true.obs,
                                 isDataLoading: loginLogic.isLoading,
                               ),

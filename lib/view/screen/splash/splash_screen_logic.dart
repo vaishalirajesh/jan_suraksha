@@ -20,7 +20,7 @@ class SplashScreenLogic extends GetxController {
     if (!Startup.initialized) {
       Startup.init();
     }
-    Future.delayed(const Duration(seconds: 8), () async {
+    Future.delayed(const Duration(seconds: 4), () async {
       if (!(Get.currentRoute == DashboardPageRoute || Get.currentRoute == LoginPageRoute)) {
         if ((await TGSharedPreferences.getInstance().get(PREF_ACCESS_TOKEN)) != null) {
           Get.offAll(() => DashboardPage(), binding: DashboardBinding());

@@ -267,8 +267,14 @@ class PersonalInfoPage extends StatelessWidget {
 
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
+      timerText: ''.obs,
       onChangeOTP: (s) {
-        personallogic.otp.value = personallogic.otp.value + s;
+        if (s.isEmpty) {
+          personallogic.otp.value = personallogic.otp.value.substring(0, personallogic.otp.value.length - 1);
+        } else {
+          personallogic.otp.value = personallogic.otp.value + s;
+        }
+
         personallogic.otpEmailError.value = '';
       },
       onSubmitOTP: (s) {
@@ -280,6 +286,7 @@ class PersonalInfoPage extends StatelessWidget {
       isEnable: true.obs,
       isLoading: personallogic.isLoadingEmailOTP,
       onButtonPress: () async {
+        personallogic.isLoadingEmailOTP.value = true;
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
         VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(
             email: personallogic.email.value, otpType: 2, userId: userId, otp: personallogic.otp.value);
@@ -296,15 +303,18 @@ class PersonalInfoPage extends StatelessWidget {
               showSnackBar(context, "Email Updated Succsessfully");
               personallogic.shouldChangeAppearInEmailSuffix.value = false;
               Get.back();
+              personallogic.isLoadingEmailOTP.value = false;
             } else {
               personallogic.otpEmailError.value = otpResponse.getOtpResponse().message ?? '';
               showSnackBar(Get.context!, otpResponse.getOtpResponse().message!);
+              personallogic.isLoadingEmailOTP.value = false;
             }
           },
           onError: (response) => (TGResponse error) {
             Get.back();
             showSnackBar(Get.context!, "Email Updated Succsessfully");
             TGLog.d("Error Occured" + error.httpStatus.toString());
+            personallogic.isLoadingEmailOTP.value = false;
           },
         );
       },
@@ -319,12 +329,14 @@ class PersonalInfoPage extends StatelessWidget {
     personallogic.passwordOtp.value = '';
     OTPBottomSheetAuth.getBottomSheet(
       context: Get.context!,
+      timerText: ''.obs,
       title: 'Email Verification',
       mobileNumber: personallogic.email.value,
       isEnable: true.obs,
       isLoading: personallogic.isLoadingEmailOTP,
       errorText: personallogic.otpPasswordError,
       onButtonPress: () async {
+        personallogic.isLoadingEmailOTP.value = true;
         var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
         VerifySignupOtpRequest verifySignupOtpRequest = VerifySignupOtpRequest(
             email: personallogic.email.value, otpType: 2, userId: userId, otp: personallogic.passwordOtp.value);
@@ -349,12 +361,15 @@ class PersonalInfoPage extends StatelessWidget {
                 isEnable: true.obs,
                 isLoading: personallogic.isSetPasswordLoading,
               );
+              personallogic.isLoadingEmailOTP.value = false;
             } else {
               personallogic.otpPasswordError.value = otpResponse.getOtpResponse().message ?? '';
+              personallogic.isLoadingEmailOTP.value = false;
             }
           },
           onError: (response) => (TGResponse error) {
             personallogic.otpPasswordError.value = "Error in update password";
+            personallogic.isLoadingEmailOTP.value = false;
             TGLog.d("Error Occured" + error.httpStatus.toString());
           },
         );
@@ -381,6 +396,8 @@ class PersonalInfoPage extends StatelessWidget {
     required RxBool isLoading,
   }) {
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
+      final key = GlobalKey<State<Tooltip>>();
+
       return Obx(() {
         return isEnable.value
             ? Container(
@@ -388,21 +405,56 @@ class PersonalInfoPage extends StatelessWidget {
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
                   color: ColorConfig.jsCardBgColor,
                 ),
-                padding: EdgeInsets.all(20.h),
+                padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 25.w),
+                            child: Text(
+                              title.isNotEmpty ? title : AppString.enterOTP,
+                              style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Tooltip(
+                          key: key,
+                          showDuration: const Duration(seconds: 1),
+                          waitDuration: const Duration(seconds: 2),
+                          message:
+                              "Password must contain at least one number, one uppercase, lowercase and special character, and at least 8 or more characters",
+                          textAlign: TextAlign.center,
+                          padding: EdgeInsets.all(10.r),
+                          margin: EdgeInsets.all(10.r),
+                          decoration: ShapeDecoration(
+                            color: ColorConfig.jsDarkCreamColor,
+                            shape: const ToolTipCustomShape(),
+                          ),
+                          textStyle: StyleConfig.regularExtraSmallText,
+                          child: GestureDetector(
+                            onTap: () {
+                              personallogic.onTap(key);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.h, right: 5.h, top: 2.h),
+                              child: Icon(
+                                Icons.info_outline_rounded,
+                                color: ThemeHelper.getInstance()?.unselectedWidgetColor,
+                                size: 20.r,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 2.h,
-                    ),
-                    Text(
-                      title.isNotEmpty ? title : AppString.enterOTP,
-                      style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
-                    ),
-                    SizedBox(
-                      height: 5.h,
                     ),
                     SizedBox(
                       height: 10.h,
@@ -882,4 +934,33 @@ getUpdatePasswordBottomSheet({
           : Container();
     });
   }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+}
+
+class ToolTipCustomShape extends ShapeBorder {
+  final bool usePadding;
+
+  const ToolTipCustomShape({this.usePadding = true});
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.only(bottom: usePadding ? 20 : 0);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    rect = Rect.fromPoints(rect.topLeft, rect.bottomRight - const Offset(0, 20));
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(5.r)))
+      ..moveTo(rect.topCenter.dx + 140, rect.topCenter.dy)
+      ..relativeLineTo(10, -10)
+      ..relativeLineTo(10, 10)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
+
+  @override
+  ToolTipCustomShape scale(double t) => this;
 }

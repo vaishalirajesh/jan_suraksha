@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/ConsentOtpRequestModel.dart';
-import 'package:jan_suraksha/model/request_model/OtpConsentRequest.dart';
 import 'package:jan_suraksha/model/request_model/PreminumDeductionRequest.dart';
 import 'package:jan_suraksha/model/request_model/TermConitionRequest.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
@@ -26,6 +25,7 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success_view.dart';
 import 'package:jan_suraksha/view/widget/otp_bottom_sheet.dart';
@@ -44,6 +44,7 @@ class TermsAndConditionsLogic extends GetxController {
   var mobile;
   late WebViewXController webViewXController;
   RxBool isEnableMobileOtpResend = false.obs;
+  String email = '';
 
   @override
   Future<void> onInit() async {
@@ -99,14 +100,18 @@ class TermsAndConditionsLogic extends GetxController {
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 
-  void onPressButton(BuildContext context) {
+  Future<void> onPressButton(BuildContext context) async {
     otp.value = '';
     otpError.value = '';
+
+    String subTitle = email.isNotEmpty
+        ? "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)} and email address ${AppUtils.getMaskedMobileNumber(mobileNumber: email)}"
+        : "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)}";
     isEnableMobileOtpResend.value = false;
     OTPBottomSheet.getBottomSheet(
       context: context,
       title: '',
-      subTitle: '',
+      subTitle: subTitle,
       onChangeOTP: onChangeOTP,
       onSubmitOTP: onSubmitOTP,
       mobileNumber: mobile,
@@ -161,7 +166,7 @@ class TermsAndConditionsLogic extends GetxController {
   Future<void> sendOTP() async {
     isLoading.value = true;
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    var email = await TGSharedPreferences.getInstance().get(PREF_EMAIL) ?? '';
+    email = await TGSharedPreferences.getInstance().get(PREF_EMAIL) ?? '';
     ConsentOtpRequestModel consentOtpSendRequest = ConsentOtpRequestModel(
       mobile: mobile,
       userId: userId,

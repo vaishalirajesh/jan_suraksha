@@ -202,11 +202,13 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
-                          'Welcome, ${dashboardLogic.userName.value}',
-                          style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: Obx(() {
+                          return Text(
+                            'Welcome, ${dashboardLogic.userName.value}',
+                            style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        }),
                       ),
                       // InkWell(
                       //   onTap: () {

@@ -57,7 +57,7 @@ class OTPBottomSheet {
                   height: 5.h,
                 ),
                 Text(
-                  'An verification code has been sent to your registered mobile number and email address',
+                  subTitle,
                   style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
                   textAlign: TextAlign.center,
                 ),
@@ -124,7 +124,7 @@ class OTPBottomSheet {
                         ),
                       )
                     : Countdown(
-                        seconds: 10,
+                        seconds: 120,
                         build: (BuildContext context, double time) => Text(
                           time > 60
                               ? "Resend Verification Code in 01:${formatter.format(time.round() - 60)} minutes"

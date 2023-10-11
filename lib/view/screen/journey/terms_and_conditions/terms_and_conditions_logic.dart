@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/model/request_model/ConsentOtpRequestModel.dart';
 import 'package:jan_suraksha/model/request_model/OtpConsentRequest.dart';
 import 'package:jan_suraksha/model/request_model/PreminumDeductionRequest.dart';
 import 'package:jan_suraksha/model/request_model/TermConitionRequest.dart';
@@ -42,6 +43,7 @@ class TermsAndConditionsLogic extends GetxController {
   RxString otpError = ''.obs;
   var mobile;
   late WebViewXController webViewXController;
+  RxBool isEnableMobileOtpResend = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -82,8 +84,6 @@ class TermsAndConditionsLogic extends GetxController {
     if (response.getTermConition().status == RES_SUCCESS) {
       content = response.getTermConition().data ?? '';
       TGLog.d(content);
-
-      // await webViewXController.loadContent(response.getTermConition().data, SourceType.html);
       isDataLoaded.value = true;
     } else {
       TGLog.d("Error in TermConditionRequest");
@@ -102,6 +102,7 @@ class TermsAndConditionsLogic extends GetxController {
   void onPressButton(BuildContext context) {
     otp.value = '';
     otpError.value = '';
+    isEnableMobileOtpResend.value = false;
     OTPBottomSheet.getBottomSheet(
       context: context,
       title: '',
@@ -109,15 +110,32 @@ class TermsAndConditionsLogic extends GetxController {
       onChangeOTP: onChangeOTP,
       onSubmitOTP: onSubmitOTP,
       mobileNumber: mobile,
-      isEnable: true.obs,
+      isEnable: isEnableMobileOtpResend,
       isLoading: isOTPVerifying,
       onButtonPress: verifyOTP,
       errorText: otpError,
+      onFinish: onFinishEmailOtpTimer,
+      onResend: onResendEmailOtpTimer,
     );
   }
 
-  void onChangeOTP(String str) {
-    otp.value = otp.value + str;
+  Future<void> onFinishEmailOtpTimer() async {
+    isEnableMobileOtpResend.value = true;
+  }
+
+  Future<void> onResendEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableMobileOtpResend.value = false;
+    sendOTP();
+  }
+
+  void onChangeOTP(String s) {
+    if (s.isEmpty) {
+      otp.value = otp.value.substring(0, otp.value.length - 1);
+    } else {
+      otp.value = otp.value + s;
+    }
     otpError.value = '';
   }
 
@@ -142,14 +160,13 @@ class TermsAndConditionsLogic extends GetxController {
 
   Future<void> sendOTP() async {
     isLoading.value = true;
-
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    OtpConsentRequest consentOtpSendRequest = OtpConsentRequest(
+    var email = await TGSharedPreferences.getInstance().get(PREF_EMAIL) ?? '';
+    ConsentOtpRequestModel consentOtpSendRequest = ConsentOtpRequestModel(
       mobile: mobile,
-      otpType: 3,
-      userType: 1,
       userId: userId,
-      notificationMasterId: 20,
+      schemeId: 2,
+      email: email == '' ? null : email,
     );
     var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());
     TGLog.d("ConsentOtpSendRequest $jsonRequest");

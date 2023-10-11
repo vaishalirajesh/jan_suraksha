@@ -199,7 +199,7 @@ class PersonalInfoPage extends StatelessWidget {
       await TGSharedPreferences.getInstance().remove(PREF_ACCESS_TOKEN);
       await TGSharedPreferences.getInstance().remove(PREF_LOGIN_TOKEN);
       EmailOtpRequest emailOtpRequest =
-          EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 16);
+          EmailOtpRequest(userId: userID, email: personallogic.email.value, otpType: 2, notificationMasterId: 17);
       var jsonRequest = jsonEncode(emailOtpRequest.toJson());
       TGLog.d("EmailOtpRequest $jsonRequest");
       TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_EMAIL_OTP);
@@ -301,7 +301,6 @@ class PersonalInfoPage extends StatelessWidget {
         } else {
           personallogic.otp.value = personallogic.otp.value + s;
         }
-
         personallogic.otpEmailError.value = '';
       },
       onSubmitOTP: (s) {
@@ -327,6 +326,7 @@ class PersonalInfoPage extends StatelessWidget {
             if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
               TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
               showSnackBar(context, "Email Updated Succsessfully");
+              TGSharedPreferences.getInstance().set(PREF_EMAIL, personallogic.email.value);
               personallogic.shouldChangeAppearInEmailSuffix.value = false;
               Get.back();
               personallogic.isLoadingEmailOTP.value = false;
@@ -404,7 +404,12 @@ class PersonalInfoPage extends StatelessWidget {
         );
       },
       onChangeOTP: (s) {
-        personallogic.passwordOtp.value = personallogic.passwordOtp.value + s;
+        if (s.isEmpty) {
+          personallogic.passwordOtp.value =
+              personallogic.passwordOtp.value.substring(0, personallogic.passwordOtp.value.length - 1);
+        } else {
+          personallogic.passwordOtp.value = personallogic.passwordOtp.value + s;
+        }
         personallogic.otpPasswordError.value = '';
       },
       onSubmitOTP: (s) {

@@ -90,8 +90,11 @@ class PreviewApplicationPage extends StatelessWidget {
                               ),
                               DisableTextField(
                                 isMandatory: true,
-                                initialvale: DateFormat('dd/MM/yyyy').format(
-                                    DateTime.parse(previewApplicationFormLogic.getAppData.data?.dob ?? '').toLocal()),
+                                initialvale: previewApplicationFormLogic.getAppData.data?.dob != null
+                                    ? DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(previewApplicationFormLogic.getAppData.data?.dob ?? '')
+                                            .toLocal())
+                                    : '',
                                 title: AppString.dateOfBirth,
                                 isReadOnly: true,
                               ),

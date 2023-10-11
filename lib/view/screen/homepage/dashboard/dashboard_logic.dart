@@ -342,11 +342,15 @@ class DashboardLogic extends GetxController {
         context: Get.context!,
         isEdit: true.obs,
         onChangeOTP: (s) {
-          otp.value = s;
+          if (s.isEmpty) {
+            otp.value = otp.value.substring(0, otp.value.length - 1);
+          } else {
+            otp.value = otp.value + s;
+          }
           TGLog.d("Otp---------${otp.value}");
         },
         onSubmitOTP: (s) {
-          otp.value = s;
+          otp.value = otp.value + s;
         },
         onEdit: () {
           Get.back();
@@ -404,6 +408,7 @@ class DashboardLogic extends GetxController {
   _onSuccessVerifyOTP(OTPResponse response) async {
     TGLog.d("verifyEmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
+      TGSharedPreferences.getInstance().set(PREF_EMAIL, emailController.text);
       getUpdatePasswordBottomSheet(
         onSubmitOTP: (String) {
           Get.back();

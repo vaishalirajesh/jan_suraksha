@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
@@ -78,8 +79,10 @@ class ApplicationFormPage extends StatelessWidget {
                           ),
                           DisableTextField(
                             isMandatory: true,
-                            initialvale: AppUtils.convertDateFormat(
-                                applicationFormLogic.getAppData.data?.dob, 'yyyy-mm-dd', 'dd/mm/yyyy'),
+                            initialvale: applicationFormLogic.getAppData.data?.dob != null
+                                ? DateFormat('dd/MM/yyyy')
+                                    .format(DateTime.parse(applicationFormLogic.getAppData.data?.dob ?? '').toLocal())
+                                : "",
                             title: AppString.dateOfBirth,
                             isReadOnly: true,
                           ),

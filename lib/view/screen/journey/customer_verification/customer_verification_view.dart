@@ -31,77 +31,79 @@ class CustomerVerificationPage extends StatelessWidget {
             isButtonEnable: logic.isButtonEnabled.value,
             isShowButton: true,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    color: ColorConfig.jsCreamColor,
-                    padding: EdgeInsets.only(top: 40.h, bottom: 50.h),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        height: 100.h,
-                        width: 0.4.sw,
-                        child: Image.asset(
-                          AppImages.verification,
+              child: AbsorbPointer(
+                absorbing: logic.isLoading.value,
+                child: Column(
+                  children: [
+                    Container(
+                      color: ColorConfig.jsCreamColor,
+                      padding: EdgeInsets.only(top: 40.h, bottom: 50.h),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          height: 100.h,
+                          width: 0.4.sw,
+                          child: Image.asset(
+                            AppImages.verification,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 22.h,
-                        ),
-                        SizedBox(
-                          child: AppTextField(
-                            hintText: 'Enter Your Account Number',
-                            title: 'Account Number',
-                            controller: logic.accountTextController,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 22.h,
+                          ),
+                          SizedBox(
+                            child: AppTextField(
+                              hintText: 'Enter Your Account Number',
+                              title: 'Account Number',
+                              controller: logic.accountTextController,
+                              isReadOnly: false,
+                              isMandatory: true,
+                              isAutoFocus: false,
+                              inputType: TextInputType.number,
+                              errorText: logic.accountErrorMsg.value,
+                              onChanged: logic.onChangeAccountNo,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          AppTextField(
+                            hintText: 'Re-Enter Your Account Number',
+                            title: 'Re-Enter Account Number',
+                            controller: logic.reAccountTextController,
                             isReadOnly: false,
                             isMandatory: true,
-                            isAutoFocus: false,
+                            errorText: logic.reAccountErrorMsg.value,
                             inputType: TextInputType.number,
-                            errorText: logic.accountErrorMsg.value,
                             onChanged: logic.onChangeAccountNo,
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        AppTextField(
-                          hintText: 'Re-Enter Your Account Number',
-                          title: 'Re-Enter Account Number',
-                          controller: logic.reAccountTextController,
-                          isReadOnly: false,
-
-                          isMandatory: true,
-                          errorText: logic.reAccountErrorMsg.value,
-                          inputType: TextInputType.number,
-                          onChanged: logic.onChangeAccountNo,
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        AppTextField(
-                          hintText: 'Enter Date Of Birth',
-                          title: 'Date Of Birth',
-                          controller: logic.dobTextController,
-                          isReadOnly: true,
-                          isMandatory: true,
-                          onTap: logic.selectDate,
-                          isDobField: true,
-                          errorText: logic.dobErrorMsg.value,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                      ],
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          AppTextField(
+                            hintText: 'Enter Date Of Birth',
+                            title: 'Date Of Birth',
+                            controller: logic.dobTextController,
+                            isReadOnly: true,
+                            isMandatory: true,
+                            onTap: logic.selectDate,
+                            isDobField: true,
+                            errorText: logic.dobErrorMsg.value,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

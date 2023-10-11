@@ -848,8 +848,6 @@ class CertificateInsurencePage extends StatelessWidget {
                                   DateTime.parse(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover ?? '')
                                       .toLocal())
                               : '',
-                          // AppUtils.convertDateFormat(certificateInsurenceLogic.generateCoiData.data?.dateOfComOfCover,
-                          //     'yyyy-MM-ddTHH:mm:ss.SSS+00:00', 'dd/MM/yyyy HH:mm:ss'),
                           style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsBlackColor),
                         ),
                       ),

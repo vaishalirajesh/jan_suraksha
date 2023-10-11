@@ -46,7 +46,7 @@ import '../../../widget/otp_bottom_sheet_auth.dart';
 import '../../homepage/dashboard/dashboard_view.dart';
 
 class LoginLogic extends GetxController {
-  TextEditingController mobileController = TextEditingController(text: '7069168116');
+  TextEditingController mobileController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
 
   RxString mobile = ''.obs;
@@ -195,6 +195,7 @@ class LoginLogic extends GetxController {
                   if (loginResponse.getLoginResponseData().status == RES_SUCCESS) {
                     AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
                     TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
+                    TGSharedPreferences.getInstance().set(PREF_EMAIL, mobileController.text);
                     TGSharedPreferences.getInstance()
                         .set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
                     TGSharedPreferences.getInstance()
@@ -327,7 +328,11 @@ class LoginLogic extends GetxController {
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
-          otp.value = otp.value + s;
+          if (s.isEmpty) {
+            otp.value = otp.value.substring(0, otp.value.length - 1);
+          } else {
+            otp.value = otp.value + s;
+          }
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },
@@ -434,7 +439,7 @@ class LoginLogic extends GetxController {
       if (response.getLoginResponseData().message == 'You have reached maximum login attempts, please try next day.') {
         otpError.value = "You have reached maximum login attempts, please try next day.";
       } else {
-        otpError.value = "Error in verify otp, Please check OTP";
+        otpError.value = "Please enter valid verification code";
       }
       isVerifyingOTP.value = false;
     } else {
@@ -455,7 +460,7 @@ class LoginLogic extends GetxController {
   _onsuccsessCaptchGet(GenerateCaptchaResponse response) {
     captchaString.value = response.verifyOTP().data?.bytes ?? "";
     captchaTrueValue = latin1.decode(base64.decode(response.verifyOTP().data?.captchaString ?? ''));
-    captchaController.text = captchaTrueValue ?? '';
+    // captchaController.text = captchaTrueValue ?? '';
   }
 
   _onErrorResponse(response) {}
@@ -533,7 +538,11 @@ class LoginLogic extends GetxController {
         context: Get.context!,
         timerText: ''.obs,
         onChangeOTP: (s) {
-          emailOtp.value = emailOtp.value + s;
+          if (s.isEmpty) {
+            emailOtp.value = emailOtp.value.substring(0, emailOtp.value.length - 1);
+          } else {
+            emailOtp.value = emailOtp.value + s;
+          }
           emailOtpError.value = '';
           TGLog.d("Otp---------${emailOtp.value}");
         },

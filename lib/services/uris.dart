@@ -19,7 +19,7 @@ abstract class URIS {
   static const URI_GEN_CAPTCH = "users/v3/signup/captcha/gen";
   static const URI_GET_MASTER_LIST = "oneform/v3/master/getMasterListByKey";
   static const URI_OTP = "users/login/otp";
-  static const URI_CONSENT_GET_OTP = "users/v3/signup/resendMobileOTP";
+  static const URI_CONSENT_GET_OTP = "users/v3/signup/sendMobileEmailOTP";
   static const URI_CONSENT_VERIFY_OTP = "users/v3/signup/verifyOTP";
   static const URI_SIGN_UP = "users/v3/signup/new";
   static const URI_SIGN_UP_VERIFY_OTP = "users/v3/signup/verifyOTP";

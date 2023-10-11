@@ -43,7 +43,7 @@ class CustomerVerificationLogic extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isOtpVerifying = false.obs;
   RxBool isButtonEnabled = true.obs;
-
+  RxBool isEnableMobileOtpResend = false.obs;
   final validCharacters = RegExp(r'^[0-9]+$');
 
   DateTime date = DateTime.now();
@@ -146,6 +146,7 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   Future<void> onCustomerVerification() async {
+    FocusScope.of(Get.context!).requestFocus(FocusNode());
     if (await NetUtils.isInternetAvailable()) {
       createApplication();
     } else {
@@ -278,10 +279,15 @@ class CustomerVerificationLogic extends GetxController {
       isLoading.value = false;
       otp.value = '';
       otpError.value = '';
+      isEnableMobileOtpResend.value = false;
       OTPBottomSheet.getBottomSheet1(
         context: Get.context!,
         onChangeOTP: (s) {
-          otp.value = otp.value + s;
+          if (s.isEmpty) {
+            otp.value = otp.value.substring(0, otp.value.length - 1);
+          } else {
+            otp.value = otp.value + s;
+          }
           otpError.value = '';
         },
         onSubmitOTP: (s) {
@@ -291,16 +297,29 @@ class CustomerVerificationLogic extends GetxController {
         title: '',
         subTitle: '',
         mobileNumber: response.updateEnrollmentVerificationType().data?.mobileNumber ?? '',
-        isEnable: true.obs,
+        isEnable: isEnableMobileOtpResend,
         isLoading: isOtpVerifying,
         onButtonPress: onVerifyOTP,
         errorText: otpError,
+        onFinish: onFinishEmailOtpTimer,
+        onResend: onResendEmailOtpTimer,
       );
     } else {
       isLoading.value = false;
       LoaderUtils.handleErrorResponse(Get.context!, response?.updateEnrollmentVerificationType().status ?? 0,
           response?.updateEnrollmentVerificationType()?.message ?? "", null);
     }
+  }
+
+  Future<void> onFinishEmailOtpTimer() async {
+    isEnableMobileOtpResend.value = true;
+  }
+
+  Future<void> onResendEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableMobileOtpResend.value = false;
+    onCustomerVerification();
   }
 
   _onErrorVerificationType(TGResponse errorResponse) {
@@ -349,7 +368,7 @@ class CustomerVerificationLogic extends GetxController {
       TGSession.getInstance().set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
       updateStageDeatilAfterOTPVerify();
     } else if (response.verifyOTP().status == RES_UNAUTHORISED) {
-      otpError.value = "Error in verify otp, Please check OTP";
+      otpError.value = "Please enter valid verification code";
       isOtpVerifying.value = false;
     } else {
       TGLog.d("Error in updateVerificationType");

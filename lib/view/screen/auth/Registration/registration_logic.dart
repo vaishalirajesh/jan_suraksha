@@ -171,7 +171,11 @@ class RegistrationLogic extends GetxController {
         context: Get.context!,
         isEdit: false.obs,
         onChangeOTP: (s) {
-          otp.value = otp.value + s;
+          if (s.isEmpty) {
+            otp.value = otp.value.substring(0, otp.value.length - 1);
+          } else {
+            otp.value = otp.value + s;
+          }
           otpError.value = '';
           TGLog.d("Otp---------${otp.value}");
         },

@@ -6,6 +6,7 @@ const PREF_REFRESHTOKEN = "refreshtoken";
 const PREF_LOGIN_TOKEN = "login_token";
 const PREF_LOGIN_USERNAME = "login_username";
 const PREF_MOBILE = "mobileNumber";
+const PREF_EMAIL = "PREF_EMAIL";
 const PREF_PANNO = "panNo";
 const PREF_BUSINESSNAME = "businessName";
 const PREF_USERNAME = 'gstUserName';

@@ -33,225 +33,229 @@ class LoginPage extends StatelessWidget {
         backgroundColor: ColorConfig.jsCreamColor,
         extendBody: true,
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 60.h,
-              ),
-              SvgPicture.asset(
-                AppImages.jsLogo,
-                height: 50.h,
-                width: 60.sw,
-              ),
-              RichText(
-                textAlign: TextAlign.start,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: AppString.janText,
-                      style: StyleConfig.boldExtraLargeText,
-                    ),
-                    TextSpan(
-                      text: AppString.surakshaText,
-                      style: StyleConfig.boldExtraLargeText.copyWith(color: ColorConfig.jsBlueColor),
-                    ),
-                  ],
+          child: AbsorbPointer(
+            absorbing: loginLogic.isLoading.value,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 60.h,
                 ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                AppString.insurenceScheme,
-                style: StyleConfig.smallText.copyWith(
-                    color: ColorConfig.jsTextBlueGreyColor,
-                    fontFamily: JSFonts.outfitRegular,
-                    fontWeight: FontWeight.w300),
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
-                  ),
+                SvgPicture.asset(
+                  AppImages.jsLogo,
+                  height: 50.h,
+                  width: 60.sw,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
-                  child: Column(
+                RichText(
+                  textAlign: TextAlign.start,
+                  text: TextSpan(
                     children: [
-                      Obx(() {
-                        return AppTextField(
-                          hintText: AppString.enterMobileNumber,
-                          controller: loginLogic.mobileController,
-                          title: AppString.enterMobileNumber,
-                          isReadOnly: false,
-                          isMandatory: true,
-                          isAutoFocus: false,
-                          inputType: TextInputType.emailAddress,
-                          maxLength: isNumeric(loginLogic.mobile.value, loginLogic) ? 10 : 255,
-                          onChanged: loginLogic.onChangeMobile,
-                          errorText: loginLogic.mobileError.value,
-                        );
-                      }),
-                      Obx(() {
-                        return !isNumeric(loginLogic.mobile.value, loginLogic)
-                            ? Padding(
-                                padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${AppString.password}',
-                                        style: StyleConfig.mediumText16,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(() => ForgotPasswordPage(), binding: LoginBinding());
-                                        },
-                                        child: Text(
-                                          AppString.forgot_password,
-                                          style: StyleConfig.regularExtraSmallBText.copyWith(
-                                            color: ColorConfig.jsBlueColor,
-                                            fontFamily: JSFonts.outfitRegular,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container();
-                      }),
-                      Obx(() {
-                        return !isNumeric(loginLogic.mobile.value, loginLogic)
-                            ? AppTextField(
-                                isObscureText: true,
-                                hintText: "Enter Password",
-                                controller: loginLogic.passwordController,
-                                isReadOnly: false,
-                                isMandatory: false,
-                                isAutoFocus: false,
-                                inputType: TextInputType.text,
-                                maxLength: 30,
-                                onChanged: loginLogic.onChangeMobile,
-                                errorText: loginLogic.passwordError.value,
-                              )
-                            : const SizedBox.shrink();
-                      }),
-                      SizedBox(
-                        height: 20.h,
+                      TextSpan(
+                        text: AppString.janText,
+                        style: StyleConfig.boldExtraLargeText,
                       ),
-                      Obx(() {
-                        return loginLogic.captchaString.value.isNotEmpty
-                            ? Row(
-                                children: [
-                                  SizedBox(
-                                      width: 0.6.sw,
-                                      height: 40,
-                                      child:
-                                          Image.memory(const Base64Decoder().convert(loginLogic.captchaString.value))),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Icon(
-                                    Icons.refresh,
-                                    size: 18,
-                                  )
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    "Loading Capthca, Please wait",
-                                    style: StyleConfig.regularText16
-                                        .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
-                                  )
-                                ],
-                              );
-                      }),
-                      SizedBox(
-                        height: 20.h,
+                      TextSpan(
+                        text: AppString.surakshaText,
+                        style: StyleConfig.boldExtraLargeText.copyWith(color: ColorConfig.jsBlueColor),
                       ),
-                      Obx(() {
-                        return AppTextField(
-                          isObscureText: false,
-                          hintText: "Enter Captcha",
-                          controller: loginLogic.captchaController,
-                          isReadOnly: false,
-                          isMandatory: false,
-                          isAutoFocus: false,
-                          inputType: TextInputType.text,
-                          maxLength: 10,
-                          onChanged: loginLogic.onChangeCaptcha,
-                          errorText: loginLogic.captchError.value,
-                        );
-                      }),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: Obx(() {
-                          return Column(
-                            children: [
-                              AppButton(
-                                onPress: loginLogic.onPressSentOTP,
-                                title:
-                                    isNumeric(loginLogic.mobile.value, loginLogic) ? "Get Verification code" : 'Login',
-                                isButtonEnable: true.obs,
-                                isDataLoading: loginLogic.isLoading,
-                              ),
-                              if (loginLogic.isLoading.value) const SizedBox.shrink(),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Don't have an account ? ",
-                                      style: StyleConfig.regularText16,
-                                    ),
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
-                                        },
-                                      text: "Register",
-                                      style: StyleConfig.regularText16
-                                          .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
-                      )
                     ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 5.h,
+                ),
+                Text(
+                  AppString.insurenceScheme,
+                  style: StyleConfig.smallText.copyWith(
+                      color: ColorConfig.jsTextBlueGreyColor,
+                      fontFamily: JSFonts.outfitRegular,
+                      fontWeight: FontWeight.w300),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
+                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+                    child: Column(
+                      children: [
+                        Obx(() {
+                          return AppTextField(
+                            hintText: AppString.enterMobileNumber,
+                            controller: loginLogic.mobileController,
+                            title: AppString.enterMobileNumber,
+                            isReadOnly: false,
+                            isMandatory: true,
+                            isAutoFocus: false,
+                            inputType: TextInputType.emailAddress,
+                            maxLength: isNumeric(loginLogic.mobile.value, loginLogic) ? 10 : 255,
+                            onChanged: loginLogic.onChangeMobile,
+                            errorText: loginLogic.mobileError.value,
+                          );
+                        }),
+                        Obx(() {
+                          return !isNumeric(loginLogic.mobile.value, loginLogic)
+                              ? Padding(
+                                  padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '${AppString.password}',
+                                          style: StyleConfig.mediumText16,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.to(() => ForgotPasswordPage(), binding: LoginBinding());
+                                          },
+                                          child: Text(
+                                            AppString.forgot_password,
+                                            style: StyleConfig.regularExtraSmallBText.copyWith(
+                                              color: ColorConfig.jsBlueColor,
+                                              fontFamily: JSFonts.outfitRegular,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container();
+                        }),
+                        Obx(() {
+                          return !isNumeric(loginLogic.mobile.value, loginLogic)
+                              ? AppTextField(
+                                  isObscureText: true,
+                                  hintText: "Enter Password",
+                                  controller: loginLogic.passwordController,
+                                  isReadOnly: false,
+                                  isMandatory: false,
+                                  isAutoFocus: false,
+                                  inputType: TextInputType.text,
+                                  maxLength: 30,
+                                  onChanged: loginLogic.onChangeMobile,
+                                  errorText: loginLogic.passwordError.value,
+                                )
+                              : const SizedBox.shrink();
+                        }),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Obx(() {
+                          return loginLogic.captchaString.value.isNotEmpty
+                              ? Row(
+                                  children: [
+                                    SizedBox(
+                                        width: 0.6.sw,
+                                        height: 40,
+                                        child: Image.memory(
+                                            const Base64Decoder().convert(loginLogic.captchaString.value))),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    const Icon(
+                                      Icons.refresh,
+                                      size: 18,
+                                    )
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "Loading Capthca, Please wait",
+                                      style: StyleConfig.regularText16
+                                          .copyWith(color: ColorConfig.jsBlackColor, fontFamily: JSFonts.outfitRegular),
+                                    )
+                                  ],
+                                );
+                        }),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Obx(() {
+                          return AppTextField(
+                            isObscureText: false,
+                            hintText: "Enter Captcha",
+                            controller: loginLogic.captchaController,
+                            isReadOnly: false,
+                            isMandatory: false,
+                            isAutoFocus: false,
+                            inputType: TextInputType.text,
+                            maxLength: 10,
+                            onChanged: loginLogic.onChangeCaptcha,
+                            errorText: loginLogic.captchError.value,
+                          );
+                        }),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40),
+                          child: Obx(() {
+                            return Column(
+                              children: [
+                                AppButton(
+                                  onPress: loginLogic.onPressSentOTP,
+                                  title: isNumeric(loginLogic.mobile.value, loginLogic)
+                                      ? "Get Verification code"
+                                      : 'Login',
+                                  isButtonEnable: true.obs,
+                                  isDataLoading: loginLogic.isLoading,
+                                ),
+                                if (loginLogic.isLoading.value) const SizedBox.shrink(),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: "Don't have an account ? ",
+                                        style: StyleConfig.regularText16,
+                                      ),
+                                      TextSpan(
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Get.offAll(() => const RegistrationPage(), binding: RegistrationBinding());
+                                          },
+                                        text: "Register",
+                                        style: StyleConfig.regularText16
+                                            .copyWith(color: ColorConfig.jsBlueColor, fontFamily: JSFonts.outfitMedium),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

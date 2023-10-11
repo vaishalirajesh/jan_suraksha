@@ -73,6 +73,8 @@ class LoginLogic extends GetxController {
 
   var passwordController = TextEditingController(text: "");
   RxBool isHidePassword = true.obs;
+  RxBool isEnableLoginOtpResend = false.obs;
+  RxBool isEnableEmailOtpResend = false.obs;
 
   var isButtonEnabled = false.obs;
 
@@ -321,6 +323,7 @@ class LoginLogic extends GetxController {
     TGLog.d("LoginWithMobileRequest : onSuccess()---$response");
     if (response.getLoginResponse().status == RES_SUCCESS) {
       otp.value = '';
+      isEnableLoginOtpResend.value = false;
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
@@ -335,7 +338,9 @@ class LoginLogic extends GetxController {
         },
         title: 'User Verification',
         mobileNumber: mobileController.text ?? '',
-        isEnable: (otp.value.length == 6 ? true : false).obs,
+        isEnable: isEnableLoginOtpResend,
+        onResend: onResendLoginOtpTimer,
+        onFinish: onFinishLoginOtpTimer,
         isLoading: isVerifyingOTP,
         onButtonPress: onPressVerifyOtp,
         isEdit: false.obs,
@@ -523,6 +528,7 @@ class LoginLogic extends GetxController {
       isPasswordAPICall.value = false;
       masterId = response.forgotPassword().data?.masterId ?? 0;
       emailOtp.value = '';
+      isEnableEmailOtpResend.value = false;
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         timerText: ''.obs,
@@ -537,12 +543,14 @@ class LoginLogic extends GetxController {
         },
         title: 'User Verification',
         mobileNumber: forgotEmailController.text ?? '',
-        isEnable: (emailOtp.value.length == 6 ? true : false).obs,
         isLoading: isEmailOTPVerifing,
         onButtonPress: emailVerifyOtp,
         isEdit: false.obs,
         errorText: emailOtpError,
         subTitle: 'A Verification code is sent on \n your email id '.obs,
+        isEnable: isEnableEmailOtpResend,
+        onResend: onResendEmailOtpTimer,
+        onFinish: onFinishEmailOtpTimer,
       );
     } else {
       TGLog.d("Error in ForgotPasswordRequest");
@@ -820,6 +828,28 @@ class LoginLogic extends GetxController {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
+  }
+
+  Future<void> onFinishLoginOtpTimer() async {
+    isEnableLoginOtpResend.value = true;
+  }
+
+  Future<void> onResendLoginOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableLoginOtpResend.value = false;
+    loginWithMobile();
+  }
+
+  Future<void> onFinishEmailOtpTimer() async {
+    isEnableEmailOtpResend.value = true;
+  }
+
+  Future<void> onResendEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableEmailOtpResend.value = false;
+    onForgotPassword();
   }
 }
 

@@ -1,23 +1,25 @@
-import 'dart:async';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
-import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 
 import 'custom_otp_field/custom_otp_field.dart';
 import 'jumpingdot_util.dart';
+import 'timer/timer_count_down.dart';
+
+NumberFormat formatter = NumberFormat("00");
 
 class OTPBottomSheetAuth {
   static getBottomSheet({
     required Function(String) onChangeOTP,
     required Function(String) onSubmitOTP,
     Function()? onEdit,
+    Function()? onFinish,
+    Function()? onResend,
     required Function() onButtonPress,
     required String mobileNumber,
     required String title,
@@ -126,17 +128,35 @@ class OTPBottomSheetAuth {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "Didn't Receive Verification Code Yet? \n",
+                              text: "Didn't Receive Verification Code Yet? ",
                               style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsTextDarkGreyColor),
-                            ),
-                            TextSpan(
-                              text: "Resend Verification Code",
-                              recognizer: TapGestureRecognizer()..onTap = () {},
-                              style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
                             ),
                           ],
                         ),
                       ),
+                      isEnable.value
+                          ? InkWell(
+                              onTap: onResend,
+                              child: Text(
+                                "Resend Verification Code",
+                                style: StyleConfig.regularText16.copyWith(
+                                  color: ColorConfig.jsPrimaryColor,
+                                ),
+                              ),
+                            )
+                          : Countdown(
+                              seconds: 5,
+                              build: (BuildContext context, double time) => Text(
+                                time > 60
+                                    ? "Resend Verification Code in 01:${formatter.format(time.round() - 60)} minutes"
+                                    : "Resend Verification Code in 00:${formatter.format(time.round())} minutes",
+                                style: StyleConfig.regularText16.copyWith(
+                                  color: ColorConfig.jsTextDarkGreyColor,
+                                ),
+                              ),
+                              interval: const Duration(seconds: 1),
+                              onFinished: onFinish,
+                            ),
                       SizedBox(
                         height: 15.h,
                       ),
@@ -153,12 +173,6 @@ class OTPBottomSheetAuth {
                         SizedBox(
                           height: 15.h,
                         ),
-                      // AppButton(
-                      //   onPress: onButtonPress,
-                      //   title: AppString.continueText,
-                      //   isButtonEnable: isEnable,
-                      //   isDataLoading: isLoading,
-                      // )
                     ],
                   ),
                 ),

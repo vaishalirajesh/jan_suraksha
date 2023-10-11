@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 import '../../../services/singleton/shared_preferences.dart';
 import '../../../utils/constant/prefrenceconstants.dart';
@@ -33,6 +31,9 @@ class PersonalInfoLogic extends GetxController {
   var repeatSetPasswordController = TextEditingController(text: '');
   RxBool isSetPasswordLoading = false.obs;
   final key = GlobalKey<State<Tooltip>>();
+  RxBool isEnablePasswordOtpResend = false.obs;
+  RxBool isEnableEmailOtpResend = false.obs;
+
   @override
   Future<void> onInit() async {
     userName.value = await TGSharedPreferences.getInstance().get(PREF_USERNAME) ?? '';
@@ -74,9 +75,12 @@ class PersonalInfoLogic extends GetxController {
       triggerMode: TooltipTriggerMode.manual, // make it manual
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTapDown: (_) => _onTapDown(tooltipkey), // add this
-        onTapUp: (_) => _onTapUpAndCancel(tooltipkey), // add this
-        onTapCancel: () => _onTapUpAndCancel(tooltipkey), // add this
+        onTapDown: (_) => _onTapDown(tooltipkey),
+        // add this
+        onTapUp: (_) => _onTapUpAndCancel(tooltipkey),
+        // add this
+        onTapCancel: () => _onTapUpAndCancel(tooltipkey),
+        // add this
         child: Icon(Icons.add),
       ),
     );

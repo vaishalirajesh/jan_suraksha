@@ -44,7 +44,7 @@ dependencies:
   device_info_plus: ^9.0.3
   permission_guard: ^2.0.0
   internet_connection_checker: ^1.0.0+1
-  just_the_tooltip: ^0.0.12
+  timer_count_down: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -19,7 +19,6 @@ class PersonalInfoLogic extends GetxController {
   var setPassError = "".obs;
 
   var resetPassError = "".obs;
-
   var subtitle = "A verification code has been sent to your Email \n".obs;
   RxBool isEmailChanging = false.obs;
   RxBool isPasswordChanging = false.obs;

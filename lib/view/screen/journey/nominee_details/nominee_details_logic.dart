@@ -348,7 +348,6 @@ class NomineeDetailsLogic extends GetxController {
         relationErrorMsg.value = '';
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
-
         lNameErrorMsg.value = '';
       } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
               mobileController.text == ' ' ||
@@ -575,11 +574,11 @@ class NomineeDetailsLogic extends GetxController {
           firstName: getAppData.data?.nominee?.first.firstName,
           isActive: getAppData.data?.nominee?.first.isActive,
           id: getAppData.data?.nominee?.first.id,
-          addressOfGuardian: getAppData.data?.nominee?.first.addressOfGuardian,
-          emailIdOfGuardian: getAppData.data?.nominee?.first.emailIdOfGuardian,
-          mobileNumberOfGuardian: getAppData.data?.nominee?.first.mobileNumberOfGuardian,
-          nameOfGuardian: getAppData.data?.nominee?.first.nameOfGuardian,
-          relationShipOfGuardian: guardianid.value,
+          addressOfGuardian: null,
+          emailIdOfGuardian: null,
+          mobileNumberOfGuardian: null,
+          nameOfGuardian: null,
+          relationShipOfGuardian: 0,
           address: request.RequestAddress(
             id: getAppData.data?.nominee?.first.address?.id,
             addressLine1: getAppData.data?.nominee?.first.address?.addressLine1,

@@ -172,15 +172,19 @@ class PreviewApplicationPage extends StatelessWidget {
                                                 print(i!);
                                               },
                                               isExpanded: false,
-                                              value: previewApplicationFormLogic.getAppData.data?.disabilityStatus,
+                                              value:
+                                                  previewApplicationFormLogic.getAppData.data?.disabilityStatus ?? 'No',
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 15.h,
-                                    ),
+                                    if (previewApplicationFormLogic.getAppData.data?.disabilityStatus == "Yes"
+                                        ? true
+                                        : false)
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
                                     if (previewApplicationFormLogic.getAppData.data?.disabilityStatus == "Yes"
                                         ? true
                                         : false)

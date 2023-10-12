@@ -974,9 +974,8 @@ class DashboardLogic extends GetxController {
         onError: (response) {});
   }
 
-  Future<void> onPressDownload({dynamic schemeId, dynamic appId}) async {
+  Future<void> onPressDownload({dynamic schemeId, dynamic appId, dynamic orgId}) async {
     isDownLoading.value = true;
-    int orgId = (await TGSharedPreferences.getInstance().get(PREF_ORG_ID)) ?? 0;
     DownloadAgreementRequest request = DownloadAgreementRequest(
         applicationId: appId.toString(), schemeId: schemeId.toString(), orgId: orgId.toString(), isDownload: true);
     var jsonRequest = jsonEncode(request.toJson());

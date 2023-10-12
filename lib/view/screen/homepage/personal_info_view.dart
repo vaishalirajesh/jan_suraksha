@@ -121,7 +121,7 @@ class PersonalInfoPage extends StatelessWidget {
                           hintText: "",
                           isReadOnly: false,
                           isMandatory: true,
-                          isAutoFocus: true,
+                          isAutoFocus: false,
                           onChanged: (s) {
                             final bool emailValid =
                                 RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -344,7 +344,10 @@ class PersonalInfoPage extends StatelessWidget {
           },
         );
       },
-      isEdit: false.obs,
+      isEdit: true.obs,
+      onEdit: () {
+        Get.back();
+      },
       subTitle: personallogic.subtitle,
       errorText: personallogic.otpEmailError,
     );

@@ -71,10 +71,12 @@ class CertificateInsurencePage extends StatelessWidget {
                           Row(
                             children: [
                               certificateInsurenceLogic.generateCoiData.data?.logoUrl != null
-                                  ? Image.network(
-                                      certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
-                                      height: 30.r,
-                                      // width: 30.r,
+                                  ? SizedBox(
+                                      child: Image.network(
+                                        certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
+                                        height: 30.r,
+                                        // width: 30.r,
+                                      ),
                                     )
                                   : Container(),
                               SizedBox(

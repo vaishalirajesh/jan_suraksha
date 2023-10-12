@@ -85,7 +85,9 @@ class TermsAndConditionsLogic extends GetxController {
     if (response.getTermConition().status == RES_SUCCESS) {
       content = response.getTermConition().data ?? '';
       TGLog.d(content);
-      isDataLoaded.value = true;
+      Future.delayed(const Duration(seconds: 1), () {
+        isDataLoaded.value = true;
+      });
     } else {
       TGLog.d("Error in TermConditionRequest");
       isDataLoaded.value = true;

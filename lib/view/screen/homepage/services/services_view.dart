@@ -519,7 +519,9 @@ class ServicesPage extends StatelessWidget {
                                                                               schemeId: dashboardLogic
                                                                                   .nomineeList[index]['scheme'],
                                                                               appId: dashboardLogic.nomineeList[index]
-                                                                                  ['id'])
+                                                                                  ['id'],
+                                                                              orgId: dashboardLogic.nomineeList[index]
+                                                                                  ['orgId'])
                                                                           : showSnackBar(context, "Download error");
                                                                     },
                                                                     icon: const Icon(Icons.download_rounded),
@@ -547,6 +549,7 @@ class ServicesPage extends StatelessWidget {
                                                                           })?.then((value) {
                                                                         dashboardLogic.onGetNomineeList();
                                                                         dashboardLogic.isNomineeLoading.value = true;
+                                                                        dashboardLogic.getSchemaDeatil();
                                                                       });
                                                               },
                                                               title: dashboardLogic.nomineeList.isNotEmpty &&

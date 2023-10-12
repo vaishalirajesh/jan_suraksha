@@ -674,7 +674,9 @@ class HomePage extends StatelessWidget {
                                                   dashboardLogic.schemeList[index]['scheme'] != null &&
                                                   dashboardLogic.schemeList[index]['scheme'] != '' &&
                                                   dashboardLogic.schemeList[index]['id'] != null &&
-                                                  dashboardLogic.schemeList[index]['id'] != '') {
+                                                  dashboardLogic.schemeList[index]['id'] != '' &&
+                                                  dashboardLogic.schemeList[index]['orgId'] != null &&
+                                                  dashboardLogic.schemeList[index]['orgId'] != '') {
                                                 if (dashboardLogic.schemeList.isNotEmpty &&
                                                     dashboardLogic.schemeList[index]['stageId'] != null &&
                                                     dashboardLogic.schemeList[index]['stageId'] != '' &&
@@ -682,7 +684,8 @@ class HomePage extends StatelessWidget {
                                                   dashboardLogic.isDownLoading.value = true;
                                                   dashboardLogic.onPressDownload(
                                                       schemeId: dashboardLogic.schemeList[index]['scheme'],
-                                                      appId: dashboardLogic.schemeList[index]['id']);
+                                                      appId: dashboardLogic.schemeList[index]['id'],
+                                                      orgId: dashboardLogic.schemeList[index]['orgId']);
                                                 } else {
                                                   Get.offAll(() => ApplicationFormPage(),
                                                       binding: ApplicationFormBinding(),

@@ -70,6 +70,7 @@ class DashboardLogic extends GetxController {
   var selectedSchemaData = {};
   TextEditingController emailController = TextEditingController(text: '');
   RxString emailErrorMsg = ''.obs;
+  RxString otpErrorMsg = ''.obs;
   RxString otp = ''.obs;
   RxBool isEmailVerifying = false.obs;
   RxBool isOTPVerifing = false.obs;
@@ -339,6 +340,8 @@ class DashboardLogic extends GetxController {
     if (response.getOtpResponse().status == RES_SUCCESS) {
       TGLog.d("Schema lenght--${schemeList.length}");
       Get.back();
+      otpErrorMsg.value = '';
+
       isEmailVerifying.value = false;
       openEmailOtpBottomSheet(
         context: Get.context!,
@@ -346,8 +349,10 @@ class DashboardLogic extends GetxController {
         onChangeOTP: (s) {
           if (s.isEmpty) {
             otp.value = otp.value.substring(0, otp.value.length - 1);
+            otpErrorMsg.value = '';
           } else {
             otp.value = otp.value + s;
+            otpErrorMsg.value = '';
           }
           TGLog.d("Otp---------${otp.value}");
         },
@@ -358,6 +363,7 @@ class DashboardLogic extends GetxController {
           Get.back();
           updateEmailOtpBottomSheet();
         },
+        errorText: otpErrorMsg,
         title: 'Email Verification',
         mobileNumber: emailController.text ?? '',
         isEnable: (otp.value.length == 6 ? true : false).obs,
@@ -380,6 +386,7 @@ class DashboardLogic extends GetxController {
     TGLog.d("EmailOtpRequest : onError()--${errorResponse.error}");
     isEmailVerifying.value = false;
     isOTPVerifing.value = false;
+    otpErrorMsg.value = errorResponse.error ?? "";
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 
@@ -436,6 +443,7 @@ class DashboardLogic extends GetxController {
     } else {
       TGLog.d("Error in verifyEmailOtpRequest");
       Get.back();
+      otpErrorMsg.value = response.getOtpResponse().message ?? "";
       isOTPVerifing.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
@@ -737,7 +745,9 @@ class DashboardLogic extends GetxController {
                 fieldHeight: 40.r,
                 showFieldAsBox: true,
                 onCodeChanged: onChangeOTP,
-                onSubmit: onSubmitOTP,
+                onSubmit: (str) {
+                  onButtonPress();
+                },
                 // end onSubmit
               ),
               SizedBox(
@@ -777,12 +787,12 @@ class DashboardLogic extends GetxController {
               SizedBox(
                 height: 15.h,
               ),
-              AppButton(
-                onPress: onButtonPress,
-                title: AppString.continueText,
-                isButtonEnable: isEnable,
-                isDataLoading: isLoading,
-              )
+              // AppButton(
+              //   onPress: onButtonPress,
+              //   title: AppString.continueText,
+              //   isButtonEnable: isEnable,
+              //   isDataLoading: isLoading,
+              // )
             ],
           ),
         );

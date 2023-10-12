@@ -67,6 +67,7 @@ class RegistrationLogic extends GetxController {
 
   final validCharacters = RegExp(r'^[0-9]+$');
   num userId = 0;
+  RxBool isEnableEmailOtpResend = false.obs;
 
   @override
   void onInit() {
@@ -167,6 +168,8 @@ class RegistrationLogic extends GetxController {
       await TGSharedPreferences.getInstance().set(PREF_USER_ID, response.getOtpResponse().data ?? 0);
       otp.value = '';
       otpError.value = '';
+      isEnableEmailOtpResend.value = false;
+
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         isEdit: false.obs,
@@ -187,10 +190,12 @@ class RegistrationLogic extends GetxController {
         title: 'User Verification',
         errorText: otpError,
         mobileNumber: mobileController.text ?? '',
-        isEnable: true.obs,
+        isEnable: isEnableEmailOtpResend,
         isLoading: isOTPVerifing,
         onButtonPress: verifyOtp,
         subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+        onResend: onResendEmailOtpTimer,
+        onFinish: onFinishEmailOtpTimer,
       );
       isLoading.value = false;
     } else {
@@ -199,6 +204,17 @@ class RegistrationLogic extends GetxController {
       LoaderUtils.handleErrorResponse(
           Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
+  }
+
+  Future<void> onFinishEmailOtpTimer() async {
+    isEnableEmailOtpResend.value = true;
+  }
+
+  Future<void> onResendEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableEmailOtpResend.value = false;
+    onPressSentOTP();
   }
 
   _onErrorSignUp(TGResponse errorResponse) {

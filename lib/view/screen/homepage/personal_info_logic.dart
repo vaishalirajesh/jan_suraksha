@@ -32,6 +32,8 @@ class PersonalInfoLogic extends GetxController {
   final key = GlobalKey<State<Tooltip>>();
   RxBool isEnablePasswordOtpResend = false.obs;
   RxBool isEnableEmailOtpResend = false.obs;
+  RxBool isShowPassword = true.obs;
+  RxBool isShowConfirmPassword = true.obs;
 
   @override
   Future<void> onInit() async {
@@ -52,36 +54,9 @@ class PersonalInfoLogic extends GetxController {
     tooltip?.ensureTooltipVisible();
   }
 
-  void _onTapDown(GlobalKey<TooltipState> tooltipkey) {
-    tooltipkey.currentState?.ensureTooltipVisible();
-  }
-
-  void _onTapUpAndCancel(GlobalKey<TooltipState> tooltipkey) {
-    tooltipkey.currentState?.deactivate();
-  }
-
   bool validateStructure(String value) {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
-  }
-
-  Widget getData(BuildContext context) {
-    final tooltipkey = GlobalKey<TooltipState>();
-    return Tooltip(
-      key: tooltipkey,
-      message: "Show tootltip",
-      triggerMode: TooltipTriggerMode.manual, // make it manual
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapDown: (_) => _onTapDown(tooltipkey),
-        // add this
-        onTapUp: (_) => _onTapUpAndCancel(tooltipkey),
-        // add this
-        onTapCancel: () => _onTapUpAndCancel(tooltipkey),
-        // add this
-        child: Icon(Icons.add),
-      ),
-    );
   }
 }

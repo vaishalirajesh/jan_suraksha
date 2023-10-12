@@ -81,6 +81,8 @@ class DashboardLogic extends GetxController {
   var passwordController = TextEditingController(text: '');
   var repeatPasswordController = TextEditingController(text: "");
   int optOutIndex = -1;
+  RxBool isShowPassword = true.obs;
+  RxBool isShowConfirmPassword = true.obs;
 
   setIndex(int value) {
     index.value = value;
@@ -269,7 +271,7 @@ class DashboardLogic extends GetxController {
                 style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
               ),
               SizedBox(
-                height: 30.h,
+                height: 20.h,
               ),
               AppTextField(
                 isMandatory: true,
@@ -721,24 +723,6 @@ class DashboardLogic extends GetxController {
               SizedBox(
                 height: 10.h,
               ),
-              if (errorText != null && errorText.value.isNotEmpty)
-                SizedBox(
-                  height: 5.h,
-                ),
-              if (errorText != null && errorText.value.isNotEmpty)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      errorText.value ?? '',
-                      style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              SizedBox(
-                height: 20.h,
-              ),
               OtpTextField(
                 numberOfFields: 6,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -756,6 +740,24 @@ class DashboardLogic extends GetxController {
                 onSubmit: onSubmitOTP,
                 // end onSubmit
               ),
+              SizedBox(
+                height: 10.h,
+              ),
+              if (errorText != null && errorText.value.isNotEmpty)
+                SizedBox(
+                  height: 5.h,
+                ),
+              if (errorText != null && errorText.value.isNotEmpty)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      errorText.value ?? '',
+                      style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
@@ -804,6 +806,12 @@ class DashboardLogic extends GetxController {
   // );
   //
   //
+
+  void onTap(GlobalKey key) {
+    final dynamic tooltip = key.currentState;
+    tooltip?.ensureTooltipVisible();
+  }
+
   getUpdatePasswordBottomSheet({
     required Function(String) onSubmitOTP,
     required Function() onButtonPress,
@@ -813,6 +821,7 @@ class DashboardLogic extends GetxController {
     required RxBool isLoading,
   }) {
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
+      final key = GlobalKey<State<Tooltip>>();
       return Obx(() {
         return isEnable.value
             ? Container(
@@ -829,9 +838,46 @@ class DashboardLogic extends GetxController {
                     SizedBox(
                       height: 2.h,
                     ),
-                    Text(
-                      title.isNotEmpty ? title : AppString.enterOTP,
-                      style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 25.w),
+                            child: Text(
+                              title.isNotEmpty ? title : AppString.enterOTP,
+                              style: StyleConfig.semiBoldText16.copyWith(color: ColorConfig.jsLightBlackColor),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Tooltip(
+                          key: key,
+                          showDuration: const Duration(seconds: 1),
+                          waitDuration: const Duration(seconds: 2),
+                          message:
+                              "Password must contain at least one number, one uppercase, lowercase and special character, and at least 8 or more characters",
+                          textAlign: TextAlign.center,
+                          padding: EdgeInsets.all(10.r),
+                          margin: EdgeInsets.all(10.r),
+                          decoration: ShapeDecoration(
+                            color: ColorConfig.jsDarkCreamColor,
+                            shape: const ToolTipCustomShape(),
+                          ),
+                          textStyle: StyleConfig.regularExtraSmallText,
+                          child: GestureDetector(
+                            onTap: () {
+                              onTap(key);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.h, right: 5.h, top: 2.h),
+                              child: Icon(
+                                Icons.info_outline_rounded,
+                                size: 20.r,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 5.h,
@@ -846,6 +892,21 @@ class DashboardLogic extends GetxController {
                       hintText: AppString.password,
                       inputType: TextInputType.text,
                       errorText: "",
+                      isObscureText: isShowPassword.value,
+                      suffix: IconButton(
+                        icon: isShowPassword.value
+                            ? Icon(
+                                Icons.visibility_sharp,
+                                color: ColorConfig.jsTextMediumGreyColor,
+                              )
+                            : Icon(
+                                Icons.visibility_off_sharp,
+                                color: ColorConfig.jsTextMediumGreyColor,
+                              ),
+                        onPressed: () {
+                          isShowPassword.value = !isShowPassword.value;
+                        },
+                      ),
                     ),
                     SizedBox(height: 20),
                     AppTextField(
@@ -855,6 +916,21 @@ class DashboardLogic extends GetxController {
                       hintText: AppString.reenterPassword,
                       inputType: TextInputType.text,
                       errorText: "",
+                      isObscureText: isShowConfirmPassword.value,
+                      suffix: IconButton(
+                        icon: isShowConfirmPassword.value
+                            ? Icon(
+                                Icons.visibility_sharp,
+                                color: ColorConfig.jsTextMediumGreyColor,
+                              )
+                            : Icon(
+                                Icons.visibility_off_sharp,
+                                color: ColorConfig.jsTextMediumGreyColor,
+                              ),
+                        onPressed: () {
+                          isShowConfirmPassword.value = !isShowConfirmPassword.value;
+                        },
+                      ),
                     ),
                     if (errorText != null && errorText.value.isNotEmpty)
                       Row(
@@ -1179,4 +1255,33 @@ class FetchProfile extends TGGetRequest {
   Map<String, dynamic> params() {
     return <String, dynamic>{};
   }
+}
+
+class ToolTipCustomShape extends ShapeBorder {
+  final bool usePadding;
+
+  const ToolTipCustomShape({this.usePadding = true});
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.only(bottom: usePadding ? 20 : 0);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    rect = Rect.fromPoints(rect.topLeft, rect.bottomRight - const Offset(0, 20));
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(5.r)))
+      ..moveTo(rect.topCenter.dx + 140, rect.topCenter.dy)
+      ..relativeLineTo(10, -10)
+      ..relativeLineTo(10, 10)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
+
+  @override
+  ToolTipCustomShape scale(double t) => this;
 }

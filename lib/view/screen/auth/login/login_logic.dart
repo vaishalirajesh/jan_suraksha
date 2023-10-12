@@ -95,6 +95,9 @@ class LoginLogic extends GetxController {
       "\\." +
       "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
       ")+");
+  RxBool isShowPassword = true.obs;
+  RxBool isShowForgotPassword = true.obs;
+  RxBool isShowConfirmPassword = true.obs;
 
   @override
   void onInit() {
@@ -781,6 +784,21 @@ class LoginLogic extends GetxController {
                         onChanged: (str) {
                           setPassError.value = '';
                         },
+                        isObscureText: isShowForgotPassword.value,
+                        suffix: IconButton(
+                          icon: isShowForgotPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            isShowForgotPassword.value = !isShowForgotPassword.value;
+                          },
+                        ),
                         maxLength: 20,
                       );
                     }),
@@ -793,9 +811,24 @@ class LoginLogic extends GetxController {
                         hintText: AppString.reenterPassword,
                         inputType: TextInputType.text,
                         errorText: resetPassError.value,
+                        isObscureText: isShowConfirmPassword.value,
                         onChanged: (str) {
                           resetPassError.value = '';
                         },
+                        suffix: IconButton(
+                          icon: isShowConfirmPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            isShowConfirmPassword.value = !isShowConfirmPassword.value;
+                          },
+                        ),
                         maxLength: 20,
                       );
                     }),

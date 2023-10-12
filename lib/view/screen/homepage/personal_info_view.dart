@@ -521,6 +521,7 @@ class PersonalInfoPage extends StatelessWidget {
                     Obx(() {
                       return AppTextField(
                         isMandatory: true,
+                        isObscureText: personallogic.isShowPassword.value,
                         title: AppString.password,
                         controller: personallogic.setPasswordController,
                         hintText: AppString.password,
@@ -530,12 +531,27 @@ class PersonalInfoPage extends StatelessWidget {
                           personallogic.setPassError.value = '';
                         },
                         maxLength: 20,
+                        suffix: IconButton(
+                          icon: personallogic.isShowPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            personallogic.isShowPassword.value = !personallogic.isShowPassword.value;
+                          },
+                        ),
                       );
                     }),
                     SizedBox(height: 20),
                     Obx(() {
                       return AppTextField(
                         isMandatory: true,
+                        isObscureText: personallogic.isShowConfirmPassword.value,
                         title: AppString.reenterPassword,
                         controller: personallogic.repeatSetPasswordController,
                         hintText: AppString.reenterPassword,
@@ -545,6 +561,20 @@ class PersonalInfoPage extends StatelessWidget {
                           personallogic.resetPassError.value = '';
                         },
                         maxLength: 20,
+                        suffix: IconButton(
+                          icon: personallogic.isShowConfirmPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            personallogic.isShowConfirmPassword.value = !personallogic.isShowConfirmPassword.value;
+                          },
+                        ),
                       );
                     }),
                     if (errorText != null && errorText.value.isNotEmpty)

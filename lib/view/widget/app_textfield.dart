@@ -87,7 +87,7 @@ class AppTextField extends StatelessWidget {
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             hintText: hintText,
-            suffix: suffix,
+            suffixIcon: suffix,
             counterText: AppString.emptyText,
             hintStyle: StyleConfig.smallTextLight,
             prefixIconConstraints: BoxConstraints(minWidth: 24.w, maxHeight: 24.h),

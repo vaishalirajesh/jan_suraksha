@@ -140,7 +140,7 @@ class LoginPage extends StatelessWidget {
                         Obx(() {
                           return !isNumeric(loginLogic.mobile.value, loginLogic)
                               ? AppTextField(
-                                  isObscureText: true,
+                                  isObscureText: loginLogic.isShowPassword.value,
                                   hintText: "Enter Password",
                                   controller: loginLogic.passwordController,
                                   isReadOnly: false,
@@ -150,6 +150,20 @@ class LoginPage extends StatelessWidget {
                                   maxLength: 30,
                                   onChanged: loginLogic.onChangeMobile,
                                   errorText: loginLogic.passwordError.value,
+                                  suffix: IconButton(
+                                    icon: loginLogic.isShowPassword.value
+                                        ? Icon(
+                                            Icons.visibility_sharp,
+                                            color: ColorConfig.jsTextMediumGreyColor,
+                                          )
+                                        : Icon(
+                                            Icons.visibility_off_sharp,
+                                            color: ColorConfig.jsTextMediumGreyColor,
+                                          ),
+                                    onPressed: () {
+                                      loginLogic.isShowPassword.value = !loginLogic.isShowPassword.value;
+                                    },
+                                  ),
                                 )
                               : const SizedBox.shrink();
                         }),

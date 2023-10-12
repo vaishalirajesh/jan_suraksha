@@ -29,6 +29,7 @@ class ApplicationFormLogic extends GetxController {
   var isdisabled = false.obs;
   Rx<String?> disbletext = (null as String?).obs;
   RxString disableError = "".obs;
+  RxString disableSelectionError = "".obs;
   var schemeId = 0.obs;
   var appId = 0.obs;
   TextEditingController disableController = TextEditingController(text: '');
@@ -50,16 +51,26 @@ class ApplicationFormLogic extends GetxController {
   }
 
   void onPressContinueFromDisability() {
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     if (disbletext?.value == 'Yes') {
       if (disableController.text.trim().isEmpty) {
         disableError.value = 'Please add disability detail';
       } else {
         disableError.value = '';
+        getAppData.data?.disabilityStatus = disbletext.value;
+        getAppData.data?.disabilityDetails = disableController.text;
+        TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
+        TGLog.d("Disablity---------${getAppData.data?.disabilityStatus}");
+        TGLog.d("Disablity-------1--${getAppData.data?.disabilityDetails}");
         Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
       }
     } else {
-      disableError.value = '';
-      Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+      if (disbletext.value == null) {
+        disableSelectionError.value = 'Please select disability';
+      } else {
+        disableError.value = '';
+        Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
+      }
     }
   }
 
@@ -98,6 +109,8 @@ class ApplicationFormLogic extends GetxController {
       TGSession.getInstance().set(PREF_USER_FORM_DATA,
           getApplicationFormDetailsResponseMainToJson(response.getApplicationFormDetailsResponse()));
       getAppData = response.getApplicationFormDetailsResponse();
+      disbletext.value = getAppData.data?.disabilityStatus;
+      disableController.text = getAppData.data?.disabilityDetails ?? '';
       isLoading.value = false;
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");

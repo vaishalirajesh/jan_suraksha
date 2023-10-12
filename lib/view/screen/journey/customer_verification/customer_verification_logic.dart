@@ -119,7 +119,7 @@ class CustomerVerificationLogic extends GetxController {
         dobErrorMsg.value = '';
         reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter account number';
-      } else if (accountTextController.text.length < 3) {
+      } else if (accountTextController.text.length < 3 || !validCharacters.hasMatch(accountTextController.text)) {
         dobErrorMsg.value = '';
         reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter valid account number';

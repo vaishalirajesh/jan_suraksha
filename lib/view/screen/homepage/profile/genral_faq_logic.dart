@@ -53,6 +53,8 @@ class GeneralFaqLogic extends GetxController {
     false.obs,
     false.obs,
     false.obs,
+    false.obs,
+    false.obs,
     false.obs
   ];
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
+import 'package:jan_suraksha/model/request_model/SaveFormDeatilRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
@@ -27,6 +27,7 @@ class PreviewApplicationFormLogic extends GetxController {
   RxBool isDataLoaded = false.obs;
   RxBool isAdultUser = true.obs;
   GetApplicationFormDetailsResponseMain getAppData = GetApplicationFormDetailsResponseMain();
+  var dropdownValues = ["Yes", "No"];
 
   @override
   void onInit() {
@@ -90,6 +91,8 @@ class PreviewApplicationFormLogic extends GetxController {
       lastName: getAppData.data?.lastName,
       middleName: getAppData.data?.middleName,
       mobileNo: getAppData.data?.mobileNo,
+      disabilityDetails: getAppData.data?.disabilityDetails,
+      disabilityStatus: getAppData.data?.disabilityStatus,
       nominee: [
         request.RequestNominee(
           middleName: getAppData.data?.nominee?.first.middleName,
@@ -139,7 +142,8 @@ class PreviewApplicationFormLogic extends GetxController {
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response?.saveFormDetail().status ?? 0, response?.saveFormDetail()?.message ?? "", null);
     }
   }
 

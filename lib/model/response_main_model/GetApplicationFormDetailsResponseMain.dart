@@ -309,6 +309,10 @@ class Data {
     _consentForAutoDebit = consentForAutoDebit;
   }
 
+  set disabilityDetails(dynamic value) {
+    _disabilityDetails = value;
+  }
+
   set isSameApplicantAddress(dynamic value) {
     _isSameApplicantAddress = value;
   }
@@ -842,6 +846,10 @@ class Data {
     map['source'] = _source;
     map['consentForAutoDebit'] = _consentForAutoDebit;
     return map;
+  }
+
+  set disabilityStatus(dynamic value) {
+    _disabilityStatus = value;
   }
 }
 

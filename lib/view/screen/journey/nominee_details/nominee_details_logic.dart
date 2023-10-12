@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:jan_suraksha/model/request_model/SaveFormDetailRequest.dart' as request;
+import 'package:jan_suraksha/model/request_model/SaveFormDeatilRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
@@ -22,7 +22,6 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
-import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_view.dart';
@@ -507,12 +506,22 @@ class NomineeDetailsLogic extends GetxController {
         lNameErrorMsg.value = '';
         setData();
         if (screenName.value == 'Service') {
-          onSaveData();
+          if (isAdult(dobController.text)) {
+            onSaveData();
+          } else {
+            Get.to(() => GuradianDetailsPage(), binding: GuradianDetailsBinding(), arguments: {
+              AppArguments.screenName: "Service",
+              AppArguments.appId: appId,
+            });
+          }
         } else {
           if (isAdult(dobController.text)) {
             Get.to(() => PreviewApplicationPage(), binding: PreviewApplicationBinding());
           } else {
-            Get.to(() => GuradianDetailsPage(), binding: GuradianDetailsBinding());
+            Get.to(() => GuradianDetailsPage(), binding: GuradianDetailsBinding(), arguments: {
+              AppArguments.screenName: "Address",
+              AppArguments.appId: appId,
+            });
           }
         }
       }

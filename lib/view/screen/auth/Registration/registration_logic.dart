@@ -92,7 +92,7 @@ class RegistrationLogic extends GetxController {
       nameError.value = 'Please enter valid name';
       mobileError.value = '';
       captchError.value = '';
-    } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+    } else if (((mobileController.text.isEmpty || !mobileRegExp.hasMatch(mobileController.text)) ||
             mobileController.text == ' ' ||
             (mobileController.text.isNotEmpty &&
                 !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||

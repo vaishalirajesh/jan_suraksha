@@ -798,21 +798,19 @@ getBottomSheet({
               style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
               textAlign: TextAlign.center,
             ),
-            if (isEdit.value)
-              SizedBox(
-                height: 5.h,
-              ),
-            if (isEdit.value)
-              InkWell(
-                onTap: onEdit,
-                child: Padding(
-                  padding: EdgeInsets.all(5.h),
-                  child: Text(
-                    'Edit Email id',
-                    style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                  ),
+            SizedBox(
+              height: 5.h,
+            ),
+            InkWell(
+              onTap: onEdit,
+              child: Padding(
+                padding: EdgeInsets.all(5.h),
+                child: Text(
+                  'Edit Email id',
+                  style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
                 ),
               ),
+            ),
             SizedBox(
               height: 10.h,
             ),

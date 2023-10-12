@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_common_screen.dart';
 import 'package:jan_suraksha/view/widget/app_loader.dart';
-import 'package:jan_suraksha/view/widget/disable_test_field.dart';
 
 import '../../../../config/style_config.dart';
 import '../../../widget/app_textfield.dart';
@@ -40,6 +40,7 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                       ? const SizedBox.shrink()
                       : Column(children: [
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -78,6 +79,7 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                                           .toList(),
                                       onChanged: (i) {
                                         applicationFormLogic.disbletext.value = i!;
+                                        applicationFormLogic.disableSelectionError.value = '';
                                         print(i!);
                                       },
                                       isExpanded: false,
@@ -86,6 +88,16 @@ class ApplicationFormDisabilityPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              if (applicationFormLogic.disableSelectionError.isNotEmpty)
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10.h),
+                                  child: Text(
+                                    applicationFormLogic.disableSelectionError.value,
+                                    style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsRedColor),
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.visible,
+                                  ),
+                                ),
                               SizedBox(
                                 height: 20.h,
                               ),

@@ -280,7 +280,7 @@ class RegistrationPage extends StatelessWidget {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "Already have and account ? ",
+                                      text: "Already have an account ? ",
                                       style: StyleConfig.regularText16,
                                     ),
                                     TextSpan(

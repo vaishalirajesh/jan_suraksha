@@ -30,7 +30,7 @@ class PreviewApplicationPage extends StatelessWidget {
               buttonTitle: AppString.submit,
               onButtonClick: previewApplicationFormLogic.onPressContinue,
               isDataLoading: previewApplicationFormLogic.isLoading.value,
-              onBackButtonCLick: AppUtils.onBackToDashboard,
+              onBackButtonCLick: AppUtils.onBackPress,
               isButtonEnable: true,
               progress: 0.8,
               child: Padding(
@@ -128,6 +128,74 @@ class PreviewApplicationPage extends StatelessWidget {
                               SizedBox(
                                 height: 40.h,
                               ),
+                              if (previewApplicationFormLogic.getAppData.data?.scheme == "PMSBY")
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Disability Declaration",
+                                      style: StyleConfig.mediumText18.copyWith(
+                                        color: ColorConfig.jsPrimaryColor,
+                                        fontFamily: JSFonts.outfitMedium,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15.h,
+                                    ),
+                                    Text(
+                                      "Whether Suffering from any Disability ? *",
+                                      style: StyleConfig.mediumText16,
+                                    ),
+                                    SizedBox(
+                                      height: 15.h,
+                                    ),
+                                    AbsorbPointer(
+                                      absorbing: true,
+                                      child: Container(
+                                        width: 0.87.sw,
+                                        height: 60,
+                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                          border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
+                                        ),
+                                        child: SizedBox(
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton(
+                                              items: previewApplicationFormLogic.dropdownValues
+                                                  .map((value) => DropdownMenuItem(
+                                                        value: value,
+                                                        child: SizedBox(child: Text(value)),
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (i) {
+                                                print(i!);
+                                              },
+                                              isExpanded: false,
+                                              value: previewApplicationFormLogic.getAppData.data?.disabilityStatus,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15.h,
+                                    ),
+                                    if (previewApplicationFormLogic.getAppData.data?.disabilityStatus == "Yes"
+                                        ? true
+                                        : false)
+                                      DisableTextField(
+                                        isMandatory: true,
+                                        initialvale:
+                                            previewApplicationFormLogic.getAppData.data?.disabilityDetails ?? '',
+                                        title: "If Yes, details thereof ",
+                                        isReadOnly: true,
+                                      ),
+                                    SizedBox(
+                                      height: 40.h,
+                                    ),
+                                  ],
+                                ),
                               Text(
                                 AppString.appAddDetail,
                                 style: StyleConfig.mediumText18.copyWith(

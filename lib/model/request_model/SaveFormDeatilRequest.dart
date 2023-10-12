@@ -24,6 +24,8 @@ class SaveFormDetailsRequest {
     bool? isNomineeDeatilsSameEnroll,
     dynamic dedupErrorMsg,
     List<RequestNominee>? nominee,
+    String? disabilityStatus,
+    String? disabilityDetails,
     bool? isNomineeUpdate,
   }) {
     _applicationId = applicationId;
@@ -44,6 +46,8 @@ class SaveFormDetailsRequest {
     _isNomineeDeatilsSameEnroll = isNomineeDeatilsSameEnroll;
     _dedupErrorMsg = dedupErrorMsg;
     _nominee = nominee;
+    _disabilityStatus = disabilityStatus;
+    _disabilityDetails = disabilityDetails;
     _isNomineeUpdate = isNomineeUpdate;
   }
 
@@ -71,6 +75,8 @@ class SaveFormDetailsRequest {
         _nominee?.add(RequestNominee.fromJson(v));
       });
     }
+    _disabilityStatus = json['disabilityStatus'];
+    _disabilityDetails = json['disabilityDetails'];
     _isNomineeUpdate = json['isNomineeUpdate'];
   }
 
@@ -92,6 +98,8 @@ class SaveFormDetailsRequest {
   bool? _isNomineeDeatilsSameEnroll;
   dynamic _dedupErrorMsg;
   List<RequestNominee>? _nominee;
+  String? _disabilityStatus;
+  String? _disabilityDetails;
   bool? _isNomineeUpdate;
 
   SaveFormDetailsRequest copyWith({
@@ -113,6 +121,8 @@ class SaveFormDetailsRequest {
     bool? isNomineeDeatilsSameEnroll,
     dynamic dedupErrorMsg,
     List<RequestNominee>? nominee,
+    String? disabilityStatus,
+    String? disabilityDetails,
     bool? isNomineeUpdate,
   }) =>
       SaveFormDetailsRequest(
@@ -134,45 +144,32 @@ class SaveFormDetailsRequest {
         isNomineeDeatilsSameEnroll: isNomineeDeatilsSameEnroll ?? _isNomineeDeatilsSameEnroll,
         dedupErrorMsg: dedupErrorMsg ?? _dedupErrorMsg,
         nominee: nominee ?? _nominee,
+        disabilityStatus: disabilityStatus ?? _disabilityStatus,
+        disabilityDetails: disabilityDetails ?? _disabilityDetails,
         isNomineeUpdate: isNomineeUpdate ?? _isNomineeUpdate,
       );
-
   num? get applicationId => _applicationId;
-
   String? get firstName => _firstName;
-
   String? get middleName => _middleName;
-
   String? get lastName => _lastName;
-
   String? get fatherHusbandName => _fatherHusbandName;
-
   String? get dob => _dob;
-
   String? get mobileNo => _mobileNo;
 
   RequestAddress? get address => _address;
 
   String? get insuranceName => _insuranceName;
-
   String? get emailAddress => _emailAddress;
-
   String? get kycId1 => _kycId1;
-
   String? get kycId1number => _kycId1number;
-
   dynamic get kycId2 => _kycId2;
-
   dynamic get kycId2number => _kycId2number;
-
   bool? get isSameApplicantAddress => _isSameApplicantAddress;
-
   bool? get isNomineeDeatilsSameEnroll => _isNomineeDeatilsSameEnroll;
-
   dynamic get dedupErrorMsg => _dedupErrorMsg;
-
   List<RequestNominee>? get nominee => _nominee;
-
+  String? get disabilityStatus => _disabilityStatus;
+  String? get disabilityDetails => _disabilityDetails;
   bool? get isNomineeUpdate => _isNomineeUpdate;
 
   Map<String, dynamic> toJson() {
@@ -199,6 +196,8 @@ class SaveFormDetailsRequest {
     if (_nominee != null) {
       map['nominee'] = _nominee?.map((v) => v.toJson()).toList();
     }
+    map['disabilityStatus'] = _disabilityStatus;
+    map['disabilityDetails'] = _disabilityDetails;
     map['isNomineeUpdate'] = _isNomineeUpdate;
     return map;
   }
@@ -315,25 +314,15 @@ class RequestNominee {
         mobileNumberOfGuardian: mobileNumberOfGuardian ?? _mobileNumberOfGuardian,
         emailIdOfGuardian: emailIdOfGuardian ?? _emailIdOfGuardian,
       );
-
   num? get id => _id;
-
   String? get firstName => _firstName;
-
   dynamic get middleName => _middleName;
-
   dynamic get lastName => _lastName;
-
   String? get dateOfBirth => _dateOfBirth;
-
   dynamic get mobileNumber => _mobileNumber;
-
   dynamic get emailIdOfNominee => _emailIdOfNominee;
-
   num? get relationOfNomineeApplicant => _relationOfNomineeApplicant;
-
   RequestAddress? get address => _address;
-
   bool? get isActive => _isActive;
 
   String? get nameOfGuardian => _nameOfGuardian;
@@ -420,7 +409,6 @@ class RequestAddress {
     _pincode = json['pincode'];
     _isActive = json['isActive'];
   }
-
   num? _id;
   String? _addressLine1;
   String? _addressLine2;
@@ -450,21 +438,13 @@ class RequestAddress {
         pincode: pincode ?? _pincode,
         isActive: isActive ?? _isActive,
       );
-
   num? get id => _id;
-
   String? get addressLine1 => _addressLine1;
-
   String? get addressLine2 => _addressLine2;
-
   String? get city => _city;
-
   String? get state => _state;
-
   String? get district => _district;
-
   num? get pincode => _pincode;
-
   bool? get isActive => _isActive;
 
   Map<String, dynamic> toJson() {

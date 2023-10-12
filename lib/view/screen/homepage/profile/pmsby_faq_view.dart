@@ -107,7 +107,7 @@ class PMSBYFaqPage extends StatelessWidget {
               buildMainView(
                 question: "9. Can individuals who leave the scheme re-join?",
                 answer:
-                    "ndividuals who exit the scheme at any point may re-join the scheme in future years by paying the annual premium, subject to conditions that may be laid down. However, risk cover would start from the date of auto debit of premium from the subscriber’s account.",
+                    "Individuals who exit the scheme at any point may re-join the scheme in future years by paying the annual premium, subject to conditions that may be laid down. However, risk cover would start from the date of auto debit of premium from the subscriber’s account.",
                 index: 8,
                 onTap: () {
                   logic.isPMSBYExpanded[8].value = !logic.isPMSBYExpanded[8].value;
@@ -115,54 +115,52 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question: "10. Who would be the Master policy holder for the scheme?",
-                answer:
-                    "Participating Banks/ Post office are the Master policy holders for the scheme.\nWhen can the accident cover assurance terminate? add remove\nThe accident cover of the member shall terminate / be restricted accordingly on any of the following events:\n\n1. On attaining 70 years or the end of the policy tenure of the subscriber already enrolled in the scheme. \n\n2. Closure of account with the Bank or insufficiency of balance to keep the insurance in force.\n\n3. In case a member is covered through more than one account and premium is received by the insurance company inadvertently, insurance cover will be restricted to one account and the premium shall be liable to be forfeited.",
+                answer: "Participating Banks/ Post office are the Master policy holders for the scheme.",
                 index: 9,
                 onTap: () {
                   logic.isPMSBYExpanded[9].value = !logic.isPMSBYExpanded[9].value;
                 },
               ),
               buildMainView(
-                question:
-                    "11. Will this cover be in addition to cover under any other insurance scheme the subscriber may be covered under?",
-                answer: "Yes",
+                question: "11. When can the accident cover assurance terminate?",
+                answer:
+                    "The accident cover of the member shall terminate / be restricted accordingly on any of the following events:\n\n1. On attaining 70 years or the end of the policy tenure of the subscriber already enrolled in the scheme. \n\n2. Closure of account with the Bank or insufficiency of balance to keep the insurance in force.\n\n3. In case a member is covered through more than one account and premium is received by the insurance company inadvertently, insurance cover will be restricted to one account and the premium shall be liable to be forfeited.",
                 index: 10,
                 onTap: () {
                   logic.isPMSBYExpanded[10].value = !logic.isPMSBYExpanded[10].value;
                 },
               ),
               buildMainView(
-                question: "12. Can all holders of a joint bank account join the scheme through the said account?",
-                answer:
-                    "In case of a joint account, all holders of the said account can join the scheme provided they satisfy its eligibility criteria and pay the premium at the rate of Rs.20 per person per annum through auto-debit.",
+                question:
+                    "12. Will this cover be in addition to cover under any other insurance scheme the subscriber may be covered under?",
+                answer: "Yes",
                 index: 11,
                 onTap: () {
                   logic.isPMSBYExpanded[11].value = !logic.isPMSBYExpanded[11].value;
                 },
               ),
               buildMainView(
-                question: "13. Are NRIs eligible for coverage under PMSBY?",
+                question: "13. Can all holders of a joint bank account join the scheme through the said account?",
                 answer:
-                    "Any NRI having an eligible bank account with a bank branch located in India is eligible for purchase of PMSBY cover subject to fulfillment of the terms and conditions relating to the scheme. However, in case a claim arises, the claim benefit will be paid to the beneficiary/ nominee only in Indian currency.",
+                    "In case of a joint account, all holders of the said account can join the scheme provided they satisfy its eligibility criteria and pay the premium at the rate of Rs.20 per person per annum through auto-debit.",
                 index: 12,
                 onTap: () {
                   logic.isPMSBYExpanded[12].value = !logic.isPMSBYExpanded[12].value;
                 },
               ),
               buildMainView(
-                question: "14. Which Bank Accounts are eligible for subscribing to PMSBY?",
+                question: "14. Are NRIs eligible for coverage under PMSBY?",
                 answer:
-                    "All bank account holders other than institutional account holders are eligible for subscribing to PMSBY scheme.",
+                    "Any NRI having an eligible bank account with a bank branch located in India is eligible for purchase of PMSBY cover subject to fulfillment of the terms and conditions relating to the scheme. However, in case a claim arises, the claim benefit will be paid to the beneficiary/ nominee only in Indian currency.",
                 index: 13,
                 onTap: () {
                   logic.isPMSBYExpanded[13].value = !logic.isPMSBYExpanded[13].value;
                 },
               ),
               buildMainView(
-                question:
-                    "15. Does the PMSBY cover death resulting from natural calamities such as earthquake, flood and other convulsions of nature? What about coverage from suicide / murder?",
+                question: "15. Which Bank Accounts are eligible for subscribing to PMSBY?",
                 answer:
-                    "Natural calamities being in the nature of accidents, any death / disability (as defined under PMSBY) resulting from such natural calamities is also covered under PMSBY. While death due to suicide is not covered, that from murder is covered.",
+                    "All bank account holders other than institutional account holders are eligible for subscribing to PMSBY scheme.",
                 index: 14,
                 onTap: () {
                   logic.isPMSBYExpanded[14].value = !logic.isPMSBYExpanded[14].value;
@@ -170,8 +168,9 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "16. Is there any provision for reimbursement of hospitalisation expenses following accident resulting in death or disablement?",
-                answer: "No.",
+                    "16. Does the PMSBY cover death resulting from natural calamities such as earthquake, flood and other convulsions of nature? What about coverage from suicide / murder?",
+                answer:
+                    "Natural calamities being in the nature of accidents, any death / disability (as defined under PMSBY) resulting from such natural calamities is also covered under PMSBY. While death due to suicide is not covered, that from murder is covered.",
                 index: 15,
                 onTap: () {
                   logic.isPMSBYExpanded[15].value = !logic.isPMSBYExpanded[15].value;
@@ -179,36 +178,35 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "17. Who can claim insurance benefit in case of death of the bank account holder who gave the enrolment form? add remove",
-                answer:
-                    "In case of death of the account holder/subscriber who enrolled in the scheme, claim can be filed by the nominee/appointee as per the enrolment form or by the legal heir/s in case nominee is pre-deceased",
+                    "17. Is there any provision for reimbursement of hospitalisation expenses following accident resulting in death or disablement?",
+                answer: "No.",
                 index: 16,
                 onTap: () {
                   logic.isPMSBYExpanded[16].value = !logic.isPMSBYExpanded[16].value;
                 },
               ),
               buildMainView(
-                question: "18. What is the mode of payment of the claim amount?",
+                question:
+                    "18. Who can claim insurance benefit in case of death of the bank account holder who gave the enrolment form?",
                 answer:
-                    "Disability claim will be credited in the bank account of the insured bank account holder / subscriber. Death claim will be remitted to the bank account of the nominee / legal heir(s).",
+                    "In case of death of the account holder/subscriber who enrolled in the scheme, claim can be filed by the nominee/appointee as per the enrolment form or by the legal heir/s in case nominee is pre-deceased",
                 index: 17,
                 onTap: () {
                   logic.isPMSBYExpanded[17].value = !logic.isPMSBYExpanded[17].value;
                 },
               ),
               buildMainView(
-                question: "19. Will the family get insurance benefit if the account holder commits suicide?",
-                answer: "No.",
+                question: "19. What is the mode of payment of the claim amount?",
+                answer:
+                    "Disability claim will be credited in the bank account of the insured bank account holder / subscriber. Death claim will be remitted to the bank account of the nominee / legal heir(s).",
                 index: 18,
                 onTap: () {
                   logic.isPMSBYExpanded[18].value = !logic.isPMSBYExpanded[18].value;
                 },
               ),
               buildMainView(
-                question:
-                    "20. Is it necessary to report accidents to Police and obtain FIR for claiming benefits under the policy?",
-                answer:
-                    "In case of incidents like road, rail and similar vehicular accidents, drowning, death involving any crime etc, the accident should be reported to police. In case of incidents like snake bite, fall from tree etc, the cause should be supported by immediate hospital record.\nIf the insured is missing and death is not confirmed, will the legal heirs get benefit of insurance? add removePMSBY covers deaths due to accident as confirmed by documentary evidence only.",
+                question: "20. Will the family get insurance benefit if the account holder commits suicide?",
+                answer: "No.",
                 index: 19,
                 onTap: () {
                   logic.isPMSBYExpanded[19].value = !logic.isPMSBYExpanded[19].value;
@@ -216,8 +214,9 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "21. What benefit will be payable if a person suffers partial disability without irrecoverable loss of sight of one eye or loss of use of one hand or foot?",
-                answer: "No benefit will be payable.",
+                    "21. Is it necessary to report accidents to Police and obtain FIR for claiming benefits under the policy?",
+                answer:
+                    "In case of incidents like road, rail and similar vehicular accidents, drowning, death involving any crime etc, the accident should be reported to police. In case of incidents like snake bite, fall from tree etc, the cause should be supported by immediate hospital record.",
                 index: 20,
                 onTap: () {
                   logic.isPMSBYExpanded[20].value = !logic.isPMSBYExpanded[20].value;
@@ -225,8 +224,8 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "22. Can an account holder get claim from more than one bank where he has enrolled and premium has been debited?",
-                answer: "No. The insured/ nominee shall be eligible for one claim only.",
+                    "22. If the insured is missing and death is not confirmed, will the legal heirs get benefit of insurance?",
+                answer: "PMSBY covers deaths due to accident as confirmed by documentary evidence only.",
                 index: 21,
                 onTap: () {
                   logic.isPMSBYExpanded[21].value = !logic.isPMSBYExpanded[21].value;
@@ -234,9 +233,8 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "23. Are PMSBY policies being introduced and serviced in association with foreign insurance Companies?",
-                answer:
-                    "There are no foreign insurance Companies directly operating in India. As permitted by the Insurance Act and IRDAI regulations there are some foreign Companies in joint ventures with Indian companies, where the stake of foreign insurers is restricted to 74% only.",
+                    "23. What benefit will be payable if a person suffers partial disability without irrecoverable loss of sight of one eye or loss of use of one hand or foot?",
+                answer: "No benefit will be payable.",
                 index: 22,
                 onTap: () {
                   logic.isPMSBYExpanded[22].value = !logic.isPMSBYExpanded[22].value;
@@ -244,9 +242,8 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "24. Will the PMSBY scheme which is being promoted aggressively and sold in large numbers accrue huge profits to the foreign insurance Companies who in joint venture with Indian entities have floated life insurance companies and are operating this insurance cover?",
-                answer:
-                    "Only Indian Insurance Companies as defined in the Insurance Act can operate in India. The policy holders’ funds of all such insurance companies operating in India including those with foreign partners within the 74% cap is to be invested in India as per regulations and cannot be invested abroad. The premium charged for PMSBY has been worked out based on actuarial calculations considering all risk factors, current mortality rates and adverse selection. Thus, there is no scope for any huge profits accruing from the scheme.",
+                    "24. Can an account holder get claim from more than one bank where he has enrolled and premium has been debited?",
+                answer: "No. The insured/ nominee shall be eligible for one claim only.",
                 index: 23,
                 onTap: () {
                   logic.isPMSBYExpanded[23].value = !logic.isPMSBYExpanded[23].value;
@@ -254,12 +251,32 @@ class PMSBYFaqPage extends StatelessWidget {
               ),
               buildMainView(
                 question:
-                    "25. In case of non-settlement of claims is it possible to proceed legally against the foreign insurers in India?",
+                    "25. Are PMSBY policies being introduced and serviced in association with foreign insurance Companies?",
                 answer:
-                    "There are no foreign insurance Companies directly operating in India. As permitted by the regulations there are Companies operating as joint ventures with Indian companies, where the stake of foreign insurers is restricted to 74% only. By definition, these are Indian insurance companies. All these companies are subject to Indian laws and there is no bar against proceeding legally against them.",
+                    "There are no foreign insurance Companies directly operating in India. As permitted by the Insurance Act and IRDAI regulations there are some foreign Companies in joint ventures with Indian companies, where the stake of foreign insurers is restricted to 74% only.",
                 index: 24,
                 onTap: () {
                   logic.isPMSBYExpanded[24].value = !logic.isPMSBYExpanded[24].value;
+                },
+              ),
+              buildMainView(
+                question:
+                    "26. Will the PMSBY scheme which is being promoted aggressively and sold in large numbers accrue huge profits to the foreign insurance Companies who in joint venture with Indian entities have floated life insurance companies and are operating this insurance cover?",
+                answer:
+                    "Only Indian Insurance Companies as defined in the Insurance Act can operate in India. The policy holders’ funds of all such insurance companies operating in India including those with foreign partners within the 74% cap is to be invested in India as per regulations and cannot be invested abroad. The premium charged for PMSBY has been worked out based on actuarial calculations considering all risk factors, current mortality rates and adverse selection. Thus, there is no scope for any huge profits accruing from the scheme.",
+                index: 25,
+                onTap: () {
+                  logic.isPMSBYExpanded[25].value = !logic.isPMSBYExpanded[25].value;
+                },
+              ),
+              buildMainView(
+                question:
+                    "27. In case of non-settlement of claims is it possible to proceed legally against the foreign insurers in India?",
+                answer:
+                    "There are no foreign insurance Companies directly operating in India. As permitted by the regulations there are Companies operating as joint ventures with Indian companies, where the stake of foreign insurers is restricted to 74% only. By definition, these are Indian insurance companies. All these companies are subject to Indian laws and there is no bar against proceeding legally against them.",
+                index: 26,
+                onTap: () {
+                  logic.isPMSBYExpanded[26].value = !logic.isPMSBYExpanded[26].value;
                 },
               ),
             ],

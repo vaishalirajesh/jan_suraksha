@@ -63,6 +63,7 @@ class GuradianDetailsPage extends StatelessWidget {
                                   controller: guradianDetailsLogic.addressController,
                                   hintText: AppString.enterYourAddress,
                                   inputType: TextInputType.text,
+                                  maxLength: 500,
                                   errorText: guradianDetailsLogic.addressErrorMsg.value,
                                   onChanged: (str) {
                                     guradianDetailsLogic.addressErrorMsg.value = '';

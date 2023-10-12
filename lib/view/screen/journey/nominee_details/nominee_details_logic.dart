@@ -319,7 +319,7 @@ class NomineeDetailsLogic extends GetxController {
         address2ErrorMsg.value = '';
 
         mNameErrorMsg.value = 'Please enter valid middle name';
-      } else if ((latsNameController.text.isNotEmpty && !onlyCharRegExp.hasMatch(latsNameController.text)) ||
+      } else if ((latsNameController.text.trim().isNotEmpty && !onlyCharRegExp.hasMatch(latsNameController.text)) ||
           latsNameController.text == ' ') {
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
@@ -349,11 +349,11 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
-      } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+      } else if (((mobileController.text.trim().isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
               mobileController.text == ' ' ||
-              (mobileController.text.isNotEmpty &&
+              (mobileController.text.trim().isNotEmpty &&
                   !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
-          (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
+          (mobileController.text.trim().isNotEmpty && mobileController.text.trim().length != 10)) {
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
         emailErrorMsg.value = '';
@@ -383,7 +383,7 @@ class NomineeDetailsLogic extends GetxController {
         emailErrorMsg.value = '';
         address2ErrorMsg.value = '';
       } else if (emailController.text.trim().isNotEmpty &&
-          (emailController.text.length < 5 || !emailRegExp.hasMatch(emailController.text))) {
+          (emailController.text.trim().length < 5 || !emailRegExp.hasMatch(emailController.text))) {
         dobErrorMsg.value = '';
         fNameErrorMsg.value = '';
         emailErrorMsg.value = 'Please enter valid email';
@@ -398,8 +398,8 @@ class NomineeDetailsLogic extends GetxController {
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
       } else if (addressOneController.text.trim().isEmpty ||
-          addressOneController.text.length < 5 ||
-          specialCharExpStartChar.hasMatch(addressOneController.text.substring(0))) {
+          addressOneController.text.trim().length < 2 ||
+          specialCharExpStartChar.hasMatch(addressOneController.text.trim().substring(0))) {
         addressErrorMsg.value = 'Please enter valid address';
         fNameErrorMsg.value = '';
         emailErrorMsg.value = '';
@@ -413,9 +413,25 @@ class NomineeDetailsLogic extends GetxController {
         relationErrorMsg.value = '';
         mobileErrorMsg.value = '';
         lNameErrorMsg.value = '';
+      } else if (addressTwoController.text.trim().isNotEmpty &&
+          (addressTwoController.text.trim().length < 2 ||
+              specialCharExpStartChar.hasMatch(addressTwoController.text.trim().substring(0)))) {
+        addressErrorMsg.value = '';
+        fNameErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        address2ErrorMsg.value = 'Please enter valid address';
+        stateErrorMsg.value = '';
+        districtErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        lNameErrorMsg.value = '';
       } else if (cityController.text.trim().isEmpty ||
-          cityController.text.length < 2 ||
-          specialCharExpStartChar.hasMatch(cityController.text.substring(0))) {
+          cityController.text.trim().length < 2 ||
+          specialCharExpStartChar.hasMatch(cityController.text.trim().substring(0))) {
         cityErrorMsg.value = 'Please enter valid city';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';
@@ -430,7 +446,7 @@ class NomineeDetailsLogic extends GetxController {
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
       } else if (districtController.text.trim().isEmpty ||
-          districtController.text.length < 2 ||
+          districtController.text.trim().length < 2 ||
           specialCharExpStartChar.hasMatch(districtController.text.substring(0))) {
         districtErrorMsg.value = 'Please enter valid district';
         fNameErrorMsg.value = '';
@@ -445,9 +461,25 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
         lNameErrorMsg.value = '';
+      } else if (districtController.text.trim().isEmpty ||
+          districtController.text.trim().length < 2 ||
+          specialCharExpStartChar.hasMatch(districtController.text.trim().substring(0))) {
+        districtErrorMsg.value = 'Please enter valid district';
+        fNameErrorMsg.value = '';
+        dobErrorMsg.value = '';
+        addressErrorMsg.value = '';
+        cityErrorMsg.value = '';
+        emailErrorMsg.value = '';
+        mNameErrorMsg.value = '';
+        stateErrorMsg.value = '';
+        pinCodeErrorMsg.value = '';
+        relationErrorMsg.value = '';
+        mobileErrorMsg.value = '';
+        address2ErrorMsg.value = '';
+        lNameErrorMsg.value = '';
       } else if (stateController.text.trim().isEmpty ||
-          stateController.text.length < 2 ||
-          specialCharExpStartChar.hasMatch(stateController.text.substring(0))) {
+          stateController.text.trim().length < 2 ||
+          specialCharExpStartChar.hasMatch(stateController.text.trim().substring(0))) {
         stateErrorMsg.value = 'Please enter valid state';
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';

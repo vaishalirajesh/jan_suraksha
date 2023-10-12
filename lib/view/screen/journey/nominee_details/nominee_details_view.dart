@@ -311,7 +311,7 @@ class NomineeDetailsPage extends StatelessWidget {
                               AppTextField(
                                 isMandatory: true,
                                 title: AppString.addressLine1,
-                                maxLength: 200,
+                                maxLength: 500,
                                 controller: nomineeDetailsLogic.addressOneController,
                                 hintText: AppString.enterAddress,
                                 inputType: TextInputType.streetAddress,
@@ -325,7 +325,7 @@ class NomineeDetailsPage extends StatelessWidget {
                               ),
                               AppTextField(
                                 isMandatory: false,
-                                maxLength: 200,
+                                maxLength: 500,
                                 title: AppString.addressLine2,
                                 controller: nomineeDetailsLogic.addressTwoController,
                                 hintText: AppString.enterAddress,

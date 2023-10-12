@@ -114,7 +114,7 @@ class GuradianDetailsLogic extends GetxController {
       emailErrorMsg.value = '';
       mobileErrorMsg.value = '';
     } else if (addressController.text.trim().isEmpty ||
-        addressController.text.length < 2 ||
+        addressController.text.trim().length < 2 ||
         specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';
@@ -129,8 +129,8 @@ class GuradianDetailsLogic extends GetxController {
       addressErrorMsg.value = '';
       emailErrorMsg.value = '';
       mobileErrorMsg.value = '';
-    } else if (emailController.text.isNotEmpty &&
-        ((emailController.text.length < 5) || !emailRegExp.hasMatch(emailController.text))) {
+    } else if (emailController.text.trim().isNotEmpty &&
+        ((emailController.text.trim().length < 5) || !emailRegExp.hasMatch(emailController.text))) {
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';
       addressErrorMsg.value = '';
@@ -138,9 +138,9 @@ class GuradianDetailsLogic extends GetxController {
       mobileErrorMsg.value = '';
     } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
             mobileController.text == ' ' ||
-            (mobileController.text.isNotEmpty &&
-                !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
-        (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
+            (mobileController.text.trim().isNotEmpty &&
+                !mobileRegExpStartChar.hasMatch(mobileController.text.trim().substring(0, 1)))) ||
+        (mobileController.text.isNotEmpty && mobileController.text.trim().length != 10)) {
       mobileErrorMsg.value = 'Please enter valid mobile number';
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';

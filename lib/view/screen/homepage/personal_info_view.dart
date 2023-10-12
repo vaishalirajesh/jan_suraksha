@@ -118,38 +118,57 @@ class PersonalInfoPage extends StatelessWidget {
                     ),
                     Obx(() {
                       return AppTextField(
-                          hintText: "",
-                          isReadOnly: false,
-                          isMandatory: true,
-                          isAutoFocus: false,
-                          onChanged: (s) {
-                            final bool emailValid =
-                                RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(s);
+                        hintText: "",
+                        isReadOnly: !personallogic.shouldChangeAppearInEmailSuffix.value,
+                        isMandatory: true,
+                        isAutoFocus: false,
+                        onChanged: (s) {
+                          final bool emailValid =
+                              RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(s);
 
-                            if (s != personallogic.email.value && emailValid) {
-                              TGLog.d("debug");
-                              personallogic.email.value = s;
-                              personallogic.shouldChangeAppearInEmailSuffix.value = true;
-                            } else {
-                              personallogic.shouldChangeAppearInEmailSuffix.value = false;
-                            }
-                          },
-                          inputType: TextInputType.emailAddress,
-                          maxLength: 255,
-                          controller: personallogic.emailController,
-                          suffix: personallogic.shouldChangeAppearInEmailSuffix.value
-                              ? InkWell(
-                                  onTap: () {
-                                    FocusScope.of(Get.context!).requestFocus(FocusNode());
-                                    updateEmail(context);
-                                  },
-                                  child: Text(
-                                    'Change',
-                                    style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                                  ),
-                                )
-                              : SizedBox.shrink());
+                          if (s != personallogic.email.value && emailValid) {
+                            TGLog.d("debug");
+                            personallogic.email.value = s;
+                            personallogic.shouldChangeAppearInEmailSuffix.value = true;
+                          } else {
+                            personallogic.shouldChangeAppearInEmailSuffix.value = false;
+                          }
+                        },
+                        inputType: TextInputType.emailAddress,
+                        maxLength: 255,
+                        controller: personallogic.emailController,
+                        suffix: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            personallogic.shouldChangeAppearInEmailSuffix.value
+                                ? InkWell(
+                                    onTap: () {
+                                      FocusScope.of(Get.context!).requestFocus(FocusNode());
+                                      updateEmail(context);
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 10.w,
+                                      ),
+                                      child: Text(
+                                        'Change',
+                                        style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                      ),
+                                    ),
+                                  )
+                                : InkWell(
+                                    onTap: () {
+                                      personallogic.shouldChangeAppearInEmailSuffix.value = true;
+                                    },
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: ColorConfig.jsBlackColor,
+                                    )),
+                          ],
+                        ),
+                      );
                     }),
                     SizedBox(
                       height: 20,
@@ -173,9 +192,12 @@ class PersonalInfoPage extends StatelessWidget {
                       controller: TextEditingController(text: "***********"),
                       suffix: InkWell(
                         onTap: onChangePassword,
-                        child: Text(
-                          'Change',
-                          style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 10.w, top: 10.h),
+                          child: Text(
+                            'Change',
+                            style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                          ),
                         ),
                       ),
                       hintText: '',
@@ -701,7 +723,7 @@ class AppTextField extends StatelessWidget {
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(
             hintText: hintText,
-            suffix: suffix,
+            suffixIcon: suffix,
             counterText: AppString.emptyText,
             hintStyle: StyleConfig.smallTextLight,
             prefixIconConstraints: BoxConstraints(minWidth: 24.w, maxHeight: 24.h),

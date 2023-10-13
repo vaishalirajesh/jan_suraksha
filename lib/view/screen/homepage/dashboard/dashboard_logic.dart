@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as Format;
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 import 'package:jan_suraksha/model/request_model/DownloadAgreementRequest.dart';
@@ -44,7 +44,9 @@ import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
+import 'package:jan_suraksha/view/widget/jumpingdot_util.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
+import 'package:jan_suraksha/view/widget/timer/timer_count_down.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../model/request_model/SetPasswordRequest.dart';
@@ -84,6 +86,7 @@ class DashboardLogic extends GetxController {
   int optOutIndex = -1;
   RxBool isShowPassword = true.obs;
   RxBool isShowConfirmPassword = true.obs;
+  RxBool isEnableEmailOtpResend = false.obs;
 
   setIndex(int value) {
     index.value = value;
@@ -346,8 +349,9 @@ class DashboardLogic extends GetxController {
       TGLog.d("Schema lenght--${schemeList.length}");
       Get.back();
       otpErrorMsg.value = '';
-
       isEmailVerifying.value = false;
+      isEnableEmailOtpResend.value = false;
+      otp.value = '';
       openEmailOtpBottomSheet(
         context: Get.context!,
         isEdit: true.obs,
@@ -368,10 +372,12 @@ class DashboardLogic extends GetxController {
           Get.back();
           updateEmailOtpBottomSheet();
         },
+        onResend: onResendEmailOtpTimer,
+        onFinish: onFinishEmailOtpTimer,
         errorText: otpErrorMsg,
         title: 'Email Verification',
         mobileNumber: emailController.text ?? '',
-        isEnable: (otp.value.length == 6 ? true : false).obs,
+        isEnable: isEnableEmailOtpResend,
         isLoading: isOTPVerifing,
         onButtonPress: () async {
           await verifyOtp();
@@ -385,6 +391,17 @@ class DashboardLogic extends GetxController {
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
+  }
+
+  Future<void> onFinishEmailOtpTimer() async {
+    isEnableEmailOtpResend.value = true;
+  }
+
+  Future<void> onResendEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableEmailOtpResend.value = false;
+    updateEmail();
   }
 
   _onErrorEmailOTP(TGResponse errorResponse) {
@@ -423,6 +440,7 @@ class DashboardLogic extends GetxController {
     TGLog.d("verifyEmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
       TGSharedPreferences.getInstance().set(PREF_EMAIL, emailController.text);
+      Get.back();
       getUpdatePasswordBottomSheet(
         onSubmitOTP: (String) {
           Get.back();
@@ -447,7 +465,6 @@ class DashboardLogic extends GetxController {
       isOTPVerifing.value = false;
     } else {
       TGLog.d("Error in verifyEmailOtpRequest");
-      Get.back();
       otpErrorMsg.value = response.getOtpResponse().message ?? "";
       isOTPVerifing.value = false;
       LoaderUtils.handleErrorResponse(
@@ -688,8 +705,12 @@ class DashboardLogic extends GetxController {
     required BuildContext context,
     required RxBool isEnable,
     required RxBool isLoading,
+    Function()? onFinish,
+    Function()? onResend,
     required RxBool isEdit,
   }) {
+    Format.NumberFormat formatter = Format.NumberFormat("00");
+
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
       return Obx(() {
         return Container(
@@ -718,15 +739,15 @@ class DashboardLogic extends GetxController {
                 style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
                 textAlign: TextAlign.center,
               ),
-              if (isEdit.value)
-                SizedBox(
-                  height: 5.h,
-                ),
+              // if (isEdit.value)
+              //   SizedBox(
+              //     height: 5.h,
+              //   ),
               if (isEdit.value)
                 InkWell(
                   onTap: onEdit,
                   child: Padding(
-                    padding: EdgeInsets.all(5.h),
+                    padding: EdgeInsets.only(left: 5.h, right: 5.h, top: 5.h),
                     child: Text(
                       'Edit Email id',
                       style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
@@ -753,10 +774,6 @@ class DashboardLogic extends GetxController {
                 onSubmit: (str) {
                   onButtonPress();
                 },
-                // end onSubmit
-              ),
-              SizedBox(
-                height: 10.h,
               ),
               if (errorText != null && errorText.value.isNotEmpty)
                 SizedBox(
@@ -773,25 +790,52 @@ class DashboardLogic extends GetxController {
                     ),
                   ],
                 ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Didn't Receive Verification Code Yet? \n",
-                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsTextDarkGreyColor),
-                    ),
-                    TextSpan(
-                      text: "Resend Verification Code",
-                      recognizer: TapGestureRecognizer()..onTap = () {},
-                      style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 15.h,
               ),
+              Text(
+                "Didn't Receive Verification Code Yet?",
+                style: StyleConfig.regularText16.copyWith(color: ColorConfig.jsTextDarkGreyColor),
+              ),
+              isEnable.value
+                  ? InkWell(
+                      onTap: onResend,
+                      child: Text(
+                        "Resend Verification Code",
+                        style: StyleConfig.regularText16.copyWith(
+                          color: ColorConfig.jsPrimaryColor,
+                        ),
+                      ),
+                    )
+                  : Countdown(
+                      seconds: 10,
+                      build: (BuildContext context, double time) => Text(
+                        time > 60
+                            ? "Resend Verification Code in 01:${formatter.format(time.round() - 60)} minutes"
+                            : "Resend Verification Code in 00:${formatter.format(time.round())} minutes",
+                        style: StyleConfig.regularText16.copyWith(
+                          color: ColorConfig.jsTextDarkGreyColor,
+                        ),
+                      ),
+                      interval: const Duration(seconds: 1),
+                      onFinished: onFinish,
+                    ),
+              SizedBox(
+                height: 15.h,
+              ),
+              if (isLoading.value)
+                Obx(() {
+                  return isLoading.value
+                      ? JumpingDots(
+                          color: ColorConfig.jsPrimaryColor,
+                          radius: 7,
+                        )
+                      : const SizedBox();
+                }),
+              if (isLoading.value)
+                SizedBox(
+                  height: 15.h,
+                ),
               // AppButton(
               //   onPress: onButtonPress,
               //   title: AppString.continueText,

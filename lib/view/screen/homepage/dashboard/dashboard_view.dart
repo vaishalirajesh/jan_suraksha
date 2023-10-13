@@ -173,7 +173,10 @@ class DashboardPage extends StatelessWidget {
                   ),
                 )),
           ),
-          if (dashboardLogic.isLoading.value || dashboardLogic.isDownLoading.value) AppLoader(),
+          if (dashboardLogic.isLoading.value ||
+              dashboardLogic.isDownLoading.value ||
+              !dashboardLogic.isEnableEmailOtpResend.value)
+            const AppLoader(),
         ],
       );
     });
@@ -399,8 +402,7 @@ class HomePage extends StatelessWidget {
                                 child: ListViewButtons(
                                   width: 0.3.sw,
                                   onPress: () {
-                                    Get.to(() => const OngoingPmsbyJourneyPage(),
-                                        binding: OngoingPmsbyJourneyBinding());
+                                    dashboardLogic.updateEmailOtpBottomSheet();
                                   },
                                   title: AppString.str_view_details,
                                 ),

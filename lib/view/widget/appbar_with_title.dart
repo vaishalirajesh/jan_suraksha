@@ -4,19 +4,22 @@ import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/style_config.dart';
 
 class CommonAppBar {
-  static PreferredSizeWidget appbarWithTitle({required String title, required VoidCallback onBackPress}) {
+  static PreferredSizeWidget appbarWithTitle(
+      {required String title, required VoidCallback onBackPress, required bool isLeading}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,
       centerTitle: true,
-      leading: InkWell(
-        onTap: onBackPress,
-        child: Icon(
-          Icons.arrow_back_sharp,
-          color: ColorConfig.jsLightBlackColor,
-          size: 25.r,
-        ),
-      ),
+      leading: isLeading
+          ? InkWell(
+              onTap: onBackPress,
+              child: Icon(
+                Icons.arrow_back_sharp,
+                color: ColorConfig.jsLightBlackColor,
+                size: 25.r,
+              ),
+            )
+          : null,
       title: Text(
         title,
         style: StyleConfig.semiBoldText18,
@@ -53,7 +56,12 @@ class CommonAppBar {
       ),
       bottom: PreferredSize(
         preferredSize: Size(0, 3.h),
-        child: LinearProgressIndicator(value: progress, semanticsLabel: '', minHeight: 2.h, color: ColorConfig.jsPrimaryColor, backgroundColor: Colors.transparent),
+        child: LinearProgressIndicator(
+            value: progress,
+            semanticsLabel: '',
+            minHeight: 2.h,
+            color: ColorConfig.jsPrimaryColor,
+            backgroundColor: Colors.transparent),
       ),
     );
   }
@@ -77,7 +85,8 @@ class CommonAppBar {
     );
   }
 
-  static PreferredSizeWidget appbarWithSubTitle({required String title, required String subTitle, required VoidCallback backPress}) {
+  static PreferredSizeWidget appbarWithSubTitle(
+      {required String title, required String subTitle, required VoidCallback backPress}) {
     return AppBar(
       backgroundColor: ColorConfig.jsCreamColor,
       elevation: 0,
@@ -145,10 +154,10 @@ class CommonAppBar {
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.notification_add,
-                  color: ColorConfig.jsLightBlackColor,
-                )
+                // Icon(
+                //   Icons.notification_add,
+                //   color: ColorConfig.jsLightBlackColor,
+                // )
               ],
             ),
             SizedBox(

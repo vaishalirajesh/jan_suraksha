@@ -8,20 +8,21 @@ import 'package:jan_suraksha/view/widget/appbar_with_title.dart';
 import 'app_button.dart';
 
 class AddHeaderFooter extends StatelessWidget {
-  AddHeaderFooter({
-    Key? key,
-    required this.child,
-    required this.appbarName,
-    required this.title,
-    required this.buttonTitle,
-    required this.onButtonClick,
-    required this.isDataLoading,
-    required this.isButtonEnable,
-    required this.onBackButtonCLick,
-    this.isShowButton,
-    this.subTitle = '',
-    this.progress,
-  }) : super(key: key);
+  AddHeaderFooter(
+      {Key? key,
+      required this.child,
+      required this.appbarName,
+      required this.title,
+      required this.buttonTitle,
+      required this.onButtonClick,
+      required this.isDataLoading,
+      required this.isButtonEnable,
+      required this.onBackButtonCLick,
+      this.isShowButton,
+      this.subTitle = '',
+      this.progress,
+      this.isLeading = true})
+      : super(key: key);
   Widget child;
   String appbarName = '';
   String title = '';
@@ -32,12 +33,13 @@ class AddHeaderFooter extends StatelessWidget {
   bool isButtonEnable = false;
   bool isDataLoading = false;
   bool? isShowButton = true;
+  bool isLeading;
   double? progress;
 
   PreferredSizeWidget getAppBar() {
     switch (appbarName) {
       case AppString.appBarWithTitle:
-        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
+        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick, isLeading: isLeading);
       case AppString.appBarWithTitleAndProgressBar:
         return CommonAppBar.appbarWithTitleAndProgressBar(
             title: title, onBackPress: onBackButtonCLick, progress: progress);
@@ -48,7 +50,7 @@ class AddHeaderFooter extends StatelessWidget {
       case AppString.appBarWithoutBackButton:
         return CommonAppBar.appbarWithoutTitleAndBackButton(title: title);
       default:
-        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick);
+        return CommonAppBar.appbarWithTitle(title: title, onBackPress: onBackButtonCLick, isLeading: true);
     }
   }
 

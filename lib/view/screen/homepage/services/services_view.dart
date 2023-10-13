@@ -54,10 +54,10 @@ class ServicesPage extends StatelessWidget {
                             'Services',
                             style: StyleConfig.regularLargeText,
                           ),
-                          Icon(
-                            Icons.notification_add,
-                            color: ColorConfig.jsLightBlackColor,
-                          )
+                          // Icon(
+                          //   Icons.notification_add,
+                          //   color: ColorConfig.jsLightBlackColor,
+                          // )
                         ],
                       ),
                       SizedBox(

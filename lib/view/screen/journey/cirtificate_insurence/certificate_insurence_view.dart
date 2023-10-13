@@ -23,7 +23,7 @@ class CertificateInsurencePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: AppUtils.onWillPopToDashboard,
+      onWillPop: AppUtils.onWillNoPop,
       child: Obx(() {
         return Stack(
           children: [
@@ -36,6 +36,7 @@ class CertificateInsurencePage extends StatelessWidget {
               isDataLoading: certificateInsurenceLogic.isDownLoading.value,
               isButtonEnable: true,
               isShowButton: false,
+              isLeading: false,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(20.h),

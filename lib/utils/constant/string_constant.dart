@@ -171,7 +171,7 @@ class AppString {
   static const String ackInsurance = 'Acknowledgement Slip Cum Certificate of Insurance - PMJJBY';
   static const String yojna = 'Pradhan Mantri Jeevan Jyoti Bima Yojana';
   static const String yojna2 = 'Pradhan Mantri Suraksha Bima Yojana';
-  static const String COI = 'Certificate of insurance (COI)';
+  static const String COI = 'Certificate of Insurance (COI)';
   static const String yojana = 'Pradhan Mantri Jeevan jyoti Bima Yojana';
   static const String nameMember = 'Name of Member';
   static const String aadharNo = 'Aadhar Number';

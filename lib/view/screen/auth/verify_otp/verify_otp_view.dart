@@ -23,7 +23,8 @@ class VerifyOtpPage extends StatelessWidget {
       onWillPop: AppUtils.onWillPopScope,
       child: Scaffold(
         extendBody: true,
-        appBar: CommonAppBar.appbarWithTitle(title: AppString.emptyText, onBackPress: AppUtils.onBackPress),
+        appBar: CommonAppBar.appbarWithTitle(
+            title: AppString.emptyText, onBackPress: AppUtils.onBackPress, isLeading: true),
         body: SizedBox(
           width: 1.sw,
           child: Column(

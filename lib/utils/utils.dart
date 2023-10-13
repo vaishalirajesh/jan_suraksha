@@ -53,6 +53,10 @@ class AppUtils {
     return true;
   }
 
+  static Future<bool> onWillNoPop() async {
+    return false;
+  }
+
   static void onBackPressAuth() {
     SystemNavigator.pop();
   }

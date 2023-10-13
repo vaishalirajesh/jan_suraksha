@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/config/navigation_config.dart';
 import 'package:jan_suraksha/model/request_model/LogoutRequest.dart';
+import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
@@ -551,9 +552,8 @@ class ProfilePage extends StatelessWidget {
                     Get.back();
                     logic.isLogoutAPICalling.value = true;
                     await TGSharedPreferences.getInstance().set(PREF_IS_FROM_REG, false);
-
+                    TGSession.getInstance().set(PREF_USER_FORM_DATA, "");
                     LogOutRequest request = LogOutRequest(id: "", type: "");
-
                     ServiceManager.getInstance().logOut(
                         request: request,
                         onSuccess: (respose) => _onsuccsessSetPassword(respose),
@@ -606,6 +606,7 @@ class ProfilePage extends StatelessWidget {
     TGSharedPreferences.getInstance().remove(PREF_USER_ID);
     TGSharedPreferences.getInstance().remove(PREF_ACCOUNT_HOLDER_DATA);
     TGSharedPreferences.getInstance().remove(PREF_USER_FORM_DATA);
+    TGSession.getInstance().set(PREF_USER_FORM_DATA, "");
     TGSharedPreferences.getInstance().remove(PREF_IS_FROM_REG);
     TGSharedPreferences.getInstance().remove(PREF_IS_ADULT);
     TGSharedPreferences.getInstance().remove(PREF_USER_NAME);

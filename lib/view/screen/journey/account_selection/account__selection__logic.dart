@@ -21,39 +21,42 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class AccountSelectionLogic extends GetxController {
-  List<RxBool> selectedWidget = [];
   VerifyOtpResponseMain verifyOtpResponseMain = VerifyOtpResponseMain();
   RxString accountHolderName = 'Vaishali Patel'.obs;
   RxString secondAccountHolderName = ''.obs;
   Data accountHolderData = Data();
   RxBool isLoading = false.obs;
+  RxInt isSelectedIndex = (-1).obs;
 
   @override
   void onInit() {
     String data = TGSession.getInstance().get(PREF_ACCOUNT_HOLDER_DATA);
     verifyOtpResponseMain = verifyOtpResponseMainFromJson(data);
-    if (verifyOtpResponseMain.data != null && verifyOtpResponseMain.data?.isNotEmpty == true) {
-      for (var element in verifyOtpResponseMain.data!) {
-        selectedWidget.add(false.obs);
-      }
-    }
-    accountHolderData = verifyOtpResponseMain.data?.first ?? Data();
-    TGLog.d("Accoun holder data----$verifyOtpResponseMain");
     super.onInit();
   }
 
+  void onChangeDetail(int index) {
+    accountHolderData = verifyOtpResponseMain.data?[index] ?? Data();
+    isSelectedIndex.value = index;
+  }
+
   Future<void> onPressContinue() async {
-    if (await NetUtils.isInternetAvailable()) {
-      updateUserAccountData();
-    } else {
-      if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, updateUserAccountData);
+    if (accountHolderData.accountHolderName != null || accountHolderData.accountHolderName?.isNotEmpty == true) {
+      if (await NetUtils.isInternetAvailable()) {
+        updateUserAccountData();
+      } else {
+        if (Get.context!.mounted) {
+          showSnackBarForintenetConnection(Get.context!, updateUserAccountData);
+        }
       }
+    } else {
+      showSnackBar(Get.context!, "Please select account holder detail");
     }
   }
 

@@ -137,6 +137,7 @@ class PreviewApplicationFormLogic extends GetxController {
     TGLog.d("SaveFormDetailRequest : onSuccess()---$response");
     if (response.saveFormDetail().status == RES_SUCCESS) {
       isLoading.value = false;
+      TGSession.getInstance().set(PREF_USER_FORM_DATA, "");
       // TGSession.getInstance().set(PREF_ACCOUNT_HOLDER_DATA, json.encode(response.verifyOTP()));
       Get.to(() => TermsAndConditionsPage(), binding: TermsAndConditionsBinding());
     } else {

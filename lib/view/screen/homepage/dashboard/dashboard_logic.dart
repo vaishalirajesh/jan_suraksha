@@ -212,7 +212,12 @@ class DashboardLogic extends GetxController {
     TGLog.d("GetEnrollmentListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
       if (response.getEnrollmentList().data != null) {
-        schemeList = json.decode(response.getEnrollmentList().data ?? '');
+        List<dynamic> scheme = json.decode(response.getEnrollmentList().data ?? '');
+        for (var element in scheme) {
+          if (element['stageId'] == 6 || element['stageId'] == 4) {
+            schemeList.add(element);
+          }
+        }
       }
       TGLog.d("Schema lenght--${schemeList.length}");
       bool isFromReg = (await TGSharedPreferences.getInstance().get(PREF_IS_FROM_REG)) ?? false;

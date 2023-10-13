@@ -254,7 +254,7 @@ class DashboardLogic extends GetxController {
     } else {
       emailErrorMsg.value = '';
       WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-      updateEmail();
+      updateEmail(true);
     }
   }
 
@@ -324,7 +324,7 @@ class DashboardLogic extends GetxController {
     }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
-  Future<void> updateEmail() async {
+  Future<void> updateEmail(bool isFromBottomSheet) async {
     isEmailVerifying.value = true;
     var userID = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     await TGSharedPreferences.getInstance().get(PREF_REFRESHTOKEN);
@@ -338,16 +338,18 @@ class DashboardLogic extends GetxController {
     TGLog.d("EmailOtpRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().otpRequest(
       request: tgPostRequest,
-      onSuccess: (response) => _onSuccessEmailOtp(response),
+      onSuccess: (response) => _onSuccessEmailOtp(response, isFromBottomSheet),
       onError: (error) => _onErrorEmailOTP(error),
     );
   }
 
-  _onSuccessEmailOtp(OTPResponse response) async {
+  _onSuccessEmailOtp(OTPResponse response, bool isBack) async {
     TGLog.d("EmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
       TGLog.d("Schema lenght--${schemeList.length}");
-      Get.back();
+      if (isBack) {
+        Get.back();
+      }
       otpErrorMsg.value = '';
       isEmailVerifying.value = false;
       isEnableEmailOtpResend.value = false;
@@ -401,7 +403,7 @@ class DashboardLogic extends GetxController {
     Get.back();
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     isEnableEmailOtpResend.value = false;
-    updateEmail();
+    updateEmail(false);
   }
 
   _onErrorEmailOTP(TGResponse errorResponse) {
@@ -436,6 +438,11 @@ class DashboardLogic extends GetxController {
         onError: (error) => _onErrorEmailOTP(error));
   }
 
+  var setPassError = "".obs;
+
+  var resetPassError = "".obs;
+  RxBool isSetPasswordLoading = false.obs;
+
   _onSuccessVerifyOTP(OTPResponse response) async {
     TGLog.d("verifyEmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
@@ -446,16 +453,41 @@ class DashboardLogic extends GetxController {
           Get.back();
         },
         onButtonPress: () async {
-          var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-          SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
-              password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
-          var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
-          TGLog.d("SignUpOtpRequest $jsonRequest");
-          TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
-          ServiceManager.getInstance().setPassword(
-              request: tgPostRequest,
-              onSuccess: (respose) => _onsuccsessSetPassword(respose),
-              onError: (response) => _onErrorSetPassword(response));
+          FocusScope.of(Get.context!).requestFocus(FocusNode());
+          if (passwordController.text.isEmpty) {
+            setPassError.value = "Please enter password";
+            resetPassError.value = '';
+          } else if (passwordController.text.length < 8) {
+            resetPassError.value = "";
+            setPassError.value = 'Invalid password pattern';
+          } else if (!validateStructure(passwordController.text)) {
+            resetPassError.value = "";
+            setPassError.value = 'Invalid password pattern';
+          } else if (repeatPasswordController.text.trim().isEmpty ||
+              passwordController.text != repeatPasswordController.text) {
+            resetPassError.value = "Password not match with confirm password";
+            setPassError.value = '';
+          } else if (repeatPasswordController.text.length < 8) {
+            resetPassError.value = "Invalid password pattern";
+            setPassError.value = '';
+          } else if (!validateStructure(repeatPasswordController.text)) {
+            resetPassError.value = "Invalid password pattern";
+            setPassError.value = '';
+          } else {
+            setPassError.value = '';
+            resetPassError.value = '';
+            isSetPasswordLoading.value = true;
+            var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+            SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(
+                password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
+            var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+            TGLog.d("SignUpOtpRequest $jsonRequest");
+            TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
+            ServiceManager.getInstance().setPassword(
+                request: tgPostRequest,
+                onSuccess: (respose) => _onsuccsessSetPassword(respose),
+                onError: (response) => _onErrorSetPassword(response));
+          }
         },
         title: 'Update Password',
         isEnable: true.obs,
@@ -808,7 +840,7 @@ class DashboardLogic extends GetxController {
                       ),
                     )
                   : Countdown(
-                      seconds: 10,
+                      seconds: 120,
                       build: (BuildContext context, double time) => Text(
                         time > 60
                             ? "Resend Verification Code in 01:${formatter.format(time.round() - 60)} minutes"
@@ -853,7 +885,7 @@ class DashboardLogic extends GetxController {
   // onSubmitOTP: (String) {},
   // onButtonPress: () async {
   // var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-  // SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: passwordController.text, confirmPassword: repeatpasswordController.text, userId: userId);
+  // SetPasswordRequest verifySignupOtpRequest = SetPasswordRequest(password: passwordController.text, confirmPassword: repeatPasswordController.text, userId: userId);
   // var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
   // TGLog.d("SignUpOtpRequest $jsonRequest");
   // TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SET_PASSWORD);
@@ -944,53 +976,63 @@ class DashboardLogic extends GetxController {
                     SizedBox(
                       height: 10.h,
                     ),
-                    AppTextField(
-                      isMandatory: true,
-                      title: AppString.password,
-                      controller: passwordController,
-                      hintText: AppString.password,
-                      inputType: TextInputType.text,
-                      errorText: "",
-                      isObscureText: isShowPassword.value,
-                      suffix: IconButton(
-                        icon: isShowPassword.value
-                            ? Icon(
-                                Icons.visibility_sharp,
-                                color: ColorConfig.jsTextMediumGreyColor,
-                              )
-                            : Icon(
-                                Icons.visibility_off_sharp,
-                                color: ColorConfig.jsTextMediumGreyColor,
-                              ),
-                        onPressed: () {
-                          isShowPassword.value = !isShowPassword.value;
+                    Obx(() {
+                      return AppTextField(
+                        isMandatory: true,
+                        title: AppString.password,
+                        controller: passwordController,
+                        hintText: AppString.password,
+                        inputType: TextInputType.text,
+                        errorText: setPassError.value,
+                        isObscureText: isShowPassword.value,
+                        onChanged: (str) {
+                          setPassError.value = '';
                         },
-                      ),
-                    ),
+                        suffix: IconButton(
+                          icon: isShowPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            isShowPassword.value = !isShowPassword.value;
+                          },
+                        ),
+                      );
+                    }),
                     SizedBox(height: 20),
-                    AppTextField(
-                      isMandatory: true,
-                      title: AppString.reenterPassword,
-                      controller: repeatPasswordController,
-                      hintText: AppString.reenterPassword,
-                      inputType: TextInputType.text,
-                      errorText: "",
-                      isObscureText: isShowConfirmPassword.value,
-                      suffix: IconButton(
-                        icon: isShowConfirmPassword.value
-                            ? Icon(
-                                Icons.visibility_sharp,
-                                color: ColorConfig.jsTextMediumGreyColor,
-                              )
-                            : Icon(
-                                Icons.visibility_off_sharp,
-                                color: ColorConfig.jsTextMediumGreyColor,
-                              ),
-                        onPressed: () {
-                          isShowConfirmPassword.value = !isShowConfirmPassword.value;
+                    Obx(() {
+                      return AppTextField(
+                        isMandatory: true,
+                        title: AppString.reenterPassword,
+                        controller: repeatPasswordController,
+                        hintText: AppString.reenterPassword,
+                        inputType: TextInputType.text,
+                        errorText: resetPassError.value,
+                        onChanged: (str) {
+                          resetPassError.value = '';
                         },
-                      ),
-                    ),
+                        isObscureText: isShowConfirmPassword.value,
+                        suffix: IconButton(
+                          icon: isShowConfirmPassword.value
+                              ? Icon(
+                                  Icons.visibility_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                )
+                              : Icon(
+                                  Icons.visibility_off_sharp,
+                                  color: ColorConfig.jsTextMediumGreyColor,
+                                ),
+                          onPressed: () {
+                            isShowConfirmPassword.value = !isShowConfirmPassword.value;
+                          },
+                        ),
+                      );
+                    }),
                     if (errorText != null && errorText.value.isNotEmpty)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1011,10 +1053,7 @@ class DashboardLogic extends GetxController {
                     AppButton(
                       onPress: onButtonPress,
                       title: AppString.continueText,
-                      isButtonEnable: ((passwordController.text == repeatPasswordController.text) &&
-                              passwordController.text.length > 8 &&
-                              validateStructure(passwordController.text))
-                          .obs,
+                      isButtonEnable: true.obs,
                       isDataLoading: false.obs,
                     )
                   ],

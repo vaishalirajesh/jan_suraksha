@@ -69,6 +69,9 @@ class ApplicationFormLogic extends GetxController {
         disableSelectionError.value = 'Please select disability';
       } else {
         disableError.value = '';
+        getAppData.data?.disabilityStatus = disbletext.value;
+        getAppData.data?.disabilityDetails = null;
+        TGSession.getInstance().set(PREF_USER_FORM_DATA, getApplicationFormDetailsResponseMainToJson(getAppData));
         Get.to(() => AddressDetailsPage(), binding: AddressDetailsBinding());
       }
     }

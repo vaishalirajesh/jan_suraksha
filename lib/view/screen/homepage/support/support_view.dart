@@ -48,10 +48,15 @@ class SupportPage extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Text(
-                  "customersupport@jansuraksha.in",
-                  style: StyleConfig.smallText
-                      .copyWith(color: ColorConfig.jsPrimaryColor, decoration: TextDecoration.underline),
+                InkWell(
+                  onTap: () {
+                    launchUrl(Uri.parse("mailto:customersupport@jansuraksha.in"));
+                  },
+                  child: Text(
+                    "customersupport@jansuraksha.in",
+                    style: StyleConfig.smallText
+                        .copyWith(color: ColorConfig.jsPrimaryColor, decoration: TextDecoration.underline),
+                  ),
                 ),
               ]),
             ),

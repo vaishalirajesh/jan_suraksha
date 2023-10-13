@@ -146,7 +146,9 @@ class NomineeDetailsLogic extends GetxController {
         firstNameController.text = nominee.firstName ?? '';
         latsNameController.text = nominee.lastName ?? '';
         middleNameController.text = nominee.middleName ?? '';
-        dobController.text = AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'dd/mm/yyyy') ?? '';
+        dobController.text = nominee.dateOfBirth != null
+            ? AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'dd/mm/yyyy')
+            : '';
         date = DateTime.parse(
             AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'yyyy-MM-dd 00:00:00.000'));
         mobileController.text = nominee.mobileNumber ?? '';
@@ -289,7 +291,7 @@ class NomineeDetailsLogic extends GetxController {
         mobileErrorMsg.value = '';
         emailErrorMsg.value = '';
         address2ErrorMsg.value = '';
-      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) || firstNameController.text == ' ') {
+      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) || firstNameController.text.trim() == ' ') {
         fNameErrorMsg.value = 'Please enter valid first name';
         dobErrorMsg.value = '';
         addressErrorMsg.value = '';
@@ -331,7 +333,6 @@ class NomineeDetailsLogic extends GetxController {
         relationErrorMsg.value = '';
         mobileErrorMsg.value = '';
         address2ErrorMsg.value = '';
-
         emailErrorMsg.value = '';
         lNameErrorMsg.value = 'Please enter valid last name';
         mNameErrorMsg.value = '';

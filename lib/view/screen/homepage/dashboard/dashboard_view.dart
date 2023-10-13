@@ -175,7 +175,7 @@ class DashboardPage extends StatelessWidget {
           ),
           if (dashboardLogic.isLoading.value ||
               dashboardLogic.isDownLoading.value ||
-              !dashboardLogic.isEnableEmailOtpResend.value)
+              dashboardLogic.isEmailVerifying.value)
             const AppLoader(),
         ],
       );

@@ -200,7 +200,7 @@ class GeneralFaqPage extends StatelessWidget {
                         style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
                       ),
                       TextSpan(
-                        text: " PMJJBY Clain Form",
+                        text: " PMJJBY Claim Form",
                         style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsHyperlinkBlueColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {

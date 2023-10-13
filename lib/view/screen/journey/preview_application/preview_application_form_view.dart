@@ -142,42 +142,12 @@ class PreviewApplicationPage extends StatelessWidget {
                                     SizedBox(
                                       height: 15.h,
                                     ),
-                                    Text(
-                                      "Whether Suffering from any Disability ? *",
-                                      style: StyleConfig.mediumText16,
-                                    ),
-                                    SizedBox(
-                                      height: 15.h,
-                                    ),
-                                    AbsorbPointer(
-                                      absorbing: true,
-                                      child: Container(
-                                        width: 0.87.sw,
-                                        height: 60,
-                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15.0),
-                                          border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 0.80),
-                                        ),
-                                        child: SizedBox(
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton(
-                                              items: previewApplicationFormLogic.dropdownValues
-                                                  .map((value) => DropdownMenuItem(
-                                                        value: value,
-                                                        child: SizedBox(child: Text(value)),
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (i) {
-                                                print(i!);
-                                              },
-                                              isExpanded: false,
-                                              value:
-                                                  previewApplicationFormLogic.getAppData.data?.disabilityStatus ?? 'No',
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                    DisableTextField(
+                                      isMandatory: true,
+                                      initialvale:
+                                          previewApplicationFormLogic.getAppData.data?.disabilityStatus ?? 'No',
+                                      title: "Whether Suffering from any Disability ? ",
+                                      isReadOnly: true,
                                     ),
                                     if (previewApplicationFormLogic.getAppData.data?.disabilityStatus == "Yes"
                                         ? true

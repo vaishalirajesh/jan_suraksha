@@ -616,6 +616,12 @@ class PersonalInfoPage extends StatelessWidget {
     if (personallogic.setPasswordController.text.isEmpty) {
       personallogic.setPassError.value = "Please enter password";
       personallogic.resetPassError.value = '';
+    } else if (personallogic.setPasswordController.text.length < 8) {
+      personallogic.resetPassError.value = "";
+      personallogic.setPassError.value = 'Invalid password pattern';
+    } else if (!validateStructure(personallogic.setPasswordController.text)) {
+      personallogic.resetPassError.value = "";
+      personallogic.setPassError.value = 'Invalid password pattern';
     } else if (personallogic.repeatSetPasswordController.text.trim().isEmpty ||
         personallogic.setPasswordController.text != personallogic.repeatSetPasswordController.text) {
       personallogic.resetPassError.value = "Password not match with confirm password";

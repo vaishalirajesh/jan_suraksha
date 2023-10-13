@@ -353,7 +353,7 @@ class LoginLogic extends GetxController {
         onButtonPress: onPressVerifyOtp,
         isEdit: false.obs,
         errorText: otpError,
-        subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+        subTitle: 'A Verification code is sent on your registered mobile number '.obs,
       );
       isLoading.value = false;
     } else {
@@ -645,6 +645,12 @@ class LoginLogic extends GetxController {
     if (setPasswordController.text.isEmpty) {
       setPassError.value = "Please enter password";
       resetPassError.value = '';
+    } else if (setPasswordController.text.length < 8) {
+      resetPassError.value = "";
+      setPassError.value = 'Invalid password pattern';
+    } else if (!validateStructure(setPasswordController.text)) {
+      resetPassError.value = "";
+      setPassError.value = 'Invalid password pattern';
     } else if (repeatSetPasswordController.text.isEmpty ||
         setPasswordController.text != repeatSetPasswordController.text) {
       resetPassError.value = "Password not match with confirm password";

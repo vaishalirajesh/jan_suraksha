@@ -97,7 +97,7 @@ class SelectSchemePage extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    "JanSuraksha schemes",
+                    "JanSuraksha Schemes",
                     style: StyleConfig.boldText16.copyWith(fontSize: 18.sp, color: ColorConfig.jsTextGreyColor),
                   ),
                   SizedBox(

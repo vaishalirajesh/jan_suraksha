@@ -37,7 +37,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20.h,
+                      height: 40.h,
                     ),
                     Text(
                       "Forgot Password ?",
@@ -91,6 +91,9 @@ class ForgotPasswordPage extends StatelessWidget {
                           inputType: TextInputType.emailAddress,
                           maxLength: 255,
                           errorText: forgotPasswordLogic.forgotEmailError.value,
+                          onChanged: (str) {
+                            forgotPasswordLogic.forgotEmailError.value = '';
+                          },
                         );
                       }),
                       Padding(

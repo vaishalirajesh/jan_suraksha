@@ -119,7 +119,7 @@ class PersonalInfoPage extends StatelessWidget {
                     Obx(() {
                       return AppTextField(
                         hintText: "",
-                        isReadOnly: !personallogic.shouldChangeAppearInEmailSuffix.value,
+                        isReadOnly: personallogic.showEditIcon.value,
                         isMandatory: true,
                         isAutoFocus: false,
                         onChanged: (s) {
@@ -142,25 +142,27 @@ class PersonalInfoPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            personallogic.shouldChangeAppearInEmailSuffix.value
-                                ? InkWell(
-                                    onTap: () {
-                                      FocusScope.of(Get.context!).requestFocus(FocusNode());
-                                      updateEmail(context);
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 10.w,
-                                      ),
-                                      child: Text(
-                                        'Change',
-                                        style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
-                                      ),
-                                    ),
-                                  )
+                            !personallogic.showEditIcon.value
+                                ? personallogic.shouldChangeAppearInEmailSuffix.value
+                                    ? InkWell(
+                                        onTap: () {
+                                          FocusScope.of(Get.context!).requestFocus(FocusNode());
+                                          updateEmail(context);
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 10.w,
+                                          ),
+                                          child: Text(
+                                            'Change',
+                                            style: StyleConfig.boldText16.copyWith(color: ColorConfig.jsPrimaryColor),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox()
                                 : InkWell(
                                     onTap: () {
-                                      personallogic.shouldChangeAppearInEmailSuffix.value = true;
+                                      personallogic.showEditIcon.value = false;
                                     },
                                     child: Icon(
                                       Icons.edit,
@@ -350,6 +352,7 @@ class PersonalInfoPage extends StatelessWidget {
               showSnackBar(context, "Email Updated Succsessfully");
               TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
               personallogic.shouldChangeAppearInEmailSuffix.value = false;
+              personallogic.showEditIcon.value = true;
               Get.back();
               personallogic.isLoadingEmailOTP.value = false;
             } else {
@@ -608,7 +611,7 @@ class PersonalInfoPage extends StatelessWidget {
               )
             : Container();
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   Future<void> onPressSetPassword() async {

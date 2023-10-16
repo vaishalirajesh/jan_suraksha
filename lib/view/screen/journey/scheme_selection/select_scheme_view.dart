@@ -37,17 +37,11 @@ class SelectSchemePage extends StatelessWidget {
             child: SizedBox(
               child: Container(
                 width: 1.sw,
-                height: 50,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.white, HexColor("#00FFFFFF")])),
+                height: 70,
+                alignment: Alignment.bottomCenter,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
                     Row(
                       children: [
                         const SizedBox(
@@ -57,7 +51,10 @@ class SelectSchemePage extends StatelessWidget {
                             onTap: () {
                               Get.back();
                             },
-                            child: const Icon(Icons.arrow_back_sharp)),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10.r, top: 10.r, bottom: 10.r),
+                              child: const Icon(Icons.arrow_back_sharp),
+                            )),
                         Expanded(
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

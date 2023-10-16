@@ -13,6 +13,7 @@ class PersonalInfoLogic extends GetxController {
   var isLoadingEmailOTP = false.obs;
 
   var shouldChangeAppearInEmailSuffix = true.obs;
+  var showEditIcon = true.obs;
 
   var emailController = TextEditingController();
 

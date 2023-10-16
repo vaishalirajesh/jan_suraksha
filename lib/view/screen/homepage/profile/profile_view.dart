@@ -50,236 +50,10 @@ class ProfilePage extends StatelessWidget {
                 subTitle: logic.mobilenumber.value,
                 child: Container(
                   color: ColorConfig.jsCreamColor,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0),
-                              ),
-                              border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(PersonalInfoPageRoute);
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                          height: 32.r,
-                                          width: 32.r,
-                                          decoration: BoxDecoration(
-                                            color: ColorConfig.jsLightGreyColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: SizedBox(
-                                              height: 12.r,
-                                              width: 12.r,
-                                              child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
-                                            ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "Personal Info",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0),
-                              ),
-                              border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  // OTPBottomSheetEmail.getBottomSheet(
-                                  //   context: Get.context!,
-                                  //   onChangeOTP: (s) {},
-                                  //   onSubmitOTP: (s) {},
-                                  //   title: 'Update Email ID',
-                                  //   isEnable: true.obs,
-                                  //   isLoading: false.obs,
-                                  //   onButtonPress: () {},
-                                  //   notNow: () {},
-                                  // );
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                          height: 32.r,
-                                          width: 32.r,
-                                          decoration: BoxDecoration(
-                                            color: ColorConfig.jsLightGreyColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: SizedBox(
-                                              height: 10.r,
-                                              width: 10.r,
-                                              child: SvgPicture.asset(Assets.profileShare),
-                                            ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "Share App",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0),
-                              ),
-                              border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("1")));
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                          height: 32.r,
-                                          width: 32.r,
-                                          decoration: BoxDecoration(
-                                            color: ColorConfig.jsLightGreyColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: SizedBox(
-                                              height: 10.r,
-                                              width: 10.r,
-                                              child: SvgPicture.asset(Assets.profileProfilePrivacyPolicy),
-                                            ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "Privacy Policy",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0),
-                              ),
-                              border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("2")));
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                          height: 32.r,
-                                          width: 32.r,
-                                          decoration: BoxDecoration(
-                                            color: ColorConfig.jsLightGreyColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: SizedBox(
-                                              height: 10.r,
-                                              width: 10.r,
-                                              child: SvgPicture.asset(Assets.profileProfileTermsAndConditions),
-                                            ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "Terms & Conditions",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => GeneralFaqPage(), binding: GenralFaqBinding());
-                        },
-                        child: Padding(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                           child: Container(
                             decoration: BoxDecoration(
@@ -294,11 +68,300 @@ class ProfilePage extends StatelessWidget {
                                 border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(PersonalInfoPageRoute);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                            height: 32.r,
+                                            width: 32.r,
+                                            decoration: BoxDecoration(
+                                              color: ColorConfig.jsLightGreyColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 12.r,
+                                                width: 12.r,
+                                                child: SvgPicture.asset(Assets.profileProfilePersonalInfo),
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "Personal Info",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    // OTPBottomSheetEmail.getBottomSheet(
+                                    //   context: Get.context!,
+                                    //   onChangeOTP: (s) {},
+                                    //   onSubmitOTP: (s) {},
+                                    //   title: 'Update Email ID',
+                                    //   isEnable: true.obs,
+                                    //   isLoading: false.obs,
+                                    //   onButtonPress: () {},
+                                    //   notNow: () {},
+                                    // );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                            height: 32.r,
+                                            width: 32.r,
+                                            decoration: BoxDecoration(
+                                              color: ColorConfig.jsLightGreyColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 10.r,
+                                                width: 10.r,
+                                                child: SvgPicture.asset(Assets.profileShare),
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "Share App",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("1")));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                            height: 32.r,
+                                            width: 32.r,
+                                            decoration: BoxDecoration(
+                                              color: ColorConfig.jsLightGreyColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 10.r,
+                                                width: 10.r,
+                                                child: SvgPicture.asset(Assets.profileProfilePrivacyPolicy),
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "Privacy Policy",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (context) => MyStatefulWidget("2")));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                            height: 32.r,
+                                            width: 32.r,
+                                            decoration: BoxDecoration(
+                                              color: ColorConfig.jsLightGreyColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 10.r,
+                                                width: 10.r,
+                                                child: SvgPicture.asset(Assets.profileProfileTermsAndConditions),
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "Terms & Conditions",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => GeneralFaqPage(), binding: GenralFaqBinding());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                  ),
+                                  border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                            height: 32.r,
+                                            width: 32.r,
+                                            decoration: BoxDecoration(
+                                              color: ColorConfig.jsLightGreyColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 10.r,
+                                                width: 10.r,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border:
+                                                        Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                                  ),
+                                                  // padding: EdgeInsets.all(1.r),
+                                                  child: Icon(Icons.question_mark,
+                                                      color: ColorConfig.jsSecondaryColor, size: 11.r),
+                                                ),
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "General FAQs",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => PMJJBYFaqPage(), binding: GenralFaqBinding());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                  ),
+                                  border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
                                           height: 32.r,
                                           width: 32.r,
                                           decoration: BoxDecoration(
@@ -320,209 +383,149 @@ class ProfilePage extends StatelessWidget {
                                                     color: ColorConfig.jsSecondaryColor, size: 11.r),
                                               ),
                                             ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "General FAQs",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "PMJJBY FAQs",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => PMJJBYFaqPage(), binding: GenralFaqBinding());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                  bottomLeft: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0),
-                                ),
-                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                        height: 32.r,
-                                        width: 32.r,
-                                        decoration: BoxDecoration(
-                                          color: ColorConfig.jsLightGreyColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: SizedBox(
-                                            height: 10.r,
-                                            width: 10.r,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => PMSBYFaqPage(), binding: GenralFaqBinding());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                  ),
+                                  border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                          height: 32.r,
+                                          width: 32.r,
+                                          decoration: BoxDecoration(
+                                            color: ColorConfig.jsLightGreyColor,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: SizedBox(
+                                              height: 10.r,
+                                              width: 10.r,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                                ),
+                                                // padding: EdgeInsets.all(1.r),
+                                                child: Icon(Icons.question_mark,
+                                                    color: ColorConfig.jsSecondaryColor, size: 11.r),
                                               ),
-                                              // padding: EdgeInsets.all(1.r),
-                                              child: Icon(Icons.question_mark,
-                                                  color: ColorConfig.jsSecondaryColor, size: 11.r),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "PMJJBY FAQs",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ],
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        "PMSBY FAQs",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => PMSBYFaqPage(), binding: GenralFaqBinding());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                  bottomLeft: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0),
-                                ),
-                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                        height: 32.r,
-                                        width: 32.r,
-                                        decoration: BoxDecoration(
-                                          color: ColorConfig.jsLightGreyColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: SizedBox(
-                                            height: 10.r,
-                                            width: 10.r,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                        InkWell(
+                          onTap: () async {
+                            _showFirstWaring(context);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                  ),
+                                  border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
+                                        child: Container(
+                                          height: 32.r,
+                                          width: 32.r,
+                                          decoration: BoxDecoration(
+                                            color: ColorConfig.jsLightGreyColor,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: SizedBox(
+                                              height: 10.r,
+                                              width: 10.r,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
+                                                ),
+                                                // padding: EdgeInsets.all(1.r),
+                                                child:
+                                                    Icon(Icons.logout, color: ColorConfig.jsSecondaryColor, size: 11.r),
                                               ),
-                                              // padding: EdgeInsets.all(1.r),
-                                              child: Icon(Icons.question_mark,
-                                                  color: ColorConfig.jsSecondaryColor, size: 11.r),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "PMSBY FAQs",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          _showFirstWaring(context);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                  bottomLeft: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0),
-                                ),
-                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.5.w)),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-                                      child: Container(
-                                        height: 32.r,
-                                        width: 32.r,
-                                        decoration: BoxDecoration(
-                                          color: ColorConfig.jsLightGreyColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: SizedBox(
-                                            height: 10.r,
-                                            width: 10.r,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(color: ColorConfig.jsSecondaryColor, width: 0.5.w),
-                                              ),
-                                              // padding: EdgeInsets.all(1.r),
-                                              child:
-                                                  Icon(Icons.logout, color: ColorConfig.jsSecondaryColor, size: 11.r),
-                                            ),
-                                          ),
-                                        ),
+                                      SizedBox(
+                                        width: 20.w,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      "Log Out",
-                                      style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
-                                    )
-                                  ],
-                                ),
-                              ],
+                                      Text(
+                                        "Log Out",
+                                        style: StyleConfig.semiBolText15.copyWith(color: ColorConfig.jsTextGreyColor),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 )),
             if (logic.isLogoutAPICalling.value) AppLoader(),

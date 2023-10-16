@@ -434,7 +434,8 @@ class LoginLogic extends GetxController {
       TGSharedPreferences.getInstance().set(PREF_USERNAME, response.getLoginResponseData().userName);
       setAccessTokenInRequestHeader();
       isVerifyingOTP.value = false;
-      Get.to(
+      Get.back();
+      Get.offAll(
         () => DashboardPage(),
         binding: DashboardBinding(),
       );
@@ -868,7 +869,7 @@ class LoginLogic extends GetxController {
               )
             : Container();
       });
-    }), isDismissible: true, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
+    }), isDismissible: false, elevation: 0, isScrollControlled: true, ignoreSafeArea: true, enableDrag: true);
   }
 
   bool validateStructure(String value) {

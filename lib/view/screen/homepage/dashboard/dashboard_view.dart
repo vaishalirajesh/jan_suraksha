@@ -402,7 +402,8 @@ class HomePage extends StatelessWidget {
                                 child: ListViewButtons(
                                   width: 0.3.sw,
                                   onPress: () {
-                                    dashboardLogic.updateEmailOtpBottomSheet();
+                                    Get.to(() => const OngoingPmsbyJourneyPage(),
+                                        binding: OngoingPmsbyJourneyBinding());
                                   },
                                   title: AppString.str_view_details,
                                 ),

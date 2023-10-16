@@ -170,10 +170,12 @@ class BankSelectionPage extends StatelessWidget {
                                               );
                                             },
                                           )
-                                        : Text(
-                                            "No Bank Found",
-                                            style: StyleConfig.regularText16
-                                                .copyWith(color: Colors.black, fontSize: 16.sp),
+                                        : Center(
+                                            child: Text(
+                                              "No Bank Found",
+                                              style: StyleConfig.regularText16
+                                                  .copyWith(color: Colors.black, fontSize: 16.sp),
+                                            ),
                                           )
                                     : ListView.separated(
                                         itemCount: bankSelectionLogic.bankList.length,
@@ -200,9 +202,11 @@ class BankSelectionPage extends StatelessWidget {
                                           );
                                         },
                                       )
-                                : Text(
-                                    "No Bank Found",
-                                    style: StyleConfig.regularText16.copyWith(color: Colors.black, fontSize: 16.sp),
+                                : Center(
+                                    child: Text(
+                                      "No Bank Found",
+                                      style: StyleConfig.regularText16.copyWith(color: Colors.black, fontSize: 16.sp),
+                                    ),
                                   ),
                           ),
                         ),

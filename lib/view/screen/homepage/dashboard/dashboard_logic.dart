@@ -1318,17 +1318,17 @@ class DashboardLogic extends GetxController {
     handleServiceFailError(Get.context!, errorResponse.error);
   }
 
-  Future<void> onGetNomineeList() async {
-    if (await NetUtils.isInternetAvailable()) {
-      getNomineeList();
-    } else {
-      if (Get.context!.mounted) {
-        showSnackBarForintenetConnection(Get.context!, getNomineeList);
-      }
-    }
-  }
+  // Future<void> onGetNomineeList({bool isFromService = false}) async {
+  //   if (await NetUtils.isInternetAvailable()) {
+  //     getNomineeList();
+  //   } else {
+  //     if (Get.context!.mounted) {
+  //       showSnackBarForintenetConnection(Get.context!, getNomineeList);
+  //     }
+  //   }
+  // }
 
-  Future<void> getNomineeList() async {
+  Future<void> onGetNomineeList({bool isFromService = false}) async {
     isNomineeLoading.value = true;
     GetNomineeListRequest getOptOutListRequest =
         GetNomineeListRequest(paginationFROM: 0, paginationTO: 10, schemeId: null, type: 2);
@@ -1338,18 +1338,21 @@ class DashboardLogic extends GetxController {
     TGLog.d("GetOptOutListRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().getEnrollmentList(
       request: tgPostRequest,
-      onSuccess: (response) => _onSuccessNomineeList(response),
+      onSuccess: (response) => _onSuccessNomineeList(response, isFromService),
       onError: (error) => _onErrorOptOutList(error),
     );
   }
 
-  _onSuccessNomineeList(GetEnrollmentListResponse response) async {
+  _onSuccessNomineeList(GetEnrollmentListResponse response, bool isFromService) async {
     TGLog.d("GetOptOutListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
       if (response.getEnrollmentList().data != null) {
         nomineeList = json.decode(response.getEnrollmentList().data ?? '');
       }
       isNomineeLoading.value = false;
+      if (isFromService) {
+        showSnackBar(Get.context!, "Nominee Update Successfully");
+      }
       TGLog.d("optOutNomineeList lenght--${nomineeList.length}");
     } else {
       TGLog.d("Error in GetOptOutListRequest");

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jan_suraksha/model/request_model/ConsentOtpRequestModel.dart';
+import 'package:jan_suraksha/model/request_model/OptOUtConsent.dart';
 import 'package:jan_suraksha/model/request_model/PreminumDeductionRequest.dart';
 import 'package:jan_suraksha/model/request_model/TermConitionRequest.dart';
 import 'package:jan_suraksha/model/request_model/UpdateStageRequest.dart';
@@ -25,6 +25,7 @@ import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
+import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/consent_success/consent_success_view.dart';
@@ -36,6 +37,7 @@ class TermsAndConditionsLogic extends GetxController {
   RxString otp = ''.obs;
   RxBool isLoading = false.obs;
   RxBool isDataLoaded = false.obs;
+  RxBool isErrorInLoadData = false.obs;
   RxBool isOTPVerifying = false.obs;
   var appId;
   LoginResponseMainModel userData = LoginResponseMainModel();
@@ -48,10 +50,11 @@ class TermsAndConditionsLogic extends GetxController {
 
   @override
   Future<void> onInit() async {
-    getConsentData();
     // userData = await TGSharedPreferences.getInstance().get(PREF_LOGIN_RES);
     mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE);
     appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID);
+    getConsentData();
+
     super.onInit();
   }
 
@@ -99,7 +102,9 @@ class TermsAndConditionsLogic extends GetxController {
   _onErrorTermCondition(TGResponse errorResponse) {
     TGLog.d("TermConditionRequest : onError()--${errorResponse.error}");
     isDataLoaded.value = true;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    isErrorInLoadData.value = true;
+    showSnackBar(Get.context!, "Error in fetch terms and condition");
+    // handleServiceFailError(Get.context!, errorResponse.error);
   }
 
   Future<void> onPressButton(BuildContext context) async {
@@ -151,7 +156,11 @@ class TermsAndConditionsLogic extends GetxController {
   }
 
   void onPressContinue() {
-    sendOTP();
+    if (!isErrorInLoadData.value) {
+      sendOTP();
+    } else {
+      showSnackBar(Get.context!, "Something went wrong");
+    }
   }
 
   Future<void> onSubmit() async {
@@ -169,11 +178,14 @@ class TermsAndConditionsLogic extends GetxController {
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
     email = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
     var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? num.parse('0');
-    ConsentOtpRequestModel consentOtpSendRequest = ConsentOtpRequestModel(
+    OptOUtConsentRequest consentOtpSendRequest = OptOUtConsentRequest(
       mobile: mobile,
       userId: userId,
-      schemeId: schemeId,
       email: email == '' ? null : email,
+      schemeId: num.parse(schemeId.toString()),
+      otpType: 3,
+      emailNotiMasterId: 15,
+      smsNotiMasterId: 20,
     );
     var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());
     TGLog.d("ConsentOtpSendRequest $jsonRequest");

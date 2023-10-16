@@ -644,7 +644,9 @@ class NomineeDetailsLogic extends GetxController {
     TGLog.d("SaveFormDetailRequest : onSuccess()---$response");
     if (response.saveFormDetail().status == RES_SUCCESS) {
       isLoading.value = true;
-      Get.back();
+      Get.back(result: [
+        {"backValue": true}
+      ]);
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;

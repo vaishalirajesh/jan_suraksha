@@ -1,40 +1,24 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:jan_suraksha/model/request_model/SaveFormDeatilRequest.dart' as request;
 import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
-import 'package:jan_suraksha/model/response_main_model/GetApplicationFormDetailsResponseMain.dart';
-import 'package:jan_suraksha/model/response_model/GetApplicationFormDetailsResponse.dart';
-import 'package:jan_suraksha/model/response_model/GetMasterListResponse.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
-import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/common/tg_log.dart';
 import 'package:jan_suraksha/services/request/tg_post_request.dart';
 import 'package:jan_suraksha/services/requtilization.dart';
 import 'package:jan_suraksha/services/response/tg_response.dart';
 import 'package:jan_suraksha/services/services.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
-import 'package:jan_suraksha/services/singleton/session.dart';
-import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/services/uris.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
-import 'package:jan_suraksha/utils/constant/argument_constant.dart';
-import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/statusconstants.dart';
 import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
-import 'package:jan_suraksha/utils/utils.dart';
-import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/guardian_details/guradian_details_view.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
 import 'package:jan_suraksha/view/screen/journey/preview_application/preview_application_form_view.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
@@ -245,8 +229,12 @@ class GuradianDetailsLogic extends GetxController {
     TGLog.d("SaveFormDetailRequest : onSuccess()---$response");
     if (response.saveFormDetail().status == RES_SUCCESS) {
       isLoading.value = true;
-      Get.back();
-      Get.back();
+      Get.back(result: [
+        {"backValue": true}
+      ]);
+      Get.back(result: [
+        {"backValue": true}
+      ]);
     } else {
       TGLog.d("Error in SaveFormDetailResponse");
       isLoading.value = true;

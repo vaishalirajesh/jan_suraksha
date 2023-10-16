@@ -550,28 +550,25 @@ class ServicesPage extends StatelessWidget {
                                                           // ),
                                                           ListViewButtons(
                                                               onPress: () {
-                                                                dashboardLogic.nomineeList[index]
-                                                                            ['dateOfNomineeUpdation'] !=
-                                                                        null
-                                                                    ? null
-                                                                    : Get.to(() => NomineeDetailsPage(),
-                                                                        binding: NomineeDetailsBinding(),
-                                                                        arguments: {
-                                                                            AppArguments.screenName: "Service",
-                                                                            AppArguments.appId:
-                                                                                dashboardLogic.nomineeList[index]['id'],
-                                                                          })?.then((value) {
-                                                                        dashboardLogic.onGetNomineeList();
-                                                                        dashboardLogic.isNomineeLoading.value = true;
-                                                                        dashboardLogic.getSchemaDeatil();
-                                                                      });
+                                                                Get.to(() => NomineeDetailsPage(),
+                                                                    binding: NomineeDetailsBinding(),
+                                                                    arguments: {
+                                                                      AppArguments.screenName: "Service",
+                                                                      AppArguments.appId:
+                                                                          dashboardLogic.nomineeList[index]['id'],
+                                                                    })?.then((value) {
+                                                                  bool isServices = false;
+                                                                  if (value != null && value[0]["backValue"] == true) {
+                                                                    print("Result is coming");
+                                                                    isServices = true;
+                                                                  }
+                                                                  dashboardLogic.onGetNomineeList(
+                                                                      isFromService: isServices);
+                                                                  dashboardLogic.isNomineeLoading.value = true;
+                                                                  dashboardLogic.getSchemaDeatil();
+                                                                });
                                                               },
-                                                              title: dashboardLogic.nomineeList.isNotEmpty &&
-                                                                      dashboardLogic.nomineeList[index]
-                                                                              ['dateOfNomineeUpdation'] !=
-                                                                          null
-                                                                  ? "Nominee Updated"
-                                                                  : "Nominee Update")
+                                                              title: "Nominee Update")
                                                         ],
                                                       ),
                                                     ),

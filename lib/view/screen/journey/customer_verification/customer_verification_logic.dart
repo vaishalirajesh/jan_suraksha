@@ -33,8 +33,8 @@ import '../../../../model/request_model/CreateApplicationRequest.dart';
 import '../../../../model/request_model/UpdateEnrollmentVerificationTypeRequest.dart';
 
 class CustomerVerificationLogic extends GetxController {
-  TextEditingController accountTextController = TextEditingController(text: '123456');
-  TextEditingController reAccountTextController = TextEditingController(text: '123456');
+  TextEditingController accountTextController = TextEditingController(text: '');
+  TextEditingController reAccountTextController = TextEditingController(text: '');
   TextEditingController dobTextController = TextEditingController();
   CreateApplicationResponseMain createApplicationResponseMain = CreateApplicationResponseMain();
   RxString accountErrorMsg = ''.obs;

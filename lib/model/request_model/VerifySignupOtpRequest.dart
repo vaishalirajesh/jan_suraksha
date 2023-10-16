@@ -61,8 +61,8 @@ class VerifySignupOtpRequest {
     map['otp'] = _otp;
     map['userId'] = _userId;
     map['email'] = _email;
+    map['mobile'] = _mobile;
     if (_email == null) {
-      map['mobile'] = _mobile;
     } else {
       map['email'] = _email;
     }

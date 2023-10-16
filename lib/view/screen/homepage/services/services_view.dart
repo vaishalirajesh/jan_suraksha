@@ -291,7 +291,21 @@ class ServicesPage extends StatelessWidget {
                                                                                       ''
                                                                               ? dashboardLogic.optOutNomineeList[index]
                                                                                   ['scheme']
-                                                                              : 0);
+                                                                              : 0,
+                                                                          mobile:
+                                                                              dashboardLogic.optOutNomineeList
+                                                                                          .isNotEmpty &&
+                                                                                      dashboardLogic.optOutNomineeList[
+                                                                                              index]['mobileNumber'] !=
+                                                                                          null &&
+                                                                                      dashboardLogic.optOutNomineeList[
+                                                                                              index]['mobileNumber'] !=
+                                                                                          ''
+                                                                                  ? dashboardLogic
+                                                                                          .optOutNomineeList[index]
+                                                                                      ['mobileNumber']
+                                                                                  : "",
+                                                                        );
                                                                 },
                                                                 style: ElevatedButton.styleFrom(
                                                                   backgroundColor:
@@ -580,7 +594,10 @@ class ServicesPage extends StatelessWidget {
                 ),
               ),
             ),
-            if (dashboardLogic.isOptOutLoading.value || dashboardLogic.isNomineeLoading.value) const AppLoader(),
+            if (dashboardLogic.isOptOutLoading.value ||
+                dashboardLogic.isNomineeLoading.value ||
+                dashboardLogic.isOptOutConsentLoading.value)
+              const AppLoader(),
           ],
         );
       }),

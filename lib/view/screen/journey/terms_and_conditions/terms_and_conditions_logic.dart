@@ -105,7 +105,6 @@ class TermsAndConditionsLogic extends GetxController {
   Future<void> onPressButton(BuildContext context) async {
     otp.value = '';
     otpError.value = '';
-
     String subTitle = email.isNotEmpty
         ? "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)} and email address ${AppUtils.getMaskedMobileNumber(mobileNumber: email)}"
         : "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)}";
@@ -168,11 +167,12 @@ class TermsAndConditionsLogic extends GetxController {
   Future<void> sendOTP() async {
     isLoading.value = true;
     var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
-    email = await TGSharedPreferences.getInstance().get(PREF_EMAIL) ?? '';
+    email = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? num.parse('0');
     ConsentOtpRequestModel consentOtpSendRequest = ConsentOtpRequestModel(
       mobile: mobile,
       userId: userId,
-      schemeId: 2,
+      schemeId: schemeId,
       email: email == '' ? null : email,
     );
     var jsonRequest = jsonEncode(consentOtpSendRequest.toJson());

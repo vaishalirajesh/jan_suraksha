@@ -14,6 +14,7 @@ import 'package:jan_suraksha/model/response_model/GetUserDetailByIdResponse.dart
 import 'package:jan_suraksha/model/response_model/LoginResponse.dart';
 import 'package:jan_suraksha/model/response_model/LoginWithMobilResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
+import 'package:jan_suraksha/model/response_model/OptOutConsentResponse.dart';
 import 'package:jan_suraksha/model/response_model/OptOutHistoryResponse.dart';
 import 'package:jan_suraksha/model/response_model/PreminumDeductionResponse.dart';
 import 'package:jan_suraksha/model/response_model/SaveFormDetailResponse.dart';
@@ -236,6 +237,12 @@ class ServiceManager {
   void optOutHistory({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
     TGLog.d("ServiceManager.optOut");
     TGService<OptOutHistoryResponse, ServiceError>(() => OptOutHistoryResponse(), () => ServiceError())
+        .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
+  }
+
+  void getOptOutConsent({required TGPostRequest request, onSuccess(T)?, onError(T)?}) {
+    TGLog.d("ServiceManager.optOut");
+    TGService<OptOutConsentResponse, ServiceError>(() => OptOutConsentResponse(), () => ServiceError())
         .post(request: request, onSuccess: (response) => onSuccess!(response), onError: (error) => onError!(error));
   }
 }

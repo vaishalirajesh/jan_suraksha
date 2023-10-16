@@ -348,7 +348,7 @@ class PersonalInfoPage extends StatelessWidget {
             if (otpResponse.getOtpResponse().status == RES_SUCCESS) {
               TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
               showSnackBar(context, "Email Updated Succsessfully");
-              TGSharedPreferences.getInstance().set(PREF_EMAIL, personallogic.email.value);
+              TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, personallogic.email.value);
               personallogic.shouldChangeAppearInEmailSuffix.value = false;
               Get.back();
               personallogic.isLoadingEmailOTP.value = false;

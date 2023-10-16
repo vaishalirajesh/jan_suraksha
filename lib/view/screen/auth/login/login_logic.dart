@@ -198,7 +198,7 @@ class LoginLogic extends GetxController {
                   if (loginResponse.getLoginResponseData().status == RES_SUCCESS) {
                     AppUtils.setAccessToken(loginResponse.getLoginResponseData().accessToken);
                     TGSharedPreferences.getInstance().set(PREF_MOBILE, loginResponse.getLoginResponseData().mobile);
-                    TGSharedPreferences.getInstance().set(PREF_EMAIL, mobileController.text);
+                    TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, mobileController.text);
                     TGSharedPreferences.getInstance()
                         .set(PREF_REFRESHTOKEN, loginResponse.getLoginResponseData().refreshToken);
                     TGSharedPreferences.getInstance()
@@ -598,7 +598,6 @@ class LoginLogic extends GetxController {
 
   Future<void> onVerifyOTP() async {
     isEmailOTPVerifing.value = true;
-
     VerifySignupOtpRequest verifySignupOtpRequest =
         VerifySignupOtpRequest(email: forgotEmailController.text, otpType: 2, userId: masterId, otp: emailOtp.value);
     var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());

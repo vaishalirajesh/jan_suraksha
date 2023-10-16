@@ -15,13 +15,16 @@ import 'package:jan_suraksha/model/request_model/GetNomineeRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetOptOutListRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetSchemaByUserIdRequest.dart';
 import 'package:jan_suraksha/model/request_model/GetUserIdRequest.dart';
+import 'package:jan_suraksha/model/request_model/OptOUtConsent.dart';
 import 'package:jan_suraksha/model/request_model/SaveOptoutRequest.dart';
 import 'package:jan_suraksha/model/request_model/VerifyEmailOtpRequest.dart';
+import 'package:jan_suraksha/model/request_model/VerifySignupOtpRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/SetPasswordResponseMain.dart';
 import 'package:jan_suraksha/model/response_model/DownloadAgreementResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetEnrollmentListResponse.dart';
 import 'package:jan_suraksha/model/response_model/GetSchemaByUserIdResponse.dart';
 import 'package:jan_suraksha/model/response_model/OTPResponse.dart';
+import 'package:jan_suraksha/model/response_model/OptOutConsentResponse.dart';
 import 'package:jan_suraksha/model/response_model/OptOutHistoryResponse.dart';
 import 'package:jan_suraksha/model/response_model/fetch_profile_details_response_main.dart';
 import 'package:jan_suraksha/services/common/app_functions.dart';
@@ -45,6 +48,7 @@ import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/widget/app_button.dart';
 import 'package:jan_suraksha/view/widget/app_textfield.dart';
 import 'package:jan_suraksha/view/widget/jumpingdot_util.dart';
+import 'package:jan_suraksha/view/widget/otp_bottom_sheet_auth.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 import 'package:jan_suraksha/view/widget/timer/timer_count_down.dart';
 import 'package:path_provider/path_provider.dart';
@@ -59,6 +63,8 @@ class DashboardLogic extends GetxController {
   var index = 0.obs;
   RxBool isLoading = true.obs;
   RxBool isOptOutLoading = false.obs;
+  RxBool isOptOutOTPVerifing = false.obs;
+  RxBool isOptOutConsentLoading = false.obs;
   RxBool isNomineeLoading = false.obs;
   RxBool isLogoutAPICalling = false.obs;
   RxBool isDownLoading = false.obs;
@@ -74,6 +80,8 @@ class DashboardLogic extends GetxController {
   RxString emailErrorMsg = ''.obs;
   RxString otpErrorMsg = ''.obs;
   RxString otp = ''.obs;
+  RxString optOutOtp = ''.obs;
+  RxString optOutOtpErrorMsg = ''.obs;
   RxBool isEmailVerifying = false.obs;
   RxBool isOTPVerifing = false.obs;
   TextEditingController dateController = TextEditingController();
@@ -87,6 +95,7 @@ class DashboardLogic extends GetxController {
   RxBool isShowPassword = true.obs;
   RxBool isShowConfirmPassword = true.obs;
   RxBool isEnableEmailOtpResend = false.obs;
+  RxBool isEnableoptOutEmailOtpResend = false.obs;
 
   setIndex(int value) {
     index.value = value;
@@ -446,7 +455,7 @@ class DashboardLogic extends GetxController {
   _onSuccessVerifyOTP(OTPResponse response) async {
     TGLog.d("verifyEmailOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
-      TGSharedPreferences.getInstance().set(PREF_EMAIL, emailController.text);
+      TGSharedPreferences.getInstance().set(PREF_USER_EMAIL, emailController.text);
       Get.back();
       getUpdatePasswordBottomSheet(
         onSubmitOTP: (String) {
@@ -504,16 +513,16 @@ class DashboardLogic extends GetxController {
     }
   }
 
-  void onPressContinue(int index, int schemeId) {
+  void onPressContinue(int index, int schemeId, String mobile) {
     if (dateController.text.isEmpty) {
       dateErrorMsg.value = 'Please select date';
     } else {
       dateErrorMsg.value = '';
-      openDialog(index: index, schemeId: schemeId);
+      openDialog(index: index, schemeId: schemeId, mobile: mobile);
     }
   }
 
-  void openOPTOutBottomSheet({required int index, required int schemeId}) {
+  void openOPTOutBottomSheet({required int index, required int schemeId, required String mobile}) {
     dateErrorMsg.value = '';
     dateController.text = '';
 
@@ -558,7 +567,7 @@ class DashboardLogic extends GetxController {
               ),
               AppButton(
                 onPress: () {
-                  onPressContinue(index, schemeId);
+                  onPressContinue(index, schemeId, mobile);
                 },
                 title: "Continue",
                 isButtonEnable: true.obs,
@@ -632,7 +641,7 @@ class DashboardLogic extends GetxController {
     return months[month - 1];
   }
 
-  void openDialog({required int index, required int schemeId}) {
+  void openDialog({required int index, required int schemeId, required String mobile}) {
     Get.back();
     Get.dialog(
       AlertDialog(
@@ -643,7 +652,7 @@ class DashboardLogic extends GetxController {
         ),
         backgroundColor: ColorConfig.jsCreamColor,
         content: Text(
-          'Are you sure you want to Opt-out of the ${AppUtils.getSchemeName(schemeId)} Scheme? \n\n Doing so , will lead to withdrawal of benefit from effective date.',
+          'Are you sure you want to Opt-out of the ${AppUtils.getSchemeName(schemeId)} Scheme? \n\n Doing so , will lead to withdrawal of benefit from effective date & no refund will be granted for opting-out of the scheme',
           style: StyleConfig.regularText16,
         ),
         actionsAlignment: MainAxisAlignment.spaceAround,
@@ -673,7 +682,7 @@ class DashboardLogic extends GetxController {
           InkWell(
             onTap: () {
               Get.back();
-              onSaveDetail();
+              sendOTPForOptOut(SchemeId: schemeId, mobile: mobile);
             },
             child: Container(
               height: 35.h,
@@ -695,6 +704,16 @@ class DashboardLogic extends GetxController {
         ],
       ),
     );
+  }
+
+  Future<void> onFinishOptOutEmailOtpTimer() async {
+    isEnableoptOutEmailOtpResend.value = true;
+  }
+
+  Future<void> onResendOptOutEmailOtpTimer() async {
+    Get.back();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    isEnableoptOutEmailOtpResend.value = false;
   }
 
   _onsuccsessSkipEmailResponse(GetResponseForSkipEmailMain response) async {
@@ -1337,6 +1356,121 @@ class DashboardLogic extends GetxController {
       isNomineeLoading.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
+    }
+  }
+
+  Future<void> sendOTPForOptOut({required dynamic SchemeId, required String mobile}) async {
+    isOptOutConsentLoading.value = true;
+    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+    var email = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+    var mobileNumber = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
+    OptOUtConsentRequest optOUtConsentRequest = OptOUtConsentRequest(
+      mobile: mobileNumber,
+      userId: userId,
+      schemeId: num.parse(SchemeId.toString()),
+      email: email == '' ? null : email,
+      otpType: 3,
+      emailNotiMasterId: 15,
+      smsNotiMasterId: 20,
+    );
+    var jsonRequest = jsonEncode(optOUtConsentRequest.toJson());
+    TGLog.d("ConsentOtpSendRequest $jsonRequest");
+    TGLog.d("ConsentOtpSendRequest 2 $optOUtConsentRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_CONSENT_GET_OTP);
+    TGLog.d("ConsentOtpSendRequest Decrypt:--------${tgPostRequest.body()}");
+    ServiceManager.getInstance().getOptOutConsent(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessSendOTP(response, mobile),
+      onError: (error) => _onErrorSendOtp(error),
+    );
+  }
+
+  _onErrorSendOtp(TGResponse errorResponse) {
+    isOptOutConsentLoading.value = true;
+    TGLog.d("PremiumDeductionRequest : onError()--${errorResponse.error}");
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  _onSuccessSendOTP(OptOutConsentResponse response, String mobile) async {
+    TGLog.d("ConsentOtpSendRequest : onSuccess()---$response");
+    if (response.getOptOutConsent().status == RES_SUCCESS) {
+      isOptOutConsentLoading.value = false;
+      isEnableoptOutEmailOtpResend.value = false;
+      optOutOtp.value = '';
+      optOutOtpErrorMsg.value = '';
+      OTPBottomSheetAuth.getBottomSheet(
+        context: Get.context!,
+        onChangeOTP: (s) {
+          if (s.isEmpty) {
+            optOutOtp.value = optOutOtp.value.substring(0, optOutOtp.value.length - 1);
+          } else {
+            optOutOtp.value = optOutOtp.value + s;
+          }
+          optOutOtpErrorMsg.value = '';
+          TGLog.d("Otp---------${optOutOtp.value}");
+        },
+        onSubmitOTP: (s) {
+          optOutOtp.value = optOutOtp.value + s;
+          optOutOtpErrorMsg.value = '';
+        },
+        title: 'User Verification',
+        mobileNumber: mobile,
+        isEnable: isEnableoptOutEmailOtpResend,
+        onResend: onResendOptOutEmailOtpTimer,
+        onFinish: onFinishOptOutEmailOtpTimer,
+        isLoading: isOptOutOTPVerifing,
+        onButtonPress: () {
+          onOptOutVerifyOTP(mobile);
+        },
+        isEdit: false.obs,
+        errorText: optOutOtpErrorMsg,
+        subTitle: 'A Verification code is sent on your registered mobile number '.obs,
+        timerText: "".obs,
+      );
+    } else {
+      TGLog.d("Error in ConsentOtpSendRequest");
+      isOptOutConsentLoading.value = true;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOptOutConsent().status ?? 0, response.getOptOutConsent().message ?? "", null);
+    }
+  }
+
+  Future<void> onOptOutVerifyOTP(String mobile) async {
+    isOptOutOTPVerifing.value = true;
+    var email = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+    var mobile = await TGSharedPreferences.getInstance().get(PREF_MOBILE) ?? '';
+    var userId = await TGSharedPreferences.getInstance().get(PREF_USER_ID);
+    VerifySignupOtpRequest verifySignupOtpRequest =
+        VerifySignupOtpRequest(email: email, otpType: 3, userId: userId, otp: optOutOtp.value, mobile: mobile);
+    var jsonRequest = jsonEncode(verifySignupOtpRequest.toJson());
+    TGLog.d("VerifySignupOtpRequest $jsonRequest");
+    TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_SIGN_UP_VERIFY_OTP);
+    ServiceManager.getInstance().otpRequest(
+      request: tgPostRequest,
+      onSuccess: (response) => _onSuccessEmailVerifyOTP(response),
+      onError: (error) => _onErrorEmailOtpVerify(error),
+    );
+  }
+
+  _onErrorEmailOtpVerify(TGResponse errorResponse) {
+    TGLog.d("VerifySignupOtpRequest : onError()--${errorResponse.error}");
+    isOptOutOTPVerifing.value = false;
+    optOutOtpErrorMsg.value = "Error in send opt out consent verification code";
+    handleServiceFailError(Get.context!, errorResponse.error);
+  }
+
+  _onSuccessEmailVerifyOTP(OTPResponse response) async {
+    TGLog.d("VerifySignupOtpRequest : onSuccess()---$response");
+    if (response.getOtpResponse().status == RES_SUCCESS) {
+      Get.back();
+      onSaveDetail();
+      isOptOutOTPVerifing.value = false;
+    } else {
+      TGLog.d("Error in VerifySignupOtpRequest");
+      optOutOtpErrorMsg.value = response.getOtpResponse().message ?? '';
+      isOptOutOTPVerifing.value = false;
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOtpResponse().status ?? 0, response.getOtpResponse().message ?? "", null);
     }
   }
 }

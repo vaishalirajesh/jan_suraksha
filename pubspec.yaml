@@ -41,7 +41,7 @@ dependencies:
   pdfx: ^2.4.0
   shared_preferences: ^2.2.1
   uuid: ^3.0.7
-  device_info_plus: ^9.0.3
+#  device_info_plus: ^9.0.3
   permission_guard: ^2.0.0
   internet_connection_checker: ^1.0.0+1
   timer_count_down: ^2.2.2

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/model/request_model/GetOrgMasterListRequest.dart';
 import 'package:jan_suraksha/model/response_main_model/GetOrgMasterListResponseMain.dart';
@@ -14,7 +15,9 @@ import 'package:jan_suraksha/view/widget/progressloader.dart';
 
 class BankSelectionLogic extends GetxController {
   RxBool isLoading = true.obs;
-  List<Data> bankList = [];
+  RxList<Data> bankList = <Data>[].obs;
+  RxList<Data> tempList = <Data>[].obs;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -31,6 +34,12 @@ class BankSelectionLogic extends GetxController {
     }
   }
 
+  void onSearch(String str) {
+    tempList.value = bankList
+        .where((bankList) => bankList.value?.toLowerCase().contains(searchController.text.toLowerCase()) == true)
+        .toList();
+  }
+
   Future<void> getDetail() async {
     var encUserId = AesGcmEncryptionUtils.encryptNew('2');
     GetOrgMasterListRequest getOrgMasterListRequest = GetOrgMasterListRequest(id: encUserId);
@@ -45,12 +54,13 @@ class BankSelectionLogic extends GetxController {
   _onSuccessGetSchemaByUserId(GetOrgMasterListResponse response) async {
     TGLog.d("GetOrgMasterListRequest : onSuccess()---$response");
     if (response.getOrgMasterList().status == RES_SUCCESS) {
-      bankList = response.getOrgMasterList().data ?? [];
+      bankList.value = response.getOrgMasterList().data ?? [];
       isLoading.value = false;
     } else {
       TGLog.d("Error in GetOrgMasterListRequest");
       isLoading.value = false;
-      LoaderUtils.handleErrorResponse(Get.context!, response.getOrgMasterList().status ?? 0, response.getOrgMasterList().message ?? "", null);
+      LoaderUtils.handleErrorResponse(
+          Get.context!, response.getOrgMasterList().status ?? 0, response.getOrgMasterList().message ?? "", null);
     }
   }
 

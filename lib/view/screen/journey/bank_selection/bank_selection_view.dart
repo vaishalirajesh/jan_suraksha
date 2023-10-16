@@ -44,124 +44,172 @@ class BankSelectionPage extends StatelessWidget {
         return Stack(
           children: [
             AddHeaderFooter(
-                appbarName: AppString.appBarWithTitle,
-                title: "Select Bank",
-                buttonTitle: "",
-                onButtonClick: () {},
-                isDataLoading: false,
-                isButtonEnable: false,
-                onBackButtonCLick: AppUtils.onBackToDashboard,
-                isShowButton: false,
-                child: ConstrainedFlexView(MediaQuery.of(context).size.height * 1,
-                    axis: Axis.vertical,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10.h,
+              appbarName: AppString.appBarWithTitle,
+              title: "Select Bank",
+              buttonTitle: "",
+              onButtonClick: () {},
+              isDataLoading: false,
+              isButtonEnable: false,
+              onBackButtonCLick: AppUtils.onBackToDashboard,
+              isShowButton: false,
+              child: ConstrainedFlexView(
+                MediaQuery.of(context).size.height * 1,
+                axis: Axis.vertical,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.h, left: 10.h, right: 10.h),
+                        child: TextField(
+                          autofocus: false,
+                          style: StyleConfig.regularText16.copyWith(
+                            decoration: TextDecoration.none,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 5.h, left: 10.h, right: 10.h),
-                            child: TextField(
-                              autofocus: false,
-                              style: StyleConfig.regularText16,
-                              onChanged: (_) {},
-                              cursorColor: ColorConfig.jsPrimaryColor,
-                              scrollPadding: EdgeInsets.zero,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                prefixIcon: Icon(Icons.search_rounded, color: ThemeHelper.getInstance()!.primaryColor),
-                                labelText: "Search your bank",
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
-                                hintStyle: StyleConfig.regularText16.copyWith(color: ColorConfig.jsSearchTextGreyColor),
-                                border: InputBorder.none,
-                                labelStyle: StyleConfig.regularText16.copyWith(
-                                  color: ColorConfig.jsSearchTextGreyColor,
-                                ),
-                              ),
+                          onChanged: bankSelectionLogic.onSearch,
+                          controller: bankSelectionLogic.searchController,
+                          cursorColor: ColorConfig.jsPrimaryColor,
+                          scrollPadding: EdgeInsets.zero,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(bottom: 15.h),
+                            prefixIcon: Icon(Icons.search_rounded, color: ThemeHelper.getInstance()!.primaryColor),
+                            labelText: "Search your bank",
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            hintStyle: StyleConfig.regularText16.copyWith(
+                              color: ColorConfig.jsSearchTextGreyColor,
+                              decoration: TextDecoration.none,
+                            ),
+                            border: InputBorder.none,
+                            labelStyle: StyleConfig.regularText16.copyWith(
+                              color: ColorConfig.jsSearchTextGreyColor,
+                              decoration: TextDecoration.none,
                             ),
                           ),
-                          Divider(),
-                          // Container(
-                          //   height: 200.h,
-                          //   child: GridView.count(
-                          //     crossAxisCount: 3,
-                          //     childAspectRatio: 1.0,
-                          //     children: List.generate(
-                          //       6,
-                          //       (index) => InkWell(
-                          //         onTap: () {
-                          //           Get.toNamed(CustomerVerificationPageRoute);
-                          //         },
-                          //         child: SizedBox(
-                          //           height: 150.h,
-                          //           child: Column(
-                          //             mainAxisAlignment: MainAxisAlignment.center,
-                          //             children: [
-                          //               SizedBox(height: 30.r, width: 30.r, child: Image.asset(list[index])),
-                          //               Center(
-                          //                 child: Container(
-                          //                   alignment: Alignment.center,
-                          //                   margin: const EdgeInsets.all(10),
-                          //                   child: Text(
-                          //                     listname[index],
-                          //                     textAlign: TextAlign.center,
-                          //                     style:
-                          //                         StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 10.sp),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 20.h,
+                        ),
+                      ),
+                      Divider(),
+                      // Container(
+                      //   height: 200.h,
+                      //   child: GridView.count(
+                      //     crossAxisCount: 3,
+                      //     childAspectRatio: 1.0,
+                      //     children: List.generate(
+                      //       6,
+                      //       (index) => InkWell(
+                      //         onTap: () {
+                      //           Get.toNamed(CustomerVerificationPageRoute);
+                      //         },
+                      //         child: SizedBox(
+                      //           height: 150.h,
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children: [
+                      //               SizedBox(height: 30.r, width: 30.r, child: Image.asset(list[index])),
+                      //               Center(
+                      //                 child: Container(
+                      //                   alignment: Alignment.center,
+                      //                   margin: const EdgeInsets.all(10),
+                      //                   child: Text(
+                      //                     listname[index],
+                      //                     textAlign: TextAlign.center,
+                      //                     style:
+                      //                         StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 10.sp),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w),
+                        child: Text(
+                          "All Banks",
+                          style: StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 16.sp),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 80.h),
+                          child: SizedBox(
+                            child: bankSelectionLogic.bankList.value.isNotEmpty
+                                ? bankSelectionLogic.searchController.text.isNotEmpty
+                                    ? bankSelectionLogic.tempList.value.isNotEmpty
+                                        ? ListView.separated(
+                                            itemCount: bankSelectionLogic.tempList.length,
+                                            separatorBuilder: (BuildContext context, int index) =>
+                                                const Divider(height: 1),
+                                            itemBuilder: (BuildContext context, int index) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  Get.toNamed(CustomerVerificationPageRoute);
+                                                  TGSharedPreferences.getInstance()
+                                                      .set(PREF_ORG_ID, bankSelectionLogic.tempList[index].id ?? 0);
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(6.0),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      bankSelectionLogic.tempList.isNotEmpty &&
+                                                              bankSelectionLogic.tempList[index].value != null
+                                                          ? bankSelectionLogic.tempList[index].value ?? ''
+                                                          : '',
+                                                      style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : Text(
+                                            "No Bank Found",
+                                            style: StyleConfig.regularText16
+                                                .copyWith(color: Colors.black, fontSize: 16.sp),
+                                          )
+                                    : ListView.separated(
+                                        itemCount: bankSelectionLogic.bankList.length,
+                                        separatorBuilder: (BuildContext context, int index) => Divider(height: 1),
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              Get.toNamed(CustomerVerificationPageRoute);
+                                              TGSharedPreferences.getInstance()
+                                                  .set(PREF_ORG_ID, bankSelectionLogic.bankList[index].id ?? 0);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(6.0),
+                                              child: ListTile(
+                                                title: Text(
+                                                  bankSelectionLogic.bankList.isNotEmpty &&
+                                                          bankSelectionLogic.bankList[index].value != null
+                                                      ? bankSelectionLogic.bankList[index].value ?? ''
+                                                      : '',
+                                                  style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      )
+                                : Text(
+                                    "No Bank Found",
+                                    style: StyleConfig.regularText16.copyWith(color: Colors.black, fontSize: 16.sp),
+                                  ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 16.w),
-                            child: Text(
-                              "All Banks",
-                              style: StyleConfig.boldText16.copyWith(color: Colors.black, fontSize: 16.sp),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 80.h),
-                              child: SizedBox(
-                                child: ListView.separated(
-                                  itemCount: bankSelectionLogic.bankList.length,
-                                  separatorBuilder: (BuildContext context, int index) => Divider(height: 1),
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.toNamed(CustomerVerificationPageRoute);
-                                        TGSharedPreferences.getInstance()
-                                            .set(PREF_ORG_ID, bankSelectionLogic.bankList[index].id ?? 0);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(6.0),
-                                        child: ListTile(
-                                          title: Text(
-                                            bankSelectionLogic.bankList.isNotEmpty &&
-                                                    bankSelectionLogic.bankList[index].value != null
-                                                ? bankSelectionLogic.bankList[index].value ?? ''
-                                                : '',
-                                            style: StyleConfig.mediumText16.copyWith(fontSize: 13.sp),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]))),
+                        ),
+                      ),
+                    ]),
+              ),
+            ),
             if (bankSelectionLogic.isLoading.value) AppLoader()
           ],
         );

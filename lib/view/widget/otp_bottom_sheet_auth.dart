@@ -27,6 +27,7 @@ class OTPBottomSheetAuth {
     required RxString timerText,
     RxString? errorText,
     bool isForBank = false,
+    bool isForOptOUt = false,
     required BuildContext context,
     required RxBool isEnable,
     required RxBool isLoading,
@@ -60,11 +61,17 @@ class OTPBottomSheetAuth {
                       SizedBox(
                         height: 5.h,
                       ),
-                      Text(
-                        '${subTitle.value.isNotEmpty ? subTitle.value : AppString.registerMobileNumber}${AppUtils.getMaskedMobileNumber(mobileNumber: mobileNumber)}${isForBank ? AppString.byTheBank : AppString.emptyText}',
-                        style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
-                        textAlign: TextAlign.center,
-                      ),
+                      isForOptOUt
+                          ? Text(
+                              subTitle.value.isNotEmpty ? subTitle.value : "",
+                              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
+                              textAlign: TextAlign.center,
+                            )
+                          : Text(
+                              '${subTitle.value.isNotEmpty ? subTitle.value : AppString.registerMobileNumber}${AppUtils.getMaskedMobileNumber(mobileNumber: mobileNumber)}${isForBank ? AppString.byTheBank : AppString.emptyText}',
+                              style: StyleConfig.smallTextLight.copyWith(color: ColorConfig.jsTextMediumGreyColor),
+                              textAlign: TextAlign.center,
+                            ),
                       if (isEdit.value)
                         SizedBox(
                           height: 5.h,
@@ -145,7 +152,7 @@ class OTPBottomSheetAuth {
                               ),
                             )
                           : Countdown(
-                              seconds: 120,
+                              seconds: 10,
                               build: (BuildContext context, double time) => Text(
                                 time > 60
                                     ? "Resend Verification Code in 01:${formatter.format(time.round() - 60)} minutes"

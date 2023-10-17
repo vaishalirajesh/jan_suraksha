@@ -43,7 +43,6 @@ class CertificateInsurenceLogic extends GetxController {
   @override
   void onInit() {
     getSchemeDetail();
-
     super.onInit();
   }
 
@@ -71,7 +70,6 @@ class CertificateInsurenceLogic extends GetxController {
         request: tgPostRequest,
         onSuccess: (response) => _onSuccess(response),
         onError: (response) => _onFailure(response));
-    // Get.offAll(() => DashboardPage(), binding: DashboardBinding());
   }
 
   Future<void> onGetDetail() async {

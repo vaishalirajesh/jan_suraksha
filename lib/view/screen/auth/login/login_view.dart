@@ -112,9 +112,21 @@ class LoginPage extends StatelessWidget {
                                     children: [
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          '${AppString.password}',
-                                          style: StyleConfig.mediumText16,
+                                        child: RichText(
+                                          textAlign: TextAlign.start,
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: AppString.password,
+                                                style: StyleConfig.mediumText16,
+                                              ),
+                                              TextSpan(
+                                                text: '*',
+                                                style: StyleConfig.mediumText16
+                                                    .copyWith(color: ColorConfig.jsPrimaryColor),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Align(
@@ -144,7 +156,7 @@ class LoginPage extends StatelessWidget {
                                   hintText: "Enter Password",
                                   controller: loginLogic.passwordController,
                                   isReadOnly: false,
-                                  isMandatory: false,
+                                  isMandatory: true,
                                   isAutoFocus: false,
                                   inputType: TextInputType.text,
                                   maxLength: 30,

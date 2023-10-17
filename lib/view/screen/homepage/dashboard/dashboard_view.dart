@@ -632,10 +632,14 @@ class HomePage extends StatelessWidget {
                                                               ? dashboardLogic.schemeList[index]['name']
                                                               : '',
                                                           style: StyleConfig.smallText
-                                                              .copyWith(color: ColorConfig.jsTextGreyColor)),
+                                                              .copyWith(color: ColorConfig.jsTextGreyColor),
+                                                          overflow: TextOverflow.ellipsis),
                                                     )
                                                   ],
                                                 ),
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
                                               ),
                                               Expanded(
                                                 child: Row(

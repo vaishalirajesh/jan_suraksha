@@ -294,6 +294,7 @@ class CustomerVerificationLogic extends GetxController {
           otp.value = otp.value + s;
           otpError.value = '';
         },
+        isForBank: true,
         title: '',
         subTitle: '',
         mobileNumber: response.updateEnrollmentVerificationType().data?.mobileNumber ?? '',

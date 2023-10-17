@@ -71,25 +71,13 @@ class CertificateInsurencePage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              certificateInsurenceLogic.generateCoiData.data?.logoUrl != null
-                                  ? SizedBox(
-                                      child: Image.network(
-                                        certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? '',
-                                        height: 30.r,
-                                        // width: 30.r,
-                                      ),
-                                    )
-                                  : Container(),
+                              AppUtils.getImageFromType(
+                                  imageUrl: certificateInsurenceLogic.generateCoiData.data?.logoUrl ?? ''),
                               SizedBox(
                                 width: 10.w,
                               ),
-                              certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl != null
-                                  ? Image.network(
-                                      certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl ?? '',
-                                      height: 30.r,
-                                      // width: 30.r,
-                                    )
-                                  : Container(),
+                              AppUtils.getImageFromType(
+                                  imageUrl: certificateInsurenceLogic.generateCoiData.data?.bankLogoUrl ?? '')
                             ],
                           ),
                           Row(
@@ -401,7 +389,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.all(10.r),
                                       child: Text(
-                                        '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                        'Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
                                         style: StyleConfig.mediumExtraSmallBlackText,
                                         textAlign: TextAlign.center,
                                       ),

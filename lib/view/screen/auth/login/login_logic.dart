@@ -353,7 +353,7 @@ class LoginLogic extends GetxController {
         onButtonPress: onPressVerifyOtp,
         isEdit: false.obs,
         errorText: otpError,
-        subTitle: 'A Verification code is sent on your registered mobile number '.obs,
+        subTitle: 'A Verification code is sent on your mobile number '.obs,
       );
       isLoading.value = false;
     } else {

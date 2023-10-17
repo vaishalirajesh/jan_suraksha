@@ -202,12 +202,15 @@ class BankSelectionPage extends StatelessWidget {
                                           );
                                         },
                                       )
-                                : Center(
-                                    child: Text(
-                                      "No Bank Found",
-                                      style: StyleConfig.regularText16.copyWith(color: Colors.black, fontSize: 16.sp),
-                                    ),
-                                  ),
+                                : !bankSelectionLogic.isLoading.value
+                                    ? Center(
+                                        child: Text(
+                                          "No Bank Found",
+                                          style:
+                                              StyleConfig.regularText16.copyWith(color: Colors.black, fontSize: 16.sp),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                           ),
                         ),
                       ),

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jan_suraksha/services/common/keys.dart';
@@ -143,6 +146,22 @@ class AppUtils {
     }
   }
 
-  static String data =
-      "[{\"userId\":7,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":5,\"imgPath\":\"fi fi-sr-file-spreadsheet PMSBY\",\"schemeId\":1,\"schemeName\":\"Pradhan Mantri Suraksha Bima Yojana\",\"shortName\":\"PMSBY\",\"routingPath\":null,\"orderId\":3,\"premiumAmount\":20,\"defaultAmount\":20},{\"userId\":7,\"businessTypeId\":1,\"businessTypeName\":\"Insurance\",\"roleId\":5,\"imgPath\":\"fi fi-sr-document PMJJBY\",\"schemeId\":2,\"schemeName\":\"Pradhan Mantri Jeevan Jyoti Bima Yojana\",\"shortName\":\"PMJJBY\",\"routingPath\":null,\"orderId\":2,\"premiumAmount\":436,\"defaultAmount\":114}]";
+  static Widget getImageFromType({required String imageUrl}) {
+    if (imageUrl.isNotEmpty) {
+      bool isImageSvg = imageUrl.substring(imageUrl.length - 4, imageUrl.length) == '.svg' ? true : false;
+      return isImageSvg
+          ? SvgPicture.network(
+              imageUrl,
+              height: 30.r,
+              // width: 30.r,
+            )
+          : Image.network(
+              imageUrl,
+              height: 30.r,
+              // width: 30.r,
+            );
+    } else {
+      return const SizedBox();
+    }
+  }
 }

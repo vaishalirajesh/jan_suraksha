@@ -96,6 +96,8 @@ class DashboardLogic extends GetxController {
   RxBool isShowConfirmPassword = true.obs;
   RxBool isEnableEmailOtpResend = false.obs;
   RxBool isEnableoptOutEmailOtpResend = false.obs;
+  int tempSchemeId = 0;
+  String tempMobile = '';
 
   setIndex(int value) {
     index.value = value;
@@ -393,7 +395,7 @@ class DashboardLogic extends GetxController {
         onButtonPress: () async {
           await verifyOtp();
         },
-        subTitle: 'A Verification code is sent on your email id'.obs,
+        subTitle: 'A Verification code is sent on your email id '.obs,
       );
     } else {
       TGLog.d("Error in EmailOtpRequest");
@@ -525,7 +527,8 @@ class DashboardLogic extends GetxController {
   void openOPTOutBottomSheet({required int index, required int schemeId, required String mobile}) {
     dateErrorMsg.value = '';
     dateController.text = '';
-
+    tempSchemeId = schemeId;
+    tempMobile = mobile;
     Get.bottomSheet(LayoutBuilder(builder: (context, _) {
       return Obx(() {
         return Container(
@@ -714,6 +717,7 @@ class DashboardLogic extends GetxController {
     Get.back();
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     isEnableoptOutEmailOtpResend.value = false;
+    sendOTPForOptOut(SchemeId: tempSchemeId, mobile: tempMobile);
   }
 
   _onsuccsessSkipEmailResponse(GetResponseForSkipEmailMain response) async {
@@ -1333,9 +1337,9 @@ class DashboardLogic extends GetxController {
     GetNomineeListRequest getOptOutListRequest =
         GetNomineeListRequest(paginationFROM: 0, paginationTO: 10, schemeId: null, type: 2);
     var jsonRequest = jsonEncode(getOptOutListRequest.toJson());
-    TGLog.d("GetOptOutListRequest $jsonRequest");
+    TGLog.d("GetNomineeListRequest $jsonRequest");
     TGPostRequest tgPostRequest = await getPayLoad(jsonRequest, URIS.URI_ENROLLMENT_LIST);
-    TGLog.d("GetOptOutListRequest Decrypt:--------${tgPostRequest.body()}");
+    TGLog.d("GetNomineeListRequest Decrypt:--------${tgPostRequest.body()}");
     ServiceManager.getInstance().getEnrollmentList(
       request: tgPostRequest,
       onSuccess: (response) => _onSuccessNomineeList(response, isFromService),
@@ -1344,7 +1348,7 @@ class DashboardLogic extends GetxController {
   }
 
   _onSuccessNomineeList(GetEnrollmentListResponse response, bool isFromService) async {
-    TGLog.d("GetOptOutListRequest : onSuccess()---$response");
+    TGLog.d("GetNomineeListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
       if (response.getEnrollmentList().data != null) {
         nomineeList = json.decode(response.getEnrollmentList().data ?? '');
@@ -1353,9 +1357,9 @@ class DashboardLogic extends GetxController {
       if (isFromService) {
         showSnackBar(Get.context!, "Nominee Update Successfully");
       }
-      TGLog.d("optOutNomineeList lenght--${nomineeList.length}");
+      TGLog.d("GetNomineeListRequest lenght--${nomineeList.length}");
     } else {
-      TGLog.d("Error in GetOptOutListRequest");
+      TGLog.d("Error in GetNomineeListRequest");
       isNomineeLoading.value = false;
       LoaderUtils.handleErrorResponse(
           Get.context!, response?.getEnrollmentList().status ?? 0, response.getEnrollmentList().message ?? "", null);
@@ -1373,8 +1377,8 @@ class DashboardLogic extends GetxController {
       schemeId: num.parse(SchemeId.toString()),
       email: email == '' ? null : email,
       otpType: 3,
-      emailNotiMasterId: 15,
-      smsNotiMasterId: 20,
+      emailNotiMasterId: 21,
+      smsNotiMasterId: 22,
     );
     var jsonRequest = jsonEncode(optOUtConsentRequest.toJson());
     TGLog.d("ConsentOtpSendRequest $jsonRequest");
@@ -1401,6 +1405,10 @@ class DashboardLogic extends GetxController {
       isEnableoptOutEmailOtpResend.value = false;
       optOutOtp.value = '';
       optOutOtpErrorMsg.value = '';
+      String email = await TGSharedPreferences.getInstance().get(PREF_USER_EMAIL) ?? '';
+      String subTitle = email.isNotEmpty
+          ? "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)} and email address ${AppUtils.getMaskedMobileNumber(mobileNumber: email)}"
+          : "An verification code has been sent to your registered mobile number ${AppUtils.getMaskedMobileNumber(mobileNumber: mobile)}";
       OTPBottomSheetAuth.getBottomSheet(
         context: Get.context!,
         onChangeOTP: (s) {
@@ -1416,6 +1424,7 @@ class DashboardLogic extends GetxController {
           optOutOtp.value = optOutOtp.value + s;
           optOutOtpErrorMsg.value = '';
         },
+        isForOptOUt: true,
         title: 'User Verification',
         mobileNumber: mobile,
         isEnable: isEnableoptOutEmailOtpResend,
@@ -1427,7 +1436,7 @@ class DashboardLogic extends GetxController {
         },
         isEdit: false.obs,
         errorText: optOutOtpErrorMsg,
-        subTitle: 'A Verification code is sent on your registered mobile number '.obs,
+        subTitle: subTitle.obs,
         timerText: "".obs,
       );
     } else {
@@ -1466,6 +1475,8 @@ class DashboardLogic extends GetxController {
     TGLog.d("VerifySignupOtpRequest : onSuccess()---$response");
     if (response.getOtpResponse().status == RES_SUCCESS) {
       Get.back();
+      tempMobile = '';
+      tempSchemeId = 0;
       onSaveDetail();
       isOptOutOTPVerifing.value = false;
     } else {

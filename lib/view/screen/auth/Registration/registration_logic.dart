@@ -78,10 +78,29 @@ class RegistrationLogic extends GetxController {
     super.onInit();
   }
 
+  void onChangeName(String? str) {
+    if (nameController.text.isEmpty ||
+        !onlyCharRegExp.hasMatch(nameController.text) ||
+        nameController.text == ' ' ||
+        nameController.text.trim().length < 2 ||
+        nameController.text.substring(0, 1) == ' ') {
+      nameError.value = 'Please enter valid name';
+    } else {
+      nameError.value = '';
+    }
+  }
+
   void onChangeMobile(String? str) {
     mobile.value = mobileController.text;
-    mobileError.value = '';
-    nameError.value = '';
+    if (((mobileController.text.isEmpty || !mobileRegExp.hasMatch(mobileController.text)) ||
+            mobileController.text == ' ' ||
+            (mobileController.text.isNotEmpty &&
+                !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
+        (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
+      mobileError.value = 'Please enter valid mobile number';
+    } else {
+      mobileError.value = '';
+    }
   }
 
   Future<void> onPressSentOTP() async {
@@ -89,25 +108,18 @@ class RegistrationLogic extends GetxController {
     if (nameController.text.isEmpty ||
         !onlyCharRegExp.hasMatch(nameController.text) ||
         nameController.text == ' ' ||
-        nameController.text.trim().length < 2) {
+        nameController.text.trim().length < 2 ||
+        nameController.text.substring(0, 1) == ' ') {
       nameError.value = 'Please enter valid name';
-      mobileError.value = '';
-      captchError.value = '';
     } else if (((mobileController.text.isEmpty || !mobileRegExp.hasMatch(mobileController.text)) ||
             mobileController.text == ' ' ||
             (mobileController.text.isNotEmpty &&
                 !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
         (mobileController.text.isNotEmpty && mobileController.text.length != 10)) {
-      nameError.value = '';
       mobileError.value = 'Please enter valid mobile number';
-      captchError.value = '';
     } else if (captchaController.text.isEmpty) {
-      nameError.value = '';
-      mobileError.value = '';
       captchError.value = 'Please enter captcha';
     } else if (captchaController.text != captchaTrueValue) {
-      nameError.value = '';
-      mobileError.value = '';
       captchError.value = 'Captcha not match';
     } else if (isCheckedFirst == false) {
       LoaderUtils.handleErrorResponse(
@@ -288,9 +300,15 @@ class RegistrationLogic extends GetxController {
   _onErrorResponse(response) {}
 
   void onChangeCaptcha(String p1) {
-    captchError.value = '';
     if (p1 == captchaTrueValue) {
       isButtonEnabled.value = true;
+    }
+    if (captchaController.text.isEmpty) {
+      captchError.value = 'Please enter captcha';
+    } else if (captchaController.text != captchaTrueValue) {
+      captchError.value = 'Captcha not match';
+    } else {
+      captchError.value = '';
     }
   }
 

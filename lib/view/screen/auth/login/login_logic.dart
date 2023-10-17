@@ -108,14 +108,66 @@ class LoginLogic extends GetxController {
   }
 
   void onChangeMobile(String? str) {
-    errorMsg.value = '';
-    mobileError.value = '';
-    passwordError.value = '';
-    captchError.value = '';
     mobile.value = mobileController.text;
+    if (mobileController.text.isEmpty) {
+      mobileError.value = 'Please enter valid mobile number or email address';
+    } else {
+      if (isNumeric(mobileController.text)) {
+        if (!validCharacters.hasMatch(mobileController.text) ||
+            mobileController.text.length != 10 ||
+            !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1))) {
+          mobileError.value = 'Please enter valid mobile number or email address';
+        } else {
+          mobileError.value = '';
+        }
+      } else {
+        if (!isNumeric(mobileController.text)) {
+          if (mobileController.text.isNotEmpty && (mobileController.text.length < 5) ||
+              !emailRegExp.hasMatch(mobileController.text)) {
+            mobileError.value = 'Please enter valid email';
+          } else {
+            mobileError.value = '';
+          }
+        }
+      }
+    }
+  }
+
+  void onChangePassword(String? str) {
+    if (passwordController.text.isEmpty || passwordController.text.length < 8) {
+      passwordError.value = 'Please enter password';
+    } else {
+      passwordError.value = '';
+    }
+    isShowPassword.value = isShowPassword.value;
   }
 
   RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
+
+  void onFocusOutEmail() {
+    if (mobileController.text.isEmpty) {
+      mobileError.value = 'Please enter valid mobile number or email address';
+    } else {
+      if (isNumeric(mobileController.text)) {
+        if (!validCharacters.hasMatch(mobileController.text) ||
+            mobileController.text.length != 10 ||
+            !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1))) {
+          mobileError.value = 'Please enter valid mobile number or email address';
+        } else {
+          mobileError.value = '';
+        }
+      } else {
+        if (!isNumeric(mobileController.text)) {
+          if (mobileController.text.isNotEmpty && (mobileController.text.length < 5) ||
+              !emailRegExp.hasMatch(mobileController.text)) {
+            mobileError.value = 'Please enter valid email';
+          } else {
+            mobileError.value = '';
+          }
+        }
+      }
+    }
+  }
 
   Future<void> onPressSentOTP() async {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
@@ -123,23 +175,15 @@ class LoginLogic extends GetxController {
     otpError.value = '';
     if (mobileController.text.isEmpty) {
       mobileError.value = 'Please enter valid mobile number or email address';
-      passwordError.value = '';
-      captchError.value = '';
     } else {
       if (isNumeric(mobileController.text)) {
         if (!validCharacters.hasMatch(mobileController.text) ||
             mobileController.text.length != 10 ||
             !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1))) {
-          passwordError.value = '';
           mobileError.value = 'Please enter valid mobile number or email address';
-          captchError.value = '';
         } else if (captchaController.text.isEmpty) {
-          passwordError.value = '';
-          mobileError.value = '';
           captchError.value = 'Please enter captcha';
         } else if (captchaController.text != captchaTrueValue) {
-          passwordError.value = '';
-          mobileError.value = '';
           captchError.value = 'Captcha not match';
         } else {
           passwordError.value = '';
@@ -152,23 +196,13 @@ class LoginLogic extends GetxController {
           if (mobileController.text.isNotEmpty && (mobileController.text.length < 5) ||
               !emailRegExp.hasMatch(mobileController.text)) {
             mobileError.value = 'Please enter valid email';
-            passwordError.value = '';
-            captchError.value = '';
           } else if (passwordController.text.isEmpty) {
             passwordError.value = 'Please enter password';
-            mobileError.value = '';
-            captchError.value = '';
           } else if (!validateStructure(passwordController.text)) {
             passwordError.value = 'Invalid password pattern';
-            mobileError.value = '';
-            captchError.value = '';
           } else if (captchaController.text.isEmpty) {
-            passwordError.value = '';
-            mobileError.value = '';
             captchError.value = 'Please enter captcha';
           } else if (captchaController.text != captchaTrueValue) {
-            passwordError.value = '';
-            mobileError.value = '';
             captchError.value = 'Captcha not match';
           } else {
             passwordError.value = '';
@@ -470,11 +504,15 @@ class LoginLogic extends GetxController {
   _onErrorResponse(response) {}
 
   void onChangeCaptcha(String p1) {
-    errorMsg.value = '';
-    mobileError.value = '';
-    captchError.value = '';
     if (p1 == captchaTrueValue) {
       isButtonEnabled.value = true;
+    }
+    if (captchaController.text.isEmpty) {
+      captchError.value = 'Please enter captcha';
+    } else if (captchaController.text != captchaTrueValue) {
+      captchError.value = 'Captcha not match';
+    } else {
+      captchError.value = '';
     }
   }
 
@@ -680,6 +718,15 @@ class LoginLogic extends GetxController {
     }
   }
 
+  void onChangeForgotPassword(String? str) {
+    if (forgotEmailController.text.isNotEmpty && (forgotEmailController.text.length < 5) ||
+        !emailRegExp.hasMatch(forgotEmailController.text)) {
+      forgotEmailError.value = 'Please enter valid email';
+    } else {
+      forgotEmailError.value = '';
+    }
+  }
+
   _onsuccsessSetPassword(SetPasswordResponseMain response) {
     if (response.skippedresponse().status == RES_SUCCESS) {
       Get.back();
@@ -788,7 +835,15 @@ class LoginLogic extends GetxController {
                         inputType: TextInputType.text,
                         errorText: setPassError.value,
                         onChanged: (str) {
-                          setPassError.value = '';
+                          if (setPasswordController.text.isEmpty) {
+                            setPassError.value = "Please enter password";
+                          } else if (setPasswordController.text.length < 8) {
+                            setPassError.value = 'Invalid password pattern';
+                          } else if (!validateStructure(setPasswordController.text)) {
+                            setPassError.value = 'Invalid password pattern';
+                          } else {
+                            setPassError.value = '';
+                          }
                         },
                         isObscureText: isShowForgotPassword.value,
                         suffix: IconButton(
@@ -819,7 +874,15 @@ class LoginLogic extends GetxController {
                         errorText: resetPassError.value,
                         isObscureText: isShowConfirmPassword.value,
                         onChanged: (str) {
-                          resetPassError.value = '';
+                          if (repeatSetPasswordController.text.isEmpty) {
+                            resetPassError.value = "Please enter confirm password";
+                          } else if (repeatSetPasswordController.text.length < 8) {
+                            resetPassError.value = "Invalid password pattern";
+                          } else if (!validateStructure(repeatSetPasswordController.text)) {
+                            resetPassError.value = "Invalid password pattern";
+                          } else {
+                            resetPassError.value = '';
+                          }
                         },
                         suffix: IconButton(
                           icon: isShowConfirmPassword.value

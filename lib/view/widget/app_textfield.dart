@@ -23,6 +23,8 @@ class AppTextField extends StatelessWidget {
       this.isAutoFocus = false,
       this.prefixText = '',
       required this.isMandatory,
+      this.onFocusOut,
+      this.onTapOutSide,
       this.errorText = '',
       this.suffix,
       this.onTap,
@@ -40,6 +42,8 @@ class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String)? onChanged;
   final void Function()? onTap;
+  final void Function()? onFocusOut;
+  final void Function(PointerDownEvent event)? onTapOutSide;
   final bool isReadOnly;
   final bool isMandatory;
   final bool isAutoFocus;
@@ -85,6 +89,8 @@ class AppTextField extends StatelessWidget {
           readOnly: isReadOnly,
           cursorColor: ColorConfig.jsLightBlackColor,
           textInputAction: TextInputAction.next,
+          // onEditingComplete: onFocusOut,
+          // onTapOutside: onTapOutSide,
           decoration: InputDecoration(
             hintText: hintText,
             suffixIcon: suffix,

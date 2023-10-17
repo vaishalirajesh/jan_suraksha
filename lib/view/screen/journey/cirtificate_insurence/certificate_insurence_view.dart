@@ -708,7 +708,7 @@ class CertificateInsurencePage extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.all(10.r),
                                       child: Text(
-                                        '"Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
+                                        'Relationship of Guardian/Appointee with Nominee (In case of minor nominee)',
                                         style: StyleConfig.mediumExtraSmallBlackText,
                                         textAlign: TextAlign.center,
                                       ),

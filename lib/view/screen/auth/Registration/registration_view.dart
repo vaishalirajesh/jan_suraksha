@@ -99,7 +99,7 @@ class RegistrationPage extends StatelessWidget {
                               title: 'Name',
                               inputType: TextInputType.emailAddress,
                               maxLength: 30,
-                              onChanged: signUpLogic.onChangeMobile,
+                              onChanged: signUpLogic.onChangeName,
                               errorText: signUpLogic.nameError.value,
                             );
                           }),

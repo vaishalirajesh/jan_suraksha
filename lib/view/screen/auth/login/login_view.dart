@@ -94,6 +94,10 @@ class LoginPage extends StatelessWidget {
                             hintText: AppString.enterMobileNumber,
                             controller: loginLogic.mobileController,
                             title: AppString.enterMobileNumber,
+                            onFocusOut: loginLogic.onFocusOutEmail,
+                            onTapOutSide: (value) {
+                              loginLogic.onFocusOutEmail();
+                            },
                             isReadOnly: false,
                             isMandatory: true,
                             isAutoFocus: false,
@@ -160,7 +164,7 @@ class LoginPage extends StatelessWidget {
                                   isAutoFocus: false,
                                   inputType: TextInputType.text,
                                   maxLength: 30,
-                                  onChanged: loginLogic.onChangeMobile,
+                                  onChanged: loginLogic.onChangePassword,
                                   errorText: loginLogic.passwordError.value,
                                   suffix: IconButton(
                                     icon: loginLogic.isShowPassword.value

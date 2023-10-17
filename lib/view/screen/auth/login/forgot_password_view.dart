@@ -91,9 +91,7 @@ class ForgotPasswordPage extends StatelessWidget {
                           inputType: TextInputType.emailAddress,
                           maxLength: 255,
                           errorText: forgotPasswordLogic.forgotEmailError.value,
-                          onChanged: (str) {
-                            forgotPasswordLogic.forgotEmailError.value = '';
-                          },
+                          onChanged: forgotPasswordLogic.onChangeForgotPassword,
                         );
                       }),
                       Padding(

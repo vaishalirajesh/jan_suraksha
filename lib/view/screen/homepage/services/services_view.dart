@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:jan_suraksha/services/singleton/session.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
@@ -557,6 +559,7 @@ class ServicesPage extends StatelessWidget {
                                                                       AppArguments.appId:
                                                                           dashboardLogic.nomineeList[index]['id'],
                                                                     })?.then((value) {
+                                                                  TGSession.getInstance().set(PREF_USER_FORM_DATA, "");
                                                                   bool isServices = false;
                                                                   if (value != null && value[0]["backValue"] == true) {
                                                                     print("Result is coming");

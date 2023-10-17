@@ -140,7 +140,7 @@ class NomineeDetailsLogic extends GetxController {
   Future<void> getData() async {
     Future.delayed(const Duration(seconds: 1), () async {
       String data = await TGSession.getInstance().get(PREF_USER_FORM_DATA) ?? '';
-      if (data.isNotEmpty) {
+      if (data.isNotEmpty && screenName.value != 'Service') {
         getAppData = getApplicationFormDetailsResponseMainFromJson(data);
         nominee = getAppData.data?.nominee?.first ?? Nominee();
         firstNameController.text = nominee.firstName ?? '';
@@ -279,249 +279,63 @@ class NomineeDetailsLogic extends GetxController {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (firstNameController.text.trim().isEmpty) {
         fNameErrorMsg.value = 'Please enter first name';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) || firstNameController.text.trim() == ' ') {
+      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) ||
+          firstNameController.text.trim() == ' ' ||
+          firstNameController.text.substring(0, 1) == ' ') {
         fNameErrorMsg.value = 'Please enter valid first name';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-      } else if ((middleNameController.text.isNotEmpty && !onlyCharRegExp.hasMatch(middleNameController.text)) ||
+      } else if ((middleNameController.text.isNotEmpty &&
+              ((!onlyCharRegExp.hasMatch(middleNameController.text)) ||
+                  middleNameController.text.substring(0, 1) == ' ')) ||
           middleNameController.text == ' ') {
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-
         mNameErrorMsg.value = 'Please enter valid middle name';
-      } else if ((latsNameController.text.trim().isNotEmpty && !onlyCharRegExp.hasMatch(latsNameController.text)) ||
+      } else if ((latsNameController.text.trim().isNotEmpty &&
+              (!onlyCharRegExp.hasMatch(latsNameController.text) || latsNameController.text.substring(0, 1) == ' ')) ||
           latsNameController.text == ' ') {
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        emailErrorMsg.value = '';
         lNameErrorMsg.value = 'Please enter valid last name';
-        mNameErrorMsg.value = '';
       } else if (dobController.text.isEmpty) {
         dobErrorMsg.value = 'Please select date of birth';
-        fNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (((mobileController.text.trim().isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
               mobileController.text == ' ' ||
               (mobileController.text.trim().isNotEmpty &&
                   !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0, 1)))) ||
           (mobileController.text.trim().isNotEmpty && mobileController.text.trim().length != 10)) {
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
         mobileErrorMsg.value = 'Please enter valid mobile number';
-        lNameErrorMsg.value = '';
-        mNameErrorMsg.value = '';
       } else if (relationshipid.value == 0) {
-        pinCodeErrorMsg.value = '';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        districtErrorMsg.value = '';
         relationErrorMsg.value = 'Please select relationship with the applicant';
-        lNameErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        address2ErrorMsg.value = '';
       } else if (emailController.text.trim().isNotEmpty &&
-          (emailController.text.trim().length < 5 || !emailRegExp.hasMatch(emailController.text))) {
-        dobErrorMsg.value = '';
-        fNameErrorMsg.value = '';
+          (emailController.text.trim().length < 5 ||
+              !emailRegExp.hasMatch(emailController.text) ||
+              emailController.text.substring(0, 1) == ' ')) {
         emailErrorMsg.value = 'Please enter valid email';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (addressOneController.text.trim().isEmpty ||
           addressOneController.text.trim().length < 2 ||
-          specialCharExpStartChar.hasMatch(addressOneController.text.trim().substring(0))) {
+          addressOneController.text.substring(0, 1) == ' ' ||
+          specialCharExpStartChar.hasMatch(addressOneController.text.trim().substring(0, 1))) {
         addressErrorMsg.value = 'Please enter valid address';
-        fNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (addressTwoController.text.trim().isNotEmpty &&
           (addressTwoController.text.trim().length < 2 ||
-              specialCharExpStartChar.hasMatch(addressTwoController.text.trim().substring(0)))) {
-        addressErrorMsg.value = '';
-        fNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        cityErrorMsg.value = '';
+              addressTwoController.text.substring(0, 1) == ' ' ||
+              specialCharExpStartChar.hasMatch(addressTwoController.text.trim().substring(0, 1)))) {
         address2ErrorMsg.value = 'Please enter valid address';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (cityController.text.trim().isEmpty ||
           cityController.text.trim().length < 2 ||
-          specialCharExpStartChar.hasMatch(cityController.text.trim().substring(0))) {
+          cityController.text.substring(0, 1) == ' ' ||
+          specialCharExpStartChar.hasMatch(cityController.text.trim().substring(0, 1))) {
         cityErrorMsg.value = 'Please enter valid city';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (districtController.text.trim().isEmpty ||
           districtController.text.trim().length < 2 ||
-          specialCharExpStartChar.hasMatch(districtController.text.substring(0))) {
+          districtController.text.substring(0, 1) == ' ' ||
+          specialCharExpStartChar.hasMatch(districtController.text.trim().substring(0, 1))) {
         districtErrorMsg.value = 'Please enter valid district';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-      } else if (districtController.text.trim().isEmpty ||
-          districtController.text.trim().length < 2 ||
-          specialCharExpStartChar.hasMatch(districtController.text.trim().substring(0))) {
-        districtErrorMsg.value = 'Please enter valid district';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (stateController.text.trim().isEmpty ||
           stateController.text.trim().length < 2 ||
-          specialCharExpStartChar.hasMatch(stateController.text.trim().substring(0))) {
+          stateController.text.substring(0, 1) == ' ' ||
+          specialCharExpStartChar.hasMatch(stateController.text.trim().substring(0, 1))) {
         stateErrorMsg.value = 'Please enter valid state';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        pinCodeErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        address2ErrorMsg.value = '';
       } else if (pinCodeController.text.trim().isEmpty) {
         pinCodeErrorMsg.value = 'Please enter pincode';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        relationErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        lNameErrorMsg.value = '';
       } else if (!validCharacters.hasMatch(pinCodeController.text) || pinCodeController.text.trim().length != 6) {
         pinCodeErrorMsg.value = 'Please enter valid pincode';
-        fNameErrorMsg.value = '';
-        dobErrorMsg.value = '';
-        addressErrorMsg.value = '';
-        cityErrorMsg.value = '';
-        mNameErrorMsg.value = '';
-        emailErrorMsg.value = '';
-        lNameErrorMsg.value = '';
-        stateErrorMsg.value = '';
-        districtErrorMsg.value = '';
-        mobileErrorMsg.value = '';
-        address2ErrorMsg.value = '';
-        relationErrorMsg.value = '';
       } else {
         fNameErrorMsg.value = '';
         dobErrorMsg.value = '';

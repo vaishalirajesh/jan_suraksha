@@ -91,45 +91,28 @@ class GuradianDetailsLogic extends GetxController {
     print("onPressContinue");
     if (firstNameController.text.trim().isEmpty ||
         !onlyCharRegExp.hasMatch(firstNameController.text) ||
-        firstNameController.text == ' ') {
+        firstNameController.text == ' ' ||
+        firstNameController.text.substring(0, 1) == ' ') {
       fNameErrorMsg.value = 'Please enter valid name';
-      relationErrorMsg.value = '';
-      addressErrorMsg.value = '';
-      emailErrorMsg.value = '';
-      mobileErrorMsg.value = '';
     } else if (addressController.text.trim().isEmpty ||
         addressController.text.trim().length < 2 ||
+        addressController.text.substring(0, 1) == ' ' ||
         specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
-      fNameErrorMsg.value = '';
-      relationErrorMsg.value = '';
       addressErrorMsg.value = 'Please enter valid address';
-      emailErrorMsg.value = '';
-      mobileErrorMsg.value = '';
-      // !mobileRegExpStartChar.hasMatch(mobileController.text.substring(0)) &&
-      //     ((!mobileRegExp.hasMatch(mobileController.text) || mobileController.text.length != 10))
     } else if (relationshipGuardianId.value == 0) {
-      fNameErrorMsg.value = '';
       relationErrorMsg.value = 'Please select relationship with the nominee';
-      addressErrorMsg.value = '';
-      emailErrorMsg.value = '';
-      mobileErrorMsg.value = '';
-    } else if (emailController.text.trim().isNotEmpty &&
-        ((emailController.text.trim().length < 5) || !emailRegExp.hasMatch(emailController.text))) {
-      fNameErrorMsg.value = '';
-      relationErrorMsg.value = '';
-      addressErrorMsg.value = '';
-      emailErrorMsg.value = 'Please enter valid email Id';
-      mobileErrorMsg.value = '';
-    } else if (((mobileController.text.isNotEmpty && !mobileRegExp.hasMatch(mobileController.text)) ||
+    } else if (((mobileController.text.isNotEmpty &&
+                (!mobileRegExp.hasMatch(mobileController.text) || mobileController.text.substring(0, 1) == ' ')) ||
             mobileController.text == ' ' ||
             (mobileController.text.trim().isNotEmpty &&
                 !mobileRegExpStartChar.hasMatch(mobileController.text.trim().substring(0, 1)))) ||
         (mobileController.text.isNotEmpty && mobileController.text.trim().length != 10)) {
       mobileErrorMsg.value = 'Please enter valid mobile number';
-      fNameErrorMsg.value = '';
-      relationErrorMsg.value = '';
-      addressErrorMsg.value = '';
-      emailErrorMsg.value = '';
+    } else if (emailController.text.isNotEmpty &&
+        ((emailController.text.trim().length < 5) ||
+            emailController.text.substring(0, 1) == ' ' ||
+            !emailRegExp.hasMatch(emailController.text))) {
+      emailErrorMsg.value = 'Please enter valid email Id';
     } else {
       fNameErrorMsg.value = '';
       relationErrorMsg.value = '';

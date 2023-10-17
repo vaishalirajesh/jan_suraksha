@@ -53,7 +53,16 @@ class NomineeDetailsPage extends StatelessWidget {
                                   inputType: TextInputType.name,
                                   errorText: nomineeDetailsLogic.fNameErrorMsg.value,
                                   onChanged: (str) {
-                                    nomineeDetailsLogic.fNameErrorMsg.value = '';
+                                    if (nomineeDetailsLogic.firstNameController.text.trim().isEmpty) {
+                                      nomineeDetailsLogic.fNameErrorMsg.value = 'Please enter first name';
+                                    } else if (!nomineeDetailsLogic.onlyCharRegExp
+                                            .hasMatch(nomineeDetailsLogic.firstNameController.text) ||
+                                        nomineeDetailsLogic.firstNameController.text == ' ' ||
+                                        nomineeDetailsLogic.firstNameController.text.substring(0, 1) == ' ') {
+                                      nomineeDetailsLogic.fNameErrorMsg.value = 'Please enter valid first name';
+                                    } else {
+                                      nomineeDetailsLogic.fNameErrorMsg.value = '';
+                                    }
                                   },
                                 );
                               }),
@@ -70,7 +79,14 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.mNameErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.mNameErrorMsg.value = '';
+                                  if ((nomineeDetailsLogic.middleNameController.text.isNotEmpty &&
+                                      (!nomineeDetailsLogic.onlyCharRegExp
+                                              .hasMatch(nomineeDetailsLogic.middleNameController.text) ||
+                                          nomineeDetailsLogic.middleNameController.text.substring(0, 1) == ' '))) {
+                                    nomineeDetailsLogic.mNameErrorMsg.value = 'Please enter valid middle name';
+                                  } else {
+                                    nomineeDetailsLogic.mNameErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -86,7 +102,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 shouldInputNamesOnly: true,
                                 errorText: nomineeDetailsLogic.lNameErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.lNameErrorMsg.value = '';
+                                  if ((nomineeDetailsLogic.latsNameController.text.trim().isNotEmpty &&
+                                          (!nomineeDetailsLogic.onlyCharRegExp
+                                                  .hasMatch(nomineeDetailsLogic.latsNameController.text) ||
+                                              nomineeDetailsLogic.latsNameController.text.substring(0, 1) == ' ')) ||
+                                      nomineeDetailsLogic.latsNameController.text == ' ') {
+                                    nomineeDetailsLogic.lNameErrorMsg.value = 'Please enter valid last name';
+                                  } else {
+                                    nomineeDetailsLogic.lNameErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -114,7 +138,19 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.phone,
                                 errorText: nomineeDetailsLogic.mobileErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.mobileErrorMsg.value = '';
+                                  if (((nomineeDetailsLogic.mobileController.text.trim().isNotEmpty &&
+                                              !nomineeDetailsLogic.mobileRegExp
+                                                  .hasMatch(nomineeDetailsLogic.mobileController.text)) ||
+                                          nomineeDetailsLogic.mobileController.text == ' ' ||
+                                          (nomineeDetailsLogic.mobileController.text.trim().isNotEmpty &&
+                                              !nomineeDetailsLogic.mobileRegExpStartChar.hasMatch(
+                                                  nomineeDetailsLogic.mobileController.text.substring(0, 1)))) ||
+                                      (nomineeDetailsLogic.mobileController.text.trim().isNotEmpty &&
+                                          nomineeDetailsLogic.mobileController.text.trim().length != 10)) {
+                                    nomineeDetailsLogic.mobileErrorMsg.value = 'Please enter valid mobile number';
+                                  } else {
+                                    nomineeDetailsLogic.mobileErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -241,7 +277,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.emailAddress,
                                 errorText: nomineeDetailsLogic.emailErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.emailErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.emailController.text.trim().isNotEmpty &&
+                                      (nomineeDetailsLogic.emailController.text.trim().length < 5 ||
+                                          !nomineeDetailsLogic.emailRegExp
+                                              .hasMatch(nomineeDetailsLogic.emailController.text) ||
+                                          nomineeDetailsLogic.emailController.text.substring(0, 1) == ' ')) {
+                                    nomineeDetailsLogic.emailErrorMsg.value = 'Please enter valid email';
+                                  } else {
+                                    nomineeDetailsLogic.emailErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -317,7 +361,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.streetAddress,
                                 errorText: nomineeDetailsLogic.addressErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.addressErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.addressOneController.text.trim().isEmpty ||
+                                      nomineeDetailsLogic.addressOneController.text.trim().length < 2 ||
+                                      nomineeDetailsLogic.addressOneController.text.substring(0, 1) == ' ' ||
+                                      nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
+                                          nomineeDetailsLogic.addressOneController.text.trim().substring(0, 1))) {
+                                    nomineeDetailsLogic.addressErrorMsg.value = 'Please enter valid address';
+                                  } else {
+                                    nomineeDetailsLogic.addressErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -332,7 +384,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.streetAddress,
                                 errorText: nomineeDetailsLogic.address2ErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.address2ErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.addressTwoController.text.isNotEmpty &&
+                                      (nomineeDetailsLogic.addressTwoController.text.trim().length < 2 ||
+                                          nomineeDetailsLogic.addressTwoController.text.substring(0, 1) == ' ' ||
+                                          nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
+                                              nomineeDetailsLogic.addressTwoController.text.trim().substring(0, 1)))) {
+                                    nomineeDetailsLogic.address2ErrorMsg.value = 'Please enter valid address';
+                                  } else {
+                                    nomineeDetailsLogic.address2ErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -347,7 +407,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.cityErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.cityErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.cityController.text.trim().isEmpty ||
+                                      nomineeDetailsLogic.cityController.text.trim().length < 2 ||
+                                      nomineeDetailsLogic.cityController.text.substring(0, 1) == ' ' ||
+                                      nomineeDetailsLogic.specialCharExpStartChar
+                                          .hasMatch(nomineeDetailsLogic.cityController.text.trim().substring(0, 1))) {
+                                    nomineeDetailsLogic.cityErrorMsg.value = 'Please enter valid city';
+                                  } else {
+                                    nomineeDetailsLogic.cityErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -362,7 +430,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.districtErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.districtErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.districtController.text.trim().isEmpty ||
+                                      nomineeDetailsLogic.districtController.text.trim().length < 2 ||
+                                      nomineeDetailsLogic.districtController.text.substring(0, 1) == ' ' ||
+                                      nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
+                                          nomineeDetailsLogic.districtController.text.trim().substring(0, 1))) {
+                                    nomineeDetailsLogic.districtErrorMsg.value = 'Please enter valid district';
+                                  } else {
+                                    nomineeDetailsLogic.districtErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -376,7 +452,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 hintText: AppString.enterState,
                                 errorText: nomineeDetailsLogic.stateErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.stateErrorMsg.value = '';
+                                  if (nomineeDetailsLogic.stateController.text.trim().isEmpty ||
+                                      nomineeDetailsLogic.stateController.text.trim().length < 2 ||
+                                      nomineeDetailsLogic.stateController.text.substring(0, 1) == ' ' ||
+                                      nomineeDetailsLogic.specialCharExpStartChar
+                                          .hasMatch(nomineeDetailsLogic.stateController.text.trim().substring(0, 1))) {
+                                    nomineeDetailsLogic.stateErrorMsg.value = 'Please enter valid state';
+                                  } else {
+                                    nomineeDetailsLogic.stateErrorMsg.value = '';
+                                  }
                                 },
                               ),
                               SizedBox(
@@ -391,7 +475,15 @@ class NomineeDetailsPage extends StatelessWidget {
                                 maxLength: 6,
                                 errorText: nomineeDetailsLogic.pinCodeErrorMsg.value,
                                 onChanged: (str) {
-                                  nomineeDetailsLogic.pinCodeErrorMsg.value = '';
+                                  final validCharacters = RegExp(r'^[0-9]+$');
+                                  if (nomineeDetailsLogic.pinCodeController.text.trim().isEmpty) {
+                                    nomineeDetailsLogic.pinCodeErrorMsg.value = 'Please enter pincode';
+                                  } else if (!validCharacters.hasMatch(nomineeDetailsLogic.pinCodeController.text) ||
+                                      nomineeDetailsLogic.pinCodeController.text.trim().length != 6) {
+                                    nomineeDetailsLogic.pinCodeErrorMsg.value = 'Please enter valid pincode';
+                                  } else {
+                                    nomineeDetailsLogic.pinCodeErrorMsg.value = '';
+                                  }
                                 },
                               ),
                             ],

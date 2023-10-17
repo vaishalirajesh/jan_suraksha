@@ -51,7 +51,15 @@ class GuradianDetailsPage extends StatelessWidget {
                                   inputType: TextInputType.text,
                                   errorText: guradianDetailsLogic.fNameErrorMsg.value,
                                   onChanged: (str) {
-                                    guradianDetailsLogic.fNameErrorMsg.value = '';
+                                    if (guradianDetailsLogic.firstNameController.text.trim().isEmpty ||
+                                        !guradianDetailsLogic.onlyCharRegExp
+                                            .hasMatch(guradianDetailsLogic.firstNameController.text) ||
+                                        guradianDetailsLogic.firstNameController.text == ' ' ||
+                                        guradianDetailsLogic.firstNameController.text.substring(0, 1) == ' ') {
+                                      guradianDetailsLogic.fNameErrorMsg.value = 'Please enter valid name';
+                                    } else {
+                                      guradianDetailsLogic.fNameErrorMsg.value = '';
+                                    }
                                   },
                                 ),
                                 SizedBox(
@@ -66,7 +74,15 @@ class GuradianDetailsPage extends StatelessWidget {
                                   maxLength: 500,
                                   errorText: guradianDetailsLogic.addressErrorMsg.value,
                                   onChanged: (str) {
-                                    guradianDetailsLogic.addressErrorMsg.value = '';
+                                    if (guradianDetailsLogic.addressController.text.trim().isEmpty ||
+                                        guradianDetailsLogic.addressController.text.trim().length < 2 ||
+                                        guradianDetailsLogic.addressController.text.substring(0, 1) == ' ' ||
+                                        guradianDetailsLogic.specialCharExpStartChar
+                                            .hasMatch(guradianDetailsLogic.addressController.text.substring(0))) {
+                                      guradianDetailsLogic.addressErrorMsg.value = 'Please enter valid address';
+                                    } else {
+                                      guradianDetailsLogic.addressErrorMsg.value = '';
+                                    }
                                   },
                                 ),
                                 SizedBox(
@@ -195,7 +211,23 @@ class GuradianDetailsPage extends StatelessWidget {
                                   maxLength: 10,
                                   errorText: guradianDetailsLogic.mobileErrorMsg.value,
                                   onChanged: (str) {
-                                    guradianDetailsLogic.mobileErrorMsg.value = '';
+                                    if (((guradianDetailsLogic.mobileController.text.isNotEmpty &&
+                                                (!guradianDetailsLogic.mobileRegExp
+                                                        .hasMatch(guradianDetailsLogic.mobileController.text) ||
+                                                    guradianDetailsLogic.mobileController.text.substring(0, 1) ==
+                                                        ' ')) ||
+                                            guradianDetailsLogic.mobileController.text == ' ' ||
+                                            (guradianDetailsLogic.mobileController.text.trim().isNotEmpty &&
+                                                !guradianDetailsLogic.mobileRegExpStartChar.hasMatch(
+                                                    guradianDetailsLogic.mobileController.text
+                                                        .trim()
+                                                        .substring(0, 1)))) ||
+                                        (guradianDetailsLogic.mobileController.text.isNotEmpty &&
+                                            guradianDetailsLogic.mobileController.text.trim().length != 10)) {
+                                      guradianDetailsLogic.mobileErrorMsg.value = 'Please enter valid mobile number';
+                                    } else {
+                                      guradianDetailsLogic.mobileErrorMsg.value = '';
+                                    }
                                   },
                                 ),
                                 SizedBox(
@@ -210,7 +242,15 @@ class GuradianDetailsPage extends StatelessWidget {
                                   inputType: TextInputType.emailAddress,
                                   errorText: guradianDetailsLogic.emailErrorMsg.value,
                                   onChanged: (str) {
-                                    guradianDetailsLogic.emailErrorMsg.value = '';
+                                    if (guradianDetailsLogic.emailController.text.isNotEmpty &&
+                                        ((guradianDetailsLogic.emailController.text.trim().length < 5) ||
+                                            guradianDetailsLogic.emailController.text.substring(0, 1) == ' ' ||
+                                            !guradianDetailsLogic.emailRegExp
+                                                .hasMatch(guradianDetailsLogic.emailController.text))) {
+                                      guradianDetailsLogic.emailErrorMsg.value = 'Please enter valid email Id';
+                                    } else {
+                                      guradianDetailsLogic.emailErrorMsg.value = '';
+                                    }
                                   },
                                 ),
                                 SizedBox(

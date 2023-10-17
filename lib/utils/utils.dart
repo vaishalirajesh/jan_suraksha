@@ -9,6 +9,8 @@ import 'package:jan_suraksha/services/encryption/encdec/aesGcmEncryption.dart';
 import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
 import 'package:jan_suraksha/utils/flavor.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_view.dart';
 
@@ -58,6 +60,11 @@ class AppUtils {
 
   static Future<bool> onWillNoPop() async {
     return false;
+  }
+
+  static Future<bool> onWillPopLogin() async {
+    Get.offAll(() => LoginPage(), binding: LoginBinding());
+    return true;
   }
 
   static void onBackPressAuth() {
@@ -163,5 +170,12 @@ class AppUtils {
     } else {
       return const SizedBox();
     }
+  }
+
+  static String capitalize(String str) {
+    return str.toLowerCase().split(' ').map((word) {
+      String leftText = (word.length > 1) ? word.substring(1, word.length) : '';
+      return word[0].toUpperCase() + leftText;
+    }).join(' ');
   }
 }

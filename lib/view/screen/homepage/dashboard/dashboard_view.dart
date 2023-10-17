@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/config/color_config.dart';
 import 'package:jan_suraksha/generated/assets.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
+import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/showcustomesnackbar.dart';
 import 'package:jan_suraksha/utils/utils.dart';
 import 'package:jan_suraksha/view/screen/homepage/profile/profile_view.dart';
@@ -12,8 +14,6 @@ import 'package:jan_suraksha/view/screen/homepage/services/services_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/support/support_view.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/application_form/application_form_view.dart';
-import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_binding.dart';
-import 'package:jan_suraksha/view/screen/journey/cirtificate_insurence/certificate_insurence_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_binding.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmjjby_journey/ongoing_pmjjby_journey_view.dart';
 import 'package:jan_suraksha/view/screen/journey/ongoing_pmsby_journey/ongoing_pmsby_journey_binding.dart';
@@ -207,7 +207,7 @@ class HomePage extends StatelessWidget {
                       Expanded(
                         child: Obx(() {
                           return Text(
-                            'Welcome, ${dashboardLogic.userName.value}',
+                            'Welcome${dashboardLogic.userName.value.isNotEmpty ? ', ${AppUtils.capitalize(dashboardLogic.userName.value)}!' : ''}',
                             style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
                             overflow: TextOverflow.ellipsis,
                           );
@@ -694,6 +694,8 @@ class HomePage extends StatelessWidget {
                                                       appId: dashboardLogic.schemeList[index]['id'],
                                                       orgId: dashboardLogic.schemeList[index]['orgId']);
                                                 } else {
+                                                  TGSharedPreferences.getInstance()
+                                                      .set(PREF_APP_ID, dashboardLogic.schemeList[index]['id']);
                                                   Get.offAll(() => ApplicationFormPage(),
                                                       binding: ApplicationFormBinding(),
                                                       arguments: {

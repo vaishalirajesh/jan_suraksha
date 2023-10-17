@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jan_suraksha/services/singleton/session.dart';
+import 'package:jan_suraksha/services/singleton/shared_preferences.dart';
 import 'package:jan_suraksha/utils/constant/argument_constant.dart';
 import 'package:jan_suraksha/utils/constant/prefrenceconstants.dart';
 import 'package:jan_suraksha/utils/constant/string_constant.dart';
@@ -552,6 +553,7 @@ class ServicesPage extends StatelessWidget {
                                                           // ),
                                                           ListViewButtons(
                                                               onPress: () {
+
                                                                 Get.to(() => NomineeDetailsPage(),
                                                                     binding: NomineeDetailsBinding(),
                                                                     arguments: {

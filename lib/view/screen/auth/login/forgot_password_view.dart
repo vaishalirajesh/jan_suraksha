@@ -21,7 +21,7 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: AppUtils.onWillPopScope,
+      onWillPop: AppUtils.onWillPopLogin,
       child: Scaffold(
         backgroundColor: ColorConfig.jsWhiteColor,
         resizeToAvoidBottomInset: true,

@@ -364,7 +364,7 @@ class RegistrationLogic extends GetxController {
       //     AppArguments.mobileNumber: mobile.value,
       //   },
       // );
-      Get.to(
+      Get.offAll(
         () => DashboardPage(),
         binding: DashboardBinding(),
         arguments: {

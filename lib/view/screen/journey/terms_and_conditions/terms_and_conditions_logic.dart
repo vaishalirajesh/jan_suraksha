@@ -72,7 +72,7 @@ class TermsAndConditionsLogic extends GetxController {
 
   Future<void> getData() async {
     isDataLoaded.value = false;
-    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
+    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? 0;
     TGLog.d("ApplicationId-------$appId");
     var encUserId = AesGcmEncryptionUtils.encryptNew(appId.toString());
     TermConditionRequest termConditionRequest = TermConditionRequest(id: encUserId);
@@ -243,8 +243,8 @@ class TermsAndConditionsLogic extends GetxController {
 
   Future<void> iAgree() async {
     isOTPVerifying.value = true;
-    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? '';
-    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? '';
+    var appId = await TGSharedPreferences.getInstance().get(PREF_APP_ID) ?? 0;
+    var schemeId = await TGSharedPreferences.getInstance().get(PREF_SCHEME_ID) ?? 0;
     PremiumDeductionRequest premiumDeductionRequest =
         PremiumDeductionRequest(applicationId: appId.toString(), schemeId: schemeId.toString());
     var jsonRequest = jsonEncode(premiumDeductionRequest.toJson());

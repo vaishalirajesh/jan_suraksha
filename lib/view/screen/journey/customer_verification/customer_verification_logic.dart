@@ -108,32 +108,41 @@ class CustomerVerificationLogic extends GetxController {
   }
 
   void onChangeAccountNo(String? str) {
-    accountErrorMsg.value = '';
-    reAccountErrorMsg.value = '';
+    if (accountTextController.text.isEmpty) {
+      accountErrorMsg.value = 'Please enter account number';
+    } else if (accountTextController.text.length < 3 || !validCharacters.hasMatch(accountTextController.text)) {
+      accountErrorMsg.value = 'Please enter valid account number';
+    } else if (accountTextController.text.length > 17) {
+      accountErrorMsg.value = 'Please enter valid account number';
+    } else {
+      accountErrorMsg.value = '';
+    }
+  }
+
+  void onChangeReAccountNo(String? str) {
+    if (reAccountTextController.text.isEmpty) {
+      reAccountErrorMsg.value = 'Please enter confirm account number';
+    } else if (reAccountTextController.text.length < 3 || !validCharacters.hasMatch(reAccountTextController.text)) {
+      reAccountErrorMsg.value = 'Please enter valid confirm account number';
+    } else if (reAccountTextController.text.length > 17) {
+      reAccountErrorMsg.value = 'Please enter valid confirm account number';
+    } else {
+      reAccountErrorMsg.value = '';
+    }
   }
 
   void onPressContinue() {
     if (!isLoading.value) {
       // final validCharacters = RegExp(r'^[0-3]+$');
       if (accountTextController.text.isEmpty) {
-        dobErrorMsg.value = '';
-        reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter account number';
       } else if (accountTextController.text.length < 3 || !validCharacters.hasMatch(accountTextController.text)) {
-        dobErrorMsg.value = '';
-        reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter valid account number';
       } else if (accountTextController.text.length > 17) {
-        dobErrorMsg.value = '';
-        reAccountErrorMsg.value = '';
         accountErrorMsg.value = 'Please enter valid account number';
       } else if (reAccountTextController.text.isEmpty || accountTextController.text != reAccountTextController.text) {
         reAccountErrorMsg.value = 'Re-enter account number does not match';
-        dobErrorMsg.value = '';
-        accountErrorMsg.value = '';
       } else if (dobTextController.text.isEmpty) {
-        accountErrorMsg.value = '';
-        reAccountErrorMsg.value = '';
         dobErrorMsg.value = 'Please select date of birth';
       } else {
         accountErrorMsg.value = '';
@@ -277,8 +286,6 @@ class CustomerVerificationLogic extends GetxController {
     TGLog.d("UpdateEnrollmentVerificationTypeRequest : onSuccess()---$response");
     if (response.updateEnrollmentVerificationType().status == RES_SUCCESS) {
       isLoading.value = false;
-      otp.value = '';
-      otpError.value = '';
       isEnableMobileOtpResend.value = false;
       OTPBottomSheet.getBottomSheet1(
         context: Get.context!,

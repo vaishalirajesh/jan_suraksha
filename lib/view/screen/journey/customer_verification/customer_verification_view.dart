@@ -81,7 +81,7 @@ class CustomerVerificationPage extends StatelessWidget {
                             isMandatory: true,
                             errorText: logic.reAccountErrorMsg.value,
                             inputType: TextInputType.number,
-                            onChanged: logic.onChangeAccountNo,
+                            onChanged: logic.onChangeReAccountNo,
                           ),
                           SizedBox(
                             height: 20.h,

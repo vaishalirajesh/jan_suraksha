@@ -509,8 +509,6 @@ class LoginLogic extends GetxController {
     }
     if (captchaController.text.isEmpty) {
       captchError.value = 'Please enter captcha';
-    } else if (captchaController.text != captchaTrueValue) {
-      captchError.value = 'Captcha not match';
     } else {
       captchError.value = '';
     }

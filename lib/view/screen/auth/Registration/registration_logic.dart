@@ -205,7 +205,7 @@ class RegistrationLogic extends GetxController {
         isEnable: isEnableEmailOtpResend,
         isLoading: isOTPVerifing,
         onButtonPress: verifyOtp,
-        subTitle: 'A Verification code is sent on Registered mobile number '.obs,
+        subTitle: 'A Verification code is sent on your mobile number '.obs,
         onResend: onResendEmailOtpTimer,
         onFinish: onFinishEmailOtpTimer,
       );

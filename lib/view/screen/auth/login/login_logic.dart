@@ -26,6 +26,8 @@ import 'package:jan_suraksha/utils/erros_handle_util.dart';
 import 'package:jan_suraksha/utils/internetcheckdialog.dart';
 import 'package:jan_suraksha/utils/net_util.dart';
 import 'package:jan_suraksha/utils/utils.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_binding.dart';
+import 'package:jan_suraksha/view/screen/auth/login/login_view.dart';
 import 'package:jan_suraksha/view/screen/homepage/dashboard/dashboard_binding.dart';
 import 'package:jan_suraksha/view/widget/progressloader.dart';
 
@@ -387,7 +389,7 @@ class LoginLogic extends GetxController {
         onButtonPress: onPressVerifyOtp,
         isEdit: false.obs,
         errorText: otpError,
-        subTitle: 'A Verification code is sent on your mobile number '.obs,
+        subTitle: 'A Verification code is sent on your register mobile number '.obs,
       );
       isLoading.value = false;
     } else {
@@ -727,8 +729,7 @@ class LoginLogic extends GetxController {
 
   _onsuccsessSetPassword(SetPasswordResponseMain response) {
     if (response.skippedresponse().status == RES_SUCCESS) {
-      Get.back();
-      Get.back();
+      Get.offAll(() => LoginPage(), binding: LoginBinding());
       isSetPasswordLoading.value = false;
       showSnackBar(Get.context!, "Password Updated Successfully");
     } else {

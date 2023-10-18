@@ -74,10 +74,14 @@ class NomineeDetailsLogic extends GetxController {
   Rx<num> relationshipid = num.parse('0').obs;
   var guardianid = 0.obs;
   var guardianShipValue = "".obs;
-  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
+  RegExp nameRegExp = RegExp(r'^[a-zA-Z .]+$');
+  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z]+$');
+  RegExp cityRegExp = RegExp(r'^[a-zA-Z0-9 &-.,()]+$');
+  RegExp addressRegExp = RegExp(r'''^[a-zA-Z0-9 /.:,-@#&_=()\"']+$''');
   RegExp mobileRegExp = RegExp(r'^[0-9]+$');
   RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
-  RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
+
+  // RegExp !onlyCharRegExp = RegExp(r'^[!@#$%^&*()]+$');
   RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
       "\\@" +
       "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
@@ -150,7 +154,7 @@ class NomineeDetailsLogic extends GetxController {
             ? AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'dd/mm/yyyy')
             : '';
         date = DateTime.parse(
-            AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'yyyy-MM-dd 00:00:00.000'));
+            AppUtils.convertDateFormat(nominee.dateOfBirth ?? '', 'yyyy-mm-dd', 'yyyy-MM-dd hh:mm:ss.SSSSSS'));
         mobileController.text = nominee.mobileNumber ?? '';
         nomineeRelationShip.value = nominee.relationOfNomineeApplicantStr ?? '';
         relationshipid.value = nominee.relationOfNomineeApplicant ?? num.parse('0');
@@ -257,7 +261,7 @@ class NomineeDetailsLogic extends GetxController {
     nominee.mobileNumber = mobileController.text;
     nominee.middleName = middleNameController.text;
     nominee.emailIdOfNominee = emailController.text;
-    nominee.dateOfBirth = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+    nominee.dateOfBirth = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd hh:mm:ss.SSSSSS', 'yyyy-MM-ddThh:mm:ss.000Z');
     nominee.relationOfNomineeApplicantStr = nomineeRelationShip.value;
     nominee.relationOfNomineeApplicant = relationshipid.value;
     nominee.address?.addressLine1 = addressOneController.text;
@@ -279,17 +283,17 @@ class NomineeDetailsLogic extends GetxController {
       final validCharacters = RegExp(r'^[0-9]+$');
       if (firstNameController.text.trim().isEmpty) {
         fNameErrorMsg.value = 'Please enter first name';
-      } else if (!onlyCharRegExp.hasMatch(firstNameController.text) ||
+      } else if (!nameRegExp.hasMatch(firstNameController.text) ||
           firstNameController.text.trim() == ' ' ||
           firstNameController.text.substring(0, 1) == ' ') {
         fNameErrorMsg.value = 'Please enter valid first name';
       } else if ((middleNameController.text.isNotEmpty &&
-              ((!onlyCharRegExp.hasMatch(middleNameController.text)) ||
+              ((!nameRegExp.hasMatch(middleNameController.text)) ||
                   middleNameController.text.substring(0, 1) == ' ')) ||
           middleNameController.text == ' ') {
         mNameErrorMsg.value = 'Please enter valid middle name';
       } else if ((latsNameController.text.trim().isNotEmpty &&
-              (!onlyCharRegExp.hasMatch(latsNameController.text) || latsNameController.text.substring(0, 1) == ' ')) ||
+              (!nameRegExp.hasMatch(latsNameController.text) || latsNameController.text.substring(0, 1) == ' ')) ||
           latsNameController.text == ' ') {
         lNameErrorMsg.value = 'Please enter valid last name';
       } else if (dobController.text.isEmpty) {
@@ -310,27 +314,29 @@ class NomineeDetailsLogic extends GetxController {
       } else if (addressOneController.text.trim().isEmpty ||
           addressOneController.text.trim().length < 2 ||
           addressOneController.text.substring(0, 1) == ' ' ||
-          specialCharExpStartChar.hasMatch(addressOneController.text.trim().substring(0, 1))) {
+          !addressRegExp.hasMatch(addressOneController.text)) {
         addressErrorMsg.value = 'Please enter valid address';
       } else if (addressTwoController.text.trim().isNotEmpty &&
           (addressTwoController.text.trim().length < 2 ||
               addressTwoController.text.substring(0, 1) == ' ' ||
-              specialCharExpStartChar.hasMatch(addressTwoController.text.trim().substring(0, 1)))) {
+              !addressRegExp.hasMatch(addressTwoController.text))) {
         address2ErrorMsg.value = 'Please enter valid address';
       } else if (cityController.text.trim().isEmpty ||
           cityController.text.trim().length < 2 ||
           cityController.text.substring(0, 1) == ' ' ||
-          specialCharExpStartChar.hasMatch(cityController.text.trim().substring(0, 1))) {
+          !onlyCharRegExp.hasMatch(cityController.text.trim().substring(0, 1)) ||
+          !cityRegExp.hasMatch(cityController.text)) {
         cityErrorMsg.value = 'Please enter valid city';
       } else if (districtController.text.trim().isEmpty ||
           districtController.text.trim().length < 2 ||
           districtController.text.substring(0, 1) == ' ' ||
-          specialCharExpStartChar.hasMatch(districtController.text.trim().substring(0, 1))) {
+          !onlyCharRegExp.hasMatch(districtController.text.trim().substring(0, 1)) ||
+          !cityRegExp.hasMatch(districtController.text)) {
         districtErrorMsg.value = 'Please enter valid district';
       } else if (stateController.text.trim().isEmpty ||
           stateController.text.trim().length < 2 ||
           stateController.text.substring(0, 1) == ' ' ||
-          specialCharExpStartChar.hasMatch(stateController.text.trim().substring(0, 1))) {
+          !onlyCharRegExp.hasMatch(stateController.text.trim().substring(0, 1))) {
         stateErrorMsg.value = 'Please enter valid state';
       } else if (pinCodeController.text.trim().isEmpty) {
         pinCodeErrorMsg.value = 'Please enter pincode';
@@ -521,7 +527,6 @@ class NomineeDetailsLogic extends GetxController {
       districtController.text = nominee.address?.district ?? '';
       stateController.text = nominee.address?.state ?? '';
       pinCodeController.text = nominee.address?.pincode != null ? '${nominee.address?.pincode}' : '';
-      isLoading.value = true;
       getMasterList();
     } else {
       TGLog.d("Error in GetApplicationFormDetailsRequest");

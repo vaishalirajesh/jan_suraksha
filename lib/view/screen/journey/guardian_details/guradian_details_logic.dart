@@ -42,8 +42,10 @@ class GuradianDetailsLogic extends GetxController {
   var guardianRelationShip = "".obs;
   Rx<num> relationshipGuardianId = num.parse('0').obs;
   RegExp specialCharExpStartChar = RegExp(r'^[!@#$%^&*()]+$');
-  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z ]+$');
+  RegExp nameRegExp = RegExp(r'^[a-zA-Z .]+$');
+  RegExp onlyCharRegExp = RegExp(r'^[a-zA-Z]+$');
   RegExp mobileRegExp = RegExp(r'^[0-9]+$');
+  RegExp addressRegExp = RegExp(r'^[a-zA-Z0-9 &-.,()]+$');
   RegExp mobileRegExpStartChar = RegExp(r'^[6-9]+$');
   RegExp emailRegExp = RegExp("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
       "\\@" +
@@ -90,14 +92,15 @@ class GuradianDetailsLogic extends GetxController {
   void onPressContinue() {
     print("onPressContinue");
     if (firstNameController.text.trim().isEmpty ||
-        !onlyCharRegExp.hasMatch(firstNameController.text) ||
+        !nameRegExp.hasMatch(firstNameController.text) ||
         firstNameController.text == ' ' ||
         firstNameController.text.substring(0, 1) == ' ') {
       fNameErrorMsg.value = 'Please enter valid name';
     } else if (addressController.text.trim().isEmpty ||
         addressController.text.trim().length < 2 ||
         addressController.text.substring(0, 1) == ' ' ||
-        specialCharExpStartChar.hasMatch(addressController.text.substring(0))) {
+        nameRegExp.hasMatch(addressController.text.trim().substring(0, 1)) ||
+        !addressRegExp.hasMatch(addressController.text)) {
       addressErrorMsg.value = 'Please enter valid address';
     } else if (relationshipGuardianId.value == 0) {
       relationErrorMsg.value = 'Please select relationship with the nominee';

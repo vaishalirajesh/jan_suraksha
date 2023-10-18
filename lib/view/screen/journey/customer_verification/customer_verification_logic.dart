@@ -76,9 +76,9 @@ class CustomerVerificationLogic extends GetxController {
       dobErrorMsg.value = '';
       reAccountErrorMsg.value = '';
       dobTextController.text = '${date.day}/${date.month}/${date.year}';
-      var dateTime = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+      var dateTime = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd hh:mm:ss.SSSSSS', 'yyyy-MM-ddThh:mm:ss.000Z');
       TGLog.d("Date----$dateTime");
-      dob = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd 00:00:00.000', 'yyyy-MM-ddThh:mm:ss.000Z');
+      dob = AppUtils.convertDateFormat('$date', 'yyyy-MM-dd hh:mm:ss.SSSSSS', 'yyyy-MM-ddThh:mm:ss.000Z');
     }
   }
 

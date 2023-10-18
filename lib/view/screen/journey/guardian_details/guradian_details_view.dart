@@ -52,7 +52,7 @@ class GuradianDetailsPage extends StatelessWidget {
                                   errorText: guradianDetailsLogic.fNameErrorMsg.value,
                                   onChanged: (str) {
                                     if (guradianDetailsLogic.firstNameController.text.trim().isEmpty ||
-                                        !guradianDetailsLogic.onlyCharRegExp
+                                        !guradianDetailsLogic.nameRegExp
                                             .hasMatch(guradianDetailsLogic.firstNameController.text) ||
                                         guradianDetailsLogic.firstNameController.text == ' ' ||
                                         guradianDetailsLogic.firstNameController.text.substring(0, 1) == ' ') {
@@ -77,8 +77,10 @@ class GuradianDetailsPage extends StatelessWidget {
                                     if (guradianDetailsLogic.addressController.text.trim().isEmpty ||
                                         guradianDetailsLogic.addressController.text.trim().length < 2 ||
                                         guradianDetailsLogic.addressController.text.substring(0, 1) == ' ' ||
-                                        guradianDetailsLogic.specialCharExpStartChar
-                                            .hasMatch(guradianDetailsLogic.addressController.text.substring(0))) {
+                                        guradianDetailsLogic.nameRegExp.hasMatch(
+                                            guradianDetailsLogic.addressController.text.trim().substring(0, 1)) ||
+                                        !guradianDetailsLogic.addressRegExp
+                                            .hasMatch(guradianDetailsLogic.addressController.text)) {
                                       guradianDetailsLogic.addressErrorMsg.value = 'Please enter valid address';
                                     } else {
                                       guradianDetailsLogic.addressErrorMsg.value = '';

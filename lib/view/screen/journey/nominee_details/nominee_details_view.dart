@@ -55,7 +55,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                   onChanged: (str) {
                                     if (nomineeDetailsLogic.firstNameController.text.trim().isEmpty) {
                                       nomineeDetailsLogic.fNameErrorMsg.value = 'Please enter first name';
-                                    } else if (!nomineeDetailsLogic.onlyCharRegExp
+                                    } else if (!nomineeDetailsLogic.nameRegExp
                                             .hasMatch(nomineeDetailsLogic.firstNameController.text) ||
                                         nomineeDetailsLogic.firstNameController.text == ' ' ||
                                         nomineeDetailsLogic.firstNameController.text.substring(0, 1) == ' ') {
@@ -80,7 +80,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 errorText: nomineeDetailsLogic.mNameErrorMsg.value,
                                 onChanged: (str) {
                                   if ((nomineeDetailsLogic.middleNameController.text.isNotEmpty &&
-                                      (!nomineeDetailsLogic.onlyCharRegExp
+                                      (!nomineeDetailsLogic.nameRegExp
                                               .hasMatch(nomineeDetailsLogic.middleNameController.text) ||
                                           nomineeDetailsLogic.middleNameController.text.substring(0, 1) == ' '))) {
                                     nomineeDetailsLogic.mNameErrorMsg.value = 'Please enter valid middle name';
@@ -103,7 +103,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                 errorText: nomineeDetailsLogic.lNameErrorMsg.value,
                                 onChanged: (str) {
                                   if ((nomineeDetailsLogic.latsNameController.text.trim().isNotEmpty &&
-                                          (!nomineeDetailsLogic.onlyCharRegExp
+                                          (!nomineeDetailsLogic.nameRegExp
                                                   .hasMatch(nomineeDetailsLogic.latsNameController.text) ||
                                               nomineeDetailsLogic.latsNameController.text.substring(0, 1) == ' ')) ||
                                       nomineeDetailsLogic.latsNameController.text == ' ') {
@@ -364,8 +364,8 @@ class NomineeDetailsPage extends StatelessWidget {
                                   if (nomineeDetailsLogic.addressOneController.text.trim().isEmpty ||
                                       nomineeDetailsLogic.addressOneController.text.trim().length < 2 ||
                                       nomineeDetailsLogic.addressOneController.text.substring(0, 1) == ' ' ||
-                                      nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
-                                          nomineeDetailsLogic.addressOneController.text.trim().substring(0, 1))) {
+                                      !nomineeDetailsLogic.addressRegExp
+                                          .hasMatch(nomineeDetailsLogic.addressOneController.text)) {
                                     nomineeDetailsLogic.addressErrorMsg.value = 'Please enter valid address';
                                   } else {
                                     nomineeDetailsLogic.addressErrorMsg.value = '';
@@ -387,8 +387,8 @@ class NomineeDetailsPage extends StatelessWidget {
                                   if (nomineeDetailsLogic.addressTwoController.text.isNotEmpty &&
                                       (nomineeDetailsLogic.addressTwoController.text.trim().length < 2 ||
                                           nomineeDetailsLogic.addressTwoController.text.substring(0, 1) == ' ' ||
-                                          nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
-                                              nomineeDetailsLogic.addressTwoController.text.trim().substring(0, 1)))) {
+                                          !nomineeDetailsLogic.addressRegExp
+                                              .hasMatch(nomineeDetailsLogic.addressTwoController.text))) {
                                     nomineeDetailsLogic.address2ErrorMsg.value = 'Please enter valid address';
                                   } else {
                                     nomineeDetailsLogic.address2ErrorMsg.value = '';
@@ -410,8 +410,10 @@ class NomineeDetailsPage extends StatelessWidget {
                                   if (nomineeDetailsLogic.cityController.text.trim().isEmpty ||
                                       nomineeDetailsLogic.cityController.text.trim().length < 2 ||
                                       nomineeDetailsLogic.cityController.text.substring(0, 1) == ' ' ||
-                                      nomineeDetailsLogic.specialCharExpStartChar
-                                          .hasMatch(nomineeDetailsLogic.cityController.text.trim().substring(0, 1))) {
+                                      !nomineeDetailsLogic.onlyCharRegExp
+                                          .hasMatch(nomineeDetailsLogic.cityController.text.trim().substring(0, 1)) ||
+                                      !nomineeDetailsLogic.cityRegExp
+                                          .hasMatch(nomineeDetailsLogic.cityController.text)) {
                                     nomineeDetailsLogic.cityErrorMsg.value = 'Please enter valid city';
                                   } else {
                                     nomineeDetailsLogic.cityErrorMsg.value = '';
@@ -430,11 +432,13 @@ class NomineeDetailsPage extends StatelessWidget {
                                 inputType: TextInputType.text,
                                 errorText: nomineeDetailsLogic.districtErrorMsg.value,
                                 onChanged: (str) {
-                                  if (nomineeDetailsLogic.districtController.text.trim().isEmpty ||
+                                  if (nomineeDetailsLogic.districtController.text.isEmpty ||
                                       nomineeDetailsLogic.districtController.text.trim().length < 2 ||
                                       nomineeDetailsLogic.districtController.text.substring(0, 1) == ' ' ||
-                                      nomineeDetailsLogic.specialCharExpStartChar.hasMatch(
-                                          nomineeDetailsLogic.districtController.text.trim().substring(0, 1))) {
+                                      !nomineeDetailsLogic.onlyCharRegExp.hasMatch(
+                                          nomineeDetailsLogic.districtController.text.trim().substring(0, 1)) ||
+                                      !nomineeDetailsLogic.cityRegExp
+                                          .hasMatch(nomineeDetailsLogic.districtController.text)) {
                                     nomineeDetailsLogic.districtErrorMsg.value = 'Please enter valid district';
                                   } else {
                                     nomineeDetailsLogic.districtErrorMsg.value = '';
@@ -455,7 +459,7 @@ class NomineeDetailsPage extends StatelessWidget {
                                   if (nomineeDetailsLogic.stateController.text.trim().isEmpty ||
                                       nomineeDetailsLogic.stateController.text.trim().length < 2 ||
                                       nomineeDetailsLogic.stateController.text.substring(0, 1) == ' ' ||
-                                      nomineeDetailsLogic.specialCharExpStartChar
+                                      !nomineeDetailsLogic.onlyCharRegExp
                                           .hasMatch(nomineeDetailsLogic.stateController.text.trim().substring(0, 1))) {
                                     nomineeDetailsLogic.stateErrorMsg.value = 'Please enter valid state';
                                   } else {

@@ -191,236 +191,239 @@ class HomePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: AppUtils.onWillPopScopeAuth,
       child: Container(
-        color: ColorConfig.jsCreamColor,
+        color: ColorConfig.jsSecondaryColor,
+        height: 1.sh,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
-                child: SingleChildScrollView(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          return Text(
-                            'Welcome${dashboardLogic.userName.value.isNotEmpty ? ', ${AppUtils.capitalize(dashboardLogic.userName.value)}!' : ''}',
-                            style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
-                            overflow: TextOverflow.ellipsis,
-                          );
-                        }),
+              Container(
+                color: ColorConfig.jsCreamColor,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.w, top: 50.h, right: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Obx(() {
+                              return Text(
+                                'Welcome${dashboardLogic.userName.value.isNotEmpty ? ', ${AppUtils.capitalize(dashboardLogic.userName.value)}!' : ''}',
+                                style: StyleConfig.smallText.copyWith(fontSize: 24.sp),
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            }),
+                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
+                          //   },
+                          //   child: Icon(
+                          //     Icons.notifications,
+                          //     size: 25.r,
+                          //     color: ColorConfig.jsSecondaryColor,
+                          //   ),
+                          // )
+                        ],
                       ),
-                      // InkWell(
-                      //   onTap: () {
-                      //     Get.to(() => CertificateInsurencePage(), binding: CertificateInsurenceBinding());
-                      //   },
-                      //   child: Icon(
-                      //     Icons.notifications,
-                      //     size: 25.r,
-                      //     color: ColorConfig.jsSecondaryColor,
-                      //   ),
-                      // )
-                    ],
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.h, left: 20.w),
-                    child: Text(
-                      AppString.happy_to_have_you_onboard,
-                      style: StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                height: 10.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 30.h, left: 10.w, right: 10.w, top: 10.h),
-                child: SizedBox(
-                  width: 0.8.sw,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                            ),
-                            border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      child: SvgPicture.asset(Assets.dashboardSchemeLogo),
-                                      height: 40.h,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          dashboardLogic.schemeDetail != null &&
-                                                  dashboardLogic.schemeDetail[1]['shortName'] != null
-                                              ? "${dashboardLogic.schemeDetail[1]['shortName']}"
-                                              : '-',
-                                          style: StyleConfig.boldText16
-                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
-                                        ),
-                                        SizedBox(
-                                          height: 1.h,
-                                        ),
-                                        // Text(
-                                        //   AppString.str_pay_annually,
-                                        //   style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
-                                        // )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                              //   child: Text(
-                              //     dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}" : '0',
-                              //     style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
-                              //   ),
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListViewButtons(
-                                  width: 0.3.sw,
-                                  onPress: () {
-                                    Get.to(() => const OngoingPmjjbyJourneyPage(),
-                                        binding: OngoingPmjjbyJourneyBinding());
-                                  },
-                                  title: AppString.str_view_details,
-                                ),
-                              ),
-                            ],
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.h, left: 20.w),
+                          child: Text(
+                            AppString.happy_to_have_you_onboard,
+                            style: StyleConfig.smallText.copyWith(fontSize: 12.sp, color: ColorConfig.jsDarkPinkColor),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                            ),
-                            border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      child: SvgPicture.asset(Assets.dashboardSchemeLogo),
-                                      height: 40.h,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30.h, left: 10.w, right: 10.w, top: 10.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          dashboardLogic.schemeDetail != null &&
-                                                  dashboardLogic.schemeDetail[0]['shortName'] != null
-                                              ? "${dashboardLogic.schemeDetail[0]['shortName']}"
-                                              : '-',
-                                          style: StyleConfig.boldText16
-                                              .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                        SizedBox(
+                                          child: SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                          height: 40.h,
                                         ),
                                         SizedBox(
-                                          height: 1.h,
+                                          width: 10.w,
                                         ),
-                                        // Text(
-                                        //   AppString.str_pay_annually,
-                                        //   style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
-                                        // )
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              dashboardLogic.schemeDetail != null &&
+                                                      dashboardLogic.schemeDetail[1]['shortName'] != null
+                                                  ? "${dashboardLogic.schemeDetail[1]['shortName']}"
+                                                  : '-',
+                                              style: StyleConfig.boldText16
+                                                  .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            // Text(
+                                            //   AppString.str_pay_annually,
+                                            //   style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                            // )
+                                          ],
+                                        ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                  //   child: Text(
+                                  //     dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[1]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[1]['premiumAmount']}" : '0',
+                                  //     style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListViewButtons(
+                                      width: 0.3.sw,
+                                      onPress: () {
+                                        Get.to(() => const OngoingPmjjbyJourneyPage(),
+                                            binding: OngoingPmjjbyJourneyBinding());
+                                      },
+                                      title: AppString.str_view_details,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                              //   child: Text(
-                              //     dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}" : '0',
-                              //     style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
-                              //   ),
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListViewButtons(
-                                  width: 0.3.sw,
-                                  onPress: () {
-                                    Get.to(() => const OngoingPmsbyJourneyPage(),
-                                        binding: OngoingPmsbyJourneyBinding());
-                                  },
-                                  title: AppString.str_view_details,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                border: Border.all(color: ColorConfig.jsGreyColor, width: 0.4.w)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 12.w, right: 5.w, top: 10.h),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          child: SvgPicture.asset(Assets.dashboardSchemeLogo),
+                                          height: 40.h,
+                                        ),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              dashboardLogic.schemeDetail != null &&
+                                                      dashboardLogic.schemeDetail[0]['shortName'] != null
+                                                  ? "${dashboardLogic.schemeDetail[0]['shortName']}"
+                                                  : '-',
+                                              style: StyleConfig.boldText16
+                                                  .copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 14.sp),
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            // Text(
+                                            //   AppString.str_pay_annually,
+                                            //   style: StyleConfig.regularExtraSmallText.copyWith(color: ColorConfig.jsTextGreyColor, fontSize: 12.sp),
+                                            // )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                  //   child: Text(
+                                  //     dashboardLogic.schemeDetail != null && dashboardLogic.schemeDetail[0]['premiumAmount'] != null ? "₹${dashboardLogic.schemeDetail[0]['premiumAmount']}" : '0',
+                                  //     style: StyleConfig.boldText20.copyWith(color: ColorConfig.jsTextGreyColor),
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListViewButtons(
+                                      width: 0.3.sw,
+                                      onPress: () {
+                                        Get.to(() => const OngoingPmsbyJourneyPage(),
+                                            binding: OngoingPmsbyJourneyBinding());
+                                      },
+                                      title: AppString.str_view_details,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        width: 10.w,
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Container(
-                color: ColorConfig.jsSecondaryColor,
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

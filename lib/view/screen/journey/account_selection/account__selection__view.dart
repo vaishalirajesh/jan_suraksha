@@ -27,9 +27,7 @@ class AccountSelectionPage extends StatelessWidget {
           appbarName: AppString.appBarWithTitle,
           buttonTitle: "Continue",
           onButtonClick: logic.onPressContinue,
-          onBackButtonCLick: () {
-            Get.offAll(() => AccountSelectionPage(), binding: AccountSelectionBinding());
-          },
+          onBackButtonCLick: AppUtils.onBackToDashboard,
           isDataLoading: logic.isLoading.value,
           isButtonEnable: true,
           isShowButton: true,

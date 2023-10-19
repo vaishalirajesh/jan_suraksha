@@ -196,7 +196,7 @@ class DashboardLogic extends GetxController {
   _onErrorGetSchemaByUserId(TGResponse errorResponse) {
     TGLog.d("GetSchemaByUserIdRequest : onError()--${errorResponse.body}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> getSchemasList() async {
@@ -225,6 +225,7 @@ class DashboardLogic extends GetxController {
   _onSuccessGetEnrollmentList(GetEnrollmentListResponse response) async {
     TGLog.d("GetEnrollmentListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
+      schemeList = [];
       if (response.getEnrollmentList().data != null) {
         List<dynamic> scheme = json.decode(response.getEnrollmentList().data ?? '');
         for (var element in scheme) {
@@ -253,7 +254,7 @@ class DashboardLogic extends GetxController {
   _onErrorGetEnrollmentList(TGResponse errorResponse) {
     TGLog.d("GetEnrollmentListRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   void onUpdate() {
@@ -422,7 +423,7 @@ class DashboardLogic extends GetxController {
     isEmailVerifying.value = false;
     isOTPVerifing.value = false;
     otpErrorMsg.value = errorResponse.error ?? "";
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> verifyOtp() async {
@@ -1152,7 +1153,7 @@ class DashboardLogic extends GetxController {
   _onErrorSaveData(TGResponse errorResponse) {
     TGLog.d("SaveOptoutRequest : onError()--${errorResponse.error}");
     isOptOutLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> fetchProfileData() async {
@@ -1251,6 +1252,7 @@ class DashboardLogic extends GetxController {
   _onSuccessOptOutList(GetEnrollmentListResponse response) async {
     TGLog.d("GetOptOutListRequest : onSuccess()---$response");
     if (response.getEnrollmentList().status == RES_SUCCESS) {
+      optOutNomineeList = [];
       if (response.getEnrollmentList().data != null) {
         optOutNomineeList = json.decode(response.getEnrollmentList().data ?? '');
         optOutNomineeList.forEach((element) {
@@ -1272,7 +1274,7 @@ class DashboardLogic extends GetxController {
     isOptOutLoading.value = false;
     isNomineeLoading.value = false;
 
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> getOptOutHistoryList() async {
@@ -1319,7 +1321,7 @@ class DashboardLogic extends GetxController {
   _onErrorOptOutHistoryList(TGResponse errorResponse) {
     TGLog.d("GetEnrollmentListRequest : onError()--${errorResponse.error}");
     isOptOutLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   // Future<void> onGetNomineeList({bool isFromService = false}) async {
@@ -1395,7 +1397,7 @@ class DashboardLogic extends GetxController {
   _onErrorSendOtp(TGResponse errorResponse) {
     isOptOutConsentLoading.value = true;
     TGLog.d("PremiumDeductionRequest : onError()--${errorResponse.error}");
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   _onSuccessSendOTP(OptOutConsentResponse response, String mobile) async {
@@ -1468,7 +1470,7 @@ class DashboardLogic extends GetxController {
     TGLog.d("VerifySignupOtpRequest : onError()--${errorResponse.error}");
     isOptOutOTPVerifing.value = false;
     optOutOtpErrorMsg.value = "Error in send opt out consent verification code";
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   _onSuccessEmailVerifyOTP(OTPResponse response) async {

@@ -403,7 +403,7 @@ class LoginLogic extends GetxController {
   _onErrorLoginWithMobile(TGResponse errorResponse) {
     TGLog.d("LoginWithMobileRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> onPressVerifyOtp() async {
@@ -494,7 +494,7 @@ class LoginLogic extends GetxController {
     TGLog.d("LoginRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     isVerifyingOTP.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   _onsuccsessCaptchGet(GenerateCaptchaResponse response) {
@@ -614,7 +614,7 @@ class LoginLogic extends GetxController {
   _onErrorForgotPassword(TGResponse errorResponse) {
     TGLog.d("ForgotPasswordRequest : onError()--${errorResponse.error}");
     isPasswordAPICall.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> emailVerifyOtp() async {
@@ -653,7 +653,7 @@ class LoginLogic extends GetxController {
     TGLog.d("SignUpOtpRequest : onError()--${errorResponse.error}");
     isEmailOTPVerifing.value = false;
 
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   _onSuccessEmailVerifyOTP(OTPResponse response) async {

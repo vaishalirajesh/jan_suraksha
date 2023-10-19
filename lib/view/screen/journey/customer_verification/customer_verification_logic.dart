@@ -206,7 +206,7 @@ class CustomerVerificationLogic extends GetxController {
   _onErrorCreateApplication(TGResponse errorResponse) {
     TGLog.d("CreateApplicationRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> updateStage() async {
@@ -247,7 +247,7 @@ class CustomerVerificationLogic extends GetxController {
   _onErrorUpdateStage(TGResponse errorResponse) {
     TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> onUpdateVerification() async {
@@ -333,7 +333,7 @@ class CustomerVerificationLogic extends GetxController {
   _onErrorVerificationType(TGResponse errorResponse) {
     TGLog.d("UpdateEnrollmentVerificationTypeRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> onVerifyOTP() async {
@@ -389,7 +389,7 @@ class CustomerVerificationLogic extends GetxController {
   _onErrorVerifyOTP(TGResponse errorResponse) {
     TGLog.d("VerifyOtpRequest : onError()--${errorResponse.error}");
     isOtpVerifying.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> updateStageDeatilAfterOTPVerify() async {

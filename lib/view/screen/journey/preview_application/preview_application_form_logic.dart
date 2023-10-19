@@ -151,7 +151,7 @@ class PreviewApplicationFormLogic extends GetxController {
   _onErrorSaveData(TGResponse errorResponse) {
     TGLog.d("SaveFormDetailRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   bool isAdult(String birthDateString) {

@@ -126,6 +126,6 @@ class ApplicationFormLogic extends GetxController {
   _onErrorVerifyOTP(TGResponse errorResponse) {
     TGLog.d("GetApplicationFormDetailsRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 }

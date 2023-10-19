@@ -118,7 +118,7 @@ class CertificateInsurenceLogic extends GetxController {
   _onErrorSaveData(TGResponse errorResponse) {
     TGLog.d("GenerateCoiRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   _onSuccess(GetCoiAgreementResponseMain response) async {

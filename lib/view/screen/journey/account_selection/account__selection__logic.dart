@@ -106,7 +106,7 @@ class AccountSelectionLogic extends GetxController {
   _onErrorUpdateSelectedAccountHolder(TGResponse errorResponse) {
     TGLog.d("UpdateSelectedAccountHolderRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> updateStage() async {
@@ -153,6 +153,6 @@ class AccountSelectionLogic extends GetxController {
   _onErrorUpdateStage(TGResponse errorResponse) {
     TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 }

@@ -103,8 +103,7 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("TermConditionRequest : onError()--${errorResponse.error}");
     isDataLoaded.value = true;
     isErrorInLoadData.value = true;
-    showSnackBar(Get.context!, "Error in fetch terms and condition");
-    // handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse, msg: "Error in fetch terms and condition");
   }
 
   Future<void> onPressButton(BuildContext context) async {
@@ -275,7 +274,7 @@ class TermsAndConditionsLogic extends GetxController {
     Get.back();
     TGLog.d("PremiumDeductionRequest : onError()--${errorResponse.error}");
     isOTPVerifying.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> updateStage() async {
@@ -317,7 +316,7 @@ class TermsAndConditionsLogic extends GetxController {
     TGLog.d("UpdateStageRequest : onError()--${errorResponse.error}");
     Get.back();
     isOTPVerifying.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> updateStageDeatilAfterOTPVerify() async {

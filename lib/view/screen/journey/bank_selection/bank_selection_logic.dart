@@ -67,6 +67,6 @@ class BankSelectionLogic extends GetxController {
   _onErrorGetSchemaByUserId(TGResponse errorResponse) {
     TGLog.d("GetOrgMasterListRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 }

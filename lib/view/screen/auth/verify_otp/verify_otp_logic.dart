@@ -76,7 +76,7 @@ class VerifyOtpLogic extends GetxController {
     // setState(() {
     //   _isGetOTPLoaderStart = false;
     // });
-    handleServiceFailError(Get.context!, errorResponse?.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   void onChangeOTP(String str) {

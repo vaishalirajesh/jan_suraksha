@@ -233,7 +233,7 @@ class RegistrationLogic extends GetxController {
     TGLog.d("SignUpOtpRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
     isOTPVerifing.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 
   Future<void> verifyOtp() async {
@@ -382,6 +382,6 @@ class RegistrationLogic extends GetxController {
   _onErrorAutoLogin(TGResponse errorResponse) {
     TGLog.d("LoginRequest : onError()--${errorResponse.error}");
     isLoading.value = false;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 }

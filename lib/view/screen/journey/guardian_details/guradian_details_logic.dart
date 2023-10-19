@@ -232,6 +232,6 @@ class GuradianDetailsLogic extends GetxController {
   _onErrorSaveData(TGResponse errorResponse) {
     TGLog.d("SaveFormDetailRequest : onError()--${errorResponse.error}");
     isLoading.value = true;
-    handleServiceFailError(Get.context!, errorResponse.error);
+    handleServiceFailError(Get.context!, errorResponse);
   }
 }
